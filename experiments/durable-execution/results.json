@@ -1,0 +1,151 @@
+{
+  "throwaway": true,
+  "date": "2026-09-12T16:01:10.773Z",
+  "node": "v24.21.0",
+  "databaseVersion": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "results": [
+    {
+      "name": "producer killed before commit rolls back state, inbox and outbox",
+      "status": "passed",
+      "assertions": 6
+    },
+    {
+      "name": "producer killed after commit preserves canonical result and idempotency",
+      "status": "passed",
+      "assertions": 6
+    },
+    {
+      "name": "schema-owner roles forbid cross-context access",
+      "status": "passed",
+      "assertions": 40
+    },
+    {
+      "name": "participant outbox survives producer crash and consumer precommit crash",
+      "status": "passed",
+      "assertions": 8
+    },
+    {
+      "name": "consumer postcommit crash before acknowledgement causes harmless redelivery",
+      "status": "passed",
+      "assertions": 9
+    },
+    {
+      "name": "concurrent competing assignment commands accept one version",
+      "status": "passed",
+      "assertions": 3
+    },
+    {
+      "name": "concurrent duplicate commands charge one invocation",
+      "status": "passed",
+      "assertions": 4
+    },
+    {
+      "name": "accepted fan-out membership and wait survive process restart without a writer",
+      "status": "passed",
+      "assertions": 11
+    },
+    {
+      "name": "invalid membership does not partially commit or spend work",
+      "status": "passed",
+      "assertions": 4
+    },
+    {
+      "name": "human acceptance remains pending until Execution accepts its own inbox",
+      "status": "passed",
+      "assertions": 11
+    },
+    {
+      "name": "observed edit before reply rejects the stale Execution approval",
+      "status": "passed",
+      "assertions": 10
+    },
+    {
+      "name": "reply before edit remains auditable while observation pauses publication; retain preserves scope",
+      "status": "passed",
+      "assertions": 12
+    },
+    {
+      "name": "expired wait persists expiry and never produces approval",
+      "status": "passed",
+      "assertions": 7
+    },
+    {
+      "name": "out-of-order observations retain newest revision and require independent gap reconciliation",
+      "status": "passed",
+      "assertions": 13
+    },
+    {
+      "name": "stopped writer retain requires verified reconstruction and one charged replacement invocation",
+      "status": "passed",
+      "assertions": 13
+    },
+    {
+      "name": "expired leases and replaced generations reject late results",
+      "status": "passed",
+      "assertions": 10
+    },
+    {
+      "name": "persisted retry time blocks early work and attempts never exceed admission",
+      "status": "passed",
+      "assertions": 12
+    },
+    {
+      "name": "edit then retain reissues a wait with fresh identity and needs a new human answer",
+      "status": "passed",
+      "assertions": 18
+    },
+    {
+      "name": "active writer cannot open a human wait or borrow an undeclared recovery class",
+      "status": "passed",
+      "assertions": 6
+    },
+    {
+      "name": "shared work allowance bounds human and publication admissions",
+      "status": "passed",
+      "assertions": 9
+    },
+    {
+      "name": "same rejected command stays rejected after state changes",
+      "status": "passed",
+      "assertions": 9
+    },
+    {
+      "name": "publication success before receipt survives crashes on both receipt boundaries",
+      "status": "passed",
+      "assertions": 25
+    },
+    {
+      "name": "lost begin acknowledgement and missing provider receipt never reauthorize a call",
+      "status": "passed",
+      "assertions": 16
+    },
+    {
+      "name": "concurrent duplicate begin commands expose one first-dispatch hint",
+      "status": "passed",
+      "assertions": 9
+    },
+    {
+      "name": "expired accepted grant cannot start external publication",
+      "status": "passed",
+      "assertions": 11
+    },
+    {
+      "name": "cancel after intent issuance preserves the accepted effect obligation and independent gap",
+      "status": "passed",
+      "assertions": 24
+    },
+    {
+      "name": "successor needs explicit admission, preserves delivery mapping and inherits no approvals or work",
+      "status": "passed",
+      "assertions": 37
+    },
+    {
+      "name": "database SIGKILL and restart preserve waits, membership, retry deadlines, budgets and outboxes",
+      "status": "passed",
+      "assertions": 10
+    }
+  ],
+  "assertions": 353,
+  "passed": 28,
+  "failed": 0
+}

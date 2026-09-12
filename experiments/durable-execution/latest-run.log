@@ -1,0 +1,32 @@
+
+added 14 packages in 890ms
+PASS producer killed before commit rolls back state, inbox and outbox
+PASS producer killed after commit preserves canonical result and idempotency
+PASS schema-owner roles forbid cross-context access
+PASS participant outbox survives producer crash and consumer precommit crash
+PASS consumer postcommit crash before acknowledgement causes harmless redelivery
+PASS concurrent competing assignment commands accept one version
+PASS concurrent duplicate commands charge one invocation
+PASS accepted fan-out membership and wait survive process restart without a writer
+PASS invalid membership does not partially commit or spend work
+PASS human acceptance remains pending until Execution accepts its own inbox
+PASS observed edit before reply rejects the stale Execution approval
+PASS reply before edit remains auditable while observation pauses publication; retain preserves scope
+PASS expired wait persists expiry and never produces approval
+PASS out-of-order observations retain newest revision and require independent gap reconciliation
+PASS stopped writer retain requires verified reconstruction and one charged replacement invocation
+PASS expired leases and replaced generations reject late results
+PASS persisted retry time blocks early work and attempts never exceed admission
+PASS edit then retain reissues a wait with fresh identity and needs a new human answer
+PASS active writer cannot open a human wait or borrow an undeclared recovery class
+PASS shared work allowance bounds human and publication admissions
+PASS same rejected command stays rejected after state changes
+PASS publication success before receipt survives crashes on both receipt boundaries
+PASS lost begin acknowledgement and missing provider receipt never reauthorize a call
+PASS concurrent duplicate begin commands expose one first-dispatch hint
+PASS expired accepted grant cannot start external publication
+PASS cancel after intent issuance preserves the accepted effect obligation and independent gap
+PASS successor needs explicit admission, preserves delivery mapping and inherits no approvals or work
+PASS database SIGKILL and restart preserve waits, membership, retry deadlines, budgets and outboxes
+{"passed":28,"failed":0,"assertions":353}
+/tmp/agents-assemble-durable-execution/experiments/durable-execution/durable-execution.throwaway.html
