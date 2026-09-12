@@ -4,7 +4,7 @@ An open-source agent software factory: define how software work proceeds, run ex
 
 Users install and authenticate Codex or Claude locally, then install the Agents Assemble CLI and start its daemon. The daemon connects outward to their chosen Agents Assemble deployment and invokes those installed harnesses using their existing local accounts. Harnesses may contact their model providers directly; Agents Assemble does not supply model credentials or proxy inference.
 
-**Status:** architecture discovery. This repository currently contains planning records, not a runnable application. The hosted service will charge per seat; self-hosting and personal-machine use will be free. The software license has not yet been selected.
+**Status:** architecture discovery. This repository currently contains planning records, not a runnable application. The hosted service will charge per seat; self-hosting and personal-machine use will be free. [ADR 0011](docs/architecture/0011-open-source-licensing-and-edition-parity.md) selects Apache-2.0 and full self-hosted feature parity, with hosting/support revenue. The actual LICENSE addition is still pending as a separate reviewable change.
 
 The [GitHub architecture map](https://github.com/09millarda/agents-assemble/issues/1) is the single canonical index of decisions and unresolved questions.
 
@@ -22,6 +22,7 @@ The [GitHub architecture map](https://github.com/09millarda/agents-assemble/issu
 - [Semantic graph collaboration](docs/architecture/0008-semantic-graph-collaboration.md): stable editor entities, ordered placements and exact conflict/publication gates; [two-replica and authoring evidence](docs/research/semantic-graph-conformance.md) preserves the supported grammar while leaving the production editor and validator unproved.
 - [Shared harness conversation](docs/architecture/0009-shared-harness-conversation.md): ordered attributed inputs, one-use dispatch claims, exact-turn control and conservative replay/redirect; [native and durable evidence](docs/research/shared-conversation-conformance.md) demonstrates duplicate client IDs and preserves interruption/recovery limits.
 - [Portable community publication and moderation](docs/architecture/0010-portable-community-publication.md): owner-approved organization publishing, exact public snapshots, immutable offline imports, feedback/moderation and independently enforced quarantine holds; package envelope/verifier conformance follows in #17.
+- [Open-source licensing and edition parity](docs/architecture/0011-open-source-licensing-and-edition-parity.md): owner-selected Apache-2.0, full self-hosted parity, DCO contributions and open-source public software packages; distribution/license application remains separate.
 - [Harness research](docs/research/harness-capabilities.md), [environment delivery](docs/research/environment-delivery.md), and [failure review](docs/research/runtime-failure-review.md): evidence supporting the first decision.
 
 TypeScript, PostgreSQL, Hono, and OpenAPI are selected inputs. AWS is the first hosted deployment target. Core domain behavior must remain portable, with infrastructure and vendor integrations behind ports and adapters.
