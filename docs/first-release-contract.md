@@ -72,12 +72,12 @@ The existing charter requires portable, versioned packages that can be exported 
 
 ## Next architecture decisions
 
-The following bounded decisions were graduated from #4 as native sub-issues of map #1. #12 is now resolved by ADR 0007; #13–#15 remain unclaimed. #16 follows #12 for semantic graph collaboration. These are not implementation tickets.
+The following bounded decisions were graduated from #4 as native sub-issues of map #1. #12 is resolved by ADR 0007, #16 by ADR 0008 and #13 by ADR 0009; #14–#15 remain unclaimed. These are not implementation tickets.
 
 | Question | Evidence needed for a verdict |
 | --- | --- |
-| [#12 — Collaborative drafts and execution revision submission](https://github.com/09millarda/agents-assemble/issues/12) | Resolved by [ADR 0007](architecture/0007-collaborative-drafts-and-revision-submission.md): bounded Yjs/durable acceptance and exact revision submission, with separate Execution observation/adoption. Full graph semantics remain #16. |
-| [#13 — Shared harness conversation and interruption delivery](https://github.com/09millarda/agents-assemble/issues/13) | Native Codex input/output/interruption probes; multiple authorized senders; durable input identity and lost-ack handling; attempt/successor routing; clear separation of interrupt acknowledgment and stopped-writer evidence. |
+| [#12 — Collaborative drafts and execution revision submission](https://github.com/09millarda/agents-assemble/issues/12) | Resolved by [ADR 0007](architecture/0007-collaborative-drafts-and-revision-submission.md): bounded Yjs/durable acceptance and exact revision submission, with separate Execution observation/adoption. The bounded semantic graph decision is resolved by #16/ADR 0008; complete editor conformance remains open. |
+| [#13 — Shared harness conversation and interruption delivery](https://github.com/09millarda/agents-assemble/issues/13) | Resolved by [ADR 0009](architecture/0009-shared-harness-conversation.md): ordered input ledger, exact-turn steering, one-use dispatch and unknown-delivery pause, with separate native and durable evidence. Integrated production delivery/output and release qualification remain open. |
 | [#14 — Portable community publication and moderation](https://github.com/09millarda/agents-assemble/issues/14) | Private/public ownership and authorization examples, immutable package versions, import/fork/update behavior, rating/comment/report/moderation invariants and registry-independent package use. Leave license selection to #5. |
 | [#15 — Lambda deployment identity and recovery](https://github.com/09millarda/agents-assemble/issues/15) | A bounded GitHub Actions/SAM fixture covering exact artifact/environment/approval binding, external run correlation, duplicate/unknown dispatch, staging-to-production promotion and health/rollback evidence. |
 
