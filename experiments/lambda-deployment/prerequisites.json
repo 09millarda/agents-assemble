@@ -1,0 +1,73 @@
+{
+  "recorded_at": "2026-09-12T21:17:57.310819+00:00",
+  "source_sha256": "a44c220b3ed9433c15d57f4fad0730a9208c2fd54cf95924de5979fc48c3100c",
+  "kind": "read_only_prerequisites",
+  "repository": "09millarda/agents-assemble",
+  "executables": {
+    "aws": null,
+    "sam": null,
+    "gh": "/usr/bin/gh",
+    "node": "/home/amillard98/.local/bin/node",
+    "python3": "/usr/bin/python3"
+  },
+  "aws_environment_names": [],
+  "aws_files": [
+    {
+      "path": "/home/amillard98/.aws/config",
+      "exists": false
+    },
+    {
+      "path": "/home/amillard98/.aws/credentials",
+      "exists": false
+    }
+  ],
+  "github": {
+    "actions_permissions": {
+      "observed": true,
+      "data": {
+        "allowed_actions": "all",
+        "enabled": true,
+        "sha_pinning_required": false
+      }
+    },
+    "workflows": {
+      "observed": true,
+      "data": {
+        "total_count": 0,
+        "workflows": []
+      }
+    },
+    "environments": {
+      "observed": true,
+      "data": {
+        "environments": [],
+        "total_count": 0
+      }
+    },
+    "secret_names": {
+      "observed": true,
+      "data": {
+        "names": [],
+        "total_count": 0
+      }
+    },
+    "variable_names": {
+      "observed": true,
+      "data": {
+        "names": [],
+        "total_count": 0
+      }
+    }
+  },
+  "conformance_passed": false,
+  "unexercised": [
+    "real workflow dispatch/correlation",
+    "AWS identity and permissions",
+    "artifact build and immutable promotion",
+    "production effect authorization",
+    "real staging/production-like deployment",
+    "health failure and rollback",
+    "lost acknowledgments and concurrent release recovery"
+  ],
+  "interpretation": "Presence or absence of configuration is not a provider conformance verdict. No STS call, workflow dispatch or cloud mutation is performed."
+}
