@@ -13,6 +13,7 @@ The [GitHub architecture map](https://github.com/09millarda/agents-assemble/issu
 - [Control plane and runner boundary](docs/architecture/0001-control-plane-and-runners.md): the first decision and its limits.
 - [Playbook and action contract](docs/architecture/0002-playbook-and-action-contract.md): versioned definitions, structured execution, approval and recovery semantics; [illustrative definitions](docs/examples/playbook-contract.md).
 - [Playbook conformance experiment](docs/research/playbook-conformance.md): retained grammar, evidence-backed amendments and limits from disposable mock authoring/recovery probes; production durability remains to validate.
+- [Durable execution and recovery](docs/architecture/0003-durable-execution-and-recovery.md): PostgreSQL acceptance transactions, participant ownership, waits, fencing and publication recovery; [fault-injection evidence](docs/research/durable-execution-conformance.md) and [substrate comparison](docs/research/durable-substrate-comparison.md).
 - [Harness research](docs/research/harness-capabilities.md), [environment delivery](docs/research/environment-delivery.md), and [failure review](docs/research/runtime-failure-review.md): evidence supporting the first decision.
 
 TypeScript, PostgreSQL, Hono, and OpenAPI are selected inputs. AWS is the first hosted deployment target. Core domain behavior must remain portable, with infrastructure and vendor integrations behind ports and adapters.
