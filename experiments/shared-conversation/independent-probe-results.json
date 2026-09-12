@@ -1,0 +1,90 @@
+[
+  {
+    "name": "retry while sending repeats possibly accepted input",
+    "observed": {
+      "retry": "accepted",
+      "native_calls": 2
+    }
+  },
+  {
+    "name": "concurrent dispatch duplicates side effect",
+    "observed": {
+      "responses": [
+        "accepted",
+        "accepted"
+      ],
+      "native_calls": 2
+    }
+  },
+  {
+    "name": "missing preceding interrupt fails to block later steer",
+    "observed": {
+      "later_intent": "sending"
+    }
+  },
+  {
+    "name": "accepted interrupt does not close continuation gate",
+    "observed": {
+      "later_send": "accepted",
+      "terminal": false,
+      "writerStopped": false
+    }
+  },
+  {
+    "name": "full queue blocks interruption",
+    "observed": {
+      "interrupt_submit": "queue-full"
+    }
+  },
+  {
+    "name": "output retention only signals and never prunes",
+    "observed": {
+      "cursor_7": {
+        "through": 10,
+        "events": [
+          {
+            "digest": "1611683bdd3a870232596c4bf5ef0a1d311d0ae3169a85d8de9ae1a020041c6d",
+            "payload": {
+              "seq": 10
+            }
+          },
+          {
+            "digest": "0128f741d4ade6cc5b751994c5ce604c9a57c3afb9d2d0873fa10ff778eb78fe",
+            "payload": {
+              "seq": 8
+            }
+          },
+          {
+            "digest": "6db41c483f5e653ed08eef6c64bbb95f0810550155d8ddfbdb3ae591d85c22fa",
+            "payload": {
+              "seq": 9
+            }
+          }
+        ]
+      },
+      "stored_count": 10
+    }
+  },
+  {
+    "name": "late historical receipt scope isolation",
+    "observed": {
+      "scope": {
+        "attempt": "B",
+        "generation": 2,
+        "journal": "journal-A",
+        "org": "org-A",
+        "run": "run-A",
+        "thread": "thread-A",
+        "turn": "turn-A"
+      },
+      "status": "accepted",
+      "newAdmission": false
+    }
+  },
+  {
+    "name": "authority revoke after modeled gate",
+    "observed": {
+      "native_calls": 1
+    }
+  }
+]

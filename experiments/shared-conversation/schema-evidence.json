@@ -1,0 +1,14 @@
+{
+  "version": "codex-cli 0.153.4",
+  "command": "codex app-server generate-ts --out <temporary-directory>",
+  "excerpts": {
+    "ThreadReadParams.ts": "c24743cb5655b4c71a853a2a290412d78e1a27e0278f2a0cde9bd9d9b78118a8",
+    "ThreadResumeParams.ts": "02f6d2d99d1cfb42ca2ef4647d731fee0b3801c25a61451b41f041b97adff649",
+    "ThreadStartParams.ts": "3a8e4943c6a9a86de42037096cedb86ac6abef491fb7ca424752663116c24fef",
+    "TurnInterruptParams.ts": "643034c3d25c23c7700236d4d1ff16286565786d48148e85b0c4761fe46d3804",
+    "TurnStartParams.ts": "049f50eff62666ed07e171d8d0a8ec08e745f697d71972a4a169e4fb7b3682d2",
+    "TurnSteerParams.ts": "47cdc50a4b0b350c00d7b921beb6b620f63642684f4b48a1e574089e8f1690be",
+    "TurnSteerResponse.ts": "b77bae04f63621580d71aecab4c19c9dcd8d9147be1c4b07fe809dcaf584212b"
+  },
+  "notes": "Selected unedited generated type excerpts; not a standalone TypeScript package."
+}

@@ -1,0 +1,86 @@
+{
+  "checks": 20,
+  "failed": 0,
+  "results": [
+    {
+      "name": "ephemeral probe completed",
+      "pass": true
+    },
+    {
+      "name": "persistent probe completed",
+      "pass": true
+    },
+    {
+      "name": "three occurrences share one clientId",
+      "pass": true
+    },
+    {
+      "name": "same and changed payloads all retained",
+      "pass": true
+    },
+    {
+      "name": "native item IDs distinct",
+      "pass": true
+    },
+    {
+      "name": "start while active targeted original turn",
+      "pass": true
+    },
+    {
+      "name": "old steer while successor active",
+      "pass": true
+    },
+    {
+      "name": "old interrupt while successor active",
+      "pass": true
+    },
+    {
+      "name": "exact interrupt acknowledged",
+      "pass": true
+    },
+    {
+      "name": "restart read has interrupted status",
+      "pass": true
+    },
+    {
+      "name": "resume reads same retained representation",
+      "pass": true
+    },
+    {
+      "name": "persistent probe archived its thread",
+      "pass": true
+    },
+    {
+      "name": "user IDs and bytes survive restart",
+      "pass": true
+    },
+    {
+      "name": "restart hydration differs from immediate interrupt snapshot",
+      "pass": true
+    },
+    {
+      "name": "ephemeral history unsupported",
+      "pass": true
+    },
+    {
+      "name": "terminal steering rejected",
+      "pass": true
+    },
+    {
+      "name": "redirect output observed",
+      "pass": true
+    },
+    {
+      "name": "events.jsonl owned server exited",
+      "pass": true
+    },
+    {
+      "name": "persistent-events.jsonl owned server exited",
+      "pass": true
+    },
+    {
+      "name": "restart-events.jsonl owned server exited",
+      "pass": true
+    }
+  ]
+}

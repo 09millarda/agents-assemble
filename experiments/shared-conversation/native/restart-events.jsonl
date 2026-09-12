@@ -1,0 +1,8 @@
+{"event": "request", "method": "initialize", "request": 1}
+{"event": "response", "method": "initialize", "request": 1}
+{"event": "request", "method": "thread/read", "request": 2}
+{"event": "request", "method": "thread/resume", "request": 3}
+{"event": "thread/status/changed", "status": {"type": "idle"}, "thread": "thread-1"}
+{"event": "request", "method": "thread/archive", "request": 4}
+{"event": "thread/status/changed", "status": {"type": "notLoaded"}, "thread": "thread-1"}
+{"event": "probe_owned_process_exit", "forcedKill": false, "notificationCounts": {"deprecationNotice": 2, "mcpServer/startupStatus/updated": 12, "remoteControl/status/changed": 1, "thread/goal/cleared": 1, "thread/status/changed": 2}, "returnCode": 0, "stderrBytesDiscarded": 305}

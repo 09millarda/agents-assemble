@@ -1,0 +1,48 @@
+{"event": "request", "method": "initialize", "request": 1}
+{"event": "response", "method": "initialize", "request": 1}
+{"event": "request", "method": "thread/start", "request": 2}
+{"event": "request", "method": "turn/start", "request": 3}
+{"event": "thread/started", "thread": "thread-1"}
+{"event": "thread/status/changed", "status": {"activeFlags": [], "type": "active"}, "thread": "thread-1"}
+{"event": "turn/started", "status": "inProgress", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "exitCode": null, "itemType": "commandExecution", "status": "inProgress", "thread": "thread-1", "turn": "turn-1"}
+{"event": "request", "method": "turn/steer", "request": 4}
+{"event": "request", "method": "turn/steer", "request": 5}
+{"event": "request", "method": "turn/steer", "request": 6}
+{"event": "request", "method": "turn/steer", "request": 7}
+{"event": "request", "method": "turn/start", "request": 8}
+{"event": "item/completed", "exitCode": 0, "itemType": "commandExecution", "status": "completed", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "thread/status/changed", "status": {"type": "idle"}, "thread": "thread-1"}
+{"event": "turn/completed", "status": "completed", "thread": "thread-1", "turn": "turn-1"}
+{"event": "request", "method": "thread/read", "request": 9}
+{"event": "request", "method": "turn/start", "request": 10}
+{"event": "thread/status/changed", "status": {"activeFlags": [], "type": "active"}, "thread": "thread-1"}
+{"event": "turn/started", "status": "inProgress", "thread": "thread-1", "turn": "turn-2"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-2"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-2"}
+{"event": "item/started", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-2"}
+{"event": "item/completed", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-2"}
+{"event": "item/started", "exitCode": null, "itemType": "commandExecution", "status": "inProgress", "thread": "thread-1", "turn": "turn-2"}
+{"event": "request", "method": "turn/steer", "request": 11}
+{"event": "request", "method": "turn/interrupt", "request": 12}
+{"event": "request", "method": "turn/interrupt", "request": 13}
+{"event": "thread/status/changed", "status": {"type": "idle"}, "thread": "thread-1"}
+{"event": "turn/completed", "status": "interrupted", "thread": "thread-1", "turn": "turn-2"}
+{"event": "request", "method": "thread/read", "request": 14}
+{"event": "probe_owned_process_exit", "forcedKill": false, "notificationCounts": {"account/rateLimits/updated": 3, "deprecationNotice": 2, "item/agentMessage/delta": 64, "item/commandExecution/outputDelta": 1, "item/completed": 11, "item/started": 12, "mcpServer/startupStatus/updated": 11, "remoteControl/status/changed": 1, "thread/started": 1, "thread/status/changed": 4, "thread/tokenUsage/updated": 3, "turn/completed": 2, "turn/started": 2}, "returnCode": 0, "stderrBytesDiscarded": 481}

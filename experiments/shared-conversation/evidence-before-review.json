@@ -1,0 +1,4101 @@
+{
+  "kind": "separate durable SQLite and modeled-native experiment",
+  "sourceHash": "c79c90e2b488f040d361ce36be70ddf2f8bd4d84732808bb1e900e0d1fab4569",
+  "scenarios": 29,
+  "checks": 86,
+  "failed": 0,
+  "results": [
+    {
+      "name": "exact retries replay verdict without another native call",
+      "checks": [
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "changed duplicate conflicts",
+      "checks": [
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "conflict",
+          "expected": "conflict",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "different sender cannot borrow identity",
+      "checks": [
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "conflict",
+          "expected": "conflict",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "unauthorized sender",
+      "checks": [
+        {
+          "actual": "unauthorized",
+          "expected": "unauthorized",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched org",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched run",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched attempt",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched generation",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched journal",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched thread",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reject mismatched turn",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "revoke before native dispatch",
+      "checks": [
+        {
+          "actual": "unauthorized",
+          "expected": "unauthorized",
+          "pass": true
+        },
+        {
+          "actual": [],
+          "expected": [],
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": false,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "received"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "document revision gate independently blocks instruction",
+      "checks": [
+        {
+          "actual": "not-admitted",
+          "expected": "not-admitted",
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": true,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "received"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "queued predecessor input never follows successor",
+      "checks": [
+        {
+          "actual": "wrong-scope",
+          "expected": "wrong-scope",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "successor",
+            "generation": 2,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "received"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "reordered transport preserves two-sender order",
+      "checks": [
+        {
+          "actual": "ordered-wait",
+          "expected": "ordered-wait",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": [
+            "input-1",
+            "input-2"
+          ],
+          "expected": [
+            "input-1",
+            "input-2"
+          ],
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "bob",
+                "text": "ALPHA"
+              },
+              "digest": "fbf04762f4a58490398e64c8e8bf8d6677668b25f8bdfd3c58c9bef17d66820f",
+              "seq": 2,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 3,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "bob",
+                "text": "ALPHA"
+              },
+              "digest": "fbf04762f4a58490398e64c8e8bf8d6677668b25f8bdfd3c58c9bef17d66820f",
+              "seq": 2,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            },
+            {
+              "digest": "fbf04762f4a58490398e64c8e8bf8d6677668b25f8bdfd3c58c9bef17d66820f",
+              "key": "input-2",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "uncertain input blocks later instructions",
+      "checks": [
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": "ordered-wait",
+          "expected": "ordered-wait",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "282a4625bd8880da1c26382d6558dc8ec594206cba9b0533e4f4a1be29a312bb",
+              "seq": 2,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 3,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "unknown"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "282a4625bd8880da1c26382d6558dc8ec594206cba9b0533e4f4a1be29a312bb",
+              "seq": 2,
+              "status": "received"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "interrupt bypasses uncertain instruction queue without stop or admission claim",
+      "checks": [
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": "ordered-wait",
+          "expected": "ordered-wait",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "282a4625bd8880da1c26382d6558dc8ec594206cba9b0533e4f4a1be29a312bb",
+              "seq": 2,
+              "status": "queued"
+            },
+            "stop": {
+              "body": {
+                "key": "stop",
+                "kind": "interrupt",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "56be6dd04f38be21b0f8bc9ad87375194e9162a4c12cdd8b4e8b8fb31059852d",
+              "seq": 3,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 4,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "unknown"
+            },
+            "input-2": {
+              "body": {
+                "key": "input-2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "282a4625bd8880da1c26382d6558dc8ec594206cba9b0533e4f4a1be29a312bb",
+              "seq": 2,
+              "status": "received"
+            },
+            "stop": {
+              "body": {
+                "key": "stop",
+                "kind": "interrupt",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "56be6dd04f38be21b0f8bc9ad87375194e9162a4c12cdd8b4e8b8fb31059852d",
+              "seq": 3,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            },
+            {
+              "digest": "56be6dd04f38be21b0f8bc9ad87375194e9162a4c12cdd8b4e8b8fb31059852d",
+              "key": "stop",
+              "kind": "interrupt",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "terminal race requires new admission for redirect",
+      "checks": [
+        {
+          "actual": "not-admitted",
+          "expected": "not-admitted",
+          "pass": true
+        },
+        {
+          "actual": "not-admitted",
+          "expected": "not-admitted",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": true,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "received"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "lost service receipt reply replays durable daemon verdict",
+      "checks": [
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "definitive native rejection stays rejected",
+      "checks": [
+        {
+          "actual": "rejected",
+          "expected": "rejected",
+          "pass": true
+        },
+        {
+          "actual": "rejected",
+          "expected": "rejected",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "rejected"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "rejected"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "rejected"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "bounded input queue gives explicit refusal",
+      "checks": [
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queue-full",
+          "expected": "queue-full",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "0": {
+              "body": {
+                "key": "0",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "358ab6c9c9e936a386bb08465803691c2af4c504bc28b1923522d6879d008ddc",
+              "seq": 1,
+              "status": "queued"
+            },
+            "1": {
+              "body": {
+                "key": "1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "4023a94a0168e942091a77498eb6c3fc42271f498105ef976a5b68cf431447e3",
+              "seq": 2,
+              "status": "queued"
+            },
+            "2": {
+              "body": {
+                "key": "2",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "ee441b9642f4c5c63eef42f0c7810b69ccdd5b1781019ac7ace25ae35bd15f7d",
+              "seq": 3,
+              "status": "queued"
+            },
+            "3": {
+              "body": {
+                "key": "3",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "1ae8600f9021650d8f1297a9ea998a008b17d354c66ada1aaa6e840b09cfc53b",
+              "seq": 4,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 5,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "actual concurrent commits allocate one input identity",
+      "checks": [
+        {
+          "actual": [
+            "queued",
+            "queued",
+            "queued",
+            "queued"
+          ],
+          "expected": [
+            "queued",
+            "queued",
+            "queued",
+            "queued"
+          ],
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "actual": 2,
+          "expected": 2,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "one": {
+              "body": {
+                "key": "one",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "same"
+              },
+              "digest": "85b796471926dd16eae9fba98187148504375fc3016c2ba9185a543b3e3b1509",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "output deduplication gap and epoch",
+      "checks": [
+        {
+          "actual": "stored",
+          "expected": "stored",
+          "pass": true
+        },
+        {
+          "actual": "duplicate",
+          "expected": "duplicate",
+          "pass": true
+        },
+        {
+          "actual": "conflict",
+          "expected": "conflict",
+          "pass": true
+        },
+        {
+          "actual": "gap",
+          "expected": "gap",
+          "pass": true
+        },
+        {
+          "actual": "wrong-journal",
+          "expected": "wrong-journal",
+          "pass": true
+        },
+        {
+          "actual": "stored",
+          "expected": "stored",
+          "pass": true
+        },
+        {
+          "actual": 2,
+          "expected": 2,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 2,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {
+            "journal-A:1": {
+              "digest": "cbbbdcd27692344de5dbab3abcaba413fb0f45307267de7081401576df1cb176",
+              "payload": {
+                "text": "hello"
+              }
+            },
+            "journal-A:2": {
+              "digest": "ace9288a3ff79a9132b9ddf621bc19354ffb04b3eacb17486ad6dc4d51303961",
+              "payload": {
+                "done": true
+              }
+            }
+          },
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "slow reader snapshot boundary and read revocation",
+      "checks": [
+        {
+          "actual": "snapshot-required",
+          "expected": "snapshot-required",
+          "pass": true
+        },
+        {
+          "actual": "unauthorized",
+          "expected": "unauthorized",
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {},
+          "cursor": 6,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": false
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {
+            "journal-A:1": {
+              "digest": "9a34952e1fbd0873eb8b62c216711e2498730eb1c6fb2d5e4778f97b796b3efc",
+              "payload": {
+                "item": "1"
+              }
+            },
+            "journal-A:2": {
+              "digest": "872e234537e6b8a243c108edbd982db8723e3ee8e1463e6b3fa7af2a0a999e7c",
+              "payload": {
+                "item": "2"
+              }
+            },
+            "journal-A:3": {
+              "digest": "b5802854f4302ae468cae2fa67002a2b042da5d538486f74f2dd19d70198f757",
+              "payload": {
+                "item": "3"
+              }
+            },
+            "journal-A:4": {
+              "digest": "57b765509b46736ec15dc1b79fc68e6d9c99dd1c29e7960fa1018ecae1102b89",
+              "payload": {
+                "item": "4"
+              }
+            },
+            "journal-A:5": {
+              "digest": "19dfc5f341aac02f73bb495d916491d44032b99e71c55325738908c23957d6e2",
+              "payload": {
+                "item": "5"
+              }
+            },
+            "journal-A:6": {
+              "digest": "359b8619b11ed6d2e7d1f95e9ccca6666dbc12a7bd378aa223b99d84791c5f50",
+              "payload": {
+                "item": "6"
+              }
+            }
+          },
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "actual process SIGKILL after-receive",
+      "checks": [
+        {
+          "actual": -9,
+          "expected": -9,
+          "pass": true
+        },
+        {
+          "actual": "received",
+          "expected": "received",
+          "pass": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "actual process SIGKILL after-intent",
+      "checks": [
+        {
+          "actual": -9,
+          "expected": -9,
+          "pass": true
+        },
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "unknown"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "scope": {
+            "org": "org-A",
+            "run": "run-A",
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "valid": true,
+          "revisionPaused": false,
+          "terminal": false,
+          "next": 1,
+          "commands": {},
+          "events": [],
+          "output": {},
+          "cursor": 0,
+          "approval": false,
+          "writerStopped": false,
+          "effectsSettled": false,
+          "newAdmission": false
+        }
+      }
+    },
+    {
+      "name": "actual process SIGKILL after-native",
+      "checks": [
+        {
+          "actual": -9,
+          "expected": -9,
+          "pass": true
+        },
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "queued"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "unknown"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "actual process SIGKILL after-receipt",
+      "checks": [
+        {
+          "actual": -9,
+          "expected": -9,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    },
+    {
+      "name": "actual process SIGKILL after-service",
+      "checks": [
+        {
+          "actual": -9,
+          "expected": -9,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null,
+      "state": {
+        "service": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 2,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "daemon": {
+          "approval": false,
+          "commands": {
+            "input-1": {
+              "body": {
+                "key": "input-1",
+                "kind": "steer",
+                "scope": {
+                  "attempt": "attempt-A",
+                  "generation": 1,
+                  "journal": "journal-A",
+                  "org": "org-A",
+                  "run": "run-A",
+                  "thread": "thread-A",
+                  "turn": "turn-A"
+                },
+                "sender": "alice",
+                "text": "ALPHA"
+              },
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "seq": 1,
+              "status": "accepted"
+            }
+          },
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        },
+        "modeledNative": {
+          "approval": false,
+          "commands": {},
+          "cursor": 0,
+          "effectsSettled": false,
+          "events": [
+            {
+              "digest": "2a4ff110c4271e6965be3a139f3c8c32ee65973a95174e1eb16d0a338a5ed9c5",
+              "key": "input-1",
+              "kind": "steer",
+              "outcome": "accepted"
+            }
+          ],
+          "members": {
+            "alice": true,
+            "bob": true
+          },
+          "newAdmission": false,
+          "next": 1,
+          "output": {},
+          "revisionPaused": false,
+          "scope": {
+            "attempt": "attempt-A",
+            "generation": 1,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "terminal": false,
+          "valid": true,
+          "writerStopped": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "version": "codex-cli 0.153.4",
+  "os": "7.0.0-31-generic",
+  "cases": [
+    {
+      "name": "wrong active turn",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "expected active turn id `wrong-turn` but found `native-id-1`"
+        }
+      }
+    },
+    {
+      "name": "concurrent senders",
+      "results": [
+        {
+          "accepted": true,
+          "turn": "turn-1"
+        },
+        {
+          "accepted": true,
+          "turn": "turn-1"
+        }
+      ]
+    },
+    {
+      "name": "same client ID same payload",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "same client ID changed payload",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "acceptance observed by harness probe but reply withheld from modeled caller",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      },
+      "nativeFault": false
+    },
+    {
+      "name": "wrong turn interrupt",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "expected active turn id wrong-turn but found native-id-1"
+        }
+      }
+    },
+    {
+      "name": "interrupt acknowledgment",
+      "result": {
+        "accepted": true
+      }
+    },
+    {
+      "name": "interrupted turn read",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "ephemeral threads do not support includeTurns"
+        }
+      }
+    },
+    {
+      "name": "steer after terminal",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "no active turn to steer"
+        }
+      }
+    },
+    {
+      "name": "explicit redirect after terminal",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "ephemeral threads do not support includeTurns"
+        }
+      }
+    }
+  ],
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true
+  },
+  "settings": {
+    "requested": {
+      "sandbox": "workspace-write",
+      "networkAccess": false,
+      "approvalPolicy": "never",
+      "ephemeral": true,
+      "model": "omitted",
+      "effort": "omitted"
+    },
+    "effective": {
+      "model": "gpt-6-astra",
+      "modelProvider": "openai",
+      "reasoningEffort": "high",
+      "approvalPolicy": "never",
+      "sandbox": {
+        "type": "workspaceWrite",
+        "writableRoots": [],
+        "networkAccess": false,
+        "excludeTmpdirEnvVar": true,
+        "excludeSlashTmp": true
+      },
+      "activePermissionProfile": null
+    },
+    "threadEphemeral": true,
+    "nativeThreadAlias": "thread-1"
+  },
+  "observed": [
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-1",
+      "turn": "turn-1",
+      "text": [
+        "This is a harmless protocol experiment. Run exactly python3 -c 'import time; time.sleep(20); print(\"PROBE_DONE\")' using the shell tool, with no file changes or network operations. After that reply DONE. Do not use any other tools."
+      ],
+      "clientUserMessageId": null
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-1",
+      "turn": "turn-1",
+      "text": [
+        "This is a harmless protocol experiment. Run exactly python3 -c 'import time; time.sleep(20); print(\"PROBE_DONE\")' using the shell tool, with no file changes or network operations. After that reply DONE. Do not use any other tools."
+      ],
+      "clientUserMessageId": null
+    },
+    {
+      "event": "item/started",
+      "type": "agentMessage",
+      "item": "item-2",
+      "turn": "turn-1",
+      "text": ""
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 8
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 8
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 9
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 2
+    },
+    {
+      "event": "item/completed",
+      "type": "agentMessage",
+      "item": "item-2",
+      "turn": "turn-1",
+      "text": "I\u2019ll run the command exactly as provided.\n"
+    },
+    {
+      "event": "item/started",
+      "type": "commandExecution",
+      "item": "item-3",
+      "turn": "turn-1",
+      "status": "inProgress",
+      "exitCode": null
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-4",
+      "turn": "turn-2",
+      "text": [
+        "Reply exactly REDIRECT_OK. Do not run any tools."
+      ],
+      "clientUserMessageId": null
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-4",
+      "turn": "turn-2",
+      "text": [
+        "Reply exactly REDIRECT_OK. Do not run any tools."
+      ],
+      "clientUserMessageId": null
+    },
+    {
+      "event": "item/started",
+      "type": "agentMessage",
+      "item": "item-5",
+      "turn": "turn-2",
+      "text": ""
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-5",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-5",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-5",
+      "bytes": 3
+    },
+    {
+      "event": "item/completed",
+      "type": "agentMessage",
+      "item": "item-5",
+      "turn": "turn-2",
+      "text": "REDIRECT_OK"
+    }
+  ],
+  "environmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "PATH",
+    "PYTHONDONTWRITEBYTECODE",
+    "TERM",
+    "XDG_RUNTIME_DIR"
+  ]
+}

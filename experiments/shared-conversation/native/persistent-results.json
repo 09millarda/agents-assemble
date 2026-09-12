@@ -1,0 +1,960 @@
+{
+  "version": "codex-cli 0.153.4",
+  "cases": [
+    {
+      "name": "alice",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "bob",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "duplicate exact",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "duplicate changed",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "start while active",
+      "result": {
+        "accepted": true,
+        "turn": "turn-1"
+      }
+    },
+    {
+      "name": "completed duplicate readback",
+      "result": {
+        "turns": [
+          {
+            "turn": "turn-1",
+            "status": "completed",
+            "items": [
+              {
+                "type": "userMessage",
+                "item": "item-1",
+                "text": [
+                  "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+                ],
+                "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+              },
+              {
+                "type": "agentMessage",
+                "item": "item-2"
+              },
+              {
+                "type": "commandExecution",
+                "item": "item-3"
+              },
+              {
+                "type": "userMessage",
+                "item": "item-4",
+                "text": [
+                  "Sender Alice token ALPHA."
+                ],
+                "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+              },
+              {
+                "type": "userMessage",
+                "item": "item-5",
+                "text": [
+                  "Sender Bob token BETA."
+                ],
+                "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+              },
+              {
+                "type": "userMessage",
+                "item": "item-6",
+                "text": [
+                  "Sender Alice token ALPHA."
+                ],
+                "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+              },
+              {
+                "type": "userMessage",
+                "item": "item-7",
+                "text": [
+                  "Sender Alice token CHANGED."
+                ],
+                "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+              },
+              {
+                "type": "userMessage",
+                "item": "item-8",
+                "text": [
+                  "Sender Carol token START_ACTIVE."
+                ],
+                "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+              },
+              {
+                "type": "agentMessage",
+                "item": "item-9"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "old steer while successor active",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "expected active turn id `native-id-2` but found `native-id-3`"
+        }
+      }
+    },
+    {
+      "name": "old interrupt while successor active",
+      "result": {
+        "error": {
+          "code": -32600,
+          "message": "expected active turn id native-id-2 but found native-id-3"
+        }
+      }
+    },
+    {
+      "name": "exact successor interrupt",
+      "result": {
+        "accepted": true
+      }
+    }
+  ],
+  "settings": {
+    "model": "gpt-6-astra",
+    "reasoningEffort": "high",
+    "approvalPolicy": "never",
+    "sandbox": {
+      "type": "readOnly",
+      "networkAccess": false
+    }
+  },
+  "clientIds": {
+    "initial": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470",
+    "duplicate": "d7eab127-c3e3-49d9-b1a6-c473a23a471d",
+    "bob": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1",
+    "startWhileActive": "ebb4a448-fb59-439d-ae6d-abc837facace"
+  },
+  "beforeRestart": {
+    "turns": [
+      {
+        "turn": "turn-1",
+        "status": "completed",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-1",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-2"
+          },
+          {
+            "type": "commandExecution",
+            "item": "item-3"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-4",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-5",
+            "text": [
+              "Sender Bob token BETA."
+            ],
+            "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-6",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-7",
+            "text": [
+              "Sender Alice token CHANGED."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-8",
+            "text": [
+              "Sender Carol token START_ACTIVE."
+            ],
+            "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-9"
+          }
+        ]
+      },
+      {
+        "turn": "turn-2",
+        "status": "interrupted",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-10",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "f0a2f13a-8eff-4d97-816f-c4b976a8acb3"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-11"
+          }
+        ]
+      }
+    ]
+  },
+  "observed": [
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-1",
+      "turn": "turn-1",
+      "text": [
+        "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+      ],
+      "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-1",
+      "turn": "turn-1",
+      "text": [
+        "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+      ],
+      "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+    },
+    {
+      "event": "item/started",
+      "type": "agentMessage",
+      "item": "item-2",
+      "turn": "turn-1",
+      "text": ""
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 8
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 12
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 10
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 9
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 9
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-2",
+      "bytes": 2
+    },
+    {
+      "event": "item/completed",
+      "type": "agentMessage",
+      "item": "item-2",
+      "turn": "turn-1",
+      "text": "I\u2019ll run the command once, then acknowledge any synthetic messages received.\n"
+    },
+    {
+      "event": "item/started",
+      "type": "commandExecution",
+      "item": "item-3",
+      "turn": "turn-1",
+      "status": "inProgress",
+      "exitCode": null
+    },
+    {
+      "event": "item/commandExecution/outputDelta",
+      "item": "item-3",
+      "bytes": 10
+    },
+    {
+      "event": "item/completed",
+      "type": "commandExecution",
+      "item": "item-3",
+      "turn": "turn-1",
+      "status": "completed",
+      "exitCode": 0
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-4",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token ALPHA."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-4",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token ALPHA."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-5",
+      "turn": "turn-1",
+      "text": [
+        "Sender Bob token BETA."
+      ],
+      "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-5",
+      "turn": "turn-1",
+      "text": [
+        "Sender Bob token BETA."
+      ],
+      "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-6",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token ALPHA."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-6",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token ALPHA."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-7",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token CHANGED."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-7",
+      "turn": "turn-1",
+      "text": [
+        "Sender Alice token CHANGED."
+      ],
+      "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-8",
+      "turn": "turn-1",
+      "text": [
+        "Sender Carol token START_ACTIVE."
+      ],
+      "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-8",
+      "turn": "turn-1",
+      "text": [
+        "Sender Carol token START_ACTIVE."
+      ],
+      "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+    },
+    {
+      "event": "item/started",
+      "type": "agentMessage",
+      "item": "item-9",
+      "turn": "turn-1",
+      "text": ""
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 2
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 9
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 2
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 6
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 2
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 6
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 6
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 6
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 6
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-9",
+      "bytes": 7
+    },
+    {
+      "event": "item/completed",
+      "type": "agentMessage",
+      "item": "item-9",
+      "turn": "turn-1",
+      "text": "HOLD_DONE\n\nAcknowledged:\n- Alice: ALPHA\n- Bob: BETA\n- Alice: ALPHA\n- Alice: CHANGED\n- Carol: START_ACTIVE"
+    },
+    {
+      "event": "item/started",
+      "type": "userMessage",
+      "item": "item-10",
+      "turn": "turn-2",
+      "text": [
+        "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+      ],
+      "clientId": "f0a2f13a-8eff-4d97-816f-c4b976a8acb3"
+    },
+    {
+      "event": "item/completed",
+      "type": "userMessage",
+      "item": "item-10",
+      "turn": "turn-2",
+      "text": [
+        "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+      ],
+      "clientId": "f0a2f13a-8eff-4d97-816f-c4b976a8acb3"
+    },
+    {
+      "event": "item/started",
+      "type": "agentMessage",
+      "item": "item-11",
+      "turn": "turn-2",
+      "text": ""
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 3
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 4
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 8
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 1
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 12
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 5
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 10
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 8
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 9
+    },
+    {
+      "event": "item/agentMessage/delta",
+      "item": "item-11",
+      "bytes": 2
+    },
+    {
+      "event": "item/completed",
+      "type": "agentMessage",
+      "item": "item-11",
+      "turn": "turn-2",
+      "text": "I\u2019ll run the command once, then acknowledge each synthetic message received.\n"
+    },
+    {
+      "event": "item/started",
+      "type": "commandExecution",
+      "item": "item-12",
+      "turn": "turn-2",
+      "status": "inProgress",
+      "exitCode": null
+    }
+  ],
+  "afterRestart": {
+    "turns": [
+      {
+        "turn": "turn-1",
+        "status": "completed",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-1",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-2"
+          },
+          {
+            "type": "commandExecution",
+            "item": "item-3"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-4",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-5",
+            "text": [
+              "Sender Bob token BETA."
+            ],
+            "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-6",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-7",
+            "text": [
+              "Sender Alice token CHANGED."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-8",
+            "text": [
+              "Sender Carol token START_ACTIVE."
+            ],
+            "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-9"
+          }
+        ]
+      },
+      {
+        "turn": "turn-2",
+        "status": "interrupted",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-10",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "f0a2f13a-8eff-4d97-816f-c4b976a8acb3"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-11"
+          },
+          {
+            "type": "commandExecution",
+            "item": "item-12"
+          }
+        ]
+      }
+    ]
+  },
+  "resume": {
+    "turns": [
+      {
+        "turn": "turn-1",
+        "status": "completed",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-1",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "b80d0610-2aba-40e3-95e9-6b0f1a3ac470"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-2"
+          },
+          {
+            "type": "commandExecution",
+            "item": "item-3"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-4",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-5",
+            "text": [
+              "Sender Bob token BETA."
+            ],
+            "clientId": "a22f26e7-e81a-4b60-a327-bc6ebe7fcec1"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-6",
+            "text": [
+              "Sender Alice token ALPHA."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-7",
+            "text": [
+              "Sender Alice token CHANGED."
+            ],
+            "clientId": "d7eab127-c3e3-49d9-b1a6-c473a23a471d"
+          },
+          {
+            "type": "userMessage",
+            "item": "item-8",
+            "text": [
+              "Sender Carol token START_ACTIVE."
+            ],
+            "clientId": "ebb4a448-fb59-439d-ae6d-abc837facace"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-9"
+          }
+        ]
+      },
+      {
+        "turn": "turn-2",
+        "status": "interrupted",
+        "items": [
+          {
+            "type": "userMessage",
+            "item": "item-10",
+            "text": [
+              "Run exactly python3 -c 'import time; time.sleep(12); print(\"HOLD_DONE\")' once. No file changes or network operations. Afterwards acknowledge each synthetic user message you have received with its token. Use no other tools."
+            ],
+            "clientId": "f0a2f13a-8eff-4d97-816f-c4b976a8acb3"
+          },
+          {
+            "type": "agentMessage",
+            "item": "item-11"
+          },
+          {
+            "type": "commandExecution",
+            "item": "item-12"
+          }
+        ]
+      }
+    ]
+  },
+  "archive": {
+    "accepted": true
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "kind": "independent repaired-fixture checks; native effects modeled",
+  "sourceHash": "0e7d61ccb3421633b55a2f0a02650f637d192a5deaf64ed102666fbefa8253c0",
+  "scenarios": 10,
+  "checks": 36,
+  "failed": 0,
+  "results": [
+    {
+      "name": "inflight retry and consumed native permit",
+      "checks": [
+        {
+          "actual": "dispatch-ready",
+          "expected": "dispatch-ready",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "inflight",
+          "expected": "inflight",
+          "pass": true
+        },
+        {
+          "actual": "no-dispatch-claim",
+          "expected": "no-dispatch-claim",
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "concurrent dispatch grants one native permit",
+      "checks": [
+        {
+          "actual": [
+            "accepted",
+            "inflight"
+          ],
+          "expected": [
+            "accepted",
+            "inflight"
+          ],
+          "pass": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "recovery consumes undispatched permit conservatively",
+      "checks": [
+        {
+          "actual": "no-dispatch-claim",
+          "expected": "no-dispatch-claim",
+          "pass": true
+        },
+        {
+          "actual": "unknown",
+          "expected": "unknown",
+          "pass": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "missing daemon stop still closes continuation",
+      "checks": [
+        {
+          "actual": "interrupt-barrier",
+          "expected": "interrupt-barrier",
+          "pass": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "interrupt acceptance cannot reopen continuation",
+      "checks": [
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": "interrupt-barrier",
+          "expected": "interrupt-barrier",
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "reserved stop capacity at full instruction queue",
+      "checks": [
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "queue-full",
+          "expected": "queue-full",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "numeric replay bounded retention and stop after overflow",
+      "checks": [
+        {
+          "actual": [
+            8,
+            9,
+            10
+          ],
+          "expected": [
+            8,
+            9,
+            10
+          ],
+          "pass": true
+        },
+        {
+          "actual": [
+            8,
+            9,
+            10
+          ],
+          "expected": [
+            8,
+            9,
+            10
+          ],
+          "pass": true
+        },
+        {
+          "actual": 3,
+          "expected": 3,
+          "pass": true
+        },
+        {
+          "actual": "expired",
+          "expected": "expired",
+          "pass": true
+        },
+        {
+          "actual": "snapshot-required",
+          "expected": "snapshot-required",
+          "pass": true
+        },
+        {
+          "actual": "queued",
+          "expected": "queued",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "late receipt remains historical after successor",
+      "checks": [
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        },
+        {
+          "actual": {
+            "attempt": "B",
+            "generation": 2,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "expected": {
+            "attempt": "B",
+            "generation": 2,
+            "journal": "journal-A",
+            "org": "org-A",
+            "run": "run-A",
+            "thread": "thread-A",
+            "turn": "turn-A"
+          },
+          "pass": true
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "captured earlier receipt cannot regress terminal projection",
+      "checks": [
+        {
+          "actual": "stale-or-conflicting-receipt",
+          "expected": "stale-or-conflicting-receipt",
+          "pass": true
+        },
+        {
+          "actual": "accepted",
+          "expected": "accepted",
+          "pass": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "explicit fixture authority cutoff is before native write",
+      "checks": [
+        {
+          "actual": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ],
+      "error": null
+    }
+  ]
+}
