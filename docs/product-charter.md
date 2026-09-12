@@ -22,7 +22,7 @@ The hosted business sells operation of the engine on a per-seat basis. A person 
 | Human collaboration | Briefs, questions, editable Markdown, review, approval, and collaborative work on the same run. |
 | Integration | Work tracking such as Linear, Jira, Asana, and GitHub; conversation/notification channels such as Slack, Teams, and WhatsApp. These are adapters, not separate engines. |
 | Context | Durable product specifications, discoveries, decisions, and run progress stored in Agents Assemble. Product specifications are Markdown editable by humans and live outside the target codebase. |
-| Git | Projects require a repository with an upstream. Use worktrees; support resumption on another eligible daemon using pushed code and persisted context. |
+| Git | Projects register repositories with upstreams. ADR 0014 selects multiple registrations per project with one writable repository per run as an explicit agent-selected first-release default, amendable by owner steering. Use worktrees; support resumption on another eligible daemon using pushed code and persisted context. |
 | Environments | Reproducible setup, centrally maintained environment configuration, and secret changes without manually configuring every machine. |
 | Architecture | DDD, hexagonal modules, narrow ports, strategy selection at explicit variation points, event-driven collaboration. |
 | Reliability | Outbox/inbox, idempotency, ordering with a defined scope, retries, explicit recovery, and orchestrated sagas when multiple contexts participate. |

@@ -14,9 +14,30 @@ TypeScript domain and application modules depend on domain-owned ports. Hono HTT
 
 ## Candidate bounded contexts
 
+### Project scope terms (#18)
+
+- **Project**: an organization-owned coordination scope with a stable identity,
+  lifecycle and policy history. It can contain several repository registrations.
+- **Repository registration**: a project-local identity for a verified upstream
+  repository, with historical binding revisions. It is distinct from its URL,
+  provider connection and local workspace.
+- **Scope permit**: finite permission for one reserved run and exact project/
+  repository/policy scope. It does not itself authorize execution or publication.
+- **Run scope**: the immutable set of project, repository, input, policy and
+  authority references accepted for a run. One writable repository per run is
+  the agent-selected first-release default, amendable by owner steering.
+- **Archive** closes new scope permission while preserving admitted work and
+  history. **Suspend** also requests independent holds on affected execution;
+  neither means that previously issued work has physically stopped.
+
+The [project scope contract](docs/architecture/0014-project-scope-and-run-admission.md)
+selects the Projects ownership boundary below. Its failure walkthroughs are
+documentary requirements, with runtime behavior still to qualify.
+
 | Context | Owns | Representative collaborations |
 | --- | --- | --- |
 | Organization and Access | Organizations, membership, role/policy decisions, external identity links | Authenticates principals through replaceable identity adapters; grants organization-scoped access to other contexts. |
+| Projects | Project identity/lifecycle, repository registrations and project policy revisions, finite scope permits | Supplies exact project/repository scope permission to Execution; keeps provider connections, artifact ownership and invocation grants with their existing owners. |
 | Automation Catalog | Draft/published playbooks, action definitions, skill references, runtime profiles, version compatibility | Supplies immutable definition snapshots to Execution; imports/exports community packages. |
 | Execution | Runs, action attempts, authoritative assignments/leases and fencing generations, durable waits, scheduling decisions, execution history, orchestration sagas | Selects eligible runners from Fleet information; pins artifact references; coordinates human requests and integration effects. |
 | Runner Fleet and Workspaces | Device enrollment, capabilities, liveness observations, session metadata, worktree/checkpoint metadata | Prepares machines/workspaces, controls existing harnesses through runner adapters, reports work outcomes. |
@@ -27,7 +48,7 @@ TypeScript domain and application modules depend on domain-owned ports. Hono HTT
 | Community | Public releases, discovery, ratings, comments, bookmarks, reports, moderation, advisories and approved provenance | Publishes exact approved Catalog export candidates; Catalog imports a complete immutable local copy under ADR 0010. No private aggregate visibility toggle or execution authority is implied. |
 | Billing | Customer/subscription state, seats, entitlement projections | Consumes organization facts, adapts Stripe events, exposes hosted entitlements without making payment a self-hosted dependency. |
 
-Project identifiers may be shared references, but a project cannot become a shared mutable record owned by every context. Decide ownership of repository registration and project policy when these seams are formalized. The context split above may merge or refine after domain examples; it is not a ten-microservice commitment.
+Project identifiers may be shared references, but a project cannot become a shared mutable record owned by every context. ADR 0014 selects Projects for repository registration and project policy; Integrations retains connections and external mappings, and Execution owns admission and delivery lineage. The context split is an ownership model, not a commitment to one deployed service per context.
 
 Execution validates its authoritative assignment generation and lease in the same local transaction that accepts an execution transition. Fleet liveness is scheduling input, not an authoritative fence. Commands to other contexts carry scoped assignment grants and are reauthorized according to the effect protocol; no cross-context transaction or stale Fleet projection is used to prove exclusive execution ownership.
 
@@ -80,6 +101,13 @@ The deployment reference is a Hono API on Lambda/API Gateway through a repositor
 Decision #6's [conformance report](docs/research/playbook-conformance.md) retains the grammar and makes ordered source edit observations, canonical scope/publication receipts, independent recovery obligations and explicitly admitted successor budgets concrete. The mock model passes 25 authoring probes and 25 runtime scenarios; it does not prove context-local database/outbox transactions, durable timers, leases or real harness behavior. The separate [#7 fault experiment](docs/research/durable-execution-conformance.md) exercises reduced context transitions with real PostgreSQL, context roles, process death, concurrent commands and database restart. This supports ADR 0003's protocol; it is not full interpreter or adapter certification.
 
 The first release boundary is settled in #4. Before implementation tickets, validate the integrated definition/execution contract, apply the owner-selected #5 license/parity policy and settle the remaining graduated decision #15, and prove the complete harness-to-human-to-checkpoint-to-deployment journey. #8 supplies separate native-account/fresh-session and daemon fault evidence; it does not yet connect real native human waits, production Execution, authenticated transport and verified publication. Later decisions must include actual aggregate invariants, command/event schemas, compatibility policy, testable recovery guarantees, and examples of concurrent human/agent behavior. This document preserves the destination while those details remain open.
+
+The owner subsequently deferred #15's live AWS setup/validation and asked to
+continue architecture planning. Keep that evidence gap explicit while independent
+specification work proceeds; no further AWS sign-in is requested. ADR 0014/#18
+settles project scope and admission ownership through documentary review. It does
+not establish integrated runtime conformance or remove deployment qualification
+from the release requirements.
 
 ## Shared native conversation
 

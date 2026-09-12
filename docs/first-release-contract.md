@@ -83,6 +83,14 @@ The following bounded decisions were graduated from #4 as native sub-issues of m
 
 Installer qualification, full interpreter integration, detailed service schemas and Agents Assemble's own AWS/serverless hosting design remain in the map's broader unresolved work. Their exact tickets should follow the relevant adapter and collaboration decisions, not preselect infrastructure here.
 
+After the owner deferred live AWS setup/validation and requested continued
+planning, [#18](https://github.com/09millarda/agents-assemble/issues/18) settled
+[project scope and run admission](architecture/0014-project-scope-and-run-admission.md)
+independently of #15. Projects owns registration/policy; Execution owns frozen
+admission. Multiple repositories per project with one writable repository per
+run is the explicit agent-selected planning default, amendable by owner steering.
+The documentary review does not certify the integrated release journey.
+
 ## Decision record
 
 - The owner explicitly accepted the complete contract with “yes, this is good” after reviewing the final consensus, including the selected serverless fixture, qualification targets and deferrals. This session resolves only #4.
