@@ -1,8 +1,8 @@
 # ADR 0008: semantic graph collaboration and authoring round trips
 
-Date: 2026-09-12  
-Status: **Select stable entities with ordered child placements for the bounded Yjs profile. Full field preservation demonstrated; production editor and semantic validator not certified.**  
-Decision: [#16](https://github.com/09millarda/agents-assemble/issues/16) · Map: [#1](https://github.com/09millarda/agents-assemble/issues/1)  
+Date: 2026-09-12
+Status: **Select stable entities with ordered child placements for the bounded Yjs profile. Full field preservation demonstrated; production editor and semantic validator not certified.**
+Decision: [#16](https://github.com/09millarda/agents-assemble/issues/16) · Map: [#1](https://github.com/09millarda/agents-assemble/issues/1)
 Depends on: [ADR 0002](0002-playbook-and-action-contract.md), [ADR 0007](0007-collaborative-drafts-and-revision-submission.md)
 
 ## Decision
