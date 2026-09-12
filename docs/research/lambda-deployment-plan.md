@@ -25,6 +25,15 @@ Its recorded `conformance_passed` is false. Source SHA-256:
 `a44c220b3ed9433c15d57f4fad0730a9208c2fd54cf95924de5979fc48c3100c`.
 Only prerequisite observations were recorded; no cloud resource was created.
 
+## Local sign-in setup
+
+The owner selected the profile name `agents-assemble`. AWS CLI `2.36.44` was
+installed under the local user after the official installer verified its GPG
+signature. The profile has region `eu-west-1` and JSON output. Browser sign-in
+was initiated; account identity and permissions remain unverified until login
+completes. This supersedes only the initial CLI/profile absence observation,
+not the archived preflight or unexercised deployment cases.
+
 ## Required environment and bounded resource proposal
 
 The owner selected AWS Europe (Ireland), `eu-west-1`, and the current repository,
