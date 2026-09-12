@@ -1,6 +1,8 @@
 # Protected observer: separation and restart sources
 
-Research for [decision #11](https://github.com/09millarda/agents-assemble/issues/11), 2026-09-12. This is a candidate comparison, not a feasibility verdict or native conformance result. Session context reports Linux `7.0.0-31`, systemd `259.5`, UID `1000`, and interactive authentication required by `sudo -n true`. No elevated experiment has run. Lack of elevation is an execution prerequisite, not evidence against either profile. Sources pin systemd to `v259.5` and kernel implementation to upstream `v7.0`; distribution patches still require runtime validation.
+Research for [decision #11](https://github.com/09millarda/agents-assemble/issues/11), 2026-09-12. This is the pre-experiment candidate comparison, not a native conformance report. Initial session context reported Linux `7.0.0-31`, systemd `259.5`, UID `1000`, and interactive authentication required by `sudo -n true`. At that checkpoint no elevated experiment had run. Lack of elevation is an execution prerequisite, not evidence against either profile. Sources pin systemd to `v259.5` and kernel implementation to upstream `v7.0`; distribution patches still require runtime validation.
+
+The owner later authorized this host and authenticated. [ADR 0013](../architecture/0013-protected-observer-and-retained-scope-recovery.md) and the [native report](protected-observer-conformance.md) now record the scoped keeper/reporter verdict. The comparison below preserves the pre-experiment recommendations; the final fixture used a surviving keeper with SCM_RIGHTS, not systemd FD-store recovery.
 
 ## Two candidate profiles
 
@@ -44,6 +46,6 @@ An open descriptor does **not** guarantee that its cgroup remains live. Kernel r
 
 Fail closed on missing descriptors, removal, recreation, journal inconsistency, reboot, or lost manager custody. Do not reopen by path and infer continuity. Durably bind grant, custody metadata and receipt; flush the file and directory when publishing a new journal entry because file `fsync()` alone does not persist its directory entry. [Linux `fsync(2)`](https://man7.org/linux/man-pages/man2/fsync.2.html#DESCRIPTION)
 
-## Remaining evidence
+## Evidence required at the research checkpoint
 
-Neither profile yet proves actual credential/journal/API denials, native account compatibility, original-object recovery, crash ordering, authenticated #10 delivery, or cleanup safety. Writer completeness additionally requires demonstrating that all write-capable helpers, siblings, IPC services and remote actors fall under the declared contract. Protecting the observer only authenticates its scoped statement. Until that separate coverage obligation is met, automatic takeover stays ineligible; remote-effect and checkpoint obligations remain.
+At the research checkpoint neither profile had proved actual credential/journal/API denials, native account compatibility, original-object recovery, crash ordering, authenticated #10 delivery, or cleanup safety. Writer completeness additionally requires demonstrating that all write-capable helpers, siblings, IPC services and remote actors fall under the declared contract. Protecting the observer only authenticates its scoped statement. Until that separate coverage obligation is met, automatic takeover stays ineligible; remote-effect and checkpoint obligations remain.

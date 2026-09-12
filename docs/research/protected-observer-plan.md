@@ -1,10 +1,12 @@
-# Protected observer: pending native experiment
+# Protected observer: original experiment plan
 
 Date: 2026-09-12 · Decision [#11](https://github.com/09millarda/agents-assemble/issues/11) · Map [#1](https://github.com/09millarda/agents-assemble/issues/1)
 
-## Current status
+## Initial prerequisite checkpoint (superseded)
 
-**Unresolved: the native experiment requires an administrative environment.**
+The owner subsequently selected this machine and authenticated. The bounded native experiment is complete; see [ADR 0013](../architecture/0013-protected-observer-and-retained-scope-recovery.md) and the [conformance report](protected-observer-conformance.md) for the conditional verdict, measured cases and remaining limits. The original plan below is retained as history.
+
+**At the initial checkpoint, the native experiment required an administrative environment.**
 This session claimed #11 before investigation. The read-only prerequisite probe
 found Linux `7.0.0-31-generic`, systemd `259.5-0ubuntu3.4`, cgroup v2 and an installed
 Codex executable. `sudo -n true` failed with `interactive authentication is required`.
@@ -74,7 +76,7 @@ protocol fixtures in the report. Record the known probe processes and clean up
 only those processes and their disposable resources after retaining evidence.
 Do not count cleanup success as a historical stop receipt.
 
-## Resume and completion
+## Original resume and completion criteria
 
 Rerun the archived read-only preflight when an environment is available. Then
 build the smallest native fixture on the separate prototype branch, use a
