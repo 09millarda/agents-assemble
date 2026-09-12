@@ -1,0 +1,82 @@
+{
+  "kind": "prerequisite_observations_only",
+  "recorded_at": "2026-09-12T20:49:02.816278+00:00",
+  "source_sha256": "621acf121ab41af98b22236093a313562da1104e3d6b1127355d676bbff28351",
+  "kernel": "7.0.0-31-generic",
+  "python": "3.14.4",
+  "uid": 1000,
+  "euid": 1000,
+  "gid": 1000,
+  "tools": {
+    "systemd-run": "/usr/bin/systemd-run",
+    "setpriv": "/usr/bin/setpriv",
+    "unshare": "/usr/bin/unshare",
+    "newuidmap": "/usr/bin/newuidmap",
+    "aa-exec": "/usr/bin/aa-exec",
+    "codex": "/home/amillard98/.local/bin/codex"
+  },
+  "cgroup_v2_present": true,
+  "checks": {
+    "sudo_noninteractive": {
+      "argv": [
+        "sudo",
+        "-n",
+        "true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "sudo: interactive authentication is required"
+    },
+    "systemd": {
+      "argv": [
+        "systemctl",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "systemd 259 (259.5-0ubuntu3.4)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE",
+      "stderr": ""
+    },
+    "user_manager": {
+      "argv": [
+        "systemctl",
+        "--user",
+        "show",
+        "--property=Version"
+      ],
+      "exit_code": 0,
+      "stdout": "Version=259.5-0ubuntu3.4",
+      "stderr": ""
+    },
+    "codex_version": {
+      "argv": [
+        "codex",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "codex-cli 0.153.4",
+      "stderr": ""
+    },
+    "openssl": {
+      "argv": [
+        "openssl",
+        "version"
+      ],
+      "exit_code": 0,
+      "stdout": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)",
+      "stderr": ""
+    }
+  },
+  "next_gate": "administrative_access_required",
+  "not_exercised": [
+    "separate_principal_denials",
+    "protected_observer_interface",
+    "native_login_compatibility",
+    "native_launch_stop",
+    "observer_restart",
+    "retained_scope_continuity",
+    "authenticated_receipt",
+    "complete_writer_coverage"
+  ],
+  "conformance_passed": false,
+  "automatic_takeover_eligible": false
+}
