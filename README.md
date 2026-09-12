@@ -9,6 +9,7 @@ Users install and authenticate Codex or Claude locally, then install the Agents 
 The [GitHub architecture map](https://github.com/09millarda/agents-assemble/issues/1) is the single canonical index of decisions and unresolved questions.
 
 - [Product charter](docs/product-charter.md): requirements, proposed terminology, and the two starting playbooks.
+- [First release contract](docs/first-release-contract.md): owner-approved pilot scope, collaboration/community features, Lambda delivery journey and release qualification targets from #4.
 - [Domain context](CONTEXT.md): candidate ownership boundaries and architectural constraints.
 - [Control plane and runner boundary](docs/architecture/0001-control-plane-and-runners.md): the first decision and its limits.
 - [Playbook and action contract](docs/architecture/0002-playbook-and-action-contract.md): versioned definitions, structured execution, approval and recovery semantics; [illustrative definitions](docs/examples/playbook-contract.md).
