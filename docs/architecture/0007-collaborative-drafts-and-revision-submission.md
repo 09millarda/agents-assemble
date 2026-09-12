@@ -56,7 +56,7 @@ The visual editor continues to represent ADR 0002's structured grammar, not an u
 
 Allow representable incomplete drafts with visible diagnostics. Publication validates the full normalized definition and pinned closure: structured control flow, identity/reference scope, schemas/bindings, bounds, dependency/runtime requirements and unknown behavioral features. Dangling references, incompatible concurrent moves or unsupported fields block publication; do not silently repair them into different executable behavior. Rejection leaves the previous published version and every run manifest intact.
 
-The reduced experiment exercises shared node records/order, competing values, dangling/orphaned nodes, action type and unknown fixture fields. It does **not** validate the full grammar, nested shared-field representation, complex moves, editor commands or JSON/TypeScript round trips. The next sharp decision must prove those semantics before selecting the product graph binding.
+The reduced experiment exercises shared node records/order, competing values, dangling/orphaned nodes, action type and unknown fixture fields. It does **not** validate the full grammar, nested shared-field representation, complex moves, editor commands or JSON/TypeScript round trips. The subsequent [#16 decision / ADR 0008](0008-semantic-graph-collaboration.md) selects the bounded stable-entity/ordered-placement representation with actual nested round-trip and conflict evidence. It still does not certify the production editor binding or complete semantic validator.
 
 ## Execution observation, retain and adoption
 
