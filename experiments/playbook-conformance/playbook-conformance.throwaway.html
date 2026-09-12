@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playbook contract · decision experiment</title>
+<style>
+:root{color-scheme:light;--ink:#172b2a;--muted:#63716f;--line:#dce4df;--paper:#fff;--back:#f4f6f2;--accent:#216458;--wash:#e8f2ee;--shadow:0 5px 20px #17352b07}*{box-sizing:border-box}body{margin:0;background:var(--back);color:var(--ink);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,summary{font:inherit}button{cursor:pointer;border:1px solid #cbd9d2;border-radius:7px;background:#fff;color:var(--ink);padding:8px 12px;text-align:left}button:hover{background:var(--wash);border-color:var(--accent)}button:focus-visible,summary:focus-visible{outline:3px solid #21645866;outline-offset:3px}button.primary,button[aria-selected=true]{background:var(--accent);color:#fff;border-color:var(--accent)}button small{display:block;font-size:11px;font-weight:400;opacity:.78}.wrap{max-width:1380px;margin:0 auto;padding:35px 34px 60px}.eyebrow{display:flex;align-items:center;gap:9px;text-transform:uppercase;font-size:11px;font-weight:750;letter-spacing:.13em;color:var(--accent)}.dot{width:8px;height:8px;background:var(--accent);border-radius:50%}h1{font-size:34px;line-height:1.16;letter-spacing:-1.1px;margin:14px 0 14px;font-weight:650}h2{font-size:18px;line-height:1.35;letter-spacing:-.3px;margin:0}h3{font-size:14px;margin:0 0 10px}.intro{font-size:16px;max-width:970px;margin:0;color:#4a5f59}.boundary{margin:13px 0 25px;font-size:12px;color:var(--muted)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:21px 23px}.panel+.panel{margin-top:17px}.row{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.note{color:var(--muted);font-size:12px;margin:5px 0 0}.state-heading{margin-bottom:16px}.badge{display:inline-flex;align-items:center;background:var(--wash);color:var(--accent);padding:4px 9px;font-size:12px;font-weight:650;border-radius:5px;white-space:nowrap}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.card{background:#f7f9f6;border:1px solid #e4eae5;border-radius:7px;padding:11px 12px;min-width:0}.card .label{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-bottom:3px}.card .value{display:block;font-weight:650;overflow-wrap:anywhere;font-size:16px}.split{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;margin-top:20px}.state-detail{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}.status-message{margin:14px 0 0;border-left:3px solid var(--accent);background:var(--wash);padding:10px 13px;overflow-wrap:anywhere;font-size:13px}.status-message.error{border-left-color:#785043;background:#f6efeb;color:#634539}.status-message:empty{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.action-group{border-left:1px solid var(--line);padding-left:9px;display:flex;flex-wrap:wrap;gap:8px}.action-group:first-child{padding-left:0;border:0}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0}.tabs button{font-size:12px}.guide-grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px}.steps{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto;padding:1px 7px 3px 1px}.step{display:flex;align-items:flex-start;gap:8px;font-size:12px}.step .number{font-size:10px;font-weight:700;border:1px solid currentColor;border-radius:4px;min-width:20px;text-align:center;padding:1px 3px}.checks{list-style:none;margin:10px 0 0;padding:0}.checks li{font-size:13px;padding:7px 0 7px 19px;position:relative;border-bottom:1px solid #edf0eb}.checks li:before{content:'•';position:absolute;left:3px;color:var(--accent);font-weight:800}.empty{color:var(--muted);font-size:13px;margin:9px 0}.payload{font-size:12px}.payload details{margin:4px 0}.payload summary{cursor:pointer;overflow-wrap:anywhere;padding:3px 0;color:#354e45}.payload summary strong{font-weight:650}.payload .tree{border-left:1px solid var(--line);margin:3px 0 6px 5px;padding-left:13px}.field{display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:12px;padding:4px 0;line-height:1.5}.field dt{color:var(--muted);overflow-wrap:anywhere}.field dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}.field .nil{color:#78847e;font-style:italic}.payload dl{margin:0}.section-toggle{border-top:1px solid var(--line);padding:11px 0 0;margin:12px 0 0}.section-toggle>summary{cursor:pointer;font-weight:650;font-size:13px;padding:3px 0}.code{background:#f7f9f6;border:1px solid var(--line);border-radius:6px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:440px;overflow:auto;padding:14px;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;margin-bottom:0}.occurrence{border:1px solid var(--line);border-radius:7px;margin:7px 0;padding:8px 11px}.occurrence>summary{display:flex;gap:8px;align-items:center;justify-content:space-between;cursor:pointer;font-size:12px;list-style:none}.occurrence>summary::before{content:'+';color:var(--muted)}.occurrence[open]>summary::before{content:'−'}.occurrence .name{flex:1;overflow-wrap:anywhere;font-weight:600}.small-badge{border:1px solid var(--line);border-radius:4px;font-size:10px;padding:1px 6px;font-weight:500;white-space:nowrap;color:#4d6559}#records{max-height:340px;overflow:auto;padding-right:3px}.events{max-height:220px;overflow:auto;margin-top:10px}.event{font-size:12px;padding:7px 0;border-bottom:1px solid #edf0eb}.event summary{cursor:pointer;overflow-wrap:anywhere}.event-label{color:var(--muted);font-size:10px;margin-right:6px}.draft{width:100%;min-height:300px;resize:vertical;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:7px;background:#f7f9f6;color:var(--ink);tab-size:2;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.footer{font-size:11px;color:var(--muted);margin:20px 3px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:950px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.split{grid-template-columns:1fr}.guide-grid{grid-template-columns:230px minmax(0,1fr)}}@media(max-width:650px){.wrap{padding:23px 14px 35px}h1{font-size:28px}.panel{padding:17px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-grid{grid-template-columns:1fr}.steps{max-height:220px}.field{grid-template-columns:minmax(90px,120px) minmax(0,1fr)}.action-group{border:0;padding:0}.tabs{max-height:240px;overflow:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+<div class="eyebrow"><span class="dot"></span>Agents Assemble · Wayfinder decision 06</div>
+<h1>Can the playbook contract survive interruptions?</h1>
+<p class="intro">Explore whether the proposed playbook model preserves its meaning through authoring round trips, restarts, human replies, specification edits, bounded work and uncertain publication. The decision is whether to retain or revise the contract before building the engine.</p>
+<p class="boundary">Disposable logic experiment · In-memory mock adapters · No accounts, repositories or pull requests are changed · A restart copies the saved model; it does not prove database or process durability.</p>
+</header>
+<section class="panel" aria-labelledby="state-title">
+<div class="row state-heading"><div><h2 id="state-title">Current state</h2><p class="note" id="view-context">Free play · New feature</p></div><span class="badge" id="run-status">Starting</span></div>
+<div class="cards" id="summary-cards"></div>
+<div id="message" class="status-message" role="status" aria-live="polite"></div>
+<div class="split"><div><h3>Work occurrences</h3><p class="note">Open a row for its accepted inputs, attempts and result.</p><div id="records"></div></div><div><h3>Human requests & publication effects</h3><div id="requests"></div><div id="effects"></div><h3 style="margin-top:20px">Transition history</h3><p class="note">Newest first. Open an event for its complete payload.</p><div class="events" id="events"></div></div></div>
+<details class="section-toggle"><summary>Run, revisions & inputs</summary><div id="run-fields" class="payload"></div></details>
+<details class="section-toggle"><summary>Pinned playbook definition</summary><div id="definition" class="payload"></div></details>
+<details class="section-toggle"><summary>Mock external world</summary><div id="world" class="payload"></div></details>
+<details class="section-toggle"><summary>Command receipts</summary><div id="commands" class="payload"></div></details>
+<details class="section-toggle"><summary>Complete snapshot as JSON</summary><pre class="code" id="json"></pre></details>
+</section>
+<section class="panel" aria-labelledby="play-title">
+<div class="row"><div><h2 id="play-title">Free play</h2><p class="note">Each action continues the snapshot displayed above. Actions stay available so you can explore rejected transitions.</p></div><button id="reset">Start a new feature run</button></div>
+<div class="actions">
+<div class="action-group"><button class="primary" data-action="step">Advance one tick</button><button data-action="restart">Simulate restart</button><button data-action="approve">Approve waiting request</button></div>
+<div class="action-group"><button data-action="save">Save spec revision 2</button><button data-action="observe">Observe revision 2</button><button data-action="retain">Keep the pinned revision</button></div>
+<div class="action-group"><button data-action="reconcile">Reconcile publication</button><button data-action="recover">Recover stopped workspace</button><button data-action="cancel">Request cancellation</button><button data-action="quiesce">Quiesce work</button></div>
+</div>
+<p class="note" style="margin-top:12px">A saved document and an observed edit are separate events. Keeping the pinned revision resumes the existing proposal; reconciliation looks for the mock provider's recorded receipt.</p>
+</section>
+<section class="panel" aria-labelledby="draft-title">
+<details><summary id="draft-title" style="cursor:pointer;font-weight:650">Edit a structured playbook draft</summary>
+<p class="note">This structured document fallback is not a graphical designer. Validation preserves your exact draft text when rejected. Starting from the draft admits a new run; it never edits the currently admitted run.</p>
+<label for="playbook-draft" class="sr-only">Playbook JSON draft</label>
+<textarea id="playbook-draft" class="draft" spellcheck="false" aria-describedby="draft-help"></textarea>
+<p class="note" id="draft-help">The mock input examples support the new-feature and bug-fix package identifiers. Other packages report unsupported_demo_inputs.</p>
+<div class="actions"><button id="normalize-draft">Normalize & validate draft</button><button id="start-draft">Start new run from draft</button></div>
+<div id="draft-message" class="status-message" role="status" aria-live="polite"></div>
+</details>
+</section>
+<section class="panel" aria-labelledby="guide-title">
+<div class="row"><div><h2 id="guide-title">Guided experiments</h2><p class="note">Choose a scenario, then inspect each recorded transition. Free play can continue from any displayed snapshot.</p></div><span class="badge" id="suite-result">Loading scenarios</span></div>
+<div class="tabs" id="scenario-tabs" role="tablist" aria-label="Conformance scenarios"></div>
+<div class="guide-grid"><div class="steps" id="trace-steps" aria-label="Scenario transitions"></div><div id="scenario-detail" role="tabpanel" aria-label="Selected scenario"></div></div>
+</section>
+<p class="footer">This file is a shareable decision record, not application code. All state resets when the page reloads. The complete model is visible, including frozen definitions and mock provider receipts.</p>
+</main>
+<script>
+(function () {
+"use strict";
+const fixtures = {"definitions":{"feature":{"formatVersion":"agents-assemble.playbook/1","package":{"id":"example/new-feature","version":"0.1.0"},"inputs":{"type":"object","properties":{"brief":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"suppliedSpec":{"type":["object","null"],"properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"deliveryKey":{"type":"string","minLength":1,"maxLength":2048}},"required":["brief","checkpoint","suppliedSpec","deliveryKey"],"additionalProperties":false},"outputs":{"type":"object","properties":{"outcome":{"type":"string","enum":["published","rejected"]},"pullRequest":{"type":["object","null"],"properties":{"url":{"type":"string","minLength":1,"maxLength":2048}},"required":["url"],"additionalProperties":false}},"required":["outcome","pullRequest"],"additionalProperties":false},"dependencies":{"actions":{"discover":{"id":"example/discover","version":"0.1.0","digest":"sha256:6187f8f4300a9e0cc8ceaf6be2a014578044e19ac1eff17631f59ad6031c894d"},"specify":{"id":"example/specify","version":"0.1.0","digest":"sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"},"approveSpec":{"id":"example/approveSpec","version":"0.1.0","digest":"sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"},"prepare":{"id":"example/prepare","version":"0.1.0","digest":"sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"},"implement":{"id":"example/implement","version":"0.1.0","digest":"sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"},"check":{"id":"example/check","version":"0.1.0","digest":"sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"},"review":{"id":"example/review","version":"0.1.0","digest":"sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"},"approvePublish":{"id":"example/approvePublish","version":"0.1.0","digest":"sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"},"publishPR":{"id":"example/publishPR","version":"0.1.0","digest":"sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"}}},"runtimeSlots":{"researcher":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"author":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"implementer":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"reviewer":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery"]}},"permissions":["repository.read","workspace.write","artifact.read","artifact.write","pull_request.upsert"],"policy":{"referencedSpecChange":"pause_and_replan","retries":"adapter_certified_only","expressionVersion":"pure-json/1","maxExpressionDepth":16,"maxExpressionNodes":256,"totalWorkBudget":100,"totalConcurrency":3,"humanDeadlineMs":86400000},"body":{"id":"feature","type":"sequence","children":[{"id":"discovery","type":"call","action":"discover","runtime":"researcher","with":{"object":{"brief":{"ref":{"source":"input","pointer":"/brief"}},"checkpoint":{"ref":{"source":"input","pointer":"/checkpoint"}}}}},{"id":"specification","type":"call","action":"specify","runtime":"author","with":{"object":{"brief":{"ref":{"source":"input","pointer":"/brief"}},"findings":{"ref":{"source":"discovery","pointer":"/findings"}},"suppliedSpec":{"ref":{"source":"input","pointer":"/suppliedSpec"}}}}},{"id":"scopeApproval","type":"call","action":"approveSpec","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}}}}},{"id":"scopeDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"scopeApproval","pointer":"/approved"}},{"literal":false}]},"then":{"id":"rejectedScope","type":"end","result":{"object":{"outcome":{"literal":"rejected"},"pullRequest":{"literal":null}}}}}],"otherwise":{"id":"approvedScope","type":"sequence","children":[]}},{"id":"workspace","type":"call","action":"prepare","with":{"object":{"checkpoint":{"ref":{"source":"input","pointer":"/checkpoint"}}}}},{"id":"delivery","type":"repeat","maxIterations":3,"initial":{"object":{"checkpoint":{"ref":{"source":"workspace","pointer":"/checkpoint"}},"feedback":{"array":[]}}},"body":{"id":"repairRound","type":"sequence","children":[{"id":"implementation","type":"call","action":"implement","runtime":"implementer","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"specApproval":{"ref":{"source":"scopeApproval","pointer":""}},"checkpoint":{"ref":{"source":"carry","pointer":"/checkpoint"}},"feedback":{"ref":{"source":"carry","pointer":"/feedback"}}}}},{"id":"verification","type":"parallel","join":"all","maxConcurrency":2,"branches":[{"id":"checks","type":"call","action":"check","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}}}}},{"id":"review","type":"call","action":"review","runtime":"reviewer","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}}}}}],"output":{"object":{"checks":{"ref":{"source":"checks","pointer":""}},"review":{"ref":{"source":"review","pointer":""}}}}}],"output":{"object":{"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}},"verification":{"ref":{"source":"verification","pointer":""}}}}},"until":{"all":[{"eq":[{"ref":{"source":"body","pointer":"/verification/checks/passed"}},{"literal":true}]},{"eq":[{"ref":{"source":"body","pointer":"/verification/review/accepted"}},{"literal":true}]}]},"carry":{"object":{"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}},"feedback":{"array":[{"ref":{"source":"body","pointer":"/verification/checks/evidence"}},{"ref":{"source":"body","pointer":"/verification/review/findings"}}]}}},"output":{"object":{"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}},"checks":{"ref":{"source":"body","pointer":"/verification/checks"}},"review":{"ref":{"source":"body","pointer":"/verification/review"}}}}},{"id":"publicationApproval","type":"call","action":"approvePublish","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"delivery","pointer":"/checkpoint"}},"checks":{"ref":{"source":"delivery","pointer":"/checks"}},"review":{"ref":{"source":"delivery","pointer":"/review"}},"deliveryKey":{"ref":{"source":"input","pointer":"/deliveryKey"}}}}},{"id":"publicationDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"publicationApproval","pointer":"/approved"}},{"literal":false}]},"then":{"id":"rejectedPublication","type":"end","result":{"object":{"outcome":{"literal":"rejected"},"pullRequest":{"literal":null}}}}}],"otherwise":{"id":"approvedPublication","type":"sequence","children":[]}},{"id":"publication","type":"call","action":"publishPR","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"delivery","pointer":"/checkpoint"}},"deliveryKey":{"ref":{"source":"input","pointer":"/deliveryKey"}},"approval":{"ref":{"source":"publicationApproval","pointer":""}}}}},{"id":"complete","type":"end","result":{"object":{"outcome":{"literal":"published"},"pullRequest":{"ref":{"source":"publication","pointer":"/pullRequest"}}}}}]}},"bug":{"formatVersion":"agents-assemble.playbook/1","package":{"id":"example/bug-fix","version":"0.1.0"},"inputs":{"type":"object","properties":{"report":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"baselineCheckpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"suppliedSpec":{"type":["object","null"],"properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"priorFindings":{"type":["object","null"],"properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"deliveryKey":{"type":"string","minLength":1,"maxLength":2048}},"required":["report","checkpoint","baselineCheckpoint","suppliedSpec","priorFindings","deliveryKey"],"additionalProperties":false},"outputs":{"type":"object","properties":{"outcome":{"type":"string","enum":["published","rejected","unreproduced"]},"pullRequest":{"type":["object","null"],"properties":{"url":{"type":"string","minLength":1,"maxLength":2048}},"required":["url"],"additionalProperties":false}},"required":["outcome","pullRequest"],"additionalProperties":false},"dependencies":{"actions":{"investigate":{"id":"example/investigate","version":"0.1.0","digest":"sha256:7d8172de8e9c186f97f7ab25deda5cc9817a8eadd6320d8ecfd89f87e486ed42"},"reproduce":{"id":"example/reproduce","version":"0.1.0","digest":"sha256:1db368a051343f33d827975b24f105d1d9d3be9021a8acc1f8b3ae3e794dd85d"},"unreproduced":{"id":"example/unreproduced","version":"0.1.0","digest":"sha256:b485d42185468a22853a4dd5c311e2e41a758235a900b975f2c9079454b1fa14"},"specify":{"id":"example/specify","version":"0.1.0","digest":"sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"},"approveSpec":{"id":"example/approveSpec","version":"0.1.0","digest":"sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"},"prepare":{"id":"example/prepare","version":"0.1.0","digest":"sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"},"implement":{"id":"example/implement","version":"0.1.0","digest":"sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"},"check":{"id":"example/check","version":"0.1.0","digest":"sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"},"review":{"id":"example/review","version":"0.1.0","digest":"sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"},"approvePublish":{"id":"example/approvePublish","version":"0.1.0","digest":"sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"},"publishPR":{"id":"example/publishPR","version":"0.1.0","digest":"sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"}}},"runtimeSlots":{"researcher":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"author":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"implementer":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"]},"reviewer":{"requiredCapabilities":["native_account","typed_result","checkpoint_recovery"]}},"permissions":["repository.read","workspace.write","artifact.read","artifact.write","pull_request.upsert"],"policy":{"referencedSpecChange":"pause_and_replan","retries":"adapter_certified_only","expressionVersion":"pure-json/1","maxExpressionDepth":16,"maxExpressionNodes":256,"totalWorkBudget":100,"totalConcurrency":3,"humanDeadlineMs":86400000},"body":{"id":"bugFix","type":"sequence","children":[{"id":"investigation","type":"call","action":"investigate","runtime":"researcher","with":{"object":{"report":{"ref":{"source":"input","pointer":"/report"}},"checkpoint":{"ref":{"source":"input","pointer":"/checkpoint"}},"priorFindings":{"ref":{"source":"input","pointer":"/priorFindings"}}}}},{"id":"reproduction","type":"repeat","maxIterations":3,"initial":{"object":{"checkpoint":{"ref":{"source":"input","pointer":"/baselineCheckpoint"}},"evidence":{"ref":{"source":"investigation","pointer":"/findings"}}}},"body":{"id":"reproduceRound","type":"sequence","children":[{"id":"probe","type":"call","action":"reproduce","runtime":"researcher","with":{"object":{"report":{"ref":{"source":"input","pointer":"/report"}},"findings":{"ref":{"source":"investigation","pointer":"/findings"}},"checkpoint":{"ref":{"source":"carry","pointer":"/checkpoint"}},"previousEvidence":{"ref":{"source":"carry","pointer":"/evidence"}}}}},{"id":"reproductionDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"probe","pointer":"/reproduced"}},{"literal":true}]},"then":{"id":"reproduced","type":"sequence","children":[],"output":{"object":{"evidence":{"ref":{"source":"probe","pointer":"/evidence"}}}}}}],"otherwise":{"id":"needEvidence","type":"sequence","children":[{"id":"humanDecision","type":"call","action":"unreproduced","with":{"object":{"report":{"ref":{"source":"input","pointer":"/report"}},"evidence":{"ref":{"source":"probe","pointer":"/evidence"}}}}},{"id":"continueDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"humanDecision","pointer":"/decision"}},{"literal":"stop"}]},"then":{"id":"stopUnreproduced","type":"end","result":{"object":{"outcome":{"literal":"unreproduced"},"pullRequest":{"literal":null}}}}}],"otherwise":{"id":"investigateAgain","type":"sequence","children":[]}}],"output":{"object":{"evidence":{"ref":{"source":"humanDecision","pointer":"/evidence"}}}}}}],"output":{"object":{"reproduced":{"ref":{"source":"probe","pointer":"/reproduced"}},"evidence":{"ref":{"source":"reproductionDecision","pointer":"/evidence"}},"checkpoint":{"ref":{"source":"probe","pointer":"/checkpoint"}}}}},"until":{"eq":[{"ref":{"source":"body","pointer":"/reproduced"}},{"literal":true}]},"carry":{"object":{"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}},"evidence":{"ref":{"source":"body","pointer":"/evidence"}}}},"output":{"object":{"evidence":{"ref":{"source":"body","pointer":"/evidence"}},"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}}}}},{"id":"specification","type":"call","action":"specify","runtime":"author","with":{"object":{"brief":{"ref":{"source":"input","pointer":"/report"}},"findings":{"ref":{"source":"reproduction","pointer":"/evidence"}},"suppliedSpec":{"ref":{"source":"input","pointer":"/suppliedSpec"}}}}},{"id":"scopeApproval","type":"call","action":"approveSpec","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}}}}},{"id":"scopeDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"scopeApproval","pointer":"/approved"}},{"literal":false}]},"then":{"id":"rejectedScope","type":"end","result":{"object":{"outcome":{"literal":"rejected"},"pullRequest":{"literal":null}}}}}],"otherwise":{"id":"approvedScope","type":"sequence","children":[]}},{"id":"workspace","type":"call","action":"prepare","with":{"object":{"checkpoint":{"ref":{"source":"input","pointer":"/checkpoint"}}}}},{"id":"remediation","type":"repeat","maxIterations":3,"initial":{"object":{"checkpoint":{"ref":{"source":"workspace","pointer":"/checkpoint"}},"feedback":{"array":[{"ref":{"source":"reproduction","pointer":"/evidence"}}]}}},"body":{"id":"repairRound","type":"sequence","children":[{"id":"implementation","type":"call","action":"implement","runtime":"implementer","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"specApproval":{"ref":{"source":"scopeApproval","pointer":""}},"checkpoint":{"ref":{"source":"carry","pointer":"/checkpoint"}},"feedback":{"ref":{"source":"carry","pointer":"/feedback"}}}}},{"id":"verification","type":"parallel","join":"all","maxConcurrency":2,"branches":[{"id":"checks","type":"call","action":"check","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}}}}},{"id":"review","type":"call","action":"review","runtime":"reviewer","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}}}}}],"output":{"object":{"checks":{"ref":{"source":"checks","pointer":""}},"review":{"ref":{"source":"review","pointer":""}}}}}],"output":{"object":{"checkpoint":{"ref":{"source":"implementation","pointer":"/checkpoint"}},"verification":{"ref":{"source":"verification","pointer":""}}}}},"until":{"all":[{"eq":[{"ref":{"source":"body","pointer":"/verification/checks/passed"}},{"literal":true}]},{"eq":[{"ref":{"source":"body","pointer":"/verification/review/accepted"}},{"literal":true}]}]},"carry":{"object":{"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}},"feedback":{"array":[{"ref":{"source":"body","pointer":"/verification/checks/evidence"}},{"ref":{"source":"body","pointer":"/verification/review/findings"}}]}}},"output":{"object":{"checkpoint":{"ref":{"source":"body","pointer":"/checkpoint"}},"checks":{"ref":{"source":"body","pointer":"/verification/checks"}},"review":{"ref":{"source":"body","pointer":"/verification/review"}}}}},{"id":"publicationApproval","type":"call","action":"approvePublish","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"remediation","pointer":"/checkpoint"}},"checks":{"ref":{"source":"remediation","pointer":"/checks"}},"review":{"ref":{"source":"remediation","pointer":"/review"}},"deliveryKey":{"ref":{"source":"input","pointer":"/deliveryKey"}}}}},{"id":"publicationDecision","type":"choose","cases":[{"when":{"eq":[{"ref":{"source":"publicationApproval","pointer":"/approved"}},{"literal":false}]},"then":{"id":"rejectedPublication","type":"end","result":{"object":{"outcome":{"literal":"rejected"},"pullRequest":{"literal":null}}}}}],"otherwise":{"id":"approvedPublication","type":"sequence","children":[]}},{"id":"publication","type":"call","action":"publishPR","with":{"object":{"spec":{"ref":{"source":"specification","pointer":"/spec"}},"checkpoint":{"ref":{"source":"remediation","pointer":"/checkpoint"}},"deliveryKey":{"ref":{"source":"input","pointer":"/deliveryKey"}},"approval":{"ref":{"source":"publicationApproval","pointer":""}}}}},{"id":"complete","type":"end","result":{"object":{"outcome":{"literal":"published"},"pullRequest":{"ref":{"source":"publication","pointer":"/pullRequest"}}}}}]}},"fanout":{"formatVersion":"agents-assemble.playbook/1","package":{"id":"example/fanout-probe","version":"0.1.0"},"inputs":{"type":"object","properties":{"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"tasks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"title":{"type":"string","minLength":1,"maxLength":2048}},"required":["id"],"additionalProperties":false},"maxItems":100}},"required":["checkpoint","tasks"],"additionalProperties":false},"outputs":{"type":"object","properties":{"findings":{"type":"array","items":{"type":"object","properties":{"finding":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["finding"],"additionalProperties":false},"maxItems":12}},"required":["findings"],"additionalProperties":false},"dependencies":{"actions":{"planTasks":{"id":"example/planTasks","version":"0.1.0","digest":"sha256:f900cba82cbeb84e3d76d070cb5e5e7ae5685240ece35028b8a32672fd27ea0b"},"inspectTask":{"id":"example/inspectTask","version":"0.1.0","digest":"sha256:255a118c1021e7f3ba7b7b6c73565634b97ed2c3944052096e171b455417b21d"}}},"runtimeSlots":{},"permissions":["repository.read","artifact.read","artifact.write"],"policy":{"referencedSpecChange":"pause_and_replan","retries":"adapter_certified_only","expressionVersion":"pure-json/1","maxExpressionDepth":16,"maxExpressionNodes":256,"totalWorkBudget":100,"totalConcurrency":3,"humanDeadlineMs":86400000},"body":{"id":"fanout","type":"sequence","children":[{"id":"plan","type":"call","action":"planTasks","with":{"object":{"tasks":{"ref":{"source":"input","pointer":"/tasks"}}}}},{"id":"inspectTasks","type":"forEach","items":{"ref":{"source":"plan","pointer":"/tasks"}},"key":"/id","maxItems":12,"maxConcurrency":3,"body":{"id":"inspect","type":"call","action":"inspectTask","with":{"object":{"task":{"ref":{"source":"item","pointer":""}},"checkpoint":{"ref":{"source":"input","pointer":"/checkpoint"}}}}},"output":{"object":{"finding":{"ref":{"source":"inspect","pointer":"/finding"}}}}}],"output":{"object":{"findings":{"ref":{"source":"inspectTasks","pointer":""}}}}}}},"actions":{"discover":{"id":"example/discover","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"brief":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["brief","checkpoint"],"additionalProperties":false},"outputs":{"type":"object","properties":{"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["findings"],"additionalProperties":false},"executor":"mock/discover","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery"],"retryableErrors":["mock_read_transport"],"maxAttempts":2,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:6187f8f4300a9e0cc8ceaf6be2a014578044e19ac1eff17631f59ad6031c894d"},"specify":{"id":"example/specify","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"brief":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"suppliedSpec":{"type":["object","null"],"properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["brief","findings","suppliedSpec"],"additionalProperties":false},"outputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["spec"],"additionalProperties":false},"executor":"mock/specify","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"},"approveSpec":{"id":"example/approveSpec","version":"0.1.0","kind":"human","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["spec"],"additionalProperties":false},"outputs":{"type":"object","properties":{"approved":{"type":"boolean"},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["approved","requestId","manifest","version","responder"],"additionalProperties":false},"executor":"mock/approveSpec","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"},"prepare":{"id":"example/prepare","version":"0.1.0","kind":"deterministic","inputs":{"type":"object","properties":{"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["checkpoint"],"additionalProperties":false},"outputs":{"type":"object","properties":{"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["checkpoint"],"additionalProperties":false},"executor":"mock/prepare","adapterVersion":"mock/1","effectClass":"workspace_write","requiredCapabilities":["checkpoint_recovery"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"},"implement":{"id":"example/implement","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"specApproval":{"type":"object","properties":{"approved":{"type":"boolean"},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["approved","requestId","manifest","version","responder"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"feedback":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"maxItems":100}},"required":["spec","specApproval","checkpoint","feedback"],"additionalProperties":false},"outputs":{"type":"object","properties":{"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["checkpoint"],"additionalProperties":false},"executor":"mock/implement","adapterVersion":"mock/1","effectClass":"workspace_write","requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"],"retryableErrors":["mock_verified_reconstruction"],"maxAttempts":2,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"},"review":{"id":"example/review","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["spec","checkpoint"],"additionalProperties":false},"outputs":{"type":"object","properties":{"accepted":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["accepted","checkpoint","findings","spec"],"additionalProperties":false},"executor":"mock/review","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"},"check":{"id":"example/check","version":"0.1.0","kind":"deterministic","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["spec","checkpoint"],"additionalProperties":false},"outputs":{"type":"object","properties":{"passed":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["passed","checkpoint","evidence","spec"],"additionalProperties":false},"executor":"mock/check","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["checkpoint_recovery"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"},"approvePublish":{"id":"example/approvePublish","version":"0.1.0","kind":"human","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"checks":{"type":"object","properties":{"passed":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["passed","checkpoint","evidence","spec"],"additionalProperties":false},"review":{"type":"object","properties":{"accepted":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["accepted","checkpoint","findings","spec"],"additionalProperties":false},"deliveryKey":{"type":"string","minLength":1,"maxLength":2048}},"required":["spec","checkpoint","checks","review","deliveryKey"],"additionalProperties":false},"outputs":{"type":"object","properties":{"approved":{"type":"boolean"},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["approved","requestId","manifest","version","responder"],"additionalProperties":false},"executor":"mock/approvePublish","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"},"publishPR":{"id":"example/publishPR","version":"0.1.0","kind":"integration","inputs":{"type":"object","properties":{"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"deliveryKey":{"type":"string","minLength":1,"maxLength":2048},"approval":{"type":"object","properties":{"approved":{"type":"boolean"},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["approved","requestId","manifest","version","responder"],"additionalProperties":false}},"required":["spec","checkpoint","deliveryKey","approval"],"additionalProperties":false},"outputs":{"type":"object","properties":{"pullRequest":{"type":"object","properties":{"url":{"type":"string","minLength":1,"maxLength":2048}},"required":["url"],"additionalProperties":false}},"required":["pullRequest"],"additionalProperties":false},"executor":"mock/publishPR","adapterVersion":"mock/1","effectClass":"external_write","requiredCapabilities":["effect_reconciliation"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"},"investigate":{"id":"example/investigate","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"report":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"priorFindings":{"type":["object","null"],"properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["report","checkpoint","priorFindings"],"additionalProperties":false},"outputs":{"type":"object","properties":{"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["findings"],"additionalProperties":false},"executor":"mock/investigate","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:7d8172de8e9c186f97f7ab25deda5cc9817a8eadd6320d8ecfd89f87e486ed42"},"reproduce":{"id":"example/reproduce","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"report":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"previousEvidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["report","findings","checkpoint","previousEvidence"],"additionalProperties":false},"outputs":{"type":"object","properties":{"reproduced":{"type":"boolean"},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["reproduced","evidence","checkpoint"],"additionalProperties":false},"executor":"mock/reproduce","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery","durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:1db368a051343f33d827975b24f105d1d9d3be9021a8acc1f8b3ae3e794dd85d"},"unreproduced":{"id":"example/unreproduced","version":"0.1.0","kind":"human","inputs":{"type":"object","properties":{"report":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["report","evidence"],"additionalProperties":false},"outputs":{"type":"object","properties":{"decision":{"type":"string","enum":["investigate_again","stop"]},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["decision","evidence"],"additionalProperties":false},"executor":"mock/unreproduced","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["durable_human_request"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:b485d42185468a22853a4dd5c311e2e41a758235a900b975f2c9079454b1fa14"},"inspectTask":{"id":"example/inspectTask","version":"0.1.0","kind":"agent","inputs":{"type":"object","properties":{"task":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"title":{"type":"string","minLength":1,"maxLength":2048}},"required":["id"],"additionalProperties":false},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false}},"required":["task","checkpoint"],"additionalProperties":false},"outputs":{"type":"object","properties":{"finding":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["finding"],"additionalProperties":false},"executor":"mock/inspectTask","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":["native_account","typed_result","checkpoint_recovery"],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:255a118c1021e7f3ba7b7b6c73565634b97ed2c3944052096e171b455417b21d"},"planTasks":{"id":"example/planTasks","version":"0.1.0","kind":"deterministic","inputs":{"type":"object","properties":{"tasks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"title":{"type":"string","minLength":1,"maxLength":2048}},"required":["id"],"additionalProperties":false},"maxItems":100}},"required":["tasks"],"additionalProperties":false},"outputs":{"type":"object","properties":{"tasks":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"title":{"type":"string","minLength":1,"maxLength":2048}},"required":["id"],"additionalProperties":false},"maxItems":100}},"required":["tasks"],"additionalProperties":false},"executor":"mock/planTasks","adapterVersion":"mock/1","effectClass":"read","requiredCapabilities":[],"retryableErrors":[],"maxAttempts":1,"timeoutMs":30000,"cancellation":"request_then_reconcile","digest":"sha256:f900cba82cbeb84e3d76d070cb5e5e7ae5685240ece35028b8a32672fd27ea0b"}},"schemas":{"ArtifactRef":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"CheckpointRef":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"DeliveryKey":{"type":"string","minLength":1,"maxLength":2048},"PRRef":{"type":"object","properties":{"url":{"type":"string","minLength":1,"maxLength":2048}},"required":["url"],"additionalProperties":false},"EvidenceList":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"maxItems":100},"ApprovalResult":{"type":"object","properties":{"approved":{"type":"boolean"},"requestId":{"type":"string","minLength":1,"maxLength":2048},"manifest":{"type":"object","additionalProperties":true},"version":{"type":"integer","minimum":1},"responder":{"type":"string","minLength":1,"maxLength":2048}},"required":["approved","requestId","manifest","version","responder"],"additionalProperties":false},"ReviewResult":{"type":"object","properties":{"accepted":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"findings":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["accepted","checkpoint","findings","spec"],"additionalProperties":false},"CheckResult":{"type":"object","properties":{"passed":{"type":"boolean"},"checkpoint":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"commit":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","commit"],"additionalProperties":false},"evidence":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false},"spec":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"revision":{"type":"string","minLength":1,"maxLength":2048},"mediaType":{"type":"string","minLength":1,"maxLength":2048},"digest":{"type":"string","minLength":1,"maxLength":2048}},"required":["id","revision","mediaType","digest"],"additionalProperties":false}},"required":["passed","checkpoint","evidence","spec"],"additionalProperties":false},"Task":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":2048},"title":{"type":"string","minLength":1,"maxLength":2048}},"required":["id"],"additionalProperties":false}}};
+const schemaKeys = new Set(['type','properties','required','additionalProperties','items','minItems','maxItems','minLength','maxLength','minimum','maximum','enum','$defs','$ref']);
+const knownCapabilities = new Set(['native_account','typed_result','checkpoint_recovery','durable_human_request','effect_reconciliation']);
+const reservedSources = new Set(['input','carry','body','item']);
+function fail(code, path, detail) { const e = new Error(`${code} at ${path}: ${detail}`); e.code=code; e.path=path; throw e; }
+function jsonData(value,path='$',ancestors=new Set()) {
+  if(value===null||typeof value==='string'||typeof value==='boolean')return;
+  if(typeof value==='number'){if(!Number.isFinite(value))fail('non_json_data',path,'finite number required');return;}
+  if(typeof value!=='object')fail('non_json_data',path,'functions, undefined, symbols and bigint cannot cross the document boundary');
+  if(ancestors.has(value))fail('non_json_data',path,'cyclic value');
+  if(!Array.isArray(value)&&Object.getPrototypeOf(value)!==Object.prototype&&Object.getPrototypeOf(value)!==null)fail('non_json_data',path,'plain data object required');
+  const next=new Set(ancestors);next.add(value);
+  for(const [key,item]of Object.entries(value))jsonData(item,path+'.'+key,next);
+}
+const clone = x => {jsonData(x);return JSON.parse(JSON.stringify(x));};
+const record = x => x !== null && typeof x === 'object' && !Array.isArray(x);
+function keys(value, allowed, path) {
+  if (!record(value)) fail('malformed_type', path, 'expected object');
+  for (const k of Object.keys(value)) if (!allowed.includes(k)) fail('unknown_behavioral_field', `${path}.${k}`, 'field is not implemented by this profile');
+}
+function required(value, names, path) { for (const n of names) if (!Object.hasOwn(value,n)) fail('missing_required_field', `${path}.${n}`, 'required field absent'); }
+function presentation(value,path) {
+  if(value===undefined)return;
+  keys(value,['title','description','metadata'],path);
+  for(const k of ['title','description'])if(value[k]!==undefined&&typeof value[k]!=='string')fail('malformed_type',path+'.'+k,'expected text');
+  if(value.metadata!==undefined){if(!record(value.metadata))fail('malformed_type',path+'.metadata','expected metadata object');for(const k of Object.keys(value.metadata))if(!/^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$/.test(k))fail('unknown_behavioral_field',path+'.metadata.'+k,'opaque metadata must be namespaced');}
+}
+function canonical(value) {
+  if (Array.isArray(value)) return '['+value.map(canonical).join(',')+']';
+  if (record(value)) return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';
+  return JSON.stringify(value);
+}
+function positive(value,path) { if (!Number.isSafeInteger(value)||value<1) fail('malformed_type',path,'expected positive safe integer'); }
+function pointerParts(pointer,path) {
+  if (typeof pointer !== 'string' || (pointer !== '' && !pointer.startsWith('/')) || /~(?![01])/u.test(pointer)) fail('malformed_ref',path,'expected RFC 6901 pointer');
+  return pointer === '' ? [] : pointer.slice(1).split('/').map(p=>p.replace(/~1/g,'/').replace(/~0/g,'~'));
+}
+function pointerGet(value,pointer,path,missingOkay=false) {
+  for (const key of pointerParts(pointer,path)) {
+    if (value===null || typeof value!=='object' || !Object.hasOwn(value,key)) { if(missingOkay)return undefined; fail('binding_error',path,`missing pointer ${pointer}`); }
+    value=value[key];
+  }
+  return value;
+}
+function checkSchema(schema,path='$schema',root=schema,stack=new Set()) {
+  if (!record(schema)) fail('malformed_schema',path,'expected object schema');
+  if(stack.has(schema)) fail('unsupported_schema_reference',path,'recursive schemas are outside probe profile');
+  stack=new Set(stack);stack.add(schema);
+  for(const k of Object.keys(schema)) if(!schemaKeys.has(k)) fail('unsupported_schema_keyword',`${path}.${k}`,'keyword not supported');
+  if(schema.$ref!==undefined) {
+    if(typeof schema.$ref!=='string'||!schema.$ref.startsWith('#/$defs/')) fail('unsupported_schema_reference',path,'only pinned local $defs references are supported');
+    const target=pointerGet(root,schema.$ref.slice(1),path,true);
+    if(target===undefined) fail('unsupported_schema_reference',path,'unresolved local schema');
+    checkSchema(target,path+'.$ref',root,stack);
+  }
+  const types=Array.isArray(schema.type)?schema.type:[schema.type];
+  if(schema.type!==undefined && (!types.length || types.some(t=>!['object','array','string','number','integer','boolean','null'].includes(t)))) fail('malformed_schema',path+'.type','unsupported type');
+  if(schema.type===undefined&&schema.$ref===undefined) fail('malformed_schema',path,'type or local $ref required');
+  if(schema.properties!==undefined) { if(!record(schema.properties)) fail('malformed_schema',path+'.properties','expected object'); for(const [k,v]of Object.entries(schema.properties))checkSchema(v,path+'.properties.'+k,root,stack); }
+  if(schema.$defs!==undefined) { if(!record(schema.$defs))fail('malformed_schema',path+'.$defs','expected object');for(const [k,v]of Object.entries(schema.$defs))checkSchema(v,path+'.$defs.'+k,root,stack); }
+  if(schema.items!==undefined) checkSchema(schema.items,path+'.items',root,stack);
+  if(schema.required!==undefined && (!Array.isArray(schema.required)||schema.required.some(k=>typeof k!=='string')||new Set(schema.required).size!==schema.required.length)) fail('malformed_schema',path+'.required','expected unique strings');
+  if(schema.additionalProperties!==undefined&&typeof schema.additionalProperties!=='boolean')fail('malformed_schema',path+'.additionalProperties','only boolean supported');
+  for(const k of ['minItems','maxItems','minLength','maxLength']) if(schema[k]!==undefined&&(!Number.isSafeInteger(schema[k])||schema[k]<0))fail('malformed_schema',path+'.'+k,'expected nonnegative integer');
+  for(const k of ['minimum','maximum'])if(schema[k]!==undefined&&(typeof schema[k]!=='number'||!Number.isFinite(schema[k])))fail('malformed_schema',path+'.'+k,'expected finite number');
+  if(schema.enum!==undefined&&(!Array.isArray(schema.enum)||!schema.enum.length))fail('malformed_schema',path+'.enum','expected nonempty array');
+}
+function validateValue(value,schema,path='$value',root=schema) {
+  if(schema.$ref) validateValue(value,pointerGet(root,schema.$ref.slice(1),path),path,root);
+  let type=value===null?'null':Array.isArray(value)?'array':typeof value;
+  const types=Array.isArray(schema.type)?schema.type:[schema.type];
+  if(schema.type!==undefined&&!types.some(t=>t===type||(t==='integer'&&Number.isSafeInteger(value))))fail('type_error',path,`expected ${types.join('|')}, got ${type}`);
+  if(type==='number'&&!Number.isFinite(value))fail('type_error',path,'number must be finite');
+  if(schema.enum&&!schema.enum.some(v=>canonical(v)===canonical(value)))fail('type_error',path,'value not in enum');
+  if(type==='object') {
+    for(const k of schema.required||[])if(!Object.hasOwn(value,k))fail('type_error',path+'.'+k,'required property absent');
+    for(const [k,v]of Object.entries(value)) {
+      if(schema.properties?.[k])validateValue(v,schema.properties[k],path+'.'+k,root);
+      else if(schema.additionalProperties===false)fail('type_error',path+'.'+k,'additional property rejected');
+    }
+  }
+  if(type==='array') {
+    if(schema.minItems!==undefined&&value.length<schema.minItems||schema.maxItems!==undefined&&value.length>schema.maxItems)fail('type_error',path,'array bound exceeded');
+    if(schema.items)value.forEach((v,i)=>validateValue(v,schema.items,`${path}[${i}]`,root));
+  }
+  if(type==='string'&&(schema.minLength!==undefined&&Array.from(value).length<schema.minLength||schema.maxLength!==undefined&&Array.from(value).length>schema.maxLength))fail('type_error',path,'string bound exceeded');
+  if(type==='number'&&(schema.minimum!==undefined&&value<schema.minimum||schema.maximum!==undefined&&value>schema.maximum))fail('type_error',path,'numeric bound exceeded');
+  return true;
+}
+function inferred(value) {
+  if(value===null)return {type:'null'};
+  if(Array.isArray(value))return {type:'array',items:value.length?inferred(value[0]):{type:['object','array','string','number','boolean','null']}};
+  if(record(value))return {type:'object',properties:Object.fromEntries(Object.entries(value).map(([k,v])=>[k,inferred(v)])),required:Object.keys(value),additionalProperties:false};
+  return {type:typeof value};
+}
+function resolveShape(schema,pointer,path) {
+  for(const part of pointerParts(pointer,path)) {
+    if(schema.type==='array'&&/^(0|[1-9][0-9]*)$/.test(part))schema=schema.items;
+    else if(schema.properties&&Object.hasOwn(schema.properties,part))schema=schema.properties[part];
+    else fail('malformed_ref',path,'pointer does not address a declared output property');
+  }
+  return schema;
+}
+function binding(b,scope,path,depth=0) {
+  if(depth>32)fail('binding_limit',path,'binding nesting too deep');
+  keys(b,['literal','ref','object','array'],path);
+  if(Object.keys(b).length!==1)fail('malformed_binding',path,'exactly one binding form required');
+  if(Object.hasOwn(b,'literal'))return inferred(b.literal);
+  if(b.ref!==undefined) {
+    keys(b.ref,['source','pointer'],path+'.ref');required(b.ref,['source','pointer'],path+'.ref');
+    if(typeof b.ref.source!=='string'||!Object.hasOwn(scope,b.ref.source))fail('malformed_ref',path,'unknown or out-of-scope source');
+    return resolveShape(scope[b.ref.source],b.ref.pointer,path);
+  }
+  if(b.array!==undefined) {
+    if(!Array.isArray(b.array))fail('malformed_binding',path,'array form must contain array');
+    const shapes=b.array.map((v,i)=>binding(v,scope,`${path}[${i}]`,depth+1));
+    return {type:'array',items:shapes[0]||{type:['object','array','string','number','boolean','null']}};
+  }
+  if(!record(b.object))fail('malformed_binding',path,'object form must contain object');
+  return {type:'object',properties:Object.fromEntries(Object.entries(b.object).map(([k,v])=>[k,binding(v,scope,path+'.'+k,depth+1)])),required:Object.keys(b.object),additionalProperties:false};
+}
+function evaluateBinding(b,scope,path='$binding') {
+  if(Object.hasOwn(b,'literal'))return clone(b.literal);
+  if(b.ref){if(!Object.hasOwn(scope,b.ref.source))fail('binding_error',path,'source absent');return clone(pointerGet(scope[b.ref.source],b.ref.pointer,path));}
+  if(b.array)return b.array.map((v,i)=>evaluateBinding(v,scope,`${path}[${i}]`));
+  if(b.object)return Object.fromEntries(Object.entries(b.object).map(([k,v])=>[k,evaluateBinding(v,scope,path+'.'+k)]));
+  fail('malformed_binding',path,'unknown binding');
+}
+function checkCondition(c,scope,path,policy,count={n:0},depth=1) {
+  if(depth>policy.maxExpressionDepth||++count.n>policy.maxExpressionNodes)fail('expression_limit',path,'expression budget exceeded');
+  keys(c,['eq','not','all','any','exists'],path);if(Object.keys(c).length!==1)fail('malformed_condition',path,'one operator required');
+  const op=Object.keys(c)[0],v=c[op];
+  if(op==='eq'){if(!Array.isArray(v)||v.length!==2)fail('malformed_condition',path,'eq requires two bindings');v.forEach((b,i)=>binding(b,scope,path+'.eq.'+i));}
+  if(op==='exists')binding(v,scope,path+'.exists');
+  if(op==='not')checkCondition(v,scope,path+'.not',policy,count,depth+1);
+  if(op==='all'||op==='any'){if(!Array.isArray(v))fail('malformed_condition',path,'expected condition array');v.forEach((x,i)=>checkCondition(x,scope,path+'.'+op+'.'+i,policy,count,depth+1));}
+}
+function evaluateCondition(c,scope) {
+  if(c.eq)return canonical(evaluateBinding(c.eq[0],scope))===canonical(evaluateBinding(c.eq[1],scope));
+  if(c.not)return !evaluateCondition(c.not,scope);
+  if(c.all)return c.all.every(v=>evaluateCondition(v,scope));
+  if(c.any)return c.any.some(v=>evaluateCondition(v,scope));
+  if(c.exists){try{evaluateBinding(c.exists,scope);return true;}catch(e){if(e.code==='binding_error')return false;throw e;}}
+  fail('malformed_condition','$condition','unknown operator');
+}
+function walk(n,scope,ancestors,doc,path,concurrent=false) {
+  const fields={call:['action','runtime','with'],sequence:['children','output'],choose:['cases','otherwise'],parallel:['branches','join','maxConcurrency','output'],forEach:['items','key','maxItems','maxConcurrency','body','output'],repeat:['initial','body','until','carry','maxIterations','output'],end:['result']};
+  if(!record(n)||!Object.hasOwn(fields,n.type))fail('unsupported_node',path,'node kind unsupported');
+  keys(n,['id','type','presentation',...fields[n.type]],path);
+  presentation(n.presentation,path+'.presentation');
+  if(typeof n.id!=='string'||!/^[A-Za-z][A-Za-z0-9_-]*$/.test(n.id)||reservedSources.has(n.id))fail('malformed_id',path+'.id','invalid or reserved node ID');
+  if(Object.hasOwn(scope,n.id)||ancestors.has(n.id))fail('duplicate_node_id',path+'.id','shadows a visible ID');
+  const nested=new Set(ancestors);nested.add(n.id);
+  const output=(available)=>n.output?binding(n.output,available,path+'.output'):{type:'object',properties:{},required:[],additionalProperties:false};
+  switch(n.type) {
+    case 'call': {
+      required(n,['action','with'],path);const action=fixtures.actions[n.action];
+      if(!action||!doc.dependencies.actions[n.action])fail('unresolved_dependency',path+'.action','alias not pinned');
+      if(n.runtime!==undefined&&!Object.hasOwn(doc.runtimeSlots,n.runtime))fail('unresolved_runtime_slot',path+'.runtime','slot not declared');
+      binding(n.with,scope,path+'.with');return action.outputs;
+    }
+    case 'sequence': {
+      if(!Array.isArray(n.children))fail('malformed_type',path+'.children','expected array');
+      const available={...scope},seen=new Set();let terminates=false;
+      for(const child of n.children){if(seen.has(child.id))fail('duplicate_node_id',path+'/'+child.id,'duplicate child ID');seen.add(child.id);const shape=walk(child,available,nested,doc,path+'/'+child.id,concurrent);if(shape!==null)available[child.id]=shape;else terminates=true;}
+      const shape=output(available);return terminates?null:shape;
+    }
+    case 'parallel': {
+      if(n.join!=='all')fail('unsupported_join',path+'.join','only all is supported');positive(n.maxConcurrency,path+'.maxConcurrency');
+      if(!Array.isArray(n.branches)||!n.branches.length)fail('malformed_type',path+'.branches','expected nonempty finite branches');
+      const available={...scope},seen=new Set();for(const b of n.branches){if(seen.has(b.id))fail('duplicate_node_id',path+'/'+b.id,'duplicate branch ID');seen.add(b.id);available[b.id]=walk(b,scope,nested,doc,path+'/'+b.id,true);}return output(available);
+    }
+    case 'forEach': {
+      const itemArray=binding(n.items,scope,path+'.items');if(itemArray.type!=='array')fail('type_error',path+'.items','expected array input');
+      positive(n.maxItems,path+'.maxItems');positive(n.maxConcurrency,path+'.maxConcurrency');pointerParts(n.key,path+'.key');
+      const available={...scope,item:itemArray.items};available[n.body.id]=walk(n.body,available,nested,doc,path+'/'+n.body.id,true);
+      return {type:'array',items:output(available),maxItems:n.maxItems};
+    }
+    case 'repeat': {
+      positive(n.maxIterations,path+'.maxIterations');const initial=binding(n.initial,scope,path+'.initial');
+      const body=walk(n.body,{...scope,carry:initial},nested,doc,path+'/'+n.body.id,concurrent);const available={...scope,carry:initial,body};
+      checkCondition(n.until,available,path+'.until',doc.policy);binding(n.carry,available,path+'.carry');return output(available);
+    }
+    case 'choose': {
+      if(!Array.isArray(n.cases)||!n.otherwise)fail('malformed_condition',path,'cases and otherwise required');
+      let returning=[];for(const [i,c]of n.cases.entries()){keys(c,['when','then'],path+'.cases.'+i);checkCondition(c.when,scope,path+'.cases.'+i+'.when',doc.policy);const result=walk(c.then,scope,nested,doc,path+'/'+c.then.id,concurrent);if(result)returning.push(result);}
+      const result=walk(n.otherwise,scope,nested,doc,path+'/'+n.otherwise.id,concurrent);if(result)returning.push(result);
+      const shape=s=>canonical({type:Array.isArray(s.type)?[...s.type].sort():s.type,...(s.type==='object'?{properties:Object.fromEntries(Object.entries(s.properties||{}).map(([k,v])=>[k,shape(v)]))}:{}),...(s.type==='array'?{items:shape(s.items)}:{})});
+      if(returning.some(s=>shape(s)!==shape(returning[0])))fail('incompatible_branch_outputs',path,'returning branches expose different shapes');return returning[0]||null;
+    }
+    case 'end': if(concurrent)fail('end_in_concurrent_branch',path,'cannot abandon siblings');binding(n.result,scope,path+'.result');return null;
+  }
+}
+function normalize(raw) {
+  const doc=clone(raw);
+  doc.policy={expressionVersion:'pure-json/1',maxExpressionDepth:16,maxExpressionNodes:256,totalWorkBudget:100,totalConcurrency:3,humanDeadlineMs:86400000,...doc.policy};
+  function defaults(n){if(n.type==='sequence'&&n.output===undefined)n.output={object:{}};for(const k of ['children','branches'])for(const child of n[k]||[])defaults(child);if(n.body)defaults(n.body);for(const c of n.cases||[])defaults(c.then);if(n.otherwise)defaults(n.otherwise);}
+  if(doc.body)defaults(doc.body);validate(doc);return JSON.parse(canonical(doc));
+}
+function validate(doc,options={}) {
+  jsonData(doc);
+  keys(doc,['formatVersion','package','inputs','outputs','dependencies','runtimeSlots','permissions','policy','body','presentation'],'$');
+  required(doc,['formatVersion','package','inputs','outputs','dependencies','runtimeSlots','permissions','policy','body'],'$');
+  presentation(doc.presentation,'$.presentation');
+  if(doc.formatVersion!=='agents-assemble.playbook/1')fail('unsupported_format','$formatVersion','format not understood');
+  keys(doc.package,['id','version'],'$.package');required(doc.package,['id','version'],'$.package');
+  if(typeof doc.package.id!=='string'||!doc.package.id||typeof doc.package.version!=='string'||!doc.package.version)fail('malformed_type','$.package','id/version strings required');
+  checkSchema(doc.inputs,'$.inputs');checkSchema(doc.outputs,'$.outputs');
+  keys(doc.dependencies,['actions'],'$.dependencies');if(!record(doc.dependencies.actions))fail('malformed_type','$.dependencies.actions','expected alias map');
+  const capabilities=new Set(options.capabilities||knownCapabilities);
+  for(const [alias,pin]of Object.entries(doc.dependencies.actions)) {
+    keys(pin,['id','version','digest'],'$.dependencies.actions.'+alias);const a=fixtures.actions[alias];
+    if(!a||canonical(pin)!==canonical({id:a.id,version:a.version,digest:a.digest}))fail('unresolved_dependency','$.dependencies.actions.'+alias,'exact mock content pin missing');
+    checkSchema(a.inputs,'actions.'+alias+'.inputs');checkSchema(a.outputs,'actions.'+alias+'.outputs');
+    for(const c of a.requiredCapabilities)if(!capabilities.has(c))fail('unsupported_capability','actions.'+alias,c);
+  }
+  if(!record(doc.runtimeSlots))fail('malformed_type','$.runtimeSlots','expected slot map');
+  for(const [id,slot]of Object.entries(doc.runtimeSlots)){keys(slot,['requiredCapabilities'],'$.runtimeSlots.'+id);if(!Array.isArray(slot.requiredCapabilities))fail('malformed_type','$.runtimeSlots.'+id,'capability list required');for(const c of slot.requiredCapabilities)if(!capabilities.has(c))fail('unsupported_capability','$.runtimeSlots.'+id,c);}
+  if(!Array.isArray(doc.permissions)||doc.permissions.some(p=>!['repository.read','workspace.write','artifact.read','artifact.write','pull_request.upsert'].includes(p)))fail('unsupported_permission','$.permissions','unsupported logical permission');
+  keys(doc.policy,['referencedSpecChange','retries','expressionVersion','maxExpressionDepth','maxExpressionNodes','totalWorkBudget','totalConcurrency','humanDeadlineMs'],'$.policy');
+  if(doc.policy.referencedSpecChange!=='pause_and_replan'||doc.policy.retries!=='adapter_certified_only'||doc.policy.expressionVersion!=='pure-json/1')fail('unsupported_policy','$.policy','unsupported policy value');
+  for(const k of ['maxExpressionDepth','maxExpressionNodes','totalWorkBudget','totalConcurrency','humanDeadlineMs'])positive(doc.policy[k],'$.policy.'+k);
+  walk(doc.body,{input:doc.inputs},new Set(),doc,'$.body');return true;
+}
+function editDocument(raw,nodeId,patch) {
+  const doc=clone(raw);let matches=0;
+  function visit(n){if(n.id===nodeId){Object.assign(n,clone(patch));matches++;}for(const k of ['children','branches'])for(const child of n[k]||[])visit(child);if(n.body)visit(n.body);for(const c of n.cases||[])visit(c.then);if(n.otherwise)visit(n.otherwise);}
+  visit(doc.body);if(matches!==1)fail('editor_target_error','$edit','expected one node; use structural path for ambiguous IDs');return normalize(doc);
+}
+function testAuthoring() {
+  const results=[];
+  const test=(name,fn)=>{try{fn();results.push({name,passed:true});}catch(e){results.push({name,passed:false,error:e.message});}};
+  const expect=(code,fn)=>{try{fn();}catch(e){if(e.code===code)return;throw e;}throw new Error('expected '+code);};
+  for(const [name,doc]of Object.entries(fixtures.definitions))test(name+' document/editor roundtrip',()=>{const a=normalize(doc),b=normalize(JSON.parse(JSON.stringify(a)));if(canonical(a)!==canonical(b))throw new Error('roundtrip changed semantics');});
+  test('bounded editor edit undo preserves full normalized document',()=>{const d=fixtures.definitions.feature;const e=editDocument(d,'delivery',{maxIterations:2});if(e.body.children.find(n=>n.id==='delivery').maxIterations!==2)throw new Error('edit absent');const undo=editDocument(e,'delivery',{maxIterations:3});if(canonical(undo)!==canonical(normalize(d)))throw new Error('undo changed semantics');});
+  const mutate=(fn)=>{const d=clone(fixtures.definitions.feature);fn(d);return d;};
+  test('unknown behavioral field rejects and raw input survives',()=>{const d=mutate(d=>d.body.children[0].retryForever=true),raw=JSON.stringify(d);expect('unknown_behavioral_field',()=>normalize(d));if(JSON.stringify(d)!==raw)throw new Error('raw input mutated');});
+  test('executable builder callback cannot cross document boundary',()=>{const d=mutate(()=>{});d.body.children[0].callback=()=>42;expect('non_json_data',()=>normalize(d));});
+  test('unknown schema keyword rejected',()=>expect('unsupported_schema_keyword',()=>validate(mutate(d=>d.inputs.properties.brief.pattern='.*'))));
+  test('external schema reference rejected',()=>expect('unsupported_schema_reference',()=>validate(mutate(d=>d.inputs={$ref:'https://example.org/schema'}))));
+  test('malformed schema type rejected',()=>expect('malformed_schema',()=>validate(mutate(d=>d.inputs.type='date'))));
+  test('unknown runner capability rejected',()=>expect('unsupported_capability',()=>validate(mutate(d=>d.runtimeSlots.researcher.requiredCapabilities.push('teleport')))));
+  test('missing native-account capability rejected',()=>expect('unsupported_capability',()=>validate(fixtures.definitions.feature,{capabilities:['typed_result','checkpoint_recovery','durable_human_request','effect_reconciliation']})));
+  test('malformed JSON pointer rejected',()=>expect('malformed_ref',()=>validate(mutate(d=>d.body.children[0].with.object.brief.ref.pointer='/bad~2escape'))));
+  test('concurrent sibling read rejected',()=>expect('malformed_ref',()=>validate(mutate(d=>d.body.children[5].body.children[1].branches[1].with.object.checkpoint={ref:{source:'checks',pointer:'/checkpoint'}}))));
+  test('visible node ID shadow rejected',()=>expect('duplicate_node_id',()=>validate(mutate(d=>d.body.children[5].body.children[0].id='specification'))));
+  test('late sibling reference rejected',()=>expect('malformed_ref',()=>validate(mutate(d=>d.body.children[0].with.object.brief={ref:{source:'publication',pointer:'/pullRequest'}}))));
+  test('choice returning incompatible field types rejected',()=>{const d=clone(fixtures.definitions.bug);d.body.children[1].body.children[1].cases[0].then.output.object.evidence={literal:12};expect('incompatible_branch_outputs',()=>validate(d));});
+  test('unknown required format rejected',()=>expect('unsupported_format',()=>validate(mutate(d=>d.formatVersion='unknown/99'))));
+  test('namespaced nonsemantic metadata survives structured roundtrip',()=>{const d=mutate(d=>d.presentation={metadata:{'example:notes':{tags:['one','two'],extra:17}}});if(canonical(normalize(d).presentation)!==canonical(d.presentation))throw new Error('metadata dropped');});
+  test('action pin drift rejected',()=>expect('unresolved_dependency',()=>validate(mutate(d=>d.dependencies.actions.discover.digest='sha256:changed'))));
+  test('boundary value type mismatch rejected',()=>expect('type_error',()=>validateValue({approved:'yes'},fixtures.schemas.ApprovalResult)));
+  test('missing runtime pointer returns binding_error',()=>expect('binding_error',()=>evaluateBinding({ref:{source:'input',pointer:'/missing'}},{input:{}})));
+  test('JSON equality has no coercion and ignores object key order',()=>{if(evaluateCondition({eq:[{literal:1},{literal:'1'}]},{}))throw new Error('coerced');if(!evaluateCondition({eq:[{literal:{b:2,a:1}},{literal:{a:1,b:2}}]},{}))throw new Error('object ordering changed equality');});
+  test('condition short circuit prevents missing reference fetch',()=>{if(evaluateCondition({all:[{eq:[{literal:false},{literal:true}]},{eq:[{ref:{source:'input',pointer:'/missing'}},{literal:true}]}]},{input:{}})!==false)throw new Error('bad short circuit');});
+  test('local pinned schema reference resolves',()=>{const schema={type:'object',$defs:{flag:{type:'boolean'}},properties:{ok:{$ref:'#/$defs/flag'}},required:['ok'],additionalProperties:false};checkSchema(schema);validateValue({ok:true},schema);expect('type_error',()=>validateValue({ok:'yes'},schema));});
+  test('RFC 6901 escaped member names resolve',()=>{const v=evaluateBinding({ref:{source:'input',pointer:'/a~1b/~0key'}},{input:{'a/b':{'~key':42}}});if(v!==42)throw new Error('bad pointer');});
+  return results;
+}
+globalThis.Authoring={...fixtures,normalize,validate,validateValue,checkSchema,evaluateBinding,evaluateCondition,canonical,editDocument,testAuthoring,knownCapabilities:[...knownCapabilities]};
+})();
+
+/* THROWAWAY decision #6 model. JSON snapshots are a simulated durable boundary, not a database. */
+globalThis.Conformance = (() => {
+  const copy = x => JSON.parse(JSON.stringify(x));
+  const canonical = x => JSON.stringify(x, (_,v) => v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])) : v);
+  const fail = (code, details='') => { throw Object.assign(new Error(code+': '+details), {code}); };
+  const eq = (a,b) => canonical(a) === canonical(b);
+  const artifact = (id,revision='1') => ({id,revision,mediaType:'text/markdown',digest:'mock:'+id+':'+revision});
+  const checkpoint = (id='base') => ({id,commit:'commit-'+id});
+  function binding(b, env) {
+    if ('literal' in b) return copy(b.literal);
+    if ('object' in b) return Object.fromEntries(Object.entries(b.object).map(([k,v])=>[k,binding(v,env)]));
+    if ('array' in b) return b.array.map(v=>binding(v,env));
+    if ('ref' in b) {
+      const {source,pointer}=b.ref;
+      if (!Object.hasOwn(env,source)) fail('binding_error',source);
+      let value=env[source];
+      if (pointer !== '') for (const part of pointer.slice(1).split('/')) {
+        const key=part.replace(/~1/g,'/').replace(/~0/g,'~');
+        if (value===null || typeof value!=='object' || !Object.hasOwn(value,key)) fail('binding_error',pointer);
+        value=value[key];
+      }
+      return copy(value);
+    }
+    fail('binding_error','unknown binding');
+  }
+  function condition(c,env,depth=0) {
+    if(depth>32) fail('expression_limit');
+    if(c.eq) return eq(binding(c.eq[0],env),binding(c.eq[1],env));
+    if(c.not) return !condition(c.not,env,depth+1);
+    if(c.all) return c.all.every(x=>condition(x,env,depth+1));
+    if(c.any) return c.any.some(x=>condition(x,env,depth+1));
+    if(c.exists) {try {binding(c.exists,env);return true;} catch(e){if(e.code==='binding_error') return false;throw e;}}
+    fail('condition_error');
+  }
+  function start(def, inputs, id='run-1', options={}) {
+    if(!id)fail('invalid_run_identity');
+    if(globalThis.Authoring)Authoring.validateValue(inputs,def.inputs);
+    const maxWork=Math.min(options.maxWork??100,def.policy.totalWorkBudget??100),maxConcurrency=Math.min(options.maxConcurrency??4,def.policy.totalConcurrency??4);
+    return {id,definition:copy(def),inputs:copy(inputs),options:copy(options),status:'running',version:1,tick:0,
+      records:{},requests:{},commands:{},effects:{},events:[],work:0,maxWork,maxConcurrency,
+      pinnedSpec:inputs.suppliedSpec??null,observedEdit:null,knowledgeHead:inputs.suppliedSpec??artifact('spec'),knowledgeVersion:1,observedSourceVersion:1,
+      revisions:[{version:1,ref:inputs.suppliedSpec??artifact('spec')}],admission:{id:'admission-'+id,maxWork,maxConcurrency},lineage:null,output:null};
+  }
+  const world = () => ({deliveries:{},receipts:{},creates:0,updates:0,verifiedCommits:['commit-base'],artifacts:[]});
+  const emit=(s,type,data={})=>s.events.push({seq:s.events.length+1,tick:s.tick,type,...copy(data)});
+  function rec(s,node,path) {
+    const id=JSON.stringify([s.id,...path,node.id]);
+    return s.records[id] ??= {id,node:node.id,type:node.type,path:[...path,node.id],status:'ready',attempts:[],output:null};
+  }
+  function gateManifest(s,action,input) {
+    return {run:s.id,definition:s.definition.package,spec:input.spec,commit:input.checkpoint?.commit??null,
+      operation:action==='approvePublish'?'pull_request.upsert':'implement',deliveryKey:input.deliveryKey??null,policy:s.definition.policy};
+  }
+  function validateGate(s,input) {
+    const a=input.approval, request=s.requests[a?.requestId];
+    if(!request || !request.answer?.approved || !eq(a,request.answer)) fail('approval_binding_mismatch');
+    const expected=gateManifest(s,'approvePublish',input);
+    if(!eq(request.manifest,expected)) fail('approval_binding_mismatch');
+    if(s.status!=='running' || s.observedEdit) fail('publication_blocked');
+  }
+  function validateScope(s,input) {
+    const a=input.specApproval,q=s.requests[a?.requestId];
+    if(!q||!q.answer?.approved||!eq(a,q.answer)||!eq(q.manifest,gateManifest(s,'approveSpec',{spec:input.spec})))fail('scope_approval_binding_mismatch');
+  }
+  function mockResult(s,r,w) {
+    const x=r.inputs, index=r.attempts.length;
+    switch(r.action) {
+      case 'discover': return {findings:artifact('discovery')};
+      case 'investigate': return {findings:artifact('investigation')};
+      case 'specify': {const spec=x.suppliedSpec??artifact('spec');s.pinnedSpec=spec;s.knowledgeHead=spec;return {spec};}
+      case 'prepare': return {checkpoint:x.checkpoint};
+      case 'implement': {const n=Object.values(s.records).filter(v=>v.action==='implement'&&v.status==='done').length+1;const cp=checkpoint('work-'+s.id+'-'+n);w.verifiedCommits.push(cp.commit);return {checkpoint:cp};}
+      case 'check': return {passed:!s.options.alwaysFailChecks,spec:x.spec,checkpoint:x.checkpoint,evidence:artifact('checks-'+r.id)};
+      case 'review': {const n=Object.values(s.records).filter(v=>v.action==='review'&&v.status==='done').length;return {accepted:!(s.options.repairOnce&&n===0),spec:x.spec,checkpoint:x.checkpoint,findings:artifact('review-'+r.id)};}
+      case 'reproduce': {const n=Object.values(s.records).filter(v=>v.action==='reproduce'&&v.status==='done').length;return {reproduced:!s.options.neverReproduce&&!(s.options.reproduceOnce&&n===0),checkpoint:x.checkpoint,evidence:artifact('reproduction-'+r.id)};}
+      case 'planTasks': return {tasks:x.tasks};
+      case 'inspectTask': return {finding:artifact('task-'+x.task.id)};
+      default: fail('unsupported_mock_action',r.action+' '+index);
+    }
+  }
+  function call(s,node,r,env,w) {
+    if(r.status==='ready') {
+      if(s.status!=='running') return;
+      if(s.work>=s.maxWork) {s.status='limit_reached';emit(s,'total_work_exhausted');return;}
+      if(Object.values(s.records).filter(v=>v.status==='running').length>=s.maxConcurrency) return;
+      r.inputs ??= binding(node.with,env);r.action=node.action;
+      if(globalThis.Authoring)Authoring.validateValue(r.inputs,Authoring.actions[node.action].inputs);
+      if(r.attempts.length>=(globalThis.Authoring?Authoring.actions[node.action].maxAttempts:1))fail('attempt_limit');
+      if(node.runtime && s.options.unsupportedRuntime) {s.status='capability_blocked';emit(s,'unsupported_capability',{setting:s.options.unsupportedRuntime});return;}
+      if(node.action==='approvePublish') {
+        if(!r.inputs.checks.passed || !r.inputs.review.accepted || !eq(r.inputs.spec,r.inputs.checks.spec) || !eq(r.inputs.spec,r.inputs.review.spec) || !eq(r.inputs.checkpoint,r.inputs.checks.checkpoint) || !eq(r.inputs.checkpoint,r.inputs.review.checkpoint)) fail('verification_binding_mismatch');
+      }
+      if(node.action==='publishPR') validateGate(s,r.inputs);
+      if(node.action==='implement') validateScope(s,r.inputs);
+      s.work++;
+      const attempt={id:JSON.stringify([r.id,r.attempts.length+1]),number:r.attempts.length+1,started:s.tick,inputs:copy(r.inputs),status:'running'};
+      r.attempts.push(attempt);r.status='running';emit(s,'dispatch',{occurrence:r.id,attempt:attempt.id,action:node.action});
+      if(['approveSpec','approvePublish','unreproduced'].includes(node.action)) {
+        const requestId=JSON.stringify([r.id,'human']);
+        s.requests[requestId]={id:requestId,occurrence:r.id,version:1,executionVersion:s.version,manifest:gateManifest(s,node.action,r.inputs),action:node.action,status:'waiting',answer:null};
+        r.status='waiting';emit(s,'human_wait',{requestId});
+      }
+      if(node.action==='publishPR') {
+        const key=JSON.stringify([s.id,r.path,'publication']);
+        const payload={spec:r.inputs.spec,commit:r.inputs.checkpoint.commit,deliveryKey:r.inputs.deliveryKey};
+        if(s.effects[key]&&!eq(s.effects[key].payload,payload)) fail('idempotency_payload_conflict');
+        s.effects[key] ??= {key,occurrence:r.id,payload,status:'intent',receipt:null};r.effectKey=key;
+        emit(s,'effect_intent',{key});
+      }
+      return;
+    }
+    if(r.status==='waiting') {
+      const q=Object.values(s.requests).find(q=>q.occurrence===r.id);
+      if(q.status==='answered'){if(globalThis.Authoring)Authoring.validateValue(q.answer,Authoring.actions[node.action].outputs);r.output=copy(q.answer);r.status='done';r.attempts.at(-1).status='done';emit(s,'accept_output',{occurrence:r.id});}
+      return;
+    }
+    if(r.status!=='running') return;
+    if(s.status!=='running') return;
+    if(r.action==='publishPR') {
+      const effect=s.effects[r.effectKey];
+      if(effect.status==='unknown'){s.status='recovery_required';return;}
+      validateGate(s,r.inputs);
+      if(effect.status==='intent') {
+        const delivery=effect.payload.deliveryKey;
+        let receipt=w.receipts[effect.key];
+        if(!receipt) {
+          if(!w.deliveries[delivery]) {w.creates++;w.deliveries[delivery]={url:'https://example.invalid/pr/'+w.creates,commit:effect.payload.commit};}
+          else {w.updates++;w.deliveries[delivery].commit=effect.payload.commit;}
+          receipt={pullRequest:{url:w.deliveries[delivery].url}};w.receipts[effect.key]=copy(receipt);
+        }
+        effect.status='unknown';emit(s,'provider_success_receipt_missing',{key:effect.key});return;
+      }
+      if(effect.status==='confirmed') {if(globalThis.Authoring)Authoring.validateValue(effect.receipt,Authoring.actions[node.action].outputs);r.output=effect.receipt;r.status='done';r.attempts.at(-1).status='done';}
+      return;
+    }
+    if(s.options.failOnce===r.action&&!s.options.failed) {
+      s.options.failed=true;r.attempts.at(-1).status='retryable_failure';r.status='retry_wait';emit(s,'retry_wait',{occurrence:r.id});return;
+    }
+    if(s.options.permanentFailure===r.action){r.status='failed';r.attempts.at(-1).status='failed';s.status='failure_recovery_required';emit(s,'branch_failed',{occurrence:r.id});for(const sibling of Object.values(s.records))if(sibling.status==='running'){sibling.stopRequested=true;emit(s,'sibling_cancel_requested',{occurrence:sibling.id});}return;}
+    r.output=mockResult(s,r,w);if(globalThis.Authoring)Authoring.validateValue(r.output,Authoring.actions[node.action].outputs);r.status='done';r.attempts.at(-1).status='done';emit(s,'accept_output',{occurrence:r.id});
+  }
+  function visit(s,node,path,env,w) {
+    const r=rec(s,node,path);if(r.status==='done')return r;
+    if(node.type==='call'){call(s,node,r,env,w);return r;}
+    r.status='active';const inner={...env};
+    const child=(n,e=inner,suffix=[])=>visit(s,n,[...r.path,...suffix],e,w);
+    const done=out=>{r.output=copy(out);r.status='done';};
+    switch(node.type) {
+      case 'sequence': {
+        for(const n of node.children) {const c=child(n);if(c.status!=='done'||s.status!=='running')return r;inner[n.id]=c.output;}
+        done(node.output?binding(node.output,inner):{});break;
+      }
+      case 'choose': {
+        if(r.selected===undefined) {r.selected=node.cases.findIndex(c=>condition(c.when,inner));emit(s,'branch_selected',{occurrence:r.id,selected:r.selected});return r;}
+        const n=r.selected<0?node.otherwise:node.cases[r.selected].then;const c=child(n);if(c.status==='done')done(c.output);break;
+      }
+      case 'parallel': {
+        if(!r.membership) {r.membership=node.branches.map(n=>n.id);emit(s,'membership_accepted',{occurrence:r.id,members:r.membership});return r;}
+        let active=0,complete=true;
+        for(const id of r.membership) {
+          const n=node.branches.find(n=>n.id===id);const existing=rec(s,n,r.path);
+          if(existing.status!=='done' && active>=node.maxConcurrency) {complete=false;continue;}
+          const c=child(n,{...env});if(c.status!=='done'){active++;complete=false;}else inner[id]=c.output;
+        }
+        if(complete)done(node.output?binding(node.output,inner):Object.fromEntries(r.membership.map(id=>[id,inner[id]])));break;
+      }
+      case 'forEach': {
+        if(!r.membership) {
+          const items=binding(node.items,env);if(!Array.isArray(items)||items.length>node.maxItems)fail('fanout_oversized');
+          const keys=items.map(item=>binding({ref:{source:'item',pointer:node.key}},{item}));
+          if(keys.some(k=>typeof k!=='string'||!k.length)||new Set(keys).size!==keys.length)fail('fanout_duplicate_or_invalid_key');
+          r.membership=items.map((item,i)=>({key:keys[i],item:copy(item)}));emit(s,'membership_accepted',{occurrence:r.id,members:r.membership});return r;
+        }
+        let active=0,complete=true;const outputs=[];
+        for(const {key,item} of r.membership) {
+          const suffix=[['item',key]],existing=rec(s,node.body,[...r.path,...suffix]);
+          if(existing.status!=='done'&&active>=node.maxConcurrency) {complete=false;continue;}
+          const e={...env,item},c=child(node.body,e,suffix);
+          if(c.status!=='done'){active++;complete=false;}else outputs.push(binding(node.output,{...e,[node.body.id]:c.output}));
+        }
+        if(complete)done(outputs);break;
+      }
+      case 'repeat': {
+        if(r.iteration===undefined){r.iteration=1;r.carry=binding(node.initial,env);}
+        const c=child(node.body,{...env,carry:r.carry},[['iteration',r.iteration]]);
+        if(c.status!=='done'||s.status!=='running')return r;
+        const e={...env,carry:r.carry,body:c.output};
+        if(condition(node.until,e))done(binding(node.output,e));
+        else if(r.iteration===node.maxIterations){s.status='limit_reached';emit(s,'loop_exhausted',{occurrence:r.id,iteration:r.iteration});}
+        else {r.carry=binding(node.carry,e);r.iteration++;emit(s,'next_iteration',{occurrence:r.id,iteration:r.iteration});}
+        break;
+      }
+      case 'end': done(binding(node.result,env));if(globalThis.Authoring)Authoring.validateValue(r.output,s.definition.outputs);s.output=r.output;s.status='completed';emit(s,'run_ended',{output:s.output});break;
+      default:fail('unsupported_node',node.type);
+    }
+    return r;
+  }
+  function step(s,w) {
+    s.tick++;
+    if(s.status!=='running'){emit(s,'dispatch_blocked',{status:s.status});return s;}
+    try{const r=visit(s,s.definition.body,[],{input:s.inputs},w);if(r.status==='done'&&s.status==='running'){if(globalThis.Authoring)Authoring.validateValue(r.output,s.definition.outputs);s.output=r.output;s.status='completed';}}
+    catch(e){s.status='blocked';emit(s,e.code??'model_error',{message:e.message});}
+    return s;
+  }
+  function reply(s,requestId,value,commandId,version,executionVersion,manifest,responder='member') {
+    const payload={requestId,value,version,executionVersion,manifest,responder};
+    if(s.commands[commandId]) {if(!eq(s.commands[commandId].payload,payload))return 'command_payload_conflict';return s.commands[commandId].result;}
+    const q=s.requests[requestId];let result='accepted';
+    if(responder!=='member')result='unauthorized';
+    else if(!q||q.status!=='waiting'||version!==q.version||executionVersion!==s.version||q.executionVersion!==s.version||!eq(manifest,q.manifest)||s.status!=='running')result='reply_conflict';
+    else if(q.action==='unreproduced'?!['stop','investigate_again'].includes(value.decision):typeof value.approved!=='boolean')result='invalid_result';
+    else {
+      const output={...copy(value),requestId:q.id,manifest:copy(q.manifest),version:q.version,responder};
+      try{if(globalThis.Authoring)Authoring.validateValue(output,Authoring.actions[q.action].outputs);q.answer=output;q.status='answered';q.version++;}
+      catch(e){result='invalid_result';}
+    }
+    s.commands[commandId]={payload:copy(payload),result};emit(s,'human_reply',{requestId,result,commandId});return result;
+  }
+  function answer(s,q,value,id='reply-'+Object.keys(s.commands).length){return reply(s,q.id,value,id,q.version,s.version,copy(q.manifest));}
+  function reconcile(s,w) {
+    for(const e of Object.values(s.effects)) if(e.status==='unknown') {
+      const receipt=w.receipts[e.key];if(receipt){e.status='confirmed';e.receipt=copy(receipt);emit(s,'effect_reconciled',{key:e.key,receipt});}
+      else emit(s,'reconciliation_unresolved',{key:e.key});
+    }
+    if(s.status==='recovery_required'&&!Object.values(s.effects).some(e=>e.status==='unknown')&&!Object.values(s.records).some(r=>r.status==='paused'))s.status='running';
+  }
+  function retry(s,occurrence) {
+    const r=s.records[occurrence],contract=r&&Authoring.actions[r.action];if(!r||r.status!=='retry_wait'||!contract.retryableErrors.includes('mock_read_transport')||r.attempts.length>=contract.maxAttempts)fail('unsafe_retry');
+    r.status='ready';emit(s,'retry_authorized',{occurrence});
+  }
+  function save(s,revision,base=s.knowledgeHead.revision) {
+    if(base!==s.knowledgeHead.revision)return 'save_conflict';
+    if(s.revisions.some(r=>r.ref.revision===revision))return 'revision_conflict';
+    s.knowledgeHead=artifact('spec',revision);s.knowledgeVersion++;s.revisions.push({version:s.knowledgeVersion,ref:copy(s.knowledgeHead)});emit(s,'knowledge_saved',{revision,sourceVersion:s.knowledgeVersion,executionObserved:false});return 'saved';
+  }
+  function observe(s,revision) {
+    if(['completed','superseded','cancelled'].includes(s.status))return 'terminal';
+    const saved=s.revisions.find(r=>r.ref.revision===revision);if(!saved)return 'unknown_revision';
+    if(saved.version<=s.observedSourceVersion)return 'stale_or_duplicate';
+    s.observedSourceVersion=saved.version;s.version++;s.observedEdit=copy(saved.ref);s.status='replan_required';emit(s,'edit_observed',{revision,sourceVersion:saved.version,version:s.version});return 'observed';
+  }
+  function retain(s,revision,version) {
+    if(s.status!=='replan_required'||s.version!==version||s.observedEdit?.revision!==revision)return 'retain_conflict';
+    s.observedEdit=null;s.status=Object.values(s.records).some(r=>r.status==='paused')?'recovery_required':'running';
+    for(const q of Object.values(s.requests))if(q.status==='waiting'){q.executionVersion=s.version;q.version++;}
+    emit(s,'revision_retained',{revision,pinned:s.pinnedSpec});return 'retained';
+  }
+  function cancel(s){s.status='cancel_requested';s.version++;emit(s,'cancel_requested');}
+  function quiesce(s) {
+    for(const r of Object.values(s.records)) if(['running','retry_wait'].includes(r.status)) {
+      if(r.effectKey&&s.effects[r.effectKey].status==='unknown')continue;
+      if(r.effectKey&&s.effects[r.effectKey].status==='intent')s.effects[r.effectKey].status='cancelled_unsent';
+      r.status=s.status==='replan_required'&&!r.effectKey?'paused':'cancelled';if(r.attempts.length)r.attempts.at(-1).status='cancelled';
+    }
+    if(s.status==='cancel_requested'&&!Object.values(s.effects).some(e=>e.status==='unknown'))s.status='cancelled';
+    emit(s,'controllable_work_quiesced');
+  }
+  function recoverWorkspace(s,w,occurrence) {
+    const r=s.records[occurrence];
+    if(s.status!=='recovery_required'||r?.status!=='paused'||!w.verifiedCommits.includes(r.inputs.checkpoint?.commit))fail('workspace_recovery_required');
+    const contract=Authoring.actions[r.action];if(!contract.retryableErrors.includes('mock_verified_reconstruction')||r.attempts.length>=contract.maxAttempts)fail('unsafe_retry');
+    r.recovery={verifiedOriginalInput:copy(r.inputs.checkpoint)};r.status='ready';emit(s,'workspace_reconstructed',{occurrence,checkpoint:r.inputs.checkpoint});
+    if(!Object.values(s.records).some(r=>r.status==='paused')&&!Object.values(s.effects).some(e=>e.status==='unknown'))s.status='running';
+  }
+  function successor(s,w,{revision,checkpoint:cp,id,version,admission}) {
+    if(!id||id===s.id)fail('invalid_run_identity');
+    if(!admission||!admission.id||admission.id===s.admission.id||!Number.isSafeInteger(admission.maxWork)||admission.maxWork<1||!Number.isSafeInteger(admission.maxConcurrency)||admission.maxConcurrency<1)fail('new_admission_required');
+    if(s.status!=='replan_required'||s.version!==version||s.observedEdit?.revision!==revision)fail('adoption_conflict');
+    if(Object.values(s.records).some(r=>r.status==='running')||Object.values(s.effects).some(e=>e.status==='unknown'||e.status==='intent'))fail('continuation_blocked');
+    if(!w.verifiedCommits.includes(cp.commit))fail('unverified_checkpoint');
+    const next=start(s.definition,{...s.inputs,checkpoint:cp,suppliedSpec:s.observedEdit},id,{...s.options,maxWork:admission.maxWork,maxConcurrency:admission.maxConcurrency});next.admission=copy(admission);
+    next.lineage={predecessor:s.id,deliveryKey:s.inputs.deliveryKey};s.status='superseded';s.version++;emit(s,'successor_created',{id,revision});return next;
+  }
+  return {copy,canonical,eq,artifact,checkpoint,binding,condition,start,world,step,reply,answer,reconcile,retry,save,observe,retain,cancel,quiesce,recoverWorkspace,successor,validateGate,validateScope};
+})();
+
+/* THROWAWAY executable experiment cases. Assertions record decision evidence, not a production test suite. */
+globalThis.Experiment = (()=>{
+  const C=globalThis.Conformance;
+  const inputs=(bug=false)=>({...bug?{report:C.artifact('report'),baselineCheckpoint:C.checkpoint(),priorFindings:null}:{brief:C.artifact('brief')},checkpoint:C.checkpoint(),suppliedSpec:null,deliveryKey:'delivery-1'});
+  const createDemo=()=>({state:C.start(Authoring.definitions.feature,inputs()),world:C.world()});
+  function runAll(){
+    const results=[];
+    function scenario(name,fn){
+      const result={name,passed:false,assertions:[],trace:[]};
+      const assert=(ok,label)=>{result.assertions.push({label,passed:!!ok});if(!ok)throw new Error(label);};
+      const log=(label,s,w)=>result.trace.push({label,state:C.copy(s),world:C.copy(w)});
+      const pump=(s,w,stop=()=>false,auto=true)=>{
+        for(let i=0;i<250;i++){
+          if(stop(s))return s;
+          if(s.status==='completed'||s.status==='limit_reached'||s.status==='blocked'||s.status==='capability_blocked')return s;
+          if(auto)for(const q of Object.values(s.requests))if(q.status==='waiting'){
+            C.answer(s,q,q.action==='unreproduced'?{decision:'investigate_again',evidence:C.artifact('more-evidence')}:{approved:true});log('Human response accepted',s,w);
+          }
+          C.step(s,w);log('Advance execution',s,w);
+          if(auto && Object.values(s.effects).some(e=>e.status==='unknown')){C.reconcile(s,w);log('Reconcile provider receipt',s,w);}
+          if(s.status!=='running'&&s.status!=='recovery_required')return s;
+        }
+        throw new Error('experiment step bound reached');
+      };
+      try{fn({assert,log,pump});result.passed=true;}catch(e){result.error=e.stack??e.message;}
+      results.push(result);
+    }
+    for(const [key,options] of [['feature',{repairOnce:true}],['bug',{reproduceOnce:true,repairOnce:true}]])scenario(key+' journey: bounded decisions and parallel verification',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions[key],inputs(key==='bug'),'run-'+key,options),w=C.world();log('Admitted frozen definition',s,w);pump(s,w);
+      assert(s.status==='completed', 'Starter journey completes');assert(s.output.outcome==='published','Typed outcome is published');assert(w.creates===1,'Exactly one mock PR created');
+      const impl=Object.values(s.records).filter(r=>r.action==='implement');assert(impl.length===2,'Review change creates a second bounded occurrence');assert(new Set(impl.map(r=>r.id)).size===2,'Repair occurrence IDs differ');
+      const branches=Object.values(s.records).filter(r=>r.type==='parallel');assert(branches.every(r=>r.membership.length===2&&r.status==='done'),'All declared verification branches join');
+      if(key==='bug')assert(Object.values(s.records).filter(r=>r.action==='reproduce').length===2,'Reproduction follows human evidence into next round');
+    });
+    scenario('Restart at a human wait preserves request and attempts',({assert,log,pump})=>{
+      let {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.status==='waiting'),false);
+      const before=C.copy(s),ids=Object.keys(s.requests);s=C.copy(s);log('JSON snapshot restored without a worker',s,w);
+      assert(C.eq(s,before),'Entire execution snapshot survives round trip');pump(s,w);assert(s.status==='completed','Restored run resumes');assert(Object.keys(s.requests).includes(ids[0]),'Original durable human request reused');
+      assert(s.records[s.requests[ids[0]].occurrence].attempts.length===1,'Wait restart does not repeat invocation');
+    });
+    scenario('Restart after membership acceptance preserves task identity and order',({assert,log,pump})=>{
+      const tasks=[{id:'a/b',title:'First'},{id:'a~b',title:'Second'},{id:'a',title:'Third'}];let s=C.start(Authoring.definitions.fanout,{tasks,checkpoint:C.checkpoint()}),w=C.world();
+      pump(s,w,x=>Object.values(x.records).some(r=>r.type==='forEach'&&r.membership));
+      const membership=Object.values(s.records).find(r=>r.type==='forEach').membership;s=C.copy(s);tasks.reverse();log('Restart; caller changes its source array order',s,w);pump(s,w);
+      const each=Object.values(s.records).find(r=>r.type==='forEach');assert(C.eq(each.membership,membership),'Accepted membership stays frozen');assert(each.output.length===3,'Exactly original three tasks complete');
+      assert(new Set(Object.values(s.records).filter(r=>r.action==='inspectTask').map(r=>r.id)).size===3,'Delimiter-like item keys remain distinct');assert(each.output[0].finding.id==='task-a/b','Output preserves original snapshot order');
+    });
+    for(const [label,tasks] of [['duplicate',[{id:'same',title:'First'},{id:'same',title:'Second'}]],['oversized',Array.from({length:13},(_,i)=>({id:String(i),title:'Task '+i}))]])scenario('Fan-out rejects '+label+' membership before item dispatch',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions.fanout,{tasks,checkpoint:C.checkpoint()}),w=C.world();pump(s,w);assert(s.status==='blocked','Invalid fan-out is blocked');assert(!Object.values(s.records).some(r=>r.action==='inspectTask'),'No item invocation created');log('Rejected fan-out',s,w);
+    });
+    scenario('Global work budget survives restart and retry',({assert,log,pump})=>{
+      let s=C.start(Authoring.definitions.feature,inputs(),'budget',{maxWork:1,failOnce:'discover'}),w=C.world();pump(s,w,x=>Object.values(x.records).some(r=>r.status==='retry_wait'));
+      const r=Object.values(s.records).find(r=>r.status==='retry_wait');s=C.copy(s);C.retry(s,r.id);C.step(s,w);log('Retry requires another admitted work unit',s,w);assert(s.status==='limit_reached','Exhausted budget blocks retry after restart');assert(s.work===1,'Restart does not replenish budget');assert(s.records[r.id].attempts.length===1,'Unfunded retry never dispatches');
+    });
+    scenario('Safe invocation retry preserves occurrence and frozen input',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions.feature,inputs(),'retry',{failOnce:'discover'}),w=C.world();pump(s,w,x=>Object.values(x.records).some(r=>r.status==='retry_wait'));
+      const r=Object.values(s.records).find(r=>r.status==='retry_wait'),id=r.id,before=C.copy(r.inputs);C.retry(s,id);pump(s,w);log('Retry complete',s,w);
+      assert(s.status==='completed','Safe read retry completes');assert(r.attempts.length===2,'Two invocation attempts, one occurrence');assert(r.attempts[0].id!==r.attempts[1].id,'Attempt identities are distinct');assert(C.eq(before,r.attempts[1].inputs),'Retry inputs remain frozen');
+    });
+    scenario('Provider success before receipt: restart reconciles one PR',({assert,log,pump})=>{
+      let {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.effects).some(e=>e.status==='intent'));
+      C.step(s,w);log('Provider created PR; receipt not accepted',s,w);const effect=C.copy(Object.values(s.effects)[0]);assert(w.creates===1&&effect.status==='unknown','Provider and Execution disagree visibly');
+      s=C.copy(s);C.step(s,w);assert(s.status==='recovery_required','Uncertain publication blocks continuation');C.reconcile(s,w);log('Existing PR found by effect identity',s,w);pump(s,w);
+      assert(s.status==='completed'&&w.creates===1,'Restart never creates a duplicate PR');assert(Object.keys(s.effects)[0]===effect.key,'Effect identity survives restart');assert(s.records[effect.occurrence].attempts.length===1,'Reconciliation is not a new publication attempt');
+    });
+    scenario('Competing replies and altered duplicate commands conflict',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.status==='waiting'),false);const q=Object.values(s.requests)[0],v=q.version,ev=s.version,m=C.copy(q.manifest);
+      assert(C.reply(s,q.id,{approved:true},'same',v,ev,m)==='accepted','First authorized response wins');assert(C.reply(s,q.id,{approved:true},'same',v,ev,m)==='accepted','Identical command redelivery is idempotent');
+      assert(C.reply(s,q.id,{approved:false},'same',v,ev,m)==='command_payload_conflict','Same ID with changed answer conflicts');assert(C.reply(s,q.id,{approved:false},'other',v,ev,m)==='reply_conflict','Competing answer cannot overwrite');log('Conflicting replies retained in experiment assertions',s,w);
+    });
+    scenario('Knowledge save precedes approval before Execution observes it',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.action==='approvePublish'&&q.status==='waiting'));const q=Object.values(s.requests).find(q=>q.action==='approvePublish');
+      C.save(s,'2');log('Knowledge saved revision 2; Execution has not observed it',s,w);assert(C.answer(s,q,{approved:true})==='accepted','Old exact-manifest approval can still be accepted before observation');
+      C.observe(s,'2');C.step(s,w);log('Execution observes edit and blocks new dispatch',s,w);assert(s.status==='replan_required'&&w.creates===0,'Observed edit stops publication dispatch');assert(q.manifest.spec.revision==='1','Accepted approval still names revision 1');
+    });
+    scenario('Observed edit rejects old approval; retain is version bound',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.status==='waiting'),false);const q=Object.values(s.requests)[0],v=q.version,ev=s.version,m=C.copy(q.manifest);
+      C.save(s,'2');C.observe(s,'2');assert(C.reply(s,q.id,{approved:true},'late',v,ev,m)==='reply_conflict','Reply after observation is stale');assert(C.retain(s,'2',ev)==='retain_conflict','Stale retain command rejected');assert(C.retain(s,'2',s.version)==='retained','Exact observed revision may be retained');
+      C.save(s,'3');C.observe(s,'3');assert(s.status==='replan_required','Retaining revision 2 does not acknowledge revision 3');log('A later edit requires another explicit decision',s,w);
+    });
+    scenario('Approval binds exact reviewed spec and commit',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.action==='approvePublish'&&q.status==='waiting'));const q=Object.values(s.requests).find(q=>q.action==='approvePublish');C.answer(s,q,{approved:true});
+      const r=s.records[q.occurrence],input={...r.inputs,approval:q.answer};let rejected=false;try{C.validateGate(s,{...input,checkpoint:C.checkpoint('different')});}catch(e){rejected=e.code==='approval_binding_mismatch';}assert(rejected,'Different commit cannot consume approval');
+      rejected=false;try{C.validateGate(s,{...input,spec:C.artifact('spec','2')});}catch(e){rejected=e.code==='approval_binding_mismatch';}assert(rejected,'Different spec cannot consume approval');log('Exact gate bindings remain inspectable',s,w);
+    });
+    scenario('Adopted bug revision starts fresh with recovered work and original baseline',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions.bug,inputs(true),'bug-old'),w=C.world();pump(s,w,x=>Object.values(x.requests).some(q=>q.action==='approvePublish'&&q.status==='waiting'));
+      const q=Object.values(s.requests).find(q=>q.action==='approvePublish'),cp=q.manifest.commit;const working={id:'recovered',commit:cp};C.save(s,'2');C.observe(s,'2');C.quiesce(s);
+      const next=C.successor(s,w,{revision:'2',checkpoint:working,id:'bug-next',version:s.version,admission:{id:'new-bug-budget',maxWork:100,maxConcurrency:4}});log('Successor admitted at entry with no inherited actions',next,w);
+      assert(!Object.keys(next.records).length&&!Object.keys(next.requests).length,'No completed action or approval copied');assert(next.inputs.baselineCheckpoint.commit==='commit-base','Original failing baseline retained');assert(next.inputs.checkpoint.commit===cp,'Recovered working checkpoint retained');assert(next.inputs.deliveryKey===s.inputs.deliveryKey,'Logical delivery mapping inherited');
+      pump(next,w);assert(next.status==='completed','Successor revalidates full journey');assert(Object.values(next.records).find(r=>r.action==='reproduce').inputs.checkpoint.commit==='commit-base','Reproduction uses failing baseline');assert(Object.values(next.records).find(r=>r.action==='prepare').inputs.checkpoint.commit===cp,'Preparation uses recovered code');
+    });
+    scenario('Unknown old publication blocks adoption; successor updates inherited PR',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.effects).some(e=>e.status==='intent'));C.step(s,w);C.save(s,'2');C.observe(s,'2');C.quiesce(s);
+      const cp=Object.values(s.records).find(r=>r.action==='implement').output.checkpoint;let blocked=false;try{C.successor(s,w,{revision:'2',checkpoint:cp,id:'next',version:s.version,admission:{id:'new-feature-budget',maxWork:100,maxConcurrency:4}});}catch(e){blocked=e.code==='continuation_blocked';}assert(blocked,'Unknown predecessor effect blocks successor');
+      C.reconcile(s,w);C.quiesce(s);const next=C.successor(s,w,{revision:'2',checkpoint:cp,id:'next',version:s.version,admission:{id:'new-feature-budget',maxWork:100,maxConcurrency:4}});pump(next,w);log('Successor updates mapped PR with a new effect',next,w);assert(w.creates===1&&w.updates===1,'Lineage updates one logical PR');assert(Object.keys(s.effects)[0]!==Object.keys(next.effects)[0],'New run has a new operation identity');
+    });
+    scenario('Cancellation preserves uncertain effects until reconciliation',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.effects).some(e=>e.status==='intent'));C.step(s,w);C.cancel(s);C.quiesce(s);C.step(s,w);log('Cancellation requested while publication is uncertain',s,w);
+      assert(s.status==='cancel_requested','Cancellation is not falsely clean');assert(Object.values(s.effects)[0].status==='unknown','Uncertain effect remains visible');C.reconcile(s,w);C.quiesce(s);assert(s.status==='cancelled','Clean cancellation follows effect accounting');assert(w.creates===1,'Cancellation did not erase published PR');
+    });
+    scenario('Loop exhaustion needs attention and survives restart',({assert,log,pump})=>{
+      let s=C.start(Authoring.definitions.feature,inputs(),'exhaustion',{alwaysFailChecks:true}),w=C.world();pump(s,w);assert(s.status==='limit_reached','Repair exhaustion pauses');assert(!Object.values(s.requests).some(q=>q.action==='approvePublish'),'No publication approval after failed checks');s=C.copy(s);C.step(s,w);log('Restart cannot reset exhausted iterations',s,w);assert(s.status==='limit_reached'&&w.creates===0,'Exhaustion remains blocked after restart');
+    });
+    scenario('Unsupported runtime settings block without substitution',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions.feature,inputs(),'unsupported',{unsupportedRuntime:'effort=imaginary'}),w=C.world();pump(s,w);assert(s.status==='capability_blocked','Specific capability blocks dispatch');assert(s.work===0,'No attempt ran under substituted settings');log('Unsupported capability is visible',s,w);
+    });
+    scenario('Out-of-order edit delivery and duplicate observation preserve the newest decision',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.status==='waiting'),false);C.save(s,'2');C.save(s,'3');C.observe(s,'3');
+      assert(C.observe(s,'2')==='stale_or_duplicate','Older source event cannot roll back revision 3');assert(C.retain(s,'2',s.version)==='retain_conflict','Older retain cannot acknowledge newer edit');assert(C.retain(s,'3',s.version)==='retained','Newest proposal can be explicitly retained');
+      assert(C.observe(s,'3')==='stale_or_duplicate'&&s.status==='running','Redelivered retained edit does not pause again');log('Monotone source version survives retain',s,w);
+    });
+    scenario('Retain after writer stop requires verified workspace reconstruction',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.records).some(r=>r.action==='implement'&&r.status==='running'));const r=Object.values(s.records).find(r=>r.action==='implement');C.save(s,'2');C.observe(s,'2');C.quiesce(s);C.retain(s,'2',s.version);
+      assert(s.status==='recovery_required','Stopped writer cannot silently resume');C.reconcile(s,w);assert(s.status==='recovery_required','Effect reconciliation cannot bypass workspace recovery');C.recoverWorkspace(s,w,r.id);pump(s,w);log('Verified original workspace input reconstructed before reattempt',s,w);assert(s.status==='completed','Retained run can recover and finish');assert(r.attempts.length===2&&r.recovery.verifiedOriginalInput.commit==='commit-base','Recovery is explicit and consumes another attempt');
+    });
+    scenario('Package budget cannot be widened by admission options',({assert,log,pump})=>{
+      const def=C.copy(Authoring.definitions.feature);def.policy.totalWorkBudget=1;const s=C.start(def,inputs(),'package-budget',{maxWork:100}),w=C.world();pump(s,w);assert(s.maxWork===1&&s.work===1,'Declared stricter budget caps admission');assert(s.status==='limit_reached','Budget blocks next action');log('Package limit enforced',s,w);
+    });
+    scenario('Failure in parallel verification requests sibling cancellation and prevents publication',({assert,log,pump})=>{
+      const s=C.start(Authoring.definitions.feature,inputs(),'parallel-failure',{permanentFailure:'check'}),w=C.world();pump(s,w);assert(s.status==='failure_recovery_required','Branch failure is explicit');const sibling=Object.values(s.records).find(r=>r.action==='review');assert(sibling.stopRequested&&sibling.status==='running','Active sibling receives stop request');C.quiesce(s);log('Controllable sibling cancellation accounted for',s,w);assert(sibling.status==='cancelled','Sibling confirms cancellation');assert(!Object.values(s.records).find(r=>r.type==='parallel'&&r.status==='done')&&w.creates===0,'Failed join never authorizes publication');
+    });
+    scenario('Successor identity and budget require explicit new admission',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.requests).some(q=>q.status==='waiting'),false);C.save(s,'2');C.observe(s,'2');const args={revision:'2',checkpoint:C.checkpoint(),version:s.version};let code;
+      try{C.successor(s,w,{...args,id:s.id,admission:{id:'new',maxWork:100,maxConcurrency:3}});}catch(e){code=e.code;}assert(code==='invalid_run_identity','Predecessor identity cannot be reused');
+      try{C.successor(s,w,{...args,id:'new-run'});}catch(e){code=e.code;}assert(code==='new_admission_required','Adoption alone does not replenish work allowance');log('Successor guards reject incomplete admission',s,w);
+    });
+    scenario('Mismatched verification spec is rejected before asking for publication approval',({assert,log,pump})=>{
+      const {state:s,world:w}=createDemo();pump(s,w,x=>Object.values(x.records).some(r=>r.action==='review'&&r.status==='running'));const review=Object.values(s.records).find(r=>r.action==='review');review.inputs.spec=C.artifact('spec','other');pump(s,w);assert(s.status==='blocked'&&s.events.at(-1).type==='verification_binding_mismatch','Injected adapter mismatch rejected');assert(!Object.values(s.requests).some(q=>q.action==='approvePublish'),'No approval requested for unrelated spec evidence');log('Exact evidence mismatch blocks gate',s,w);
+    });
+    scenario('Implementation cannot consume a scope approval for another specification',({assert,log,pump})=>{
+      const def=C.copy(Authoring.definitions.feature);def.body.children.find(n=>n.id==='delivery').body.children[0].with.object.spec={literal:C.artifact('different')};Authoring.validate(def);
+      const s=C.start(def,inputs(),'scope-mismatch'),w=C.world();pump(s,w);assert(s.status==='blocked'&&s.events.at(-1).type==='scope_approval_binding_mismatch','Accepted scope receipt must match exact implementation spec');assert(!Object.values(s.records).some(r=>r.action==='implement'&&r.attempts.length),'No workspace invocation begins outside approved scope');log('Scope gate rejects mismatched specification',s,w);
+    });
+    return results;
+  }
+  return {runAll,createDemo,inputs};
+})();
+
+</script>
+<script>
+(function () {
+'use strict';
+const $=id=>document.getElementById(id);
+const make=(tag,text,className)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(className)n.className=className;return n;};
+const label=k=>String(k).replace(/([a-z0-9])([A-Z])/g,'$1 $2').replace(/[_-]/g,' ').replace(/^./,x=>x.toUpperCase());
+let current, results=[], selected=-1, selectedStep=-1, context='Free play · New feature';
+function message(text,error=false){$('message').textContent=text||'';$('message').classList.toggle('error',error);}
+function readable(value,depth=0){
+ const frag=document.createDocumentFragment();
+ if(value===null||typeof value!=='object'){frag.append(make('span',value===null?'None':String(value)));return frag;}
+ const entries=Object.entries(value);
+ if(!entries.length){frag.append(make('p',Array.isArray(value)?'No entries':'None recorded','empty'));return frag;}
+ const dl=make('dl');
+ for(const [key,item] of entries){
+  const title=Array.isArray(value)?'Item '+(Number(key)+1):label(key);
+  if(item!==null&&typeof item==='object'){
+   const d=make('details');d.open=depth<1;const s=make('summary');s.append(make('strong',title),document.createTextNode(' · '+(Array.isArray(item)?item.length+' items':Object.keys(item).length+' fields')));d.append(s);const body=make('div',undefined,'tree');body.append(readable(item,depth+1));d.append(body);dl.append(d);
+  }else{const row=make('div',undefined,'field');const dd=make('dd',item===null?'None':String(item));if(item===null)dd.className='nil';row.append(make('dt',title),dd);dl.append(row);}
+ }
+ frag.append(dl);return frag;
+}
+function renderPayload(id,data){$(id).replaceChildren(readable(data));}
+function stateRows(id,items,emptyText){
+ const host=$(id);host.replaceChildren();
+ const rows=Object.values(items||{});
+ if(!rows.length){host.append(make('p',emptyText,'empty'));return;}
+ for(const row of rows){const d=make('details',undefined,'occurrence');const summary=make('summary');summary.append(make('span',label(row.action||row.node||row.occurrence||row.key||'Publication effect'),'name'),make('span',label(row.status||'recorded'),'small-badge'));d.append(summary);const body=make('div',undefined,'payload');body.append(readable(row));d.append(body);host.append(d);}
+}
+function render(){
+ const s=current.state,w=current.world;
+ $('view-context').textContent=context;$('run-status').textContent=label(s.status||'snapshot');
+ const cards=[['Run',s.id||'Not applicable'],['Execution version',s.version??'—'],['Logical tick',s.tick??'—'],['Work used',s.work===undefined?'—':s.work+' / '+s.maxWork],['Pinned spec revision',s.pinnedSpec?.revision??'None'],['Saved spec revision',s.knowledgeHead?.revision??'None'],['Observed edit',s.observedEdit?.revision??'None'],['Mock PR changes',(w.creates??0)+' created · '+(w.updates??0)+' updated']];
+ $('summary-cards').replaceChildren(...cards.map(([key,value])=>{const card=make('div',undefined,'card');card.append(make('span',key,'label'),make('span',value,'value'));return card;}));
+ stateRows('records',s.records,'No work has been dispatched.');stateRows('requests',s.requests,'No human requests.');stateRows('effects',s.effects,'No publication effects.');
+ const fields=Object.fromEntries(Object.entries(s).filter(([key])=>!['records','requests','effects','events','definition','commands'].includes(key)));
+ renderPayload('run-fields',fields);renderPayload('definition',s.definition||{});renderPayload('world',w);renderPayload('commands',s.commands||{});
+ $('events').replaceChildren();
+ if(!(s.events||[]).length)$('events').append(make('p','No transitions yet.','empty'));
+ for(const event of [...(s.events||[])].reverse()){const d=make('details',undefined,'event');const sum=make('summary');sum.append(make('span','#'+event.seq+' · tick '+event.tick,'event-label'),document.createTextNode(label(event.type)));d.append(sum);const body=make('div',undefined,'payload');body.append(readable(event));d.append(body);$('events').append(d);}
+ $('json').textContent=JSON.stringify(current,null,2);
+}
+function chooseTrace(i){
+ const scenario=results[selected],trace=scenario.trace||[],snap=trace[i];if(!snap)return;
+ selectedStep=i;current={state:Conformance.copy(snap.state||{}),world:Conformance.copy(snap.world||{})};context='Guided · '+scenario.name+' · '+snap.label;
+ for(const [j,b] of [...$('trace-steps').children].entries())b.setAttribute('aria-selected',String(j===i));
+ message(snap.label);render();
+}
+function assertionText(a){if(typeof a==='string')return a;if(a&&typeof a==='object')return a.message||a.label||a.name||a.description||JSON.stringify(a);return String(a);}
+function chooseScenario(index){
+ selected=index;selectedStep=-1;const scenario=results[index];
+ for(const [i,b] of [...$('scenario-tabs').children].entries())b.setAttribute('aria-selected',String(i===index));
+ $('scenario-detail').replaceChildren(make('h3',scenario.name));
+ $('scenario-detail').append(make('span',scenario.passed?'Assertions satisfied':'Needs investigation','badge'));
+ if(scenario.description)$('scenario-detail').append(make('p',scenario.description,'note'));
+ const assertions=Array.isArray(scenario.assertions)?scenario.assertions:scenario.assertions===undefined?[]:Object.entries(scenario.assertions).map(([k,v])=>k+': '+JSON.stringify(v));
+ const checks=make('ul',undefined,'checks');for(const a of assertions)checks.append(make('li',assertionText(a)));$('scenario-detail').append(checks);
+ if(scenario.error)$('scenario-detail').append(make('p',typeof scenario.error==='string'?scenario.error:JSON.stringify(scenario.error),'status-message error'));
+ const traces=scenario.trace||[];$('trace-steps').replaceChildren();
+ traces.forEach((snap,i)=>{const b=make('button',undefined,'step');b.append(make('span',String(i+1),'number'),make('span',snap.label));b.setAttribute('aria-selected','false');b.addEventListener('click',()=>chooseTrace(i));$('trace-steps').append(b);});
+ if(traces.length)chooseTrace(0);else $('trace-steps').append(make('p','This authoring experiment has no execution trace. Its assertions are shown alongside.','empty'));
+}
+function act(action){
+ try{
+  const s=current.state,w=current.world;let result='';
+  if(!s.definition&&action!=='restart')throw new Error('This snapshot is an authoring result. Start a new feature run to explore execution.');
+  switch(action){
+   case 'step':Conformance.step(s,w);result='Advanced the scheduler by one logical tick.';break;
+   case 'restart':current.state=Conformance.copy(s);result='Restored the run from a JSON snapshot. The mock external world was preserved.';break;
+   case 'approve':{const q=Object.values(s.requests||{}).find(q=>q.status==='waiting');if(!q)throw new Error('There is no waiting human request to approve.');if(q.action==='unreproduced')throw new Error('This request needs a reproduction decision. Use its guided experiment.');result='Human reply: '+Conformance.answer(s,q,{approved:true});break;}
+   case 'save':result='Save revision 2: '+Conformance.save(s,'2');break;
+   case 'observe':result='Observe revision 2: '+Conformance.observe(s,'2');break;
+   case 'retain':if(!s.observedEdit)throw new Error('There is no observed edit to resolve. Observe revision 2 first.');result='Keep pinned revision: '+Conformance.retain(s,s.observedEdit.revision,s.version);break;
+   case 'reconcile':Conformance.reconcile(s,w);result='Reconciled uncertain publication effects against recorded mock provider receipts.';break;
+   case 'recover':{const r=Object.values(s.records||{}).find(r=>r.status==='paused');if(!r)throw new Error('workspace_recovery_required: no paused work occurrence is available.');try{Conformance.recoverWorkspace(s,w,r.id);}catch(e){throw new Error(e.message+' Run status: '+s.status+'; original checkpoint: '+(r.inputs?.checkpoint?.commit||'none')+'; verified by the mock world: '+String((w.verifiedCommits||[]).includes(r.inputs?.checkpoint?.commit))+'.');}result='Recovered stopped work from its verified original checkpoint: '+r.node+'.';break;}
+   case 'cancel':Conformance.cancel(s);result='Cancellation requested. Quiesce work to settle controllable activity.';break;
+   case 'quiesce':Conformance.quiesce(s);result='Controllable work quiesced. Unknown external effects still require reconciliation.';break;
+  }
+  context='Free play · '+(s.definition?.package?.id||s.id||'snapshot');
+  const latest=s.events?.at(-1);if(s.status==='blocked')message('Transition blocked: '+(latest?.message||latest?.type||'inspect the latest event'),true);else message(result,/conflict|invalid|unauthorized/.test(result));render();
+ }catch(error){message(error.message,true);render();}
+}
+let draftRunNumber=0;
+function draftMessage(text,error=false){$('draft-message').textContent=text;$('draft-message').classList.toggle('error',error);}
+function readDraft(){return Authoring.normalize(JSON.parse($('playbook-draft').value));}
+$('normalize-draft').addEventListener('click',()=>{try{const normalized=readDraft();$('playbook-draft').value=JSON.stringify(normalized,null,2);draftMessage('Draft validated and normalized. The current run is unchanged.');}catch(e){draftMessage('Draft rejected; original text preserved. '+e.message,true);}});
+$('start-draft').addEventListener('click',()=>{try{
+ const def=readDraft(),packageId=def.package.id;
+ const supported=[Authoring.definitions.feature.package.id,Authoring.definitions.bug.package.id];
+ if(!supported.includes(packageId))throw new Error('unsupported_demo_inputs: no mock input example is configured for '+packageId+'. Use '+supported.join(' or ')+'.');
+ const next=Conformance.start(def,Experiment.inputs(packageId.includes('bug')),'draft-'+Date.now()+'-'+(++draftRunNumber));
+ current={state:next,world:Conformance.world()};context='Free play · New run from draft · '+packageId;
+ $('playbook-draft').value=JSON.stringify(def,null,2);draftMessage('Admitted '+next.id+' from the validated draft. The prior run was not edited.');message('Started a separate run from the draft. Advance one tick to begin.');render();
+}catch(e){draftMessage('New run rejected; original draft text and displayed run preserved. '+e.message,true);}});
+$('reset').addEventListener('click',()=>{try{current=Experiment.createDemo();context='Free play · New feature';message('Started a fresh feature run. Advance one tick to begin.');render();}catch(e){message(e.message,true);}});
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
+try{
+ $('playbook-draft').value=JSON.stringify(Authoring.normalize(Authoring.definitions.feature),null,2);
+ current=Experiment.createDemo();render();results=Experiment.runAll();
+ $('suite-result').textContent=results.filter(x=>x.passed).length+' / '+results.length+' experiments passed';
+ results.forEach((scenario,i)=>{const b=make('button',scenario.name);b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.addEventListener('click',()=>chooseScenario(i));$('scenario-tabs').append(b);});
+ $('scenario-detail').append(make('p','Choose an experiment to inspect its assertions and the recorded states that support them.','empty'));
+}catch(error){message('Experiment failed to initialize: '+error.message,true);$('suite-result').textContent='Initialization failed';}
+})();
+</script>
+</body>
+</html>

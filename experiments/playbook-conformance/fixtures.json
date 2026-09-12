@@ -1,0 +1,4515 @@
+{
+  "definitions": {
+    "feature": {
+      "formatVersion": "agents-assemble.playbook/1",
+      "package": {
+        "id": "example/new-feature",
+        "version": "0.1.0"
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "suppliedSpec": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "deliveryKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "brief",
+          "checkpoint",
+          "suppliedSpec",
+          "deliveryKey"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "published",
+              "rejected"
+            ]
+          },
+          "pullRequest": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "outcome",
+          "pullRequest"
+        ],
+        "additionalProperties": false
+      },
+      "dependencies": {
+        "actions": {
+          "discover": {
+            "id": "example/discover",
+            "version": "0.1.0",
+            "digest": "sha256:6187f8f4300a9e0cc8ceaf6be2a014578044e19ac1eff17631f59ad6031c894d"
+          },
+          "specify": {
+            "id": "example/specify",
+            "version": "0.1.0",
+            "digest": "sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"
+          },
+          "approveSpec": {
+            "id": "example/approveSpec",
+            "version": "0.1.0",
+            "digest": "sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"
+          },
+          "prepare": {
+            "id": "example/prepare",
+            "version": "0.1.0",
+            "digest": "sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"
+          },
+          "implement": {
+            "id": "example/implement",
+            "version": "0.1.0",
+            "digest": "sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"
+          },
+          "check": {
+            "id": "example/check",
+            "version": "0.1.0",
+            "digest": "sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"
+          },
+          "review": {
+            "id": "example/review",
+            "version": "0.1.0",
+            "digest": "sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"
+          },
+          "approvePublish": {
+            "id": "example/approvePublish",
+            "version": "0.1.0",
+            "digest": "sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"
+          },
+          "publishPR": {
+            "id": "example/publishPR",
+            "version": "0.1.0",
+            "digest": "sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"
+          }
+        }
+      },
+      "runtimeSlots": {
+        "researcher": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "author": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "implementer": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "reviewer": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery"
+          ]
+        }
+      },
+      "permissions": [
+        "repository.read",
+        "workspace.write",
+        "artifact.read",
+        "artifact.write",
+        "pull_request.upsert"
+      ],
+      "policy": {
+        "referencedSpecChange": "pause_and_replan",
+        "retries": "adapter_certified_only",
+        "expressionVersion": "pure-json/1",
+        "maxExpressionDepth": 16,
+        "maxExpressionNodes": 256,
+        "totalWorkBudget": 100,
+        "totalConcurrency": 3,
+        "humanDeadlineMs": 86400000
+      },
+      "body": {
+        "id": "feature",
+        "type": "sequence",
+        "children": [
+          {
+            "id": "discovery",
+            "type": "call",
+            "action": "discover",
+            "runtime": "researcher",
+            "with": {
+              "object": {
+                "brief": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/brief"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/checkpoint"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "specification",
+            "type": "call",
+            "action": "specify",
+            "runtime": "author",
+            "with": {
+              "object": {
+                "brief": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/brief"
+                  }
+                },
+                "findings": {
+                  "ref": {
+                    "source": "discovery",
+                    "pointer": "/findings"
+                  }
+                },
+                "suppliedSpec": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/suppliedSpec"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "scopeApproval",
+            "type": "call",
+            "action": "approveSpec",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "scopeDecision",
+            "type": "choose",
+            "cases": [
+              {
+                "when": {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "scopeApproval",
+                        "pointer": "/approved"
+                      }
+                    },
+                    {
+                      "literal": false
+                    }
+                  ]
+                },
+                "then": {
+                  "id": "rejectedScope",
+                  "type": "end",
+                  "result": {
+                    "object": {
+                      "outcome": {
+                        "literal": "rejected"
+                      },
+                      "pullRequest": {
+                        "literal": null
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "otherwise": {
+              "id": "approvedScope",
+              "type": "sequence",
+              "children": []
+            }
+          },
+          {
+            "id": "workspace",
+            "type": "call",
+            "action": "prepare",
+            "with": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/checkpoint"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "delivery",
+            "type": "repeat",
+            "maxIterations": 3,
+            "initial": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "workspace",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "feedback": {
+                  "array": []
+                }
+              }
+            },
+            "body": {
+              "id": "repairRound",
+              "type": "sequence",
+              "children": [
+                {
+                  "id": "implementation",
+                  "type": "call",
+                  "action": "implement",
+                  "runtime": "implementer",
+                  "with": {
+                    "object": {
+                      "spec": {
+                        "ref": {
+                          "source": "specification",
+                          "pointer": "/spec"
+                        }
+                      },
+                      "specApproval": {
+                        "ref": {
+                          "source": "scopeApproval",
+                          "pointer": ""
+                        }
+                      },
+                      "checkpoint": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/checkpoint"
+                        }
+                      },
+                      "feedback": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/feedback"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "verification",
+                  "type": "parallel",
+                  "join": "all",
+                  "maxConcurrency": 2,
+                  "branches": [
+                    {
+                      "id": "checks",
+                      "type": "call",
+                      "action": "check",
+                      "with": {
+                        "object": {
+                          "spec": {
+                            "ref": {
+                              "source": "specification",
+                              "pointer": "/spec"
+                            }
+                          },
+                          "checkpoint": {
+                            "ref": {
+                              "source": "implementation",
+                              "pointer": "/checkpoint"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": "review",
+                      "type": "call",
+                      "action": "review",
+                      "runtime": "reviewer",
+                      "with": {
+                        "object": {
+                          "spec": {
+                            "ref": {
+                              "source": "specification",
+                              "pointer": "/spec"
+                            }
+                          },
+                          "checkpoint": {
+                            "ref": {
+                              "source": "implementation",
+                              "pointer": "/checkpoint"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "output": {
+                    "object": {
+                      "checks": {
+                        "ref": {
+                          "source": "checks",
+                          "pointer": ""
+                        }
+                      },
+                      "review": {
+                        "ref": {
+                          "source": "review",
+                          "pointer": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "output": {
+                "object": {
+                  "checkpoint": {
+                    "ref": {
+                      "source": "implementation",
+                      "pointer": "/checkpoint"
+                    }
+                  },
+                  "verification": {
+                    "ref": {
+                      "source": "verification",
+                      "pointer": ""
+                    }
+                  }
+                }
+              }
+            },
+            "until": {
+              "all": [
+                {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/checks/passed"
+                      }
+                    },
+                    {
+                      "literal": true
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/review/accepted"
+                      }
+                    },
+                    {
+                      "literal": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "carry": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "feedback": {
+                  "array": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/checks/evidence"
+                      }
+                    },
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/review/findings"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "output": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "checks": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/verification/checks"
+                  }
+                },
+                "review": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/verification/review"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "publicationApproval",
+            "type": "call",
+            "action": "approvePublish",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "delivery",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "checks": {
+                  "ref": {
+                    "source": "delivery",
+                    "pointer": "/checks"
+                  }
+                },
+                "review": {
+                  "ref": {
+                    "source": "delivery",
+                    "pointer": "/review"
+                  }
+                },
+                "deliveryKey": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/deliveryKey"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "publicationDecision",
+            "type": "choose",
+            "cases": [
+              {
+                "when": {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "publicationApproval",
+                        "pointer": "/approved"
+                      }
+                    },
+                    {
+                      "literal": false
+                    }
+                  ]
+                },
+                "then": {
+                  "id": "rejectedPublication",
+                  "type": "end",
+                  "result": {
+                    "object": {
+                      "outcome": {
+                        "literal": "rejected"
+                      },
+                      "pullRequest": {
+                        "literal": null
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "otherwise": {
+              "id": "approvedPublication",
+              "type": "sequence",
+              "children": []
+            }
+          },
+          {
+            "id": "publication",
+            "type": "call",
+            "action": "publishPR",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "delivery",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "deliveryKey": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/deliveryKey"
+                  }
+                },
+                "approval": {
+                  "ref": {
+                    "source": "publicationApproval",
+                    "pointer": ""
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "complete",
+            "type": "end",
+            "result": {
+              "object": {
+                "outcome": {
+                  "literal": "published"
+                },
+                "pullRequest": {
+                  "ref": {
+                    "source": "publication",
+                    "pointer": "/pullRequest"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "bug": {
+      "formatVersion": "agents-assemble.playbook/1",
+      "package": {
+        "id": "example/bug-fix",
+        "version": "0.1.0"
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "report": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "baselineCheckpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "suppliedSpec": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "priorFindings": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "deliveryKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "report",
+          "checkpoint",
+          "baselineCheckpoint",
+          "suppliedSpec",
+          "priorFindings",
+          "deliveryKey"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "published",
+              "rejected",
+              "unreproduced"
+            ]
+          },
+          "pullRequest": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "outcome",
+          "pullRequest"
+        ],
+        "additionalProperties": false
+      },
+      "dependencies": {
+        "actions": {
+          "investigate": {
+            "id": "example/investigate",
+            "version": "0.1.0",
+            "digest": "sha256:7d8172de8e9c186f97f7ab25deda5cc9817a8eadd6320d8ecfd89f87e486ed42"
+          },
+          "reproduce": {
+            "id": "example/reproduce",
+            "version": "0.1.0",
+            "digest": "sha256:1db368a051343f33d827975b24f105d1d9d3be9021a8acc1f8b3ae3e794dd85d"
+          },
+          "unreproduced": {
+            "id": "example/unreproduced",
+            "version": "0.1.0",
+            "digest": "sha256:b485d42185468a22853a4dd5c311e2e41a758235a900b975f2c9079454b1fa14"
+          },
+          "specify": {
+            "id": "example/specify",
+            "version": "0.1.0",
+            "digest": "sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"
+          },
+          "approveSpec": {
+            "id": "example/approveSpec",
+            "version": "0.1.0",
+            "digest": "sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"
+          },
+          "prepare": {
+            "id": "example/prepare",
+            "version": "0.1.0",
+            "digest": "sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"
+          },
+          "implement": {
+            "id": "example/implement",
+            "version": "0.1.0",
+            "digest": "sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"
+          },
+          "check": {
+            "id": "example/check",
+            "version": "0.1.0",
+            "digest": "sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"
+          },
+          "review": {
+            "id": "example/review",
+            "version": "0.1.0",
+            "digest": "sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"
+          },
+          "approvePublish": {
+            "id": "example/approvePublish",
+            "version": "0.1.0",
+            "digest": "sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"
+          },
+          "publishPR": {
+            "id": "example/publishPR",
+            "version": "0.1.0",
+            "digest": "sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"
+          }
+        }
+      },
+      "runtimeSlots": {
+        "researcher": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "author": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "implementer": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery",
+            "durable_human_request"
+          ]
+        },
+        "reviewer": {
+          "requiredCapabilities": [
+            "native_account",
+            "typed_result",
+            "checkpoint_recovery"
+          ]
+        }
+      },
+      "permissions": [
+        "repository.read",
+        "workspace.write",
+        "artifact.read",
+        "artifact.write",
+        "pull_request.upsert"
+      ],
+      "policy": {
+        "referencedSpecChange": "pause_and_replan",
+        "retries": "adapter_certified_only",
+        "expressionVersion": "pure-json/1",
+        "maxExpressionDepth": 16,
+        "maxExpressionNodes": 256,
+        "totalWorkBudget": 100,
+        "totalConcurrency": 3,
+        "humanDeadlineMs": 86400000
+      },
+      "body": {
+        "id": "bugFix",
+        "type": "sequence",
+        "children": [
+          {
+            "id": "investigation",
+            "type": "call",
+            "action": "investigate",
+            "runtime": "researcher",
+            "with": {
+              "object": {
+                "report": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/report"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "priorFindings": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/priorFindings"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "reproduction",
+            "type": "repeat",
+            "maxIterations": 3,
+            "initial": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/baselineCheckpoint"
+                  }
+                },
+                "evidence": {
+                  "ref": {
+                    "source": "investigation",
+                    "pointer": "/findings"
+                  }
+                }
+              }
+            },
+            "body": {
+              "id": "reproduceRound",
+              "type": "sequence",
+              "children": [
+                {
+                  "id": "probe",
+                  "type": "call",
+                  "action": "reproduce",
+                  "runtime": "researcher",
+                  "with": {
+                    "object": {
+                      "report": {
+                        "ref": {
+                          "source": "input",
+                          "pointer": "/report"
+                        }
+                      },
+                      "findings": {
+                        "ref": {
+                          "source": "investigation",
+                          "pointer": "/findings"
+                        }
+                      },
+                      "checkpoint": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/checkpoint"
+                        }
+                      },
+                      "previousEvidence": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/evidence"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "reproductionDecision",
+                  "type": "choose",
+                  "cases": [
+                    {
+                      "when": {
+                        "eq": [
+                          {
+                            "ref": {
+                              "source": "probe",
+                              "pointer": "/reproduced"
+                            }
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      "then": {
+                        "id": "reproduced",
+                        "type": "sequence",
+                        "children": [],
+                        "output": {
+                          "object": {
+                            "evidence": {
+                              "ref": {
+                                "source": "probe",
+                                "pointer": "/evidence"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "otherwise": {
+                    "id": "needEvidence",
+                    "type": "sequence",
+                    "children": [
+                      {
+                        "id": "humanDecision",
+                        "type": "call",
+                        "action": "unreproduced",
+                        "with": {
+                          "object": {
+                            "report": {
+                              "ref": {
+                                "source": "input",
+                                "pointer": "/report"
+                              }
+                            },
+                            "evidence": {
+                              "ref": {
+                                "source": "probe",
+                                "pointer": "/evidence"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "continueDecision",
+                        "type": "choose",
+                        "cases": [
+                          {
+                            "when": {
+                              "eq": [
+                                {
+                                  "ref": {
+                                    "source": "humanDecision",
+                                    "pointer": "/decision"
+                                  }
+                                },
+                                {
+                                  "literal": "stop"
+                                }
+                              ]
+                            },
+                            "then": {
+                              "id": "stopUnreproduced",
+                              "type": "end",
+                              "result": {
+                                "object": {
+                                  "outcome": {
+                                    "literal": "unreproduced"
+                                  },
+                                  "pullRequest": {
+                                    "literal": null
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "otherwise": {
+                          "id": "investigateAgain",
+                          "type": "sequence",
+                          "children": []
+                        }
+                      }
+                    ],
+                    "output": {
+                      "object": {
+                        "evidence": {
+                          "ref": {
+                            "source": "humanDecision",
+                            "pointer": "/evidence"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "output": {
+                "object": {
+                  "reproduced": {
+                    "ref": {
+                      "source": "probe",
+                      "pointer": "/reproduced"
+                    }
+                  },
+                  "evidence": {
+                    "ref": {
+                      "source": "reproductionDecision",
+                      "pointer": "/evidence"
+                    }
+                  },
+                  "checkpoint": {
+                    "ref": {
+                      "source": "probe",
+                      "pointer": "/checkpoint"
+                    }
+                  }
+                }
+              }
+            },
+            "until": {
+              "eq": [
+                {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/reproduced"
+                  }
+                },
+                {
+                  "literal": true
+                }
+              ]
+            },
+            "carry": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "evidence": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/evidence"
+                  }
+                }
+              }
+            },
+            "output": {
+              "object": {
+                "evidence": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/evidence"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "specification",
+            "type": "call",
+            "action": "specify",
+            "runtime": "author",
+            "with": {
+              "object": {
+                "brief": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/report"
+                  }
+                },
+                "findings": {
+                  "ref": {
+                    "source": "reproduction",
+                    "pointer": "/evidence"
+                  }
+                },
+                "suppliedSpec": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/suppliedSpec"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "scopeApproval",
+            "type": "call",
+            "action": "approveSpec",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "scopeDecision",
+            "type": "choose",
+            "cases": [
+              {
+                "when": {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "scopeApproval",
+                        "pointer": "/approved"
+                      }
+                    },
+                    {
+                      "literal": false
+                    }
+                  ]
+                },
+                "then": {
+                  "id": "rejectedScope",
+                  "type": "end",
+                  "result": {
+                    "object": {
+                      "outcome": {
+                        "literal": "rejected"
+                      },
+                      "pullRequest": {
+                        "literal": null
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "otherwise": {
+              "id": "approvedScope",
+              "type": "sequence",
+              "children": []
+            }
+          },
+          {
+            "id": "workspace",
+            "type": "call",
+            "action": "prepare",
+            "with": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/checkpoint"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "remediation",
+            "type": "repeat",
+            "maxIterations": 3,
+            "initial": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "workspace",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "feedback": {
+                  "array": [
+                    {
+                      "ref": {
+                        "source": "reproduction",
+                        "pointer": "/evidence"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "body": {
+              "id": "repairRound",
+              "type": "sequence",
+              "children": [
+                {
+                  "id": "implementation",
+                  "type": "call",
+                  "action": "implement",
+                  "runtime": "implementer",
+                  "with": {
+                    "object": {
+                      "spec": {
+                        "ref": {
+                          "source": "specification",
+                          "pointer": "/spec"
+                        }
+                      },
+                      "specApproval": {
+                        "ref": {
+                          "source": "scopeApproval",
+                          "pointer": ""
+                        }
+                      },
+                      "checkpoint": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/checkpoint"
+                        }
+                      },
+                      "feedback": {
+                        "ref": {
+                          "source": "carry",
+                          "pointer": "/feedback"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "verification",
+                  "type": "parallel",
+                  "join": "all",
+                  "maxConcurrency": 2,
+                  "branches": [
+                    {
+                      "id": "checks",
+                      "type": "call",
+                      "action": "check",
+                      "with": {
+                        "object": {
+                          "spec": {
+                            "ref": {
+                              "source": "specification",
+                              "pointer": "/spec"
+                            }
+                          },
+                          "checkpoint": {
+                            "ref": {
+                              "source": "implementation",
+                              "pointer": "/checkpoint"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": "review",
+                      "type": "call",
+                      "action": "review",
+                      "runtime": "reviewer",
+                      "with": {
+                        "object": {
+                          "spec": {
+                            "ref": {
+                              "source": "specification",
+                              "pointer": "/spec"
+                            }
+                          },
+                          "checkpoint": {
+                            "ref": {
+                              "source": "implementation",
+                              "pointer": "/checkpoint"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "output": {
+                    "object": {
+                      "checks": {
+                        "ref": {
+                          "source": "checks",
+                          "pointer": ""
+                        }
+                      },
+                      "review": {
+                        "ref": {
+                          "source": "review",
+                          "pointer": ""
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "output": {
+                "object": {
+                  "checkpoint": {
+                    "ref": {
+                      "source": "implementation",
+                      "pointer": "/checkpoint"
+                    }
+                  },
+                  "verification": {
+                    "ref": {
+                      "source": "verification",
+                      "pointer": ""
+                    }
+                  }
+                }
+              }
+            },
+            "until": {
+              "all": [
+                {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/checks/passed"
+                      }
+                    },
+                    {
+                      "literal": true
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/review/accepted"
+                      }
+                    },
+                    {
+                      "literal": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "carry": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "feedback": {
+                  "array": [
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/checks/evidence"
+                      }
+                    },
+                    {
+                      "ref": {
+                        "source": "body",
+                        "pointer": "/verification/review/findings"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "output": {
+              "object": {
+                "checkpoint": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "checks": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/verification/checks"
+                  }
+                },
+                "review": {
+                  "ref": {
+                    "source": "body",
+                    "pointer": "/verification/review"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "publicationApproval",
+            "type": "call",
+            "action": "approvePublish",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "remediation",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "checks": {
+                  "ref": {
+                    "source": "remediation",
+                    "pointer": "/checks"
+                  }
+                },
+                "review": {
+                  "ref": {
+                    "source": "remediation",
+                    "pointer": "/review"
+                  }
+                },
+                "deliveryKey": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/deliveryKey"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "publicationDecision",
+            "type": "choose",
+            "cases": [
+              {
+                "when": {
+                  "eq": [
+                    {
+                      "ref": {
+                        "source": "publicationApproval",
+                        "pointer": "/approved"
+                      }
+                    },
+                    {
+                      "literal": false
+                    }
+                  ]
+                },
+                "then": {
+                  "id": "rejectedPublication",
+                  "type": "end",
+                  "result": {
+                    "object": {
+                      "outcome": {
+                        "literal": "rejected"
+                      },
+                      "pullRequest": {
+                        "literal": null
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "otherwise": {
+              "id": "approvedPublication",
+              "type": "sequence",
+              "children": []
+            }
+          },
+          {
+            "id": "publication",
+            "type": "call",
+            "action": "publishPR",
+            "with": {
+              "object": {
+                "spec": {
+                  "ref": {
+                    "source": "specification",
+                    "pointer": "/spec"
+                  }
+                },
+                "checkpoint": {
+                  "ref": {
+                    "source": "remediation",
+                    "pointer": "/checkpoint"
+                  }
+                },
+                "deliveryKey": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/deliveryKey"
+                  }
+                },
+                "approval": {
+                  "ref": {
+                    "source": "publicationApproval",
+                    "pointer": ""
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "complete",
+            "type": "end",
+            "result": {
+              "object": {
+                "outcome": {
+                  "literal": "published"
+                },
+                "pullRequest": {
+                  "ref": {
+                    "source": "publication",
+                    "pointer": "/pullRequest"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "fanout": {
+      "formatVersion": "agents-assemble.playbook/1",
+      "package": {
+        "id": "example/fanout-probe",
+        "version": "0.1.0"
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "checkpoint",
+          "tasks"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "finding": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 2048
+                    },
+                    "revision": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 2048
+                    },
+                    "mediaType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 2048
+                    },
+                    "digest": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 2048
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "revision",
+                    "mediaType",
+                    "digest"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "finding"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 12
+          }
+        },
+        "required": [
+          "findings"
+        ],
+        "additionalProperties": false
+      },
+      "dependencies": {
+        "actions": {
+          "planTasks": {
+            "id": "example/planTasks",
+            "version": "0.1.0",
+            "digest": "sha256:f900cba82cbeb84e3d76d070cb5e5e7ae5685240ece35028b8a32672fd27ea0b"
+          },
+          "inspectTask": {
+            "id": "example/inspectTask",
+            "version": "0.1.0",
+            "digest": "sha256:255a118c1021e7f3ba7b7b6c73565634b97ed2c3944052096e171b455417b21d"
+          }
+        }
+      },
+      "runtimeSlots": {},
+      "permissions": [
+        "repository.read",
+        "artifact.read",
+        "artifact.write"
+      ],
+      "policy": {
+        "referencedSpecChange": "pause_and_replan",
+        "retries": "adapter_certified_only",
+        "expressionVersion": "pure-json/1",
+        "maxExpressionDepth": 16,
+        "maxExpressionNodes": 256,
+        "totalWorkBudget": 100,
+        "totalConcurrency": 3,
+        "humanDeadlineMs": 86400000
+      },
+      "body": {
+        "id": "fanout",
+        "type": "sequence",
+        "children": [
+          {
+            "id": "plan",
+            "type": "call",
+            "action": "planTasks",
+            "with": {
+              "object": {
+                "tasks": {
+                  "ref": {
+                    "source": "input",
+                    "pointer": "/tasks"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "inspectTasks",
+            "type": "forEach",
+            "items": {
+              "ref": {
+                "source": "plan",
+                "pointer": "/tasks"
+              }
+            },
+            "key": "/id",
+            "maxItems": 12,
+            "maxConcurrency": 3,
+            "body": {
+              "id": "inspect",
+              "type": "call",
+              "action": "inspectTask",
+              "with": {
+                "object": {
+                  "task": {
+                    "ref": {
+                      "source": "item",
+                      "pointer": ""
+                    }
+                  },
+                  "checkpoint": {
+                    "ref": {
+                      "source": "input",
+                      "pointer": "/checkpoint"
+                    }
+                  }
+                }
+              }
+            },
+            "output": {
+              "object": {
+                "finding": {
+                  "ref": {
+                    "source": "inspect",
+                    "pointer": "/finding"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "output": {
+          "object": {
+            "findings": {
+              "ref": {
+                "source": "inspectTasks",
+                "pointer": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "actions": {
+    "discover": {
+      "id": "example/discover",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "brief",
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "findings"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/discover",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery"
+      ],
+      "retryableErrors": [
+        "mock_read_transport"
+      ],
+      "maxAttempts": 2,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:6187f8f4300a9e0cc8ceaf6be2a014578044e19ac1eff17631f59ad6031c894d"
+    },
+    "specify": {
+      "id": "example/specify",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "findings": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "suppliedSpec": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "brief",
+          "findings",
+          "suppliedSpec"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "spec"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/specify",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery",
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:c8efc06b8a313f3262bf0fe1477afce4f006b20ef1962f00d5a946d89f65b3de"
+    },
+    "approveSpec": {
+      "id": "example/approveSpec",
+      "version": "0.1.0",
+      "kind": "human",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "spec"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "approved": {
+            "type": "boolean"
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "manifest": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "responder": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "approved",
+          "requestId",
+          "manifest",
+          "version",
+          "responder"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/approveSpec",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:0394e419a966ab9cd085e6d17fcfe54f8efbfc702bf20cfd29ffea452bc104a8"
+    },
+    "prepare": {
+      "id": "example/prepare",
+      "version": "0.1.0",
+      "kind": "deterministic",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/prepare",
+      "adapterVersion": "mock/1",
+      "effectClass": "workspace_write",
+      "requiredCapabilities": [
+        "checkpoint_recovery"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:fd9f7501f5b01b6c4e3bc2c35ae3304aa9ed813d7f7fb8aabbff4dc675cac6ad"
+    },
+    "implement": {
+      "id": "example/implement",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "specApproval": {
+            "type": "object",
+            "properties": {
+              "approved": {
+                "type": "boolean"
+              },
+              "requestId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "manifest": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "responder": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "approved",
+              "requestId",
+              "manifest",
+              "version",
+              "responder"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "feedback": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "mediaType": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "digest": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                }
+              },
+              "required": [
+                "id",
+                "revision",
+                "mediaType",
+                "digest"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "spec",
+          "specApproval",
+          "checkpoint",
+          "feedback"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/implement",
+      "adapterVersion": "mock/1",
+      "effectClass": "workspace_write",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery",
+        "durable_human_request"
+      ],
+      "retryableErrors": [
+        "mock_verified_reconstruction"
+      ],
+      "maxAttempts": 2,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:be46be071baf59a83d56d27ab12525fc27fbd67caba18e4e9605d06d67449085"
+    },
+    "review": {
+      "id": "example/review",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "spec",
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "accepted": {
+            "type": "boolean"
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "findings": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "accepted",
+          "checkpoint",
+          "findings",
+          "spec"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/review",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:e014b6302730504f5f8f5423f51137c8d366ddd763c0a852bbe7e4da0133fe6d"
+    },
+    "check": {
+      "id": "example/check",
+      "version": "0.1.0",
+      "kind": "deterministic",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "spec",
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "passed": {
+            "type": "boolean"
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "passed",
+          "checkpoint",
+          "evidence",
+          "spec"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/check",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "checkpoint_recovery"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:d2083910b14f56c3fff2bb54e912c95233bf502ca5146a60210edd92ef03cc2e"
+    },
+    "approvePublish": {
+      "id": "example/approvePublish",
+      "version": "0.1.0",
+      "kind": "human",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "checks": {
+            "type": "object",
+            "properties": {
+              "passed": {
+                "type": "boolean"
+              },
+              "checkpoint": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "commit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "commit"
+                ],
+                "additionalProperties": false
+              },
+              "evidence": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "mediaType": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "digest": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "revision",
+                  "mediaType",
+                  "digest"
+                ],
+                "additionalProperties": false
+              },
+              "spec": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "mediaType": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "digest": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "revision",
+                  "mediaType",
+                  "digest"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "passed",
+              "checkpoint",
+              "evidence",
+              "spec"
+            ],
+            "additionalProperties": false
+          },
+          "review": {
+            "type": "object",
+            "properties": {
+              "accepted": {
+                "type": "boolean"
+              },
+              "checkpoint": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "commit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "commit"
+                ],
+                "additionalProperties": false
+              },
+              "findings": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "mediaType": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "digest": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "revision",
+                  "mediaType",
+                  "digest"
+                ],
+                "additionalProperties": false
+              },
+              "spec": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "mediaType": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  },
+                  "digest": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "id",
+                  "revision",
+                  "mediaType",
+                  "digest"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "accepted",
+              "checkpoint",
+              "findings",
+              "spec"
+            ],
+            "additionalProperties": false
+          },
+          "deliveryKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "spec",
+          "checkpoint",
+          "checks",
+          "review",
+          "deliveryKey"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "approved": {
+            "type": "boolean"
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "manifest": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "responder": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "approved",
+          "requestId",
+          "manifest",
+          "version",
+          "responder"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/approvePublish",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:f31afd017c8ae3598b89c8625dd8e641d9f2ff44a333e03deab76cac1347d22a"
+    },
+    "publishPR": {
+      "id": "example/publishPR",
+      "version": "0.1.0",
+      "kind": "integration",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "deliveryKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "approval": {
+            "type": "object",
+            "properties": {
+              "approved": {
+                "type": "boolean"
+              },
+              "requestId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "manifest": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "responder": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "approved",
+              "requestId",
+              "manifest",
+              "version",
+              "responder"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "spec",
+          "checkpoint",
+          "deliveryKey",
+          "approval"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "pullRequest": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "pullRequest"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/publishPR",
+      "adapterVersion": "mock/1",
+      "effectClass": "external_write",
+      "requiredCapabilities": [
+        "effect_reconciliation"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:25dac1181e4dbb8b081a85365ef40bd041681b02c0799b0554428006fbe020e4"
+    },
+    "investigate": {
+      "id": "example/investigate",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "report": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "priorFindings": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "report",
+          "checkpoint",
+          "priorFindings"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "findings"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/investigate",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery",
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:7d8172de8e9c186f97f7ab25deda5cc9817a8eadd6320d8ecfd89f87e486ed42"
+    },
+    "reproduce": {
+      "id": "example/reproduce",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "report": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "findings": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          },
+          "previousEvidence": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "report",
+          "findings",
+          "checkpoint",
+          "previousEvidence"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "reproduced": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "reproduced",
+          "evidence",
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/reproduce",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery",
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:1db368a051343f33d827975b24f105d1d9d3be9021a8acc1f8b3ae3e794dd85d"
+    },
+    "unreproduced": {
+      "id": "example/unreproduced",
+      "version": "0.1.0",
+      "kind": "human",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "report": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "report",
+          "evidence"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "investigate_again",
+              "stop"
+            ]
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "manifest": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "responder": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "decision",
+          "evidence"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/unreproduced",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "durable_human_request"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:b485d42185468a22853a4dd5c311e2e41a758235a900b975f2c9079454b1fa14"
+    },
+    "inspectTask": {
+      "id": "example/inspectTask",
+      "version": "0.1.0",
+      "kind": "agent",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          },
+          "checkpoint": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "commit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "commit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "task",
+          "checkpoint"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "finding": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "mediaType",
+              "digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "finding"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/inspectTask",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [
+        "native_account",
+        "typed_result",
+        "checkpoint_recovery"
+      ],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:255a118c1021e7f3ba7b7b6c73565634b97ed2c3944052096e171b455417b21d"
+    },
+    "planTasks": {
+      "id": "example/planTasks",
+      "version": "0.1.0",
+      "kind": "deterministic",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "tasks"
+        ],
+        "additionalProperties": false
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "tasks"
+        ],
+        "additionalProperties": false
+      },
+      "executor": "mock/planTasks",
+      "adapterVersion": "mock/1",
+      "effectClass": "read",
+      "requiredCapabilities": [],
+      "retryableErrors": [],
+      "maxAttempts": 1,
+      "timeoutMs": 30000,
+      "cancellation": "request_then_reconcile",
+      "digest": "sha256:f900cba82cbeb84e3d76d070cb5e5e7ae5685240ece35028b8a32672fd27ea0b"
+    }
+  },
+  "schemas": {
+    "ArtifactRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "mediaType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "digest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "mediaType",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "CheckpointRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "commit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id",
+        "commit"
+      ],
+      "additionalProperties": false
+    },
+    "DeliveryKey": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "PRRef": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "mediaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "digest": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "mediaType",
+          "digest"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 100
+    },
+    "ApprovalResult": {
+      "type": "object",
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "manifest": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "responder": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "approved",
+        "requestId",
+        "manifest",
+        "version",
+        "responder"
+      ],
+      "additionalProperties": false
+    },
+    "ReviewResult": {
+      "type": "object",
+      "properties": {
+        "accepted": {
+          "type": "boolean"
+        },
+        "checkpoint": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "commit": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "commit"
+          ],
+          "additionalProperties": false
+        },
+        "findings": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "mediaType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "digest": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "mediaType",
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        "spec": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "mediaType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "digest": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "mediaType",
+            "digest"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "accepted",
+        "checkpoint",
+        "findings",
+        "spec"
+      ],
+      "additionalProperties": false
+    },
+    "CheckResult": {
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "checkpoint": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "commit": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "commit"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "mediaType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "digest": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "mediaType",
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        "spec": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "mediaType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "digest": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "mediaType",
+            "digest"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "passed",
+        "checkpoint",
+        "evidence",
+        "spec"
+      ],
+      "additionalProperties": false
+    },
+    "Task": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

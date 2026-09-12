@@ -1,0 +1,672 @@
+{
+  "generatedAt": "2026-09-12T12:03:54.258Z",
+  "node": "v24.21.0",
+  "authoring": [
+    {
+      "name": "feature document/editor roundtrip",
+      "passed": true
+    },
+    {
+      "name": "bug document/editor roundtrip",
+      "passed": true
+    },
+    {
+      "name": "fanout document/editor roundtrip",
+      "passed": true
+    },
+    {
+      "name": "bounded editor edit undo preserves full normalized document",
+      "passed": true
+    },
+    {
+      "name": "unknown behavioral field rejects and raw input survives",
+      "passed": true
+    },
+    {
+      "name": "executable builder callback cannot cross document boundary",
+      "passed": true
+    },
+    {
+      "name": "unknown schema keyword rejected",
+      "passed": true
+    },
+    {
+      "name": "external schema reference rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed schema type rejected",
+      "passed": true
+    },
+    {
+      "name": "unknown runner capability rejected",
+      "passed": true
+    },
+    {
+      "name": "missing native-account capability rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed JSON pointer rejected",
+      "passed": true
+    },
+    {
+      "name": "concurrent sibling read rejected",
+      "passed": true
+    },
+    {
+      "name": "visible node ID shadow rejected",
+      "passed": true
+    },
+    {
+      "name": "late sibling reference rejected",
+      "passed": true
+    },
+    {
+      "name": "choice returning incompatible field types rejected",
+      "passed": true
+    },
+    {
+      "name": "unknown required format rejected",
+      "passed": true
+    },
+    {
+      "name": "namespaced nonsemantic metadata survives structured roundtrip",
+      "passed": true
+    },
+    {
+      "name": "action pin drift rejected",
+      "passed": true
+    },
+    {
+      "name": "boundary value type mismatch rejected",
+      "passed": true
+    },
+    {
+      "name": "missing runtime pointer returns binding_error",
+      "passed": true
+    },
+    {
+      "name": "JSON equality has no coercion and ignores object key order",
+      "passed": true
+    },
+    {
+      "name": "condition short circuit prevents missing reference fetch",
+      "passed": true
+    },
+    {
+      "name": "local pinned schema reference resolves",
+      "passed": true
+    },
+    {
+      "name": "RFC 6901 escaped member names resolve",
+      "passed": true
+    }
+  ],
+  "builder": {
+    "builder": "local TypeScript helper composition",
+    "typeAnnotations": "stripped by Node; not a tsc typecheck",
+    "fullFeatureEquivalent": true,
+    "editorRoundtrip": true,
+    "stableNodeIds": true,
+    "pinnedDependenciesAndPolicy": true
+  },
+  "runtime": [
+    {
+      "name": "feature journey: bounded decisions and parallel verification",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Starter journey completes",
+          "passed": true
+        },
+        {
+          "label": "Typed outcome is published",
+          "passed": true
+        },
+        {
+          "label": "Exactly one mock PR created",
+          "passed": true
+        },
+        {
+          "label": "Review change creates a second bounded occurrence",
+          "passed": true
+        },
+        {
+          "label": "Repair occurrence IDs differ",
+          "passed": true
+        },
+        {
+          "label": "All declared verification branches join",
+          "passed": true
+        }
+      ],
+      "snapshots": 21,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "bug journey: bounded decisions and parallel verification",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Starter journey completes",
+          "passed": true
+        },
+        {
+          "label": "Typed outcome is published",
+          "passed": true
+        },
+        {
+          "label": "Exactly one mock PR created",
+          "passed": true
+        },
+        {
+          "label": "Review change creates a second bounded occurrence",
+          "passed": true
+        },
+        {
+          "label": "Repair occurrence IDs differ",
+          "passed": true
+        },
+        {
+          "label": "All declared verification branches join",
+          "passed": true
+        },
+        {
+          "label": "Reproduction follows human evidence into next round",
+          "passed": true
+        }
+      ],
+      "snapshots": 29,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Restart at a human wait preserves request and attempts",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Entire execution snapshot survives round trip",
+          "passed": true
+        },
+        {
+          "label": "Restored run resumes",
+          "passed": true
+        },
+        {
+          "label": "Original durable human request reused",
+          "passed": true
+        },
+        {
+          "label": "Wait restart does not repeat invocation",
+          "passed": true
+        }
+      ],
+      "snapshots": 17,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Restart after membership acceptance preserves task identity and order",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Accepted membership stays frozen",
+          "passed": true
+        },
+        {
+          "label": "Exactly original three tasks complete",
+          "passed": true
+        },
+        {
+          "label": "Delimiter-like item keys remain distinct",
+          "passed": true
+        },
+        {
+          "label": "Output preserves original snapshot order",
+          "passed": true
+        }
+      ],
+      "snapshots": 5,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Fan-out rejects duplicate membership before item dispatch",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Invalid fan-out is blocked",
+          "passed": true
+        },
+        {
+          "label": "No item invocation created",
+          "passed": true
+        }
+      ],
+      "snapshots": 3,
+      "finalStatus": "blocked"
+    },
+    {
+      "name": "Fan-out rejects oversized membership before item dispatch",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Invalid fan-out is blocked",
+          "passed": true
+        },
+        {
+          "label": "No item invocation created",
+          "passed": true
+        }
+      ],
+      "snapshots": 3,
+      "finalStatus": "blocked"
+    },
+    {
+      "name": "Global work budget survives restart and retry",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Exhausted budget blocks retry after restart",
+          "passed": true
+        },
+        {
+          "label": "Restart does not replenish budget",
+          "passed": true
+        },
+        {
+          "label": "Unfunded retry never dispatches",
+          "passed": true
+        }
+      ],
+      "snapshots": 3,
+      "finalStatus": "limit_reached"
+    },
+    {
+      "name": "Safe invocation retry preserves occurrence and frozen input",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Safe read retry completes",
+          "passed": true
+        },
+        {
+          "label": "Two invocation attempts, one occurrence",
+          "passed": true
+        },
+        {
+          "label": "Attempt identities are distinct",
+          "passed": true
+        },
+        {
+          "label": "Retry inputs remain frozen",
+          "passed": true
+        }
+      ],
+      "snapshots": 19,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Provider success before receipt: restart reconciles one PR",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Provider and Execution disagree visibly",
+          "passed": true
+        },
+        {
+          "label": "Uncertain publication blocks continuation",
+          "passed": true
+        },
+        {
+          "label": "Restart never creates a duplicate PR",
+          "passed": true
+        },
+        {
+          "label": "Effect identity survives restart",
+          "passed": true
+        },
+        {
+          "label": "Reconciliation is not a new publication attempt",
+          "passed": true
+        }
+      ],
+      "snapshots": 16,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Competing replies and altered duplicate commands conflict",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "First authorized response wins",
+          "passed": true
+        },
+        {
+          "label": "Identical command redelivery is idempotent",
+          "passed": true
+        },
+        {
+          "label": "Same ID with changed answer conflicts",
+          "passed": true
+        },
+        {
+          "label": "Competing answer cannot overwrite",
+          "passed": true
+        }
+      ],
+      "snapshots": 4,
+      "finalStatus": "running"
+    },
+    {
+      "name": "Knowledge save precedes approval before Execution observes it",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Old exact-manifest approval can still be accepted before observation",
+          "passed": true
+        },
+        {
+          "label": "Observed edit stops publication dispatch",
+          "passed": true
+        },
+        {
+          "label": "Accepted approval still names revision 1",
+          "passed": true
+        }
+      ],
+      "snapshots": 12,
+      "finalStatus": "replan_required"
+    },
+    {
+      "name": "Observed edit rejects old approval; retain is version bound",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Reply after observation is stale",
+          "passed": true
+        },
+        {
+          "label": "Stale retain command rejected",
+          "passed": true
+        },
+        {
+          "label": "Exact observed revision may be retained",
+          "passed": true
+        },
+        {
+          "label": "Retaining revision 2 does not acknowledge revision 3",
+          "passed": true
+        }
+      ],
+      "snapshots": 4,
+      "finalStatus": "replan_required"
+    },
+    {
+      "name": "Approval binds exact reviewed spec and commit",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Different commit cannot consume approval",
+          "passed": true
+        },
+        {
+          "label": "Different spec cannot consume approval",
+          "passed": true
+        }
+      ],
+      "snapshots": 11,
+      "finalStatus": "running"
+    },
+    {
+      "name": "Adopted bug revision starts fresh with recovered work and original baseline",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "No completed action or approval copied",
+          "passed": true
+        },
+        {
+          "label": "Original failing baseline retained",
+          "passed": true
+        },
+        {
+          "label": "Recovered working checkpoint retained",
+          "passed": true
+        },
+        {
+          "label": "Logical delivery mapping inherited",
+          "passed": true
+        },
+        {
+          "label": "Successor revalidates full journey",
+          "passed": true
+        },
+        {
+          "label": "Reproduction uses failing baseline",
+          "passed": true
+        },
+        {
+          "label": "Preparation uses recovered code",
+          "passed": true
+        }
+      ],
+      "snapshots": 31,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Unknown old publication blocks adoption; successor updates inherited PR",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Unknown predecessor effect blocks successor",
+          "passed": true
+        },
+        {
+          "label": "Lineage updates one logical PR",
+          "passed": true
+        },
+        {
+          "label": "New run has a new operation identity",
+          "passed": true
+        }
+      ],
+      "snapshots": 30,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Cancellation preserves uncertain effects until reconciliation",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Cancellation is not falsely clean",
+          "passed": true
+        },
+        {
+          "label": "Uncertain effect remains visible",
+          "passed": true
+        },
+        {
+          "label": "Clean cancellation follows effect accounting",
+          "passed": true
+        },
+        {
+          "label": "Cancellation did not erase published PR",
+          "passed": true
+        }
+      ],
+      "snapshots": 14,
+      "finalStatus": "cancel_requested"
+    },
+    {
+      "name": "Loop exhaustion needs attention and survives restart",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Repair exhaustion pauses",
+          "passed": true
+        },
+        {
+          "label": "No publication approval after failed checks",
+          "passed": true
+        },
+        {
+          "label": "Exhaustion remains blocked after restart",
+          "passed": true
+        }
+      ],
+      "snapshots": 19,
+      "finalStatus": "limit_reached"
+    },
+    {
+      "name": "Unsupported runtime settings block without substitution",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Specific capability blocks dispatch",
+          "passed": true
+        },
+        {
+          "label": "No attempt ran under substituted settings",
+          "passed": true
+        }
+      ],
+      "snapshots": 2,
+      "finalStatus": "capability_blocked"
+    },
+    {
+      "name": "Out-of-order edit delivery and duplicate observation preserve the newest decision",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Older source event cannot roll back revision 3",
+          "passed": true
+        },
+        {
+          "label": "Older retain cannot acknowledge newer edit",
+          "passed": true
+        },
+        {
+          "label": "Newest proposal can be explicitly retained",
+          "passed": true
+        },
+        {
+          "label": "Redelivered retained edit does not pause again",
+          "passed": true
+        }
+      ],
+      "snapshots": 4,
+      "finalStatus": "running"
+    },
+    {
+      "name": "Retain after writer stop requires verified workspace reconstruction",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Stopped writer cannot silently resume",
+          "passed": true
+        },
+        {
+          "label": "Effect reconciliation cannot bypass workspace recovery",
+          "passed": true
+        },
+        {
+          "label": "Retained run can recover and finish",
+          "passed": true
+        },
+        {
+          "label": "Recovery is explicit and consumes another attempt",
+          "passed": true
+        }
+      ],
+      "snapshots": 18,
+      "finalStatus": "completed"
+    },
+    {
+      "name": "Package budget cannot be widened by admission options",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Declared stricter budget caps admission",
+          "passed": true
+        },
+        {
+          "label": "Budget blocks next action",
+          "passed": true
+        }
+      ],
+      "snapshots": 3,
+      "finalStatus": "limit_reached"
+    },
+    {
+      "name": "Failure in parallel verification requests sibling cancellation and prevents publication",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Branch failure is explicit",
+          "passed": true
+        },
+        {
+          "label": "Active sibling receives stop request",
+          "passed": true
+        },
+        {
+          "label": "Sibling confirms cancellation",
+          "passed": true
+        },
+        {
+          "label": "Failed join never authorizes publication",
+          "passed": true
+        }
+      ],
+      "snapshots": 11,
+      "finalStatus": "failure_recovery_required"
+    },
+    {
+      "name": "Successor identity and budget require explicit new admission",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Predecessor identity cannot be reused",
+          "passed": true
+        },
+        {
+          "label": "Adoption alone does not replenish work allowance",
+          "passed": true
+        }
+      ],
+      "snapshots": 4,
+      "finalStatus": "replan_required"
+    },
+    {
+      "name": "Mismatched verification spec is rejected before asking for publication approval",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Injected adapter mismatch rejected",
+          "passed": true
+        },
+        {
+          "label": "No approval requested for unrelated spec evidence",
+          "passed": true
+        }
+      ],
+      "snapshots": 11,
+      "finalStatus": "blocked"
+    },
+    {
+      "name": "Implementation cannot consume a scope approval for another specification",
+      "passed": true,
+      "assertions": [
+        {
+          "label": "Accepted scope receipt must match exact implementation spec",
+          "passed": true
+        },
+        {
+          "label": "No workspace invocation begins outside approved scope",
+          "passed": true
+        }
+      ],
+      "snapshots": 8,
+      "finalStatus": "blocked"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playbook contract · decision experiment</title>
+<style>
+:root{color-scheme:light;--ink:#172b2a;--muted:#63716f;--line:#dce4df;--paper:#fff;--back:#f4f6f2;--accent:#216458;--wash:#e8f2ee;--shadow:0 5px 20px #17352b07}*{box-sizing:border-box}body{margin:0;background:var(--back);color:var(--ink);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,summary{font:inherit}button{cursor:pointer;border:1px solid #cbd9d2;border-radius:7px;background:#fff;color:var(--ink);padding:8px 12px;text-align:left}button:hover{background:var(--wash);border-color:var(--accent)}button:focus-visible,summary:focus-visible{outline:3px solid #21645866;outline-offset:3px}button.primary,button[aria-selected=true]{background:var(--accent);color:#fff;border-color:var(--accent)}button small{display:block;font-size:11px;font-weight:400;opacity:.78}.wrap{max-width:1380px;margin:0 auto;padding:35px 34px 60px}.eyebrow{display:flex;align-items:center;gap:9px;text-transform:uppercase;font-size:11px;font-weight:750;letter-spacing:.13em;color:var(--accent)}.dot{width:8px;height:8px;background:var(--accent);border-radius:50%}h1{font-size:34px;line-height:1.16;letter-spacing:-1.1px;margin:14px 0 14px;font-weight:650}h2{font-size:18px;line-height:1.35;letter-spacing:-.3px;margin:0}h3{font-size:14px;margin:0 0 10px}.intro{font-size:16px;max-width:970px;margin:0;color:#4a5f59}.boundary{margin:13px 0 25px;font-size:12px;color:var(--muted)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:21px 23px}.panel+.panel{margin-top:17px}.row{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.note{color:var(--muted);font-size:12px;margin:5px 0 0}.state-heading{margin-bottom:16px}.badge{display:inline-flex;align-items:center;background:var(--wash);color:var(--accent);padding:4px 9px;font-size:12px;font-weight:650;border-radius:5px;white-space:nowrap}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.card{background:#f7f9f6;border:1px solid #e4eae5;border-radius:7px;padding:11px 12px;min-width:0}.card .label{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-bottom:3px}.card .value{display:block;font-weight:650;overflow-wrap:anywhere;font-size:16px}.split{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;margin-top:20px}.state-detail{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}.status-message{margin:14px 0 0;border-left:3px solid var(--accent);background:var(--wash);padding:10px 13px;overflow-wrap:anywhere;font-size:13px}.status-message.error{border-left-color:#785043;background:#f6efeb;color:#634539}.status-message:empty{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.action-group{border-left:1px solid var(--line);padding-left:9px;display:flex;flex-wrap:wrap;gap:8px}.action-group:first-child{padding-left:0;border:0}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0}.tabs button{font-size:12px}.guide-grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px}.steps{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto;padding:1px 7px 3px 1px}.step{display:flex;align-items:flex-start;gap:8px;font-size:12px}.step .number{font-size:10px;font-weight:700;border:1px solid currentColor;border-radius:4px;min-width:20px;text-align:center;padding:1px 3px}.checks{list-style:none;margin:10px 0 0;padding:0}.checks li{font-size:13px;padding:7px 0 7px 19px;position:relative;border-bottom:1px solid #edf0eb}.checks li:before{content:'•';position:absolute;left:3px;color:var(--accent);font-weight:800}.empty{color:var(--muted);font-size:13px;margin:9px 0}.payload{font-size:12px}.payload details{margin:4px 0}.payload summary{cursor:pointer;overflow-wrap:anywhere;padding:3px 0;color:#354e45}.payload summary strong{font-weight:650}.payload .tree{border-left:1px solid var(--line);margin:3px 0 6px 5px;padding-left:13px}.field{display:grid;grid-template-columns:minmax(100px,160px) minmax(0,1fr);gap:12px;padding:4px 0;line-height:1.5}.field dt{color:var(--muted);overflow-wrap:anywhere}.field dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}.field .nil{color:#78847e;font-style:italic}.payload dl{margin:0}.section-toggle{border-top:1px solid var(--line);padding:11px 0 0;margin:12px 0 0}.section-toggle>summary{cursor:pointer;font-weight:650;font-size:13px;padding:3px 0}.code{background:#f7f9f6;border:1px solid var(--line);border-radius:6px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:440px;overflow:auto;padding:14px;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;margin-bottom:0}.occurrence{border:1px solid var(--line);border-radius:7px;margin:7px 0;padding:8px 11px}.occurrence>summary{display:flex;gap:8px;align-items:center;justify-content:space-between;cursor:pointer;font-size:12px;list-style:none}.occurrence>summary::before{content:'+';color:var(--muted)}.occurrence[open]>summary::before{content:'−'}.occurrence .name{flex:1;overflow-wrap:anywhere;font-weight:600}.small-badge{border:1px solid var(--line);border-radius:4px;font-size:10px;padding:1px 6px;font-weight:500;white-space:nowrap;color:#4d6559}#records{max-height:340px;overflow:auto;padding-right:3px}.events{max-height:220px;overflow:auto;margin-top:10px}.event{font-size:12px;padding:7px 0;border-bottom:1px solid #edf0eb}.event summary{cursor:pointer;overflow-wrap:anywhere}.event-label{color:var(--muted);font-size:10px;margin-right:6px}.draft{width:100%;min-height:300px;resize:vertical;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:7px;background:#f7f9f6;color:var(--ink);tab-size:2;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.footer{font-size:11px;color:var(--muted);margin:20px 3px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:950px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.split{grid-template-columns:1fr}.guide-grid{grid-template-columns:230px minmax(0,1fr)}}@media(max-width:650px){.wrap{padding:23px 14px 35px}h1{font-size:28px}.panel{padding:17px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-grid{grid-template-columns:1fr}.steps{max-height:220px}.field{grid-template-columns:minmax(90px,120px) minmax(0,1fr)}.action-group{border:0;padding:0}.tabs{max-height:240px;overflow:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+<div class="eyebrow"><span class="dot"></span>Agents Assemble · Wayfinder decision 06</div>
+<h1>Can the playbook contract survive interruptions?</h1>
+<p class="intro">Explore whether the proposed playbook model preserves its meaning through authoring round trips, restarts, human replies, specification edits, bounded work and uncertain publication. The decision is whether to retain or revise the contract before building the engine.</p>
+<p class="boundary">Disposable logic experiment · In-memory mock adapters · No accounts, repositories or pull requests are changed · A restart copies the saved model; it does not prove database or process durability.</p>
+</header>
+<section class="panel" aria-labelledby="state-title">
+<div class="row state-heading"><div><h2 id="state-title">Current state</h2><p class="note" id="view-context">Free play · New feature</p></div><span class="badge" id="run-status">Starting</span></div>
+<div class="cards" id="summary-cards"></div>
+<div id="message" class="status-message" role="status" aria-live="polite"></div>
+<div class="split"><div><h3>Work occurrences</h3><p class="note">Open a row for its accepted inputs, attempts and result.</p><div id="records"></div></div><div><h3>Human requests & publication effects</h3><div id="requests"></div><div id="effects"></div><h3 style="margin-top:20px">Transition history</h3><p class="note">Newest first. Open an event for its complete payload.</p><div class="events" id="events"></div></div></div>
+<details class="section-toggle"><summary>Run, revisions & inputs</summary><div id="run-fields" class="payload"></div></details>
+<details class="section-toggle"><summary>Pinned playbook definition</summary><div id="definition" class="payload"></div></details>
+<details class="section-toggle"><summary>Mock external world</summary><div id="world" class="payload"></div></details>
+<details class="section-toggle"><summary>Command receipts</summary><div id="commands" class="payload"></div></details>
+<details class="section-toggle"><summary>Complete snapshot as JSON</summary><pre class="code" id="json"></pre></details>
+</section>
+<section class="panel" aria-labelledby="play-title">
+<div class="row"><div><h2 id="play-title">Free play</h2><p class="note">Each action continues the snapshot displayed above. Actions stay available so you can explore rejected transitions.</p></div><button id="reset">Start a new feature run</button></div>
+<div class="actions">
+<div class="action-group"><button class="primary" data-action="step">Advance one tick</button><button data-action="restart">Simulate restart</button><button data-action="approve">Approve waiting request</button></div>
+<div class="action-group"><button data-action="save">Save spec revision 2</button><button data-action="observe">Observe revision 2</button><button data-action="retain">Keep the pinned revision</button></div>
+<div class="action-group"><button data-action="reconcile">Reconcile publication</button><button data-action="recover">Recover stopped workspace</button><button data-action="cancel">Request cancellation</button><button data-action="quiesce">Quiesce work</button></div>
+</div>
+<p class="note" style="margin-top:12px">A saved document and an observed edit are separate events. Keeping the pinned revision resumes the existing proposal; reconciliation looks for the mock provider's recorded receipt.</p>
+</section>
+<section class="panel" aria-labelledby="draft-title">
+<details><summary id="draft-title" style="cursor:pointer;font-weight:650">Edit a structured playbook draft</summary>
+<p class="note">This structured document fallback is not a graphical designer. Validation preserves your exact draft text when rejected. Starting from the draft admits a new run; it never edits the currently admitted run.</p>
+<label for="playbook-draft" class="sr-only">Playbook JSON draft</label>
+<textarea id="playbook-draft" class="draft" spellcheck="false" aria-describedby="draft-help"></textarea>
+<p class="note" id="draft-help">The mock input examples support the new-feature and bug-fix package identifiers. Other packages report unsupported_demo_inputs.</p>
+<div class="actions"><button id="normalize-draft">Normalize & validate draft</button><button id="start-draft">Start new run from draft</button></div>
+<div id="draft-message" class="status-message" role="status" aria-live="polite"></div>
+</details>
+</section>
+<section class="panel" aria-labelledby="guide-title">
+<div class="row"><div><h2 id="guide-title">Guided experiments</h2><p class="note">Choose a scenario, then inspect each recorded transition. Free play can continue from any displayed snapshot.</p></div><span class="badge" id="suite-result">Loading scenarios</span></div>
+<div class="tabs" id="scenario-tabs" role="tablist" aria-label="Conformance scenarios"></div>
+<div class="guide-grid"><div class="steps" id="trace-steps" aria-label="Scenario transitions"></div><div id="scenario-detail" role="tabpanel" aria-label="Selected scenario"></div></div>
+</section>
+<p class="footer">This file is a shareable decision record, not application code. All state resets when the page reloads. The complete model is visible, including frozen definitions and mock provider receipts.</p>
+</main>
+<script>
+/* AUTHORING_MODULE */
+/* RUNTIME_MODULE */
+/* SCENARIOS_MODULE */
+</script>
+<script>
+(function () {
+'use strict';
+const $=id=>document.getElementById(id);
+const make=(tag,text,className)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(className)n.className=className;return n;};
+const label=k=>String(k).replace(/([a-z0-9])([A-Z])/g,'$1 $2').replace(/[_-]/g,' ').replace(/^./,x=>x.toUpperCase());
+let current, results=[], selected=-1, selectedStep=-1, context='Free play · New feature';
+function message(text,error=false){$('message').textContent=text||'';$('message').classList.toggle('error',error);}
+function readable(value,depth=0){
+ const frag=document.createDocumentFragment();
+ if(value===null||typeof value!=='object'){frag.append(make('span',value===null?'None':String(value)));return frag;}
+ const entries=Object.entries(value);
+ if(!entries.length){frag.append(make('p',Array.isArray(value)?'No entries':'None recorded','empty'));return frag;}
+ const dl=make('dl');
+ for(const [key,item] of entries){
+  const title=Array.isArray(value)?'Item '+(Number(key)+1):label(key);
+  if(item!==null&&typeof item==='object'){
+   const d=make('details');d.open=depth<1;const s=make('summary');s.append(make('strong',title),document.createTextNode(' · '+(Array.isArray(item)?item.length+' items':Object.keys(item).length+' fields')));d.append(s);const body=make('div',undefined,'tree');body.append(readable(item,depth+1));d.append(body);dl.append(d);
+  }else{const row=make('div',undefined,'field');const dd=make('dd',item===null?'None':String(item));if(item===null)dd.className='nil';row.append(make('dt',title),dd);dl.append(row);}
+ }
+ frag.append(dl);return frag;
+}
+function renderPayload(id,data){$(id).replaceChildren(readable(data));}
+function stateRows(id,items,emptyText){
+ const host=$(id);host.replaceChildren();
+ const rows=Object.values(items||{});
+ if(!rows.length){host.append(make('p',emptyText,'empty'));return;}
+ for(const row of rows){const d=make('details',undefined,'occurrence');const summary=make('summary');summary.append(make('span',label(row.action||row.node||row.occurrence||row.key||'Publication effect'),'name'),make('span',label(row.status||'recorded'),'small-badge'));d.append(summary);const body=make('div',undefined,'payload');body.append(readable(row));d.append(body);host.append(d);}
+}
+function render(){
+ const s=current.state,w=current.world;
+ $('view-context').textContent=context;$('run-status').textContent=label(s.status||'snapshot');
+ const cards=[['Run',s.id||'Not applicable'],['Execution version',s.version??'—'],['Logical tick',s.tick??'—'],['Work used',s.work===undefined?'—':s.work+' / '+s.maxWork],['Pinned spec revision',s.pinnedSpec?.revision??'None'],['Saved spec revision',s.knowledgeHead?.revision??'None'],['Observed edit',s.observedEdit?.revision??'None'],['Mock PR changes',(w.creates??0)+' created · '+(w.updates??0)+' updated']];
+ $('summary-cards').replaceChildren(...cards.map(([key,value])=>{const card=make('div',undefined,'card');card.append(make('span',key,'label'),make('span',value,'value'));return card;}));
+ stateRows('records',s.records,'No work has been dispatched.');stateRows('requests',s.requests,'No human requests.');stateRows('effects',s.effects,'No publication effects.');
+ const fields=Object.fromEntries(Object.entries(s).filter(([key])=>!['records','requests','effects','events','definition','commands'].includes(key)));
+ renderPayload('run-fields',fields);renderPayload('definition',s.definition||{});renderPayload('world',w);renderPayload('commands',s.commands||{});
+ $('events').replaceChildren();
+ if(!(s.events||[]).length)$('events').append(make('p','No transitions yet.','empty'));
+ for(const event of [...(s.events||[])].reverse()){const d=make('details',undefined,'event');const sum=make('summary');sum.append(make('span','#'+event.seq+' · tick '+event.tick,'event-label'),document.createTextNode(label(event.type)));d.append(sum);const body=make('div',undefined,'payload');body.append(readable(event));d.append(body);$('events').append(d);}
+ $('json').textContent=JSON.stringify(current,null,2);
+}
+function chooseTrace(i){
+ const scenario=results[selected],trace=scenario.trace||[],snap=trace[i];if(!snap)return;
+ selectedStep=i;current={state:Conformance.copy(snap.state||{}),world:Conformance.copy(snap.world||{})};context='Guided · '+scenario.name+' · '+snap.label;
+ for(const [j,b] of [...$('trace-steps').children].entries())b.setAttribute('aria-selected',String(j===i));
+ message(snap.label);render();
+}
+function assertionText(a){if(typeof a==='string')return a;if(a&&typeof a==='object')return a.message||a.label||a.name||a.description||JSON.stringify(a);return String(a);}
+function chooseScenario(index){
+ selected=index;selectedStep=-1;const scenario=results[index];
+ for(const [i,b] of [...$('scenario-tabs').children].entries())b.setAttribute('aria-selected',String(i===index));
+ $('scenario-detail').replaceChildren(make('h3',scenario.name));
+ $('scenario-detail').append(make('span',scenario.passed?'Assertions satisfied':'Needs investigation','badge'));
+ if(scenario.description)$('scenario-detail').append(make('p',scenario.description,'note'));
+ const assertions=Array.isArray(scenario.assertions)?scenario.assertions:scenario.assertions===undefined?[]:Object.entries(scenario.assertions).map(([k,v])=>k+': '+JSON.stringify(v));
+ const checks=make('ul',undefined,'checks');for(const a of assertions)checks.append(make('li',assertionText(a)));$('scenario-detail').append(checks);
+ if(scenario.error)$('scenario-detail').append(make('p',typeof scenario.error==='string'?scenario.error:JSON.stringify(scenario.error),'status-message error'));
+ const traces=scenario.trace||[];$('trace-steps').replaceChildren();
+ traces.forEach((snap,i)=>{const b=make('button',undefined,'step');b.append(make('span',String(i+1),'number'),make('span',snap.label));b.setAttribute('aria-selected','false');b.addEventListener('click',()=>chooseTrace(i));$('trace-steps').append(b);});
+ if(traces.length)chooseTrace(0);else $('trace-steps').append(make('p','This authoring experiment has no execution trace. Its assertions are shown alongside.','empty'));
+}
+function act(action){
+ try{
+  const s=current.state,w=current.world;let result='';
+  if(!s.definition&&action!=='restart')throw new Error('This snapshot is an authoring result. Start a new feature run to explore execution.');
+  switch(action){
+   case 'step':Conformance.step(s,w);result='Advanced the scheduler by one logical tick.';break;
+   case 'restart':current.state=Conformance.copy(s);result='Restored the run from a JSON snapshot. The mock external world was preserved.';break;
+   case 'approve':{const q=Object.values(s.requests||{}).find(q=>q.status==='waiting');if(!q)throw new Error('There is no waiting human request to approve.');if(q.action==='unreproduced')throw new Error('This request needs a reproduction decision. Use its guided experiment.');result='Human reply: '+Conformance.answer(s,q,{approved:true});break;}
+   case 'save':result='Save revision 2: '+Conformance.save(s,'2');break;
+   case 'observe':result='Observe revision 2: '+Conformance.observe(s,'2');break;
+   case 'retain':if(!s.observedEdit)throw new Error('There is no observed edit to resolve. Observe revision 2 first.');result='Keep pinned revision: '+Conformance.retain(s,s.observedEdit.revision,s.version);break;
+   case 'reconcile':Conformance.reconcile(s,w);result='Reconciled uncertain publication effects against recorded mock provider receipts.';break;
+   case 'recover':{const r=Object.values(s.records||{}).find(r=>r.status==='paused');if(!r)throw new Error('workspace_recovery_required: no paused work occurrence is available.');try{Conformance.recoverWorkspace(s,w,r.id);}catch(e){throw new Error(e.message+' Run status: '+s.status+'; original checkpoint: '+(r.inputs?.checkpoint?.commit||'none')+'; verified by the mock world: '+String((w.verifiedCommits||[]).includes(r.inputs?.checkpoint?.commit))+'.');}result='Recovered stopped work from its verified original checkpoint: '+r.node+'.';break;}
+   case 'cancel':Conformance.cancel(s);result='Cancellation requested. Quiesce work to settle controllable activity.';break;
+   case 'quiesce':Conformance.quiesce(s);result='Controllable work quiesced. Unknown external effects still require reconciliation.';break;
+  }
+  context='Free play · '+(s.definition?.package?.id||s.id||'snapshot');
+  const latest=s.events?.at(-1);if(s.status==='blocked')message('Transition blocked: '+(latest?.message||latest?.type||'inspect the latest event'),true);else message(result,/conflict|invalid|unauthorized/.test(result));render();
+ }catch(error){message(error.message,true);render();}
+}
+let draftRunNumber=0;
+function draftMessage(text,error=false){$('draft-message').textContent=text;$('draft-message').classList.toggle('error',error);}
+function readDraft(){return Authoring.normalize(JSON.parse($('playbook-draft').value));}
+$('normalize-draft').addEventListener('click',()=>{try{const normalized=readDraft();$('playbook-draft').value=JSON.stringify(normalized,null,2);draftMessage('Draft validated and normalized. The current run is unchanged.');}catch(e){draftMessage('Draft rejected; original text preserved. '+e.message,true);}});
+$('start-draft').addEventListener('click',()=>{try{
+ const def=readDraft(),packageId=def.package.id;
+ const supported=[Authoring.definitions.feature.package.id,Authoring.definitions.bug.package.id];
+ if(!supported.includes(packageId))throw new Error('unsupported_demo_inputs: no mock input example is configured for '+packageId+'. Use '+supported.join(' or ')+'.');
+ const next=Conformance.start(def,Experiment.inputs(packageId.includes('bug')),'draft-'+Date.now()+'-'+(++draftRunNumber));
+ current={state:next,world:Conformance.world()};context='Free play · New run from draft · '+packageId;
+ $('playbook-draft').value=JSON.stringify(def,null,2);draftMessage('Admitted '+next.id+' from the validated draft. The prior run was not edited.');message('Started a separate run from the draft. Advance one tick to begin.');render();
+}catch(e){draftMessage('New run rejected; original draft text and displayed run preserved. '+e.message,true);}});
+$('reset').addEventListener('click',()=>{try{current=Experiment.createDemo();context='Free play · New feature';message('Started a fresh feature run. Advance one tick to begin.');render();}catch(e){message(e.message,true);}});
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
+try{
+ $('playbook-draft').value=JSON.stringify(Authoring.normalize(Authoring.definitions.feature),null,2);
+ current=Experiment.createDemo();render();results=Experiment.runAll();
+ $('suite-result').textContent=results.filter(x=>x.passed).length+' / '+results.length+' experiments passed';
+ results.forEach((scenario,i)=>{const b=make('button',scenario.name);b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.addEventListener('click',()=>chooseScenario(i));$('scenario-tabs').append(b);});
+ $('scenario-detail').append(make('p','Choose an experiment to inspect its assertions and the recorded states that support them.','empty'));
+}catch(error){message('Experiment failed to initialize: '+error.message,true);$('suite-result').textContent='Initialization failed';}
+})();
+</script>
+</body>
+</html>
