@@ -2,6 +2,8 @@
 
 Research date: **2026-09-12**. Supports Wayfinder decision **#2**, the boundary between the service and customer-operated execution. This is documentation research and local interface inspection, not a working integration or a compatibility certification.
 
+**Later evidence, decision #8:** the [native runner recovery probe](runner-recovery-conformance.md) demonstrates Codex 0.153.4 App Server using the current Linux user's existing ChatGPT login and fresh-session reconstruction from verified Git/artifact inputs. An actual App Server SIGKILL left tool descendants alive. The original #2 research below is preserved as its earlier evidence snapshot; other harnesses, service identities and production integration remain unproved.
+
 ## Principal finding
 
 The project owner has resolved the execution boundary: users install the Agents Assemble CLI on their own machines or servers; it starts a daemon and tunnel and invokes their already installed, already authenticated Codex, Claude Code or other supported harness. Those harnesses use the user's existing accounts and may call their model providers directly. Agents Assemble neither implements an agent loop nor proxies inference or model credentials, and requires no service-side model authentication.
