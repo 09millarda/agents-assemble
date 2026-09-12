@@ -1,0 +1,734 @@
+{
+  "method": "Independent Python standard-library HTTPS client; actual local mTLS boundary",
+  "passed": 52,
+  "failed": 0,
+  "cases": [
+    {
+      "case": "no_client_certificate",
+      "expected": "TLS failure before application state change",
+      "actual": {
+        "status": null,
+        "error_type": "ConnectionResetError",
+        "error": "[Errno 104] Connection reset by peer"
+      },
+      "passed": true
+    },
+    {
+      "case": "untrusted_client_CA",
+      "expected": "TLS failure before application state change",
+      "actual": {
+        "status": null,
+        "error_type": "SSLError",
+        "error": "[SSL: TLSV1_ALERT_UNKNOWN_CA] tlsv1 alert unknown ca (_ssl.c:2711)"
+      },
+      "passed": true
+    },
+    {
+      "case": "expired_client_certificate",
+      "expected": "TLS failure before application state change",
+      "actual": {
+        "status": null,
+        "error_type": "SSLError",
+        "error": "[SSL: SSLV3_ALERT_CERTIFICATE_EXPIRED] ssl/tls alert certificate expired (_ssl.c:2711)"
+      },
+      "passed": true
+    },
+    {
+      "case": "untrusted_server_CA",
+      "expected": "TLS failure before application state change",
+      "actual": {
+        "status": null,
+        "error_type": "SSLCertVerificationError",
+        "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)"
+      },
+      "passed": true
+    },
+    {
+      "case": "unregistered_receipt_identity_boundary",
+      "expected": "unknown_credential",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "unknown_credential"
+        },
+        "local_port": 33160,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "b_receipt_identity_boundary",
+      "expected": "runner_denied",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "runner_denied"
+        },
+        "local_port": 33170,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "wrong_tenant_query_identity_boundary",
+      "expected": "organization_denied",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "organization_denied"
+        },
+        "local_port": 33178,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "runner_only_receipt_identity_boundary",
+      "expected": "role_denied",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "role_denied"
+        },
+        "local_port": 33190,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "generation_boolean",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "wrong_field_type"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "journal_sequence_boolean",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "wrong_field_type"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "generation_float",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unsupported_value"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "generation_exponent",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unsupported_value"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "generation_nan",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unsupported_number"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "oversized_integer",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unsupported_number"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "null_metadata",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unsupported_value"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "nested_object_metadata",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "wrong_field_type"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "unknown_top_level_member",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "unknown_or_missing_field"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "duplicate_member",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "duplicate_key"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "noncanonical_whitespace",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "noncanonical_ascii_escape",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "negative_zero",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "unicode_metadata",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "non_ascii_metadata"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "control_character_metadata",
+      "expected": "HTTP 400; no Execution state/inbox/outbox changes",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "non_ascii_metadata"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "canonical_receipt_positive_control",
+      "expected": "One accepted stopped receipt",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "exact_receipt_replay",
+      "expected": "Original verdict; no state/outbox change",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "same_id_changed_outcome",
+      "expected": "HTTP 409 payload_conflict; no state change",
+      "actual": {
+        "status": 409,
+        "body": {
+          "error": "payload_conflict"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "new_evidence_after_grant_expiry",
+      "expected": "Semantic grant_expired rejection",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "new-after-expiry",
+          "reason": "grant_expired"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "history_survives_invocation_grant_expiry",
+      "expected": "Historical accepted verdict",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "revocation_on_existing_tls_connection",
+      "expected": "403 credential_revoked on same established connection",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "credential_revoked"
+        },
+        "local_port": 33194,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_exact_receipt_replay",
+      "expected": "Original immutable verdict with original logical issuer",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 33210,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_historical_query",
+      "expected": "Original immutable verdict",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 33210,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "expired_enrollment_cannot_use_replay",
+      "expected": "403 enrollment_expired",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "enrollment_expired"
+        },
+        "local_port": 33210,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "historical_replay_is_not_current_sequence_claim",
+      "expected": "Old immutable verdict despite newer acknowledged highwater",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 34808,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotation_cannot_bypass_runner_highwater",
+      "expected": "New evidence rejected as journal_rollback",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "lower-seq-new-evidence",
+          "reason": "journal_rollback"
+        },
+        "local_port": 34818,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_cannot_bypass_changed_journal",
+      "expected": "Reject old destination binding; admission budget unchanged",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "rotated-journal",
+          "reason": "current_journal_mismatch"
+        },
+        "local_port": 35120,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_cannot_bypass_changed_boot",
+      "expected": "Reject old destination binding; admission budget unchanged",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "rotated-boot",
+          "reason": "current_boot_mismatch"
+        },
+        "local_port": 36454,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_cannot_bypass_changed_host",
+      "expected": "Reject old destination binding; admission budget unchanged",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "rotated-host",
+          "reason": "current_host_mismatch"
+        },
+        "local_port": 58810,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "rotated_key_cannot_bypass_changed_profile",
+      "expected": "Reject old destination binding; admission budget unchanged",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "rotated-profile",
+          "reason": "current_profile_mismatch"
+        },
+        "local_port": 45902,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "cross_tenant_recovery_known_writer",
+      "expected": "Deny selected writer owned by another tenant",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "organization_denied"
+        },
+        "local_port": 50876,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "stopped_writer_does_not_account_external_effect",
+      "expected": "external_effect_unknown",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "effects-still-unknown",
+          "reason": "external_effect_unknown"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "quarantined_evidence_retains_immutable_history",
+      "expected": "Accepted original history remains queryable",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "quarantined_evidence_cannot_authorize_recovery",
+      "expected": "evidence_quarantined",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "quarantined-new-admission",
+          "reason": "evidence_quarantined"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "semantic_rejection_is_not_reinterpreted",
+      "expected": "Original quarantine rejection remains after assessment changes",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "quarantined-new-admission",
+          "reason": "evidence_quarantined"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "eligible_fresh_admission_positive_control",
+      "expected": "One fresh replacement admitted",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "message_id": "fresh-after-assessment",
+          "reason": "accepted",
+          "replacement_writer": "replacement-fresh-after-assessment"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "admission_replay_charges_once",
+      "expected": "Same admitted verdict; no new replacement or budget change",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "message_id": "fresh-after-assessment",
+          "reason": "accepted",
+          "replacement_writer": "replacement-fresh-after-assessment"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "predecessor_receipt_replay_cannot_clear_replacement",
+      "expected": "Historical fact leaves replacement unknown",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "stopped_predecessor_cannot_bypass_live_replacement",
+      "expected": "stale_current_writer; still one admission",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "second-attempt-old-writer",
+          "reason": "stale_current_writer"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "live_replacement_with_own_valid_grant_still_blocks",
+      "expected": "local_writer_unresolved; still one admission",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": false,
+          "message_id": "current-still-active",
+          "reason": "local_writer_unresolved"
+        },
+        "local_port": 54212,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "actual_certificate_expiry_on_existing_tls_connection",
+      "expected": "403 certificate_expired on same established TLS socket",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "certificate_expired"
+        },
+        "local_port": 40656,
+        "tls": "TLSv1.3"
+      },
+      "passed": true,
+      "note": "Toy client certificate was genuinely valid for 3 seconds; operation was retried after its actual notAfter."
+    },
+    {
+      "case": "runner_retirement_revokes_rotated_key_too",
+      "expected": "403 credential_revoked for rotated credential on existing connection",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "credential_revoked"
+        },
+        "local_port": 56994,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "explicit_revocation_linearization_limitation",
+      "expected": "Already-authorized operation may commit after Fleet mutation",
+      "actual": {
+        "status": 200,
+        "body": {
+          "accepted": true,
+          "local_state": "stopped",
+          "message_id": "receipt-1",
+          "reason": "accepted"
+        },
+        "local_port": 51456,
+        "tls": "TLSv1.3"
+      },
+      "passed": true,
+      "note": "Expected limitation: no ordered Execution-local gate/authorization permit is implemented by this fixture."
+    },
+    {
+      "case": "subsequent_operation_observes_revocation",
+      "expected": "Next operation denied",
+      "actual": {
+        "status": 403,
+        "body": {
+          "error": "credential_revoked"
+        },
+        "local_port": 51456,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    }
+  ],
+  "fixture_sha256": "28eced26fa319f7676ec400c00ee1e1707c423309fc3dbc8c7f49f1129cc68dd",
+  "reviewed_utc": "2026-09-12T18:08:48Z",
+  "limits": [
+    "Real TLS and application acceptance; fixture setup/admin/verifier/physical observation are controlled inputs.",
+    "No production PostgreSQL, native supervisor, enrollment UI, compromised-host resistance or propagated revocation gate certification."
+  ]
+}

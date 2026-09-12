@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.key
+*.crt
+*.csr
+*.sqlite
+*.sqlite-*

@@ -1,0 +1,111 @@
+{
+  "method": "Independent Python standard-library HTTPS client; actual local mTLS boundary",
+  "passed": 5,
+  "failed": 0,
+  "cases": [
+    {
+      "case": "cross_tenant_recovery_known_writer",
+      "expected": "Denied and org-1 run/admissions unchanged",
+      "actual": {
+        "response": {
+          "status": 403,
+          "body": {
+            "error": "organization_denied"
+          },
+          "local_port": 60486,
+          "tls": "TLSv1.3"
+        },
+        "before": [
+          {
+            "run_id": "run-1",
+            "current_writer": "writer-1",
+            "budget": 1,
+            "admissions": 0
+          }
+        ],
+        "after": [
+          {
+            "run_id": "run-1",
+            "current_writer": "writer-1",
+            "budget": 1,
+            "admissions": 0
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "new_incarnation_cannot_inherit_old_destination",
+      "expected": "Denied and admissions unchanged",
+      "actual": {
+        "response": {
+          "status": 200,
+          "body": {
+            "accepted": false,
+            "message_id": "admission-replacement",
+            "reason": "current_journal_mismatch"
+          },
+          "local_port": 54654,
+          "tls": "TLSv1.3"
+        },
+        "before": [
+          {
+            "run_id": "run-1",
+            "current_writer": "writer-1",
+            "budget": 1,
+            "admissions": 0
+          }
+        ],
+        "after": [
+          {
+            "run_id": "run-1",
+            "current_writer": "writer-1",
+            "budget": 1,
+            "admissions": 0
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "noncanonical_whitespace",
+      "expected": "Rejected at encoding/schema boundary",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 59360,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "alternate_ascii_escape",
+      "expected": "Rejected at encoding/schema boundary",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 60638,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    },
+    {
+      "case": "negative_zero_journal_sequence",
+      "expected": "Rejected at encoding/schema boundary",
+      "actual": {
+        "status": 400,
+        "body": {
+          "error": "noncanonical_wire_encoding"
+        },
+        "local_port": 58866,
+        "tls": "TLSv1.3"
+      },
+      "passed": true
+    }
+  ],
+  "fixture_sha256": "2902bff953b9703023a7084e5978251dbd504ffbf420a556ed476578e3c9ef9e"
+}
