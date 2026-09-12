@@ -1,0 +1,10 @@
+{
+  "model.mjs": "9acf1fbcf25baf4971627fa7a151ab80e3c23dacd0effb89c8fd7aa34eb24d53",
+  "run-experiment.mjs": "ce99bab66eafc0446300010a3b885ae6752444ce9929eb49fc811dbbb3e6c727",
+  "reference/authoring.cjs": "40e52ee0c7f68b874a695c6dacae0cef485b15346dc2c83dda6d5079560b8566",
+  "reference/builder.ts": "2452145598debb1d6d83077131cae713c81b4ae9b109569f06fdb301c91a266d",
+  "reference/fixtures.json": "4179bcc8b2b536184d4305e2321188a70a4b99d0ce82250b90628fc7260c1b1b",
+  "package-lock.json": "94d4ed32b710d34b1aeadf38622478602a6ab57d4b2f11db1cfb25ed6ad630cb",
+  "independent-review.mjs": "c6d20b51c727292f73e1b90424423ffec85439f37d65a2121db3bc708a246fbd",
+  "build-viewer.mjs": "148231b5e9f43261eaa7992cd82c30c0285711fb324fdc73d07ea4b2438d34e0"
+}

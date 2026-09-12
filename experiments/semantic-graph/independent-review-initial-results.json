@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-09-12T19:33:55.847Z",
+  "modelScope": "actual Yjs, controlled in-memory intents and publication",
+  "results": [
+    {
+      "name": "arrays: structural field edit cannot silently disappear",
+      "status": "defect",
+      "publishable": true,
+      "requestedChildren": 0,
+      "actualChildren": 3,
+      "diagnostics": []
+    },
+    {
+      "name": "arrays: unknown behavior preserved and blocked",
+      "status": "pass",
+      "diagnostics": [
+        "unknown_behavioral_field"
+      ]
+    },
+    {
+      "name": "arrays: same-gap moves require review",
+      "status": "pass",
+      "order": [
+        "b",
+        "c",
+        "a"
+      ],
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    },
+    {
+      "name": "arrays: duplicate operation preserves invalidity",
+      "status": "pass",
+      "order": [
+        "a",
+        "b",
+        "c",
+        null
+      ],
+      "diagnostics": [
+        "duplicate_placement"
+      ]
+    },
+    {
+      "name": "arrays: self-cycle blocks freeze",
+      "status": "pass",
+      "diagnostics": [
+        "unplaced_node"
+      ]
+    },
+    {
+      "name": "arrays: unrelated structural edit and move must not lose command",
+      "status": "defect",
+      "publishable": true,
+      "order": [
+        "c",
+        "a",
+        "b"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "parent: structural field edit cannot silently disappear",
+      "status": "defect",
+      "publishable": true,
+      "requestedChildren": 0,
+      "actualChildren": 3,
+      "diagnostics": []
+    },
+    {
+      "name": "parent: unknown behavior preserved and blocked",
+      "status": "pass",
+      "diagnostics": [
+        "unknown_behavioral_field"
+      ]
+    },
+    {
+      "name": "parent: same-gap moves require review",
+      "status": "pass",
+      "order": [
+        "b",
+        "c",
+        "a"
+      ],
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    },
+    {
+      "name": "parent: duplicate operation preserves invalidity",
+      "status": "defect",
+      "order": [
+        "b",
+        "c",
+        "a"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "parent: self-cycle blocks freeze",
+      "status": "pass",
+      "diagnostics": [
+        "unplaced_node"
+      ]
+    },
+    {
+      "name": "parent: unrelated structural edit and move must not lose command",
+      "status": "defect",
+      "publishable": true,
+      "order": [
+        "c",
+        "a",
+        "b"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "inherited validator: literal action input compatibility",
+      "status": "limitation",
+      "publishable": true,
+      "diagnostics": [],
+      "note": "Fixture discover action requires an object; syntactic bindings are checked but input compatibility is not."
+    },
+    {
+      "name": "inherited validator: end result output compatibility",
+      "status": "limitation",
+      "publishable": true,
+      "diagnostics": [],
+      "note": "Fixture document outputs require an object; end result compatibility is not checked."
+    },
+    {
+      "name": "publication cannot accept fabricated unvalidated candidate",
+      "status": "defect",
+      "result": {
+        "status": "published",
+        "revision": 1
+      }
+    },
+    {
+      "name": "publication cannot accept changed frozen bytes",
+      "status": "defect",
+      "result": {
+        "status": "published",
+        "revision": 1
+      }
+    },
+    {
+      "name": "unresolved field conflict blocks legitimate freeze route",
+      "status": "pass",
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    }
+  ]
+}

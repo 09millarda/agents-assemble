@@ -1,0 +1,52 @@
+PASS arrays: feature full normalized JSON and generated TypeScript round trip
+PASS arrays: bug full normalized JSON and generated TypeScript round trip
+PASS arrays: fanout full normalized JSON and generated TypeScript round trip
+PASS arrays: disjoint nested binding edits survive
+PASS arrays: same field conflict survives map convergence
+PASS arrays: nested object replacement versus field edit
+PASS arrays: incompatible moves of one entity
+PASS arrays: same parent conflicting reorders
+PASS arrays: ancestor cycles cannot publish
+PASS arrays: parent delete versus child insertion
+PASS arrays: deletion versus nested edit keeps proposal
+PASS arrays: insertion at same ordered gap requires review
+PASS parent: feature full normalized JSON and generated TypeScript round trip
+PASS parent: bug full normalized JSON and generated TypeScript round trip
+PASS parent: fanout full normalized JSON and generated TypeScript round trip
+PASS parent: disjoint nested binding edits survive
+PASS parent: same field conflict survives map convergence
+PASS parent: nested object replacement versus field edit
+PASS parent: incompatible moves of one entity
+PASS parent: same parent conflicting reorders
+PASS parent: ancestor cycles cannot publish
+PASS parent: parent delete versus child insertion
+PASS parent: deletion versus nested edit keeps proposal
+PASS parent: insertion at same ordered gap requires review
+PASS arrays: duplicate placement rejected without automatic deduplication
+PASS arrays: scoped author IDs remain distinct editor entities
+PASS arrays: move retains stable content and independent field edit
+PASS arrays: producer reorder invalidates lexical binding
+PASS arrays: moving end into concurrent branch is rejected
+PASS arrays: case order and every condition operator round trip
+PASS publication gate: unknown format
+PASS publication gate: unknown behavior
+PASS publication gate: unknown schema
+PASS publication gate: unresolved external schema
+PASS publication gate: dependency pin drift
+PASS publication gate: runtime slot missing
+PASS publication gate: unknown capability
+PASS publication gate: unbounded repeat
+PASS publication gate: unknown policy
+PASS publication gate: concurrent sibling reference
+PASS publication gate: malformed pointer
+PASS publication gate: visible ID shadow
+PASS publication gate: wrong node kind retains incompatible fields
+PASS namespaced presentation metadata survives every representation
+PASS exact candidate publication and explicit lineage proposal
+PASS resolution cannot acknowledge unseen offline conflict
+PASS 100 nodes: two replicas, semantic mapping and edit/merge timings
+{"builder":"local TypeScript helper composition","typeAnnotations":"stripped by Node; not a tsc typecheck","fullFeatureEquivalent":true,"editorRoundtrip":true,"stableNodeIds":true,"pinnedDependenciesAndPolicy":true}
+PASS local TypeScript builder reconstructs feature before visual edit
+PASS unknown required behavior is raw-exportable and read-only
+PASS local executable value rejected before lossy JSON conversion
+{"scenarios":50,"checks":242,"passed":50,"sourceHash":"4e79a3fa52e4eeeb14e6a259fea475181ef523daffadb5266e216ea51dba82a3"}

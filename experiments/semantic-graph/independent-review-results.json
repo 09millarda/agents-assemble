@@ -1,0 +1,215 @@
+{
+  "generatedAt": "2026-09-12T19:40:18.684Z",
+  "modelScope": "actual Yjs, controlled in-memory intents and publication",
+  "results": [
+    {
+      "name": "arrays: structural field edit cannot silently disappear",
+      "status": "pass",
+      "rejected": {
+        "error": "structural_command_required"
+      },
+      "publishable": true,
+      "requestedChildren": 0,
+      "actualChildren": 3,
+      "diagnostics": []
+    },
+    {
+      "name": "arrays: unknown behavior preserved and blocked",
+      "status": "pass",
+      "diagnostics": [
+        "unknown_behavioral_field"
+      ]
+    },
+    {
+      "name": "arrays: same-gap moves require review",
+      "status": "pass",
+      "order": [
+        "b",
+        "c",
+        "a"
+      ],
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    },
+    {
+      "name": "arrays: duplicate operation preserves invalidity",
+      "status": "pass",
+      "rejected": {
+        "result": "2404710404:1"
+      },
+      "order": [
+        "a",
+        "b",
+        "c",
+        null
+      ],
+      "diagnostics": [
+        "duplicate_placement"
+      ]
+    },
+    {
+      "name": "arrays: self-cycle blocks freeze",
+      "status": "pass",
+      "diagnostics": [
+        "unplaced_node"
+      ]
+    },
+    {
+      "name": "arrays: unrelated structural edit and move must not lose command",
+      "status": "pass",
+      "rejected": {
+        "error": "structural_command_required"
+      },
+      "publishable": true,
+      "order": [
+        "c",
+        "a",
+        "b"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "parent: structural field edit cannot silently disappear",
+      "status": "pass",
+      "rejected": {
+        "error": "structural_command_required"
+      },
+      "publishable": true,
+      "requestedChildren": 0,
+      "actualChildren": 3,
+      "diagnostics": []
+    },
+    {
+      "name": "parent: unknown behavior preserved and blocked",
+      "status": "pass",
+      "diagnostics": [
+        "unknown_behavioral_field"
+      ]
+    },
+    {
+      "name": "parent: same-gap moves require review",
+      "status": "pass",
+      "order": [
+        "b",
+        "c",
+        "a"
+      ],
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    },
+    {
+      "name": "parent: duplicate operation preserves invalidity",
+      "status": "pass",
+      "rejected": {
+        "error": "unsupported_duplicate_placement"
+      },
+      "order": [
+        "a",
+        "b",
+        "c"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "parent: self-cycle blocks freeze",
+      "status": "pass",
+      "diagnostics": [
+        "unplaced_node"
+      ]
+    },
+    {
+      "name": "parent: unrelated structural edit and move must not lose command",
+      "status": "pass",
+      "rejected": {
+        "error": "structural_command_required"
+      },
+      "publishable": true,
+      "order": [
+        "c",
+        "a",
+        "b"
+      ],
+      "diagnostics": []
+    },
+    {
+      "name": "inherited validator: literal action input compatibility",
+      "status": "pass",
+      "publishable": false,
+      "diagnostics": [
+        "type_error"
+      ],
+      "note": "Wholly constant action input incompatibility should now be rejected; general dynamic compatibility remains outside this probe."
+    },
+    {
+      "name": "inherited validator: end result output compatibility",
+      "status": "pass",
+      "publishable": false,
+      "diagnostics": [
+        "type_error"
+      ],
+      "note": "Wholly constant end result incompatibility should now be rejected; general dynamic compatibility remains outside this probe."
+    },
+    {
+      "name": "publication cannot accept fabricated unvalidated candidate",
+      "status": "pass",
+      "result": {
+        "status": "candidate_conflict"
+      }
+    },
+    {
+      "name": "publication cannot accept changed frozen bytes",
+      "status": "pass",
+      "result": {
+        "status": "candidate_conflict"
+      }
+    },
+    {
+      "name": "unresolved field conflict blocks legitimate freeze route",
+      "status": "pass",
+      "diagnostics": [
+        "unresolved_intent"
+      ]
+    },
+    {
+      "name": "own __proto__ JSON property must survive materialization",
+      "status": "pass",
+      "before": {
+        "metadata": {
+          "test:data": {
+            "__proto__": 17,
+            "keep": true
+          }
+        }
+      },
+      "after": {
+        "metadata": {
+          "test:data": {
+            "__proto__": 17,
+            "keep": true
+          }
+        }
+      },
+      "publishable": true,
+      "diagnostics": []
+    },
+    {
+      "name": "rejected move leaves state and intent history unchanged",
+      "status": "pass",
+      "rejected": {
+        "error": "unknown_target_slot"
+      },
+      "operations": 0,
+      "diagnostics": []
+    },
+    {
+      "name": "owner-recorded candidate publication still succeeds",
+      "status": "pass",
+      "result": {
+        "status": "published",
+        "revision": 1
+      }
+    }
+  ]
+}

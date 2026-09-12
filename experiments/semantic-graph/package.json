@@ -1,0 +1,1 @@
+{"name":"semantic-graph-throwaway","version":"0.0.0","private":true,"type":"module","scripts":{"experiment":"node run-experiment.mjs"},"dependencies":{"yjs":"13.6.32"}}
