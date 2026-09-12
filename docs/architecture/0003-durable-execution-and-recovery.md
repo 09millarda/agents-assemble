@@ -1,7 +1,7 @@
 # ADR 0003: Execution-owned PostgreSQL transitions and recovery
 
-Date: 2026-09-12  
-Status: **Accepted — PostgreSQL substrate and minimum context-local protocol, supported by bounded fault evidence; full production conformance remains unproved.**  
+Date: 2026-09-12
+Status: **Accepted — PostgreSQL substrate and minimum context-local protocol, supported by bounded fault evidence; full production conformance remains unproved.**
 Decision: [#7](https://github.com/09millarda/agents-assemble/issues/7) · Map: [#1](https://github.com/09millarda/agents-assemble/issues/1)
 
 ## Decision
