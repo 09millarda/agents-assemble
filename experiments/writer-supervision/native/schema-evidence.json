@@ -1,0 +1,6 @@
+{
+  "version": "codex-cli 0.153.4",
+  "generatedType": "v2/TurnInterruptParams.ts",
+  "sha256": "643034c3d25c23c7700236d4d1ff16286565786d48148e85b0c4761fe46d3804",
+  "signature": "{ threadId: string, turnId: string }"
+}

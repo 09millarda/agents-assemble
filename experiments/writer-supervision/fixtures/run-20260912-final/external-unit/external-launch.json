@@ -1,0 +1,27 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--quiet",
+    "--unit=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+    "--property=Type=exec",
+    "--property=ExitType=cgroup",
+    "--property=Restart=no",
+    "--property=RestartForceExitStatus=",
+    "--property=KillMode=control-group",
+    "--property=SendSIGKILL=yes",
+    "--property=TimeoutStopSec=750ms",
+    "--property=RuntimeMaxSec=20s",
+    "--property=Delegate=no",
+    "/usr/bin/python3",
+    "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+    "--worker",
+    "writer",
+    "--directory",
+    "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/external-unit/external"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "elapsed_seconds": 0.0575
+}

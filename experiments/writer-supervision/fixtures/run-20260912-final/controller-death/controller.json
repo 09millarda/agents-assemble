@@ -1,0 +1,39 @@
+{
+  "identity": {
+    "pid": 403396,
+    "state": "R",
+    "ppid": 403305,
+    "process_group": 403396,
+    "session": 403396,
+    "start_ticks": 16020858,
+    "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+    "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+  },
+  "launch": {
+    "command": [
+      "systemd-run",
+      "--user",
+      "--quiet",
+      "--unit=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+      "--property=Type=exec",
+      "--property=ExitType=cgroup",
+      "--property=Restart=no",
+      "--property=RestartForceExitStatus=",
+      "--property=KillMode=control-group",
+      "--property=SendSIGKILL=yes",
+      "--property=TimeoutStopSec=750ms",
+      "--property=RuntimeMaxSec=20s",
+      "--property=Delegate=no",
+      "/usr/bin/python3",
+      "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+      "--worker",
+      "escaped",
+      "--directory",
+      "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/controller-death/service"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "",
+    "elapsed_seconds": 0.059
+  }
+}

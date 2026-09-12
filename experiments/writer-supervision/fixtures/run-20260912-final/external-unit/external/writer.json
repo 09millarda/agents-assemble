@@ -1,0 +1,10 @@
+{
+  "pid": 403456,
+  "state": "R",
+  "ppid": 8907,
+  "process_group": 403456,
+  "session": 403456,
+  "start_ticks": 16021312,
+  "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+}

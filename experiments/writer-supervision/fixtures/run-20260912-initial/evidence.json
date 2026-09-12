@@ -1,0 +1,239 @@
+{
+  "throwaway": true,
+  "started_unix": 1789231103.0795758,
+  "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "platform": [
+    "Linux",
+    "amillard98-Inspiron-16-Plus-7620",
+    "7.0.0-31-generic",
+    "#31-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 04:26:38 UTC 2026",
+    "x86_64"
+  ],
+  "fixture_directory": "experiments/writer-supervision/fixtures/run-20260912-initial",
+  "empirical_cases": [
+    {
+      "name": "process_group_double_fork_escape",
+      "passed": true,
+      "main_before": {
+        "pid": 401996,
+        "state": "R",
+        "ppid": 401932,
+        "process_group": 401996,
+        "session": 401996,
+        "start_ticks": 16016765,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "writer_before": {
+        "pid": 401998,
+        "state": "R",
+        "ppid": 8907,
+        "process_group": 401997,
+        "session": 401997,
+        "start_ticks": 16016787,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "main_exitcode": -9,
+      "writer_after_group_kill": {
+        "pid": 401998,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 401997,
+        "session": 401997,
+        "start_ticks": 16016787,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "post_kill_writes": {
+        "before_bytes": 23,
+        "after_bytes": 161,
+        "grew": true,
+        "observation_seconds": 0.22
+      }
+    }
+  ],
+  "modeled_guards": [],
+  "owned_units": [
+    "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service"
+  ],
+  "events": [
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "systemd 259 (259.5-0ubuntu3.4)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0103
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "--property=Version,ControlGroup"
+      ],
+      "returncode": 0,
+      "stdout": "Version=259.5-0ubuntu3.4\nControlGroup=/user.slice/user-1000.slice/user@1000.service\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0185
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--quiet",
+        "--unit=aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service",
+        "--property=Type=exec",
+        "--property=ExitType=cgroup",
+        "--property=Restart=no",
+        "--property=RestartForceExitStatus=",
+        "--property=KillMode=control-group",
+        "--property=SendSIGKILL=yes",
+        "--property=TimeoutStopSec=750ms",
+        "--property=RuntimeMaxSec=20s",
+        "--property=Delegate=no",
+        "/usr/bin/python3",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+        "--worker",
+        "escaped",
+        "--directory",
+        "experiments/writer-supervision/fixtures/run-20260912-initial/main-death"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0701
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.8461
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0196
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0258
+    }
+  ],
+  "environment": {
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "systemd": {
+      "command": [
+        "systemctl",
+        "--user",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "systemd 259 (259.5-0ubuntu3.4)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0103
+    },
+    "manager": {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "--property=Version,ControlGroup"
+      ],
+      "returncode": 0,
+      "stdout": "Version=259.5-0ubuntu3.4\nControlGroup=/user.slice/user-1000.slice/user@1000.service\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0185
+    },
+    "cgroup_v2": true
+  },
+  "harness_error": "RuntimeError('timed out waiting for experiments/writer-supervision/fixtures/run-20260912-initial/main-death/main.json')",
+  "final_cleanup": [
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.8461
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0196
+    }
+  ],
+  "final_owned_unit_snapshots": {
+    "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-b6a8075d70bd434283ed7d67bfb8cb8b-main-death.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    }
+  },
+  "finished_unix": 1789231109.57756,
+  "empirical_pass_count": 1,
+  "empirical_case_count": 1,
+  "modeled_guard_count": 0,
+  "harness_bug_note": "Initial run passed relative output path to user service whose cwd defaulted to the home directory. It timed out in harness readiness; exact owned unit was stopped, and only the resulting fixture directory was relocated into this run directory. Corrected runner resolves output to absolute path before launching."
+}

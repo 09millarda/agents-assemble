@@ -1,0 +1,368 @@
+{
+  "mode": "graceful",
+  "status": "observed_scoped_stop",
+  "version": "codex-cli 0.153.4",
+  "kernel": "7.0.0-31-generic",
+  "systemd": "systemd 259 (259.5-0ubuntu3.4)",
+  "bootId": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "workspace": "/tmp/aa-writer-native-vm0v_qnk",
+  "unit": "aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+  "nativeTurnStarts": 1,
+  "claimScope": "owned systemd user unit subtree; trusted cooperative local tools; no remote effect claim",
+  "sourceSha256": "fbe6684eb186a2fc99fa81e7800c9a9d77d89b158ba094676576850c2e083f56",
+  "environmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "PATH",
+    "PYTHONDONTWRITEBYTECODE",
+    "TERM",
+    "XDG_RUNTIME_DIR"
+  ],
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true
+  },
+  "settings": {
+    "requested": {
+      "sandbox": "workspace-write",
+      "networkAccess": false,
+      "approvalPolicy": "never",
+      "ephemeral": true,
+      "model": "omitted",
+      "effort": "omitted"
+    },
+    "effective": {
+      "model": "gpt-6-astra",
+      "modelProvider": "openai",
+      "reasoningEffort": "ultra",
+      "approvalPolicy": "never",
+      "sandbox": {
+        "type": "workspaceWrite",
+        "writableRoots": [],
+        "networkAccess": false,
+        "excludeTmpdirEnvVar": true,
+        "excludeSlashTmp": true
+      },
+      "activePermissionProfile": null
+    },
+    "threadEphemeral": true,
+    "nativeThreadAlias": "thread-1"
+  },
+  "turnStartStatus": "inProgress",
+  "before": {
+    "Id": "aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "3de7d74217fb43d38ce257dc00a0292d",
+    "Type": "exec",
+    "ExitType": "cgroup",
+    "Restart": "no",
+    "TimeoutStopUSec": "2s",
+    "RuntimeMaxUSec": "4min",
+    "RestartForceExitStatus": "",
+    "MainPID": "399211",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "KillMode": "control-group",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": true,
+    "cgroupInode": 36850,
+    "cgroupEvents": "populated 1\nfrozen 0",
+    "members": [
+      {
+        "pid": 399211,
+        "startTicks": "16002494",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399211"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 399437,
+        "startTicks": "16002582",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399437"
+        ],
+        "comm": "MainThread"
+      },
+      {
+        "pid": 399440,
+        "startTicks": "16002582",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399440"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 399577,
+        "startTicks": "16002594",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399577"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 400031,
+        "startTicks": "16003256",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400031"
+        ],
+        "comm": "codex-code-mode"
+      },
+      {
+        "pid": 400051,
+        "startTicks": "16003266",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400051"
+        ],
+        "comm": "codex-linux-san"
+      },
+      {
+        "pid": 400056,
+        "startTicks": "16003271",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400056"
+        ],
+        "comm": "bwrap"
+      },
+      {
+        "pid": 400057,
+        "startTicks": "16003271",
+        "state": "S",
+        "pidNamespace": "pid:[4026533703]",
+        "namespacePids": [
+          "400057",
+          "1"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 400059,
+        "startTicks": "16003274",
+        "state": "S",
+        "pidNamespace": "pid:[4026533703]",
+        "namespacePids": [
+          "400059",
+          "2"
+        ],
+        "comm": "python3"
+      }
+    ]
+  },
+  "writer": {
+    "pid": 400059,
+    "startTicks": "16003274",
+    "state": "S",
+    "pidNamespace": "pid:[4026533703]",
+    "namespacePids": [
+      "400059",
+      "2"
+    ],
+    "comm": "python3"
+  },
+  "eventsBefore": "populated 1\nfrozen 0",
+  "ticksBefore": 2,
+  "interruptReply": {},
+  "nativeTerminalStatus": "interrupted",
+  "afterNativeInterrupt": {
+    "Id": "aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "3de7d74217fb43d38ce257dc00a0292d",
+    "Type": "exec",
+    "ExitType": "cgroup",
+    "Restart": "no",
+    "TimeoutStopUSec": "2s",
+    "RuntimeMaxUSec": "4min",
+    "RestartForceExitStatus": "",
+    "MainPID": "399211",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "KillMode": "control-group",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": true,
+    "cgroupInode": 36850,
+    "cgroupEvents": "populated 1\nfrozen 0",
+    "members": [
+      {
+        "pid": 399211,
+        "startTicks": "16002494",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399211"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 399437,
+        "startTicks": "16002582",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399437"
+        ],
+        "comm": "MainThread"
+      },
+      {
+        "pid": 399440,
+        "startTicks": "16002582",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399440"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 399577,
+        "startTicks": "16002594",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "399577"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 400031,
+        "startTicks": "16003256",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400031"
+        ],
+        "comm": "codex-code-mode"
+      },
+      {
+        "pid": 400051,
+        "startTicks": "16003266",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400051"
+        ],
+        "comm": "codex-linux-san"
+      },
+      {
+        "pid": 400056,
+        "startTicks": "16003271",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400056"
+        ],
+        "comm": "bwrap"
+      },
+      {
+        "pid": 400057,
+        "startTicks": "16003271",
+        "state": "S",
+        "pidNamespace": "pid:[4026533703]",
+        "namespacePids": [
+          "400057",
+          "1"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 400059,
+        "startTicks": "16003274",
+        "state": "S",
+        "pidNamespace": "pid:[4026533703]",
+        "namespacePids": [
+          "400059",
+          "2"
+        ],
+        "comm": "python3"
+      },
+      {
+        "pid": 400077,
+        "startTicks": "16003286",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400077"
+        ],
+        "comm": "lsb_release"
+      },
+      {
+        "pid": 400087,
+        "startTicks": "16003289",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "400087"
+        ],
+        "comm": "lsb_release"
+      }
+    ]
+  },
+  "writerExitedAfterInterrupt": false,
+  "stopCommandExit": 0,
+  "stopElapsedSeconds": 0.055,
+  "afterStop": {
+    "Id": "aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "InvocationID": "",
+    "Type": "",
+    "ExitType": "main",
+    "Restart": "no",
+    "TimeoutStopUSec": "1min 30s",
+    "RuntimeMaxUSec": "infinity",
+    "RestartForceExitStatus": "",
+    "MainPID": "0",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "",
+    "KillMode": "control-group",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": false
+  },
+  "heldCgroupEventsAfterStopError": 19,
+  "writerExitedAfterUnitStop": true,
+  "heartbeatStableAfterStop": true,
+  "finishedMarker": false,
+  "cleanup": {
+    "Id": "aa-writer-native-7749c863477d405da2fea00c8df112a8.service",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "InvocationID": "",
+    "Type": "",
+    "ExitType": "main",
+    "Restart": "no",
+    "TimeoutStopUSec": "1min 30s",
+    "RuntimeMaxUSec": "infinity",
+    "RestartForceExitStatus": "",
+    "MainPID": "0",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "",
+    "KillMode": "control-group",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": false
+  }
+}

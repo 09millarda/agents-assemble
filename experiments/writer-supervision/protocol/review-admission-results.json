@@ -1,0 +1,138 @@
+{
+  "reviewKind": "independent targeted admission/replay protocol regressions",
+  "nativeRequests": 0,
+  "fullSuiteRerun": false,
+  "sourceSha256": "ff1c003035d012260b9d65c14064622de09e2c5311c4d27940656c7d04fba736",
+  "sourceMatchesCurrentFullSuiteEvidence": true,
+  "passed": 13,
+  "total": 13,
+  "checks": [
+    {
+      "name": "active replacement cannot be skipped by reusing its stopped predecessor",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "stale_predecessor",
+          "invocation": "invocation-3"
+        }
+      }
+    },
+    {
+      "name": "additional active writer in same occurrence prevents admission",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "additional_writer_unresolved",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "unknown effect of another same-occurrence writer prevents admission",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "external_effect_unresolved",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "unrelated occurrence retains independent writers and effects",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": true,
+          "reason": "fresh_bounded_admission",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "replacement profile must satisfy trusted registry",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "replacement_runner_ineligible",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "replacement enrollment must satisfy trusted registry",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "replacement_runner_ineligible",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "replacement runner must satisfy trusted registry",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "replacement_runner_ineligible",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "replacement journal_incarnation must satisfy trusted registry",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "replacement_runner_ineligible",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "revoked replacement runner cannot receive fresh admission",
+      "passed": true,
+      "details": {
+        "verdict": {
+          "accepted": false,
+          "reason": "replacement_runner_ineligible",
+          "invocation": "invocation-2"
+        }
+      }
+    },
+    {
+      "name": "exact admission replay remains immutable after expiry and changed payload",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "historical stop receipt cannot settle replacement identity",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "local receipt ID conflicts across different exact stop requests",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "concurrent distinct requests cannot overwrite a shared receipt identity",
+      "passed": true,
+      "details": {
+        "success_count": 1,
+        "conflict_count": 1
+      }
+    }
+  ],
+  "limits": [
+    "Controlled SQLite protocol only; trusted identity/OS scope/checkpoint/effect fixtures remain assumptions.",
+    "Four native runs and native archive assertions are separate evidence and are not counted here.",
+    "The concurrent test is one synchronized two-observer run, not a general concurrency proof."
+  ]
+}

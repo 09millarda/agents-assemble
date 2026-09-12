@@ -1,0 +1,29 @@
+{
+  "exactOwnedUnits": [
+    {
+      "record": "app-server-kill",
+      "activeState": "failed",
+      "mainPID": 0,
+      "controlGroup": ""
+    },
+    {
+      "record": "delegated-graceful",
+      "activeState": "inactive",
+      "mainPID": 0,
+      "controlGroup": ""
+    },
+    {
+      "record": "delegated-kill",
+      "activeState": "inactive",
+      "mainPID": 0,
+      "controlGroup": ""
+    },
+    {
+      "record": "graceful",
+      "activeState": "inactive",
+      "mainPID": 0,
+      "controlGroup": ""
+    }
+  ],
+  "knownScopesWithProcesses": 0
+}

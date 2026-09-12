@@ -1,0 +1,10 @@
+{
+  "pid": 401998,
+  "state": "R",
+  "ppid": 8907,
+  "process_group": 401997,
+  "session": 401997,
+  "start_ticks": 16016787,
+  "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+}

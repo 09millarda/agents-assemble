@@ -1,0 +1,2412 @@
+{
+  "throwaway": true,
+  "started_unix": 1789231141.9114347,
+  "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "platform": [
+    "Linux",
+    "amillard98-Inspiron-16-Plus-7620",
+    "7.0.0-31-generic",
+    "#31-Ubuntu SMP PREEMPT_DYNAMIC Sat Aug  1 04:26:38 UTC 2026",
+    "x86_64"
+  ],
+  "fixture_directory": "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final",
+  "empirical_cases": [
+    {
+      "name": "process_group_double_fork_escape",
+      "passed": true,
+      "main_before": {
+        "pid": 403371,
+        "state": "R",
+        "ppid": 403305,
+        "process_group": 403371,
+        "session": 403371,
+        "start_ticks": 16020649,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "writer_before": {
+        "pid": 403377,
+        "state": "R",
+        "ppid": 8907,
+        "process_group": 403376,
+        "session": 403376,
+        "start_ticks": 16020671,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "main_exitcode": -9,
+      "writer_after_group_kill": {
+        "pid": 403377,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403376,
+        "session": 403376,
+        "start_ticks": 16020671,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "post_kill_writes": {
+        "before_bytes": 23,
+        "after_bytes": 161,
+        "grew": true,
+        "observation_seconds": 0.22
+      }
+    },
+    {
+      "name": "cgroup_survives_main_death",
+      "passed": true,
+      "unit": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+      "main": {
+        "pid": 403382,
+        "state": "R",
+        "ppid": 8907,
+        "process_group": 403382,
+        "session": 403382,
+        "start_ticks": 16020698,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      },
+      "writer": {
+        "pid": 403388,
+        "state": "R",
+        "ppid": 8907,
+        "process_group": 403387,
+        "session": 403387,
+        "start_ticks": 16020718,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      },
+      "before": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "9e1bd3c9fb6f40d480f78072f260059f",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403382",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "exists": true,
+          "inode": 37283,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403382,
+            403388
+          ],
+          "processes": [
+            {
+              "pid": 403382,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403382,
+              "session": 403382,
+              "start_ticks": 16020698,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+            },
+            {
+              "pid": 403388,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403387,
+              "session": 403387,
+              "start_ticks": 16020718,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "after_main_death": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "9e1bd3c9fb6f40d480f78072f260059f",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "0",
+          "Result": "signal",
+          "NRestarts": "0",
+          "ExecMainCode": "2",
+          "ExecMainStatus": "9",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "exists": true,
+          "inode": 37283,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403388
+          ],
+          "processes": [
+            {
+              "pid": 403388,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403387,
+              "session": 403387,
+              "start_ticks": 16020718,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "post_main_death_writes": {
+        "before_bytes": 69,
+        "after_bytes": 184,
+        "grew": true,
+        "observation_seconds": 0.22
+      }
+    },
+    {
+      "name": "bounded_term_then_kill_entire_cgroup",
+      "passed": true,
+      "unit": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+      "termination": {
+        "before": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "9e1bd3c9fb6f40d480f78072f260059f",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "signal",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+            "exists": true,
+            "inode": 37283,
+            "events": {
+              "populated": "1",
+              "frozen": "0"
+            },
+            "direct_pids": [
+              403388
+            ],
+            "processes": [
+              {
+                "pid": 403388,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403387,
+                "session": 403387,
+                "start_ticks": 16020718,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+              }
+            ]
+          },
+          "query_returncode": 0
+        },
+        "stop_command": {
+          "command": [
+            "systemctl",
+            "--user",
+            "stop",
+            "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.7989
+        },
+        "after": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "InvocationID": "9e1bd3c9fb6f40d480f78072f260059f",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "signal",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "exists": false,
+            "path": null
+          },
+          "query_returncode": 0
+        },
+        "old_cgroup_after": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+          "exists": false
+        },
+        "retained_cgroup_events_fd_samples": [
+          {
+            "elapsed_seconds": 0.0022,
+            "raw": "populated 1\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.7919,
+            "raw": "populated 0\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.7941,
+            "errno": 19,
+            "error": "[Errno 19] No such device"
+          }
+        ],
+        "observed_populated_zero": true,
+        "cleanup_receipt_certified": false,
+        "proof_limit": "Manager stop plus known writer observation only; removal/ENODEV is not a populated=0 receipt."
+      },
+      "writer_after_stop": null,
+      "post_stop_writes": {
+        "before_bytes": 667,
+        "after_bytes": 667,
+        "grew": false,
+        "observation_seconds": 0.22
+      }
+    },
+    {
+      "name": "controller_death_and_rediscovery",
+      "passed": true,
+      "unit": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+      "controller": {
+        "identity": {
+          "pid": 403396,
+          "state": "R",
+          "ppid": 403305,
+          "process_group": 403396,
+          "session": 403396,
+          "start_ticks": 16020858,
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+        },
+        "launch": {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--quiet",
+            "--unit=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+            "--property=Type=exec",
+            "--property=ExitType=cgroup",
+            "--property=Restart=no",
+            "--property=RestartForceExitStatus=",
+            "--property=KillMode=control-group",
+            "--property=SendSIGKILL=yes",
+            "--property=TimeoutStopSec=750ms",
+            "--property=RuntimeMaxSec=20s",
+            "--property=Delegate=no",
+            "/usr/bin/python3",
+            "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+            "--worker",
+            "escaped",
+            "--directory",
+            "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/controller-death/service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.059
+        }
+      },
+      "controller_exitcode": -9,
+      "before": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "6d29c2e3a1a14fbba1fd0749c36b90af",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403398",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "exists": true,
+          "inode": 37327,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403398,
+            403400
+          ],
+          "processes": [
+            {
+              "pid": 403398,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403398,
+              "session": 403398,
+              "start_ticks": 16020880,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+            },
+            {
+              "pid": 403400,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403399,
+              "session": 403399,
+              "start_ticks": 16020904,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "rediscovered": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "6d29c2e3a1a14fbba1fd0749c36b90af",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403398",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "exists": true,
+          "inode": 37327,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403398,
+            403400
+          ],
+          "processes": [
+            {
+              "pid": 403398,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403398,
+              "session": 403398,
+              "start_ticks": 16020880,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+            },
+            {
+              "pid": 403400,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403399,
+              "session": 403399,
+              "start_ticks": 16020904,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "writes_after_controller_death": {
+        "before_bytes": 46,
+        "after_bytes": 184,
+        "grew": true,
+        "observation_seconds": 0.22
+      },
+      "termination": {
+        "before": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "6d29c2e3a1a14fbba1fd0749c36b90af",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "403398",
+            "Result": "success",
+            "NRestarts": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+            "exists": true,
+            "inode": 37327,
+            "events": {
+              "populated": "1",
+              "frozen": "0"
+            },
+            "direct_pids": [
+              403398,
+              403400
+            ],
+            "processes": [
+              {
+                "pid": 403398,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403398,
+                "session": 403398,
+                "start_ticks": 16020880,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+              },
+              {
+                "pid": 403400,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403399,
+                "session": 403399,
+                "start_ticks": 16020904,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+              }
+            ]
+          },
+          "query_returncode": 0
+        },
+        "stop_command": {
+          "command": [
+            "systemctl",
+            "--user",
+            "stop",
+            "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.9452
+        },
+        "after": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "InvocationID": "6d29c2e3a1a14fbba1fd0749c36b90af",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "timeout",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "exists": false,
+            "path": null
+          },
+          "query_returncode": 0
+        },
+        "old_cgroup_after": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+          "exists": false
+        },
+        "retained_cgroup_events_fd_samples": [
+          {
+            "elapsed_seconds": 0.0018,
+            "raw": "populated 1\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.9403,
+            "errno": 19,
+            "error": "[Errno 19] No such device"
+          }
+        ],
+        "observed_populated_zero": false,
+        "cleanup_receipt_certified": false,
+        "proof_limit": "Manager stop plus known writer observation only; removal/ENODEV is not a populated=0 receipt."
+      }
+    },
+    {
+      "name": "explicit_restart_changes_invocation_identity",
+      "passed": true,
+      "unit": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+      "before": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "3323d74ea7694114afe74642fa9a9723",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403419",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "exists": true,
+          "inode": 37371,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403419,
+            403435
+          ],
+          "processes": [
+            {
+              "pid": 403419,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403419,
+              "session": 403419,
+              "start_ticks": 16021038,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+            },
+            {
+              "pid": 403435,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403434,
+              "session": 403434,
+              "start_ticks": 16021061,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "after_restart": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "508765c384f642daa142c5a935b93076",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403439",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "exists": true,
+          "inode": 37415,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403439,
+            403442
+          ],
+          "processes": [
+            {
+              "pid": 403439,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403439,
+              "session": 403439,
+              "start_ticks": 16021157,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+            },
+            {
+              "pid": 403442,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403441,
+              "session": 403441,
+              "start_ticks": 16021181,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "termination": {
+        "before": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "508765c384f642daa142c5a935b93076",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "403439",
+            "Result": "success",
+            "NRestarts": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+            "exists": true,
+            "inode": 37415,
+            "events": {
+              "populated": "1",
+              "frozen": "0"
+            },
+            "direct_pids": [
+              403439,
+              403442
+            ],
+            "processes": [
+              {
+                "pid": 403439,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403439,
+                "session": 403439,
+                "start_ticks": 16021157,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+              },
+              {
+                "pid": 403442,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403441,
+                "session": 403441,
+                "start_ticks": 16021181,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+              }
+            ]
+          },
+          "query_returncode": 0
+        },
+        "stop_command": {
+          "command": [
+            "systemctl",
+            "--user",
+            "stop",
+            "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.9673
+        },
+        "after": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "InvocationID": "508765c384f642daa142c5a935b93076",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "timeout",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "exists": false,
+            "path": null
+          },
+          "query_returncode": 0
+        },
+        "old_cgroup_after": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+          "exists": false
+        },
+        "retained_cgroup_events_fd_samples": [
+          {
+            "elapsed_seconds": 0.0011,
+            "raw": "populated 1\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.9626,
+            "raw": "populated 0\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.9649,
+            "errno": 19,
+            "error": "[Errno 19] No such device"
+          }
+        ],
+        "observed_populated_zero": true,
+        "cleanup_receipt_certified": false,
+        "proof_limit": "Manager stop plus known writer observation only; removal/ENODEV is not a populated=0 receipt."
+      }
+    },
+    {
+      "name": "same_uid_external_unit_outlives_empty_outer_unit",
+      "passed": true,
+      "outer_unit": "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+      "sibling_unit": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+      "sibling_writer": {
+        "pid": 403456,
+        "state": "R",
+        "ppid": 8907,
+        "process_group": 403456,
+        "session": 403456,
+        "start_ticks": 16021312,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      },
+      "outer_before": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "5526c733bfaa49dd8548ff353fc25357",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403452",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+          "exists": true,
+          "inode": 37459,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403452
+          ],
+          "processes": [
+            {
+              "pid": 403452,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403452,
+              "session": 403452,
+              "start_ticks": 16021288,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "sibling_before": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "371a0042aea84d0caaa658e79376c329",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403456",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "exists": true,
+          "inode": 37503,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403456
+          ],
+          "processes": [
+            {
+              "pid": 403456,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403456,
+              "session": 403456,
+              "start_ticks": 16021312,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "outer_termination": {
+        "before": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "5526c733bfaa49dd8548ff353fc25357",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "403452",
+            "Result": "success",
+            "NRestarts": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+            "exists": true,
+            "inode": 37459,
+            "events": {
+              "populated": "1",
+              "frozen": "0"
+            },
+            "direct_pids": [
+              403452
+            ],
+            "processes": [
+              {
+                "pid": 403452,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403452,
+                "session": 403452,
+                "start_ticks": 16021288,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+              }
+            ]
+          },
+          "query_returncode": 0
+        },
+        "stop_command": {
+          "command": [
+            "systemctl",
+            "--user",
+            "stop",
+            "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.8343
+        },
+        "after": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "InvocationID": "5526c733bfaa49dd8548ff353fc25357",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "timeout",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "exists": false,
+            "path": null
+          },
+          "query_returncode": 0
+        },
+        "old_cgroup_after": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+          "exists": false
+        },
+        "retained_cgroup_events_fd_samples": [
+          {
+            "elapsed_seconds": 0.0017,
+            "raw": "populated 1\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.8275,
+            "raw": "populated 0\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.8296,
+            "errno": 19,
+            "error": "[Errno 19] No such device"
+          }
+        ],
+        "observed_populated_zero": true,
+        "cleanup_receipt_certified": false,
+        "proof_limit": "Manager stop plus known writer observation only; removal/ENODEV is not a populated=0 receipt."
+      },
+      "sibling_after_outer_stop": {
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "properties": {
+          "Id": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "371a0042aea84d0caaa658e79376c329",
+          "ExitType": "cgroup",
+          "Restart": "no",
+          "TimeoutStopUSec": "750ms",
+          "RuntimeMaxUSec": "20s",
+          "RestartForceExitStatus": "",
+          "MainPID": "403456",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainCode": "0",
+          "ExecMainStatus": "0",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "Delegate": "no",
+          "KillMode": "control-group",
+          "SendSIGKILL": "yes"
+        },
+        "cgroup": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "exists": true,
+          "inode": 37503,
+          "events": {
+            "populated": "1",
+            "frozen": "0"
+          },
+          "direct_pids": [
+            403456
+          ],
+          "processes": [
+            {
+              "pid": 403456,
+              "state": "S",
+              "ppid": 8907,
+              "process_group": 403456,
+              "session": 403456,
+              "start_ticks": 16021312,
+              "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+              "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+            }
+          ]
+        },
+        "query_returncode": 0
+      },
+      "sibling_writes_after_outer_stop": {
+        "before_bytes": 575,
+        "after_bytes": 713,
+        "grew": true,
+        "observation_seconds": 0.22
+      },
+      "sibling_cleanup": {
+        "before": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "371a0042aea84d0caaa658e79376c329",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "403456",
+            "Result": "success",
+            "NRestarts": "0",
+            "ExecMainCode": "0",
+            "ExecMainStatus": "0",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+            "exists": true,
+            "inode": 37503,
+            "events": {
+              "populated": "1",
+              "frozen": "0"
+            },
+            "direct_pids": [
+              403456
+            ],
+            "processes": [
+              {
+                "pid": 403456,
+                "state": "S",
+                "ppid": 8907,
+                "process_group": 403456,
+                "session": 403456,
+                "start_ticks": 16021312,
+                "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+                "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+              }
+            ]
+          },
+          "query_returncode": 0
+        },
+        "stop_command": {
+          "command": [
+            "systemctl",
+            "--user",
+            "stop",
+            "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "elapsed_seconds": 0.9339
+        },
+        "after": {
+          "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+          "properties": {
+            "Id": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "InvocationID": "371a0042aea84d0caaa658e79376c329",
+            "ExitType": "cgroup",
+            "Restart": "no",
+            "TimeoutStopUSec": "750ms",
+            "RuntimeMaxUSec": "20s",
+            "RestartForceExitStatus": "",
+            "MainPID": "0",
+            "Result": "timeout",
+            "NRestarts": "0",
+            "ExecMainCode": "2",
+            "ExecMainStatus": "9",
+            "ControlGroup": "",
+            "Delegate": "no",
+            "KillMode": "control-group",
+            "SendSIGKILL": "yes"
+          },
+          "cgroup": {
+            "exists": false,
+            "path": null
+          },
+          "query_returncode": 0
+        },
+        "old_cgroup_after": {
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+          "exists": false
+        },
+        "retained_cgroup_events_fd_samples": [
+          {
+            "elapsed_seconds": 0.0019,
+            "raw": "populated 1\nfrozen 0\n"
+          },
+          {
+            "elapsed_seconds": 0.9291,
+            "errno": 19,
+            "error": "[Errno 19] No such device"
+          }
+        ],
+        "observed_populated_zero": false,
+        "cleanup_receipt_certified": false,
+        "proof_limit": "Manager stop plus known writer observation only; removal/ENODEV is not a populated=0 receipt."
+      }
+    }
+  ],
+  "modeled_guards": [
+    {
+      "name": "stale_receipt_identity_mismatch",
+      "kind": "pure protocol assertion over observed restart",
+      "outcome": "BLOCKED_UNCERTAIN_CLEANUP",
+      "reason": "A new InvocationID cannot satisfy an old invocation cleanup receipt; no cleanup certification.",
+      "performed_destructive_action_from_stale_receipt": false
+    },
+    {
+      "name": "observed_writer_outside_owned_scope",
+      "kind": "pure protocol assertion over observed escape",
+      "outcome": "BLOCKED_UNCERTAIN_CLEANUP",
+      "reason": "Outer unit emptiness does not certify unrestricted same-UID writers; sibling required separate owned cleanup."
+    },
+    {
+      "name": "capability_gate_missing",
+      "kind": "synthetic input to protocol predicate; not a host failure experiment",
+      "input": {
+        "user_manager_available": false,
+        "cgroup_v2": true
+      },
+      "outcome": "BLOCKED_CAPABILITY_UNAVAILABLE",
+      "reason": "No invocation would be launched; no downgrade to PID/process-group certification."
+    }
+  ],
+  "owned_units": [
+    "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+    "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+    "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+    "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+    "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+  ],
+  "events": [
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "systemd 259 (259.5-0ubuntu3.4)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0097
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "--property=Version,ControlGroup"
+      ],
+      "returncode": 0,
+      "stdout": "Version=259.5-0ubuntu3.4\nControlGroup=/user.slice/user-1000.slice/user@1000.service\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0189
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--quiet",
+        "--unit=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Type=exec",
+        "--property=ExitType=cgroup",
+        "--property=Restart=no",
+        "--property=RestartForceExitStatus=",
+        "--property=KillMode=control-group",
+        "--property=SendSIGKILL=yes",
+        "--property=TimeoutStopSec=750ms",
+        "--property=RuntimeMaxSec=20s",
+        "--property=Delegate=no",
+        "/usr/bin/python3",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+        "--worker",
+        "escaped",
+        "--directory",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/main-death"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0623
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=9e1bd3c9fb6f40d480f78072f260059f\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403382\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0205
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "kill",
+        "--kill-whom=main",
+        "--signal=KILL",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0127
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=9e1bd3c9fb6f40d480f78072f260059f\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=signal\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0225
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=9e1bd3c9fb6f40d480f78072f260059f\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=signal\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0277
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.7989
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nLoadState=loaded\nActiveState=failed\nSubState=failed\nInvocationID=9e1bd3c9fb6f40d480f78072f260059f\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=signal\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0262
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=6d29c2e3a1a14fbba1fd0749c36b90af\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403398\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0294
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=6d29c2e3a1a14fbba1fd0749c36b90af\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403398\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0287
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=6d29c2e3a1a14fbba1fd0749c36b90af\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403398\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0321
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.9452
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nLoadState=loaded\nActiveState=failed\nSubState=failed\nInvocationID=6d29c2e3a1a14fbba1fd0749c36b90af\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=timeout\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0319
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--quiet",
+        "--unit=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Type=exec",
+        "--property=ExitType=cgroup",
+        "--property=Restart=no",
+        "--property=RestartForceExitStatus=",
+        "--property=KillMode=control-group",
+        "--property=SendSIGKILL=yes",
+        "--property=TimeoutStopSec=750ms",
+        "--property=RuntimeMaxSec=20s",
+        "--property=Delegate=no",
+        "/usr/bin/python3",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+        "--worker",
+        "escaped",
+        "--directory",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/restart"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0552
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=3323d74ea7694114afe74642fa9a9723\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403419\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0248
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "restart",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.9683
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=508765c384f642daa142c5a935b93076\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403439\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.023
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=508765c384f642daa142c5a935b93076\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403439\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0197
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.9673
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nLoadState=loaded\nActiveState=failed\nSubState=failed\nInvocationID=508765c384f642daa142c5a935b93076\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=timeout\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0288
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--quiet",
+        "--unit=aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "--property=Type=exec",
+        "--property=ExitType=cgroup",
+        "--property=Restart=no",
+        "--property=RestartForceExitStatus=",
+        "--property=KillMode=control-group",
+        "--property=SendSIGKILL=yes",
+        "--property=TimeoutStopSec=750ms",
+        "--property=RuntimeMaxSec=20s",
+        "--property=Delegate=no",
+        "/usr/bin/python3",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/throwaway_fixture.py",
+        "--worker",
+        "external",
+        "--directory",
+        "/tmp/agents-assemble-writer-supervision/experiments/writer-supervision/fixtures/run-20260912-final/external-unit",
+        "--unit",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0651
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=5526c733bfaa49dd8548ff353fc25357\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403452\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0289
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=371a0042aea84d0caaa658e79376c329\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403456\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0278
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=5526c733bfaa49dd8548ff353fc25357\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403452\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0267
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.8343
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nLoadState=loaded\nActiveState=failed\nSubState=failed\nInvocationID=5526c733bfaa49dd8548ff353fc25357\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=timeout\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0294
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=371a0042aea84d0caaa658e79376c329\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403456\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0321
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nLoadState=loaded\nActiveState=active\nSubState=running\nInvocationID=371a0042aea84d0caaa658e79376c329\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=403456\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0309
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.9339
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nLoadState=loaded\nActiveState=failed\nSubState=failed\nInvocationID=371a0042aea84d0caaa658e79376c329\nExitType=cgroup\nRestart=no\nTimeoutStopUSec=750ms\nRuntimeMaxUSec=20s\nRestartForceExitStatus=\nMainPID=0\nResult=timeout\nNRestarts=0\nExecMainCode=2\nExecMainStatus=9\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0301
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.024
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0158
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0247
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0146
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0247
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0174
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0257
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0171
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0248
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0166
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0211
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0215
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0213
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0223
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "--property=Id,LoadState,ActiveState,SubState,MainPID,InvocationID,ControlGroup,ExitType,Restart,KillMode,TimeoutStopUSec,SendSIGKILL,RuntimeMaxUSec,Delegate,Result,ExecMainCode,ExecMainStatus,NRestarts,RestartForceExitStatus"
+      ],
+      "returncode": 0,
+      "stdout": "Id=aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nInvocationID=\nExitType=main\nRestart=no\nTimeoutStopUSec=1min 30s\nRuntimeMaxUSec=infinity\nRestartForceExitStatus=\nMainPID=0\nResult=success\nNRestarts=0\nExecMainCode=0\nExecMainStatus=0\nControlGroup=\nDelegate=no\nKillMode=control-group\nSendSIGKILL=yes\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0214
+    }
+  ],
+  "environment": {
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "systemd": {
+      "command": [
+        "systemctl",
+        "--user",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "systemd 259 (259.5-0ubuntu3.4)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0097
+    },
+    "manager": {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "--property=Version,ControlGroup"
+      ],
+      "returncode": 0,
+      "stdout": "Version=259.5-0ubuntu3.4\nControlGroup=/user.slice/user-1000.slice/user@1000.service\n",
+      "stderr": "",
+      "elapsed_seconds": 0.0189
+    },
+    "cgroup_v2": true
+  },
+  "final_cleanup": [
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.024
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0158
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0247
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0146
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0247
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0174
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0257
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0171
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "stop",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0248
+    },
+    {
+      "command": [
+        "systemctl",
+        "--user",
+        "reset-failed",
+        "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.0166
+    }
+  ],
+  "final_owned_unit_snapshots": {
+    "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    },
+    "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    },
+    "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    },
+    "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    },
+    "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service": {
+      "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+      "properties": {
+        "Id": "aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "InvocationID": "",
+        "ExitType": "main",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "infinity",
+        "RestartForceExitStatus": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "",
+        "Delegate": "no",
+        "KillMode": "control-group",
+        "SendSIGKILL": "yes"
+      },
+      "cgroup": {
+        "exists": false,
+        "path": null
+      },
+      "query_returncode": 0
+    }
+  },
+  "finished_unix": 1789231151.376529,
+  "empirical_pass_count": 6,
+  "empirical_case_count": 6,
+  "modeled_guard_count": 3,
+  "final_exact_process_check": [
+    {
+      "expected": {
+        "pid": 403371,
+        "state": "R",
+        "ppid": 403305,
+        "process_group": 403371,
+        "session": 403371,
+        "start_ticks": 16020649,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403377,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403376,
+        "session": 403376,
+        "start_ticks": 16020671,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403382,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403382,
+        "session": 403382,
+        "start_ticks": 16020698,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403388,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403387,
+        "session": 403387,
+        "start_ticks": 16020718,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6da4b7dcd3d9414ab5a5a38660e78b7a-main-death.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403396,
+        "state": "R",
+        "ppid": 403305,
+        "process_group": 403396,
+        "session": 403396,
+        "start_ticks": 16020858,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-65866.scope"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403398,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403398,
+        "session": 403398,
+        "start_ticks": 16020880,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403400,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403399,
+        "session": 403399,
+        "start_ticks": 16020904,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-6bdb7d1c28cc4eca9c735b2c293abc03-controller-death.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403419,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403419,
+        "session": 403419,
+        "start_ticks": 16021038,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403435,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403434,
+        "session": 403434,
+        "start_ticks": 16021061,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403439,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403439,
+        "session": 403439,
+        "start_ticks": 16021157,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403442,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403441,
+        "session": 403441,
+        "start_ticks": 16021181,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-0c79940ad3a54e9bb10d9d0c8f94bc27-restart.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403456,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403456,
+        "session": 403456,
+        "start_ticks": 16021312,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-4dfb92100503488cab3ada8657eb722e-owned-sibling.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    },
+    {
+      "expected": {
+        "pid": 403452,
+        "state": "S",
+        "ppid": 8907,
+        "process_group": 403452,
+        "session": 403452,
+        "start_ticks": 16021288,
+        "boot_id": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+        "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-fixture-60e48eac6f3b44ff996708740045a757-outer.service"
+      },
+      "observed": null,
+      "same_birth_identity": false,
+      "live_owned_process": false
+    }
+  ]
+}

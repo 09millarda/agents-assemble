@@ -1,0 +1,9 @@
+{
+  "kind": "contained_local_processes_stopped",
+  "unitInvocation": "22fec6d92b4846ee8c54e48a66289609",
+  "bootId": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "payloadInode": 37829,
+  "evidence": "populated 0\nfrozen 0\n",
+  "launchCount": 1,
+  "provenance": "trusted local fixture only; not authenticated service receipt"
+}

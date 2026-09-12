@@ -1,0 +1,450 @@
+{
+  "mode": "graceful",
+  "status": "observed_scoped_stop",
+  "version": "codex-cli 0.153.4",
+  "kernel": "7.0.0-31-generic",
+  "systemd": "systemd 259 (259.5-0ubuntu3.4)",
+  "bootId": "4d4f9082-0b2a-4050-8c3f-0f466dc8f69d",
+  "workspace": "/tmp/aa-writer-native-cnyf3fke",
+  "unit": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+  "nativeTurnStarts": 1,
+  "delegated": true,
+  "claimScope": "owned systemd user unit subtree; trusted cooperative local tools; no remote effect claim",
+  "sourceSha256": "7080348b288322dc96406fcab604ce1cda5e51747177eabef4557910d60cbf21",
+  "environmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "PATH",
+    "PYTHONDONTWRITEBYTECODE",
+    "TERM",
+    "XDG_RUNTIME_DIR"
+  ],
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true
+  },
+  "settings": {
+    "requested": {
+      "sandbox": "workspace-write",
+      "networkAccess": false,
+      "approvalPolicy": "never",
+      "ephemeral": true,
+      "model": "omitted",
+      "effort": "omitted"
+    },
+    "effective": {
+      "model": "gpt-6-astra",
+      "modelProvider": "openai",
+      "reasoningEffort": "ultra",
+      "approvalPolicy": "never",
+      "sandbox": {
+        "type": "workspaceWrite",
+        "writableRoots": [],
+        "networkAccess": false,
+        "excludeTmpdirEnvVar": true,
+        "excludeSlashTmp": true
+      },
+      "activePermissionProfile": null
+    },
+    "threadEphemeral": true,
+    "nativeThreadAlias": "thread-1"
+  },
+  "turnStartStatus": "inProgress",
+  "before": {
+    "Id": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "22fec6d92b4846ee8c54e48a66289609",
+    "Type": "exec",
+    "ExitType": "cgroup",
+    "Restart": "no",
+    "TimeoutStopUSec": "2s",
+    "RuntimeMaxUSec": "4min",
+    "RestartForceExitStatus": "",
+    "MainPID": "403871",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "Delegate": "yes",
+    "KillMode": "control-group",
+    "FinalKillSignal": "9",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": true,
+    "cgroupInode": 37778,
+    "cgroupEvents": "populated 1\nfrozen 0",
+    "members": [
+      {
+        "pid": 403871,
+        "startTicks": "16024738",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "403871"
+        ],
+        "comm": "python3"
+      },
+      {
+        "pid": 403872,
+        "startTicks": "16024751",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "403872"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 404110,
+        "startTicks": "16024836",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404110"
+        ],
+        "comm": "MainThread"
+      },
+      {
+        "pid": 404115,
+        "startTicks": "16024837",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404115"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 404265,
+        "startTicks": "16024848",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404265"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 404736,
+        "startTicks": "16025568",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404736"
+        ],
+        "comm": "codex-code-mode"
+      },
+      {
+        "pid": 404756,
+        "startTicks": "16025578",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404756"
+        ],
+        "comm": "codex-linux-san"
+      },
+      {
+        "pid": 404761,
+        "startTicks": "16025583",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404761"
+        ],
+        "comm": "bwrap"
+      },
+      {
+        "pid": 404762,
+        "startTicks": "16025583",
+        "state": "S",
+        "pidNamespace": "pid:[4026533700]",
+        "namespacePids": [
+          "404762",
+          "1"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 404763,
+        "startTicks": "16025586",
+        "state": "S",
+        "pidNamespace": "pid:[4026533700]",
+        "namespacePids": [
+          "404763",
+          "2"
+        ],
+        "comm": "python3"
+      }
+    ]
+  },
+  "writer": {
+    "pid": 404763,
+    "startTicks": "16025586",
+    "state": "S",
+    "pidNamespace": "pid:[4026533700]",
+    "namespacePids": [
+      "404763",
+      "2"
+    ],
+    "comm": "python3"
+  },
+  "supervisorBinding": {
+    "payload": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-c668f671b0f3446194629e1442231969.service/payload",
+    "inode": 37829,
+    "nativePid": 403872,
+    "supervisorPid": 403871,
+    "launches": 1
+  },
+  "payloadMembersBefore": [
+    "403872",
+    "404110",
+    "404115",
+    "404265",
+    "404736",
+    "404756",
+    "404761",
+    "404762",
+    "404763"
+  ],
+  "eventsBefore": "populated 1\nfrozen 0",
+  "ticksBefore": 2,
+  "interruptReply": {},
+  "nativeTerminalStatus": "interrupted",
+  "afterNativeInterrupt": {
+    "Id": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "22fec6d92b4846ee8c54e48a66289609",
+    "Type": "exec",
+    "ExitType": "cgroup",
+    "Restart": "no",
+    "TimeoutStopUSec": "2s",
+    "RuntimeMaxUSec": "4min",
+    "RestartForceExitStatus": "",
+    "MainPID": "403871",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "Delegate": "yes",
+    "KillMode": "control-group",
+    "FinalKillSignal": "9",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": true,
+    "cgroupInode": 37778,
+    "cgroupEvents": "populated 1\nfrozen 0",
+    "members": [
+      {
+        "pid": 403871,
+        "startTicks": "16024738",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "403871"
+        ],
+        "comm": "python3"
+      },
+      {
+        "pid": 403872,
+        "startTicks": "16024751",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "403872"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 404110,
+        "startTicks": "16024836",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404110"
+        ],
+        "comm": "MainThread"
+      },
+      {
+        "pid": 404115,
+        "startTicks": "16024837",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404115"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 404265,
+        "startTicks": "16024848",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404265"
+        ],
+        "comm": "node_repl"
+      },
+      {
+        "pid": 404736,
+        "startTicks": "16025568",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404736"
+        ],
+        "comm": "codex-code-mode"
+      },
+      {
+        "pid": 404756,
+        "startTicks": "16025578",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404756"
+        ],
+        "comm": "codex-linux-san"
+      },
+      {
+        "pid": 404761,
+        "startTicks": "16025583",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404761"
+        ],
+        "comm": "bwrap"
+      },
+      {
+        "pid": 404762,
+        "startTicks": "16025583",
+        "state": "S",
+        "pidNamespace": "pid:[4026533700]",
+        "namespacePids": [
+          "404762",
+          "1"
+        ],
+        "comm": "codex"
+      },
+      {
+        "pid": 404763,
+        "startTicks": "16025586",
+        "state": "S",
+        "pidNamespace": "pid:[4026533700]",
+        "namespacePids": [
+          "404763",
+          "2"
+        ],
+        "comm": "python3"
+      },
+      {
+        "pid": 404765,
+        "startTicks": "16025599",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404765"
+        ],
+        "comm": "lsb_release"
+      },
+      {
+        "pid": 404775,
+        "startTicks": "16025601",
+        "state": "S",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404775"
+        ],
+        "comm": "lsb_release"
+      },
+      {
+        "pid": 404777,
+        "startTicks": "16025601",
+        "state": "R",
+        "pidNamespace": "pid:[4026531836]",
+        "namespacePids": [
+          "404777"
+        ],
+        "comm": "tr"
+      }
+    ]
+  },
+  "writerExitedAfterInterrupt": false,
+  "preKillPayloadInode": 37829,
+  "payloadEmptyObservation": "populated 0\nfrozen 0\n",
+  "payloadInodeAfterEmpty": 37829,
+  "supervisorAfterPayloadKill": {
+    "Id": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "22fec6d92b4846ee8c54e48a66289609",
+    "Type": "exec",
+    "ExitType": "cgroup",
+    "Restart": "no",
+    "TimeoutStopUSec": "2s",
+    "RuntimeMaxUSec": "4min",
+    "RestartForceExitStatus": "",
+    "MainPID": "403871",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "Delegate": "yes",
+    "KillMode": "control-group",
+    "FinalKillSignal": "9",
+    "SendSIGKILL": "yes"
+  },
+  "receiptPersistedBeforeOuterCleanup": true,
+  "stopCommandExit": 0,
+  "stopElapsedSeconds": 0.032,
+  "afterStop": {
+    "Id": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "InvocationID": "",
+    "Type": "",
+    "ExitType": "main",
+    "Restart": "no",
+    "TimeoutStopUSec": "1min 30s",
+    "RuntimeMaxUSec": "infinity",
+    "RestartForceExitStatus": "",
+    "MainPID": "0",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "",
+    "Delegate": "no",
+    "KillMode": "control-group",
+    "FinalKillSignal": "9",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": false
+  },
+  "heldCgroupEventsAfterStopError": 19,
+  "writerExitedAfterUnitStop": true,
+  "heartbeatStableAfterStop": true,
+  "finishedMarker": false,
+  "cleanup": {
+    "Id": "aa-writer-native-c668f671b0f3446194629e1442231969.service",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "InvocationID": "",
+    "Type": "",
+    "ExitType": "main",
+    "Restart": "no",
+    "TimeoutStopUSec": "1min 30s",
+    "RuntimeMaxUSec": "infinity",
+    "RestartForceExitStatus": "",
+    "MainPID": "0",
+    "Result": "success",
+    "NRestarts": "0",
+    "ControlGroup": "",
+    "Delegate": "no",
+    "KillMode": "control-group",
+    "FinalKillSignal": "9",
+    "SendSIGKILL": "yes",
+    "cgroupPresent": false
+  }
+}

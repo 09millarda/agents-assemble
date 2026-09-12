@@ -1,0 +1,475 @@
+{
+  "reviewKind": "independent recorded evidence and optional original workspace integrity",
+  "nativeInferenceRequestsByThisReview": 0,
+  "recordedNativeRuns": 4,
+  "recordedNativeTurnStartRequests": 4,
+  "summary": {
+    "archive": {
+      "passed": 69,
+      "total": 69
+    },
+    "original-workspaces": {
+      "passed": 14,
+      "total": 14
+    }
+  },
+  "passed": true,
+  "sourceSha256AtReview": {
+    "probe_plain.py": "fbe6684eb186a2fc99fa81e7800c9a9d77d89b158ba094676576850c2e083f56",
+    "probe.py": "7080348b288322dc96406fcab604ce1cda5e51747177eabef4557910d60cbf21",
+    "client.py": "7d26fce040be20db1047715e6880da005d88d70487156658e1d3c2bc96946445",
+    "delegated_supervisor.py": "04f1a878ee7120065dbf8ba31d6f92c58022ea225535f900b1a5e56ce17dbfeb"
+  },
+  "originalProbeHashes": {
+    "graceful": "fbe6684eb186a2fc99fa81e7800c9a9d77d89b158ba094676576850c2e083f56",
+    "app-server-kill": "fbe6684eb186a2fc99fa81e7800c9a9d77d89b158ba094676576850c2e083f56",
+    "delegated-kill": "7080348b288322dc96406fcab604ce1cda5e51747177eabef4557910d60cbf21",
+    "delegated-graceful": "7080348b288322dc96406fcab604ce1cda5e51747177eabef4557910d60cbf21"
+  },
+  "evidenceSha256AtReview": {
+    "graceful/events.jsonl": "c534c56e1def6cbb575270bd58c2602d62e8bce8e1fa6881a6968dd364517b06",
+    "graceful/results.json": "684807e4ec969459e3ff01bbf51b79272f51d02bcae0d70fd5166d089f8d4635",
+    "app-server-kill/events.jsonl": "c1f77864403f49098fdd79da5cf47566deb075ad5b53b0dceda118afb91488d0",
+    "app-server-kill/results.json": "0a1d9109a94707d956617c8856559c0b1c6964d2e9652d4698d128f45779eaba",
+    "delegated-kill/events.jsonl": "ec81444b30b3e79dbf198cb0188a714a12b8cdcc11fdaa10db39b44c69e2a86e",
+    "delegated-kill/results.json": "0b9502156c80c7180d8154c9db8431deb181471909c29f85a3645e4de6c5bee7",
+    "delegated-kill/scoped-receipt.json": "ad3c500cf566264fecba5e0193a692aac48f4091edb9111947e264bfbee1936f",
+    "delegated-graceful/events.jsonl": "552e009568e230d2e6b5a1b839e1d2c84a45476e3d107db5f910e6e92a9d4231",
+    "delegated-graceful/results.json": "a7dde3075c40be45cd3baf207ff9031c68876b7027a6a4a870f98db56742d621",
+    "delegated-graceful/scoped-receipt.json": "ebaa4b4d37af89cb6103ea0095372d23ec60e0fe23ffad71852555f1b2b71980"
+  },
+  "directEmptyPayloadInodes": {
+    "delegated-kill": 37264,
+    "delegated-graceful": 37829
+  },
+  "assertions": [
+    {
+      "name": "graceful: recorded probe source matches retained bytes",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: exactly one recorded native turn request and reply",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: no replay/resume/additional native request method",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: live native command boundary preceded intervention",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: unique named unit and activation present",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: finite bounded effective unit configuration",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: unit activation and cgroup instance persist through native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: exact recorded writer instance survives native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: native account and reported requested permissions retained",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: whole-unit cleanup stops known writer only as recorded",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: post-cleanup ENODEV remains explicit",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: no direct empty receipt claimed in original data",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: interrupted terminal coexists with still-live writer observation",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: recorded probe source matches retained bytes",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: exactly one recorded native turn request and reply",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: no replay/resume/additional native request method",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: live native command boundary preceded intervention",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: unique named unit and activation present",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: finite bounded effective unit configuration",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: unit activation and cgroup instance persist through native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: exact recorded writer instance survives native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: native account and reported requested permissions retained",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: whole-unit cleanup stops known writer only as recorded",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: post-cleanup ENODEV remains explicit",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: no direct empty receipt claimed in original data",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "app-server-kill: writer continues heartbeat after App Server kill",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: recorded probe source matches retained bytes",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: exactly one recorded native turn request and reply",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: no replay/resume/additional native request method",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: live native command boundary preceded intervention",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: unique named unit and activation present",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: finite bounded effective unit configuration",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: unit activation and cgroup instance persist through native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: exact recorded writer instance survives native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: native account and reported requested permissions retained",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: whole-unit cleanup stops known writer only as recorded",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: post-cleanup ENODEV remains explicit",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: writer continues heartbeat after App Server kill",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: recorded probe source matches retained bytes",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: exactly one recorded native turn request and reply",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: no replay/resume/additional native request method",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: live native command boundary preceded intervention",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: unique named unit and activation present",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: finite bounded effective unit configuration",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: unit activation and cgroup instance persist through native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: exact recorded writer instance survives native boundary",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: native account and reported requested permissions retained",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: whole-unit cleanup stops known writer only as recorded",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: post-cleanup ENODEV remains explicit",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: interrupted terminal coexists with still-live writer observation",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "four distinct unit names and activation identities",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "four native turn requests across four retained runs",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "all records retain the same kernel boot and declared runtime versions",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: retained payload path belongs beneath exact unit cgroup",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: shim remains outside payload while native process and writer are members",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: observed native PID identified as Codex within unit before kill",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: payload directory inode matches before kill, after empty and receipt",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: actual payload populated transitions from one to zero",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: same live shim activation after payload emptiness",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: receipt binds local scope boot and activation",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-kill: receipt ordering is recorded before outer cleanup",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: retained payload path belongs beneath exact unit cgroup",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: shim remains outside payload while native process and writer are members",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: observed native PID identified as Codex within unit before kill",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: payload directory inode matches before kill, after empty and receipt",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: actual payload populated transitions from one to zero",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: same live shim activation after payload emptiness",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: receipt binds local scope boot and activation",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "delegated-graceful: receipt ordering is recorded before outer cleanup",
+      "passed": true,
+      "scope": "archive"
+    },
+    {
+      "name": "graceful: original native writer script remains exact generated bytes",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "graceful: original namespace marker matches recorded writer",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "graceful: original heartbeat sequence is bounded and unfinished",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "app-server-kill: original native writer script remains exact generated bytes",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "app-server-kill: original namespace marker matches recorded writer",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "app-server-kill: original heartbeat sequence is bounded and unfinished",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-kill: original native writer script remains exact generated bytes",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-kill: original namespace marker matches recorded writer",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-kill: original heartbeat sequence is bounded and unfinished",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-graceful: original native writer script remains exact generated bytes",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-graceful: original namespace marker matches recorded writer",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-graceful: original heartbeat sequence is bounded and unfinished",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-kill: original supervisor binding agrees with retained evidence",
+      "passed": true,
+      "scope": "original-workspaces"
+    },
+    {
+      "name": "delegated-graceful: original supervisor binding agrees with retained evidence",
+      "passed": true,
+      "scope": "original-workspaces"
+    }
+  ],
+  "limitations": [
+    "These are independent recorded-evidence/integrity assertions, not additional native inference, process experiments, or security certification.",
+    "The two plain runs show known-writer exit after unit stop; ENODEV or missing cgroup metadata is not a direct subtree-empty observation.",
+    "Both delegated native runs record actual payload populated=0. No daemon/controller-death or runtime-deadline native run is retained here.",
+    "The receipt concerns the payload; the trusted shim is deliberately still alive outside it. It does not prove whole-unit, whole-host, arbitrary-writer or external-effect quiescence.",
+    "The receipt file is flushed and fsynced before outer cleanup, but its newly created directory entry is not directory-fsynced; crash-durable receipt creation was not established.",
+    "The recorded sourceSha256 binds each probe entry point. client.py and delegated_supervisor.py have review-time hashes only; original run records did not attest those supporting bytes.",
+    "pidfd_open occurs after numeric-PID snapshots. Held pidfds prevent later reuse confusion but not an acquisition race; matching writer startTicks/namespace in subsequent snapshots supports the recorded instance, not a generic restart/reopen guarantee.",
+    "The shim stays in its unit root and source does not enable domain controllers. No cgroup.subtree_control value was captured. A future profile should separate supervisor/payload subgroups if enabling domain controllers.",
+    "The shim launches once and never restarts but does not journal launch intent or stop the payload on controller loss; RuntimeMaxSec bounds the entire unit without guaranteeing an emptiness receipt.",
+    "The local fixture receipt lacks ADR assignment/generation/journal identity and authenticated transport provenance; it cannot independently authorize production replacement admission.",
+    "Same-UID control/daemon escape, input tampering, other authorized writers, external effects and kernel/manager failure are outside this trusted local fixture claim."
+  ]
+}
