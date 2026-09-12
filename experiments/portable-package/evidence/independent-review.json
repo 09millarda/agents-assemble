@@ -1,0 +1,145 @@
+{
+  "sourceSha256": "8259aa86541110d497062d61a381e6533ed6ec126019cf5d60547d825ecc8916",
+  "allPassed": true,
+  "cases": [
+    {
+      "name": "pretty manifest canonical equality",
+      "outcome": "rejected",
+      "detail": "noncanonical-manifest",
+      "status": "passed"
+    },
+    {
+      "name": "proof signature list shape",
+      "outcome": "rejected",
+      "detail": "signature-encoding",
+      "status": "passed"
+    },
+    {
+      "name": "manifest root list shape",
+      "outcome": "rejected",
+      "detail": "digest-shape",
+      "status": "passed"
+    },
+    {
+      "name": "unsigned then signed replay preserves new proofs",
+      "outcome": "accepted",
+      "detail": {
+        "replayAttribution": [
+          "verified-local-key"
+        ],
+        "exportedAttribution": [
+          "verified-local-key"
+        ],
+        "exportedProofs": 3
+      },
+      "status": "passed"
+    },
+    {
+      "name": "signed then unsigned replay preserves existing proofs",
+      "outcome": "accepted",
+      "detail": {
+        "replayAttribution": [
+          "unverified"
+        ],
+        "exportedAttribution": [
+          "verified-local-key"
+        ],
+        "exportedProofs": 3
+      },
+      "status": "passed"
+    },
+    {
+      "name": "known valid proof upgrades prior unknown invalid proof",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "verified-local-key"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "name": "unknown invalid replay cannot poison prior verified proof",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "verified-local-key"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "name": "alternate base64 padding bits cannot erase verified evidence",
+      "outcome": "rejected",
+      "detail": "signature-noncanonical",
+      "status": "passed"
+    },
+    {
+      "name": "accumulated evidence exports within reader proof budget",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "verified-local-key"
+        ],
+        "exportedProofs": 3
+      },
+      "status": "passed"
+    },
+    {
+      "name": "dependency-only identity conflict with new parent versions is atomic",
+      "outcome": "rejected",
+      "detail": "catalog-identity-conflict",
+      "status": "passed"
+    },
+    {
+      "name": "malformed dependency type at reader boundary",
+      "outcome": "rejected",
+      "detail": "malformed-shape",
+      "status": "passed"
+    },
+    {
+      "name": "duplicate runtime slot with conflicting requirements",
+      "outcome": "rejected",
+      "detail": "duplicate-runtime-slot",
+      "status": "passed"
+    },
+    {
+      "name": "private origin-shaped provenance is not detectable by importer",
+      "outcome": "accepted",
+      "detail": {
+        "privateReferencePresent": true,
+        "accepted": true,
+        "attribution": [
+          "unverified"
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "name": "private ancestry never rewrites origin with stale digest",
+      "outcome": "accepted",
+      "detail": {
+        "publicAncestryConsistent": true,
+        "mode": "mapped",
+        "exported": [
+          {
+            "origin": [
+              "opaque-install",
+              "opaque-org",
+              "input-schema"
+            ],
+            "version": "1.0.0",
+            "digest": "4128a4234917778e648afcb7394e8e4ede889985d0b076448ef528b414c2c013"
+          }
+        ]
+      },
+      "status": "passed"
+    },
+    {
+      "name": "private ancestry without full approved mapping rejects",
+      "outcome": "rejected",
+      "detail": "provenance-not-approved",
+      "status": "passed"
+    }
+  ]
+}

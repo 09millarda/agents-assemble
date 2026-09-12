@@ -1,0 +1,105 @@
+{
+  "sourceSha256": "4a39a83bf0323f94968661f1406a3f6a8a9896f11bbcd702b5c45f0dca614868",
+  "cases": [
+    {
+      "name": "pretty manifest canonical equality",
+      "outcome": "rejected",
+      "detail": "noncanonical-manifest"
+    },
+    {
+      "name": "proof signature list shape",
+      "outcome": "rejected",
+      "detail": "signature-encoding"
+    },
+    {
+      "name": "manifest root list shape",
+      "outcome": "rejected",
+      "detail": "digest-shape"
+    },
+    {
+      "name": "component dependency dict shape",
+      "outcome": "rejected",
+      "detail": "malformed-shape"
+    },
+    {
+      "name": "unsigned then signed replay preserves new proofs",
+      "outcome": "accepted",
+      "detail": {
+        "replayAttribution": [
+          "verified-local-key"
+        ],
+        "exportedAttribution": [
+          "verified-local-key"
+        ],
+        "exportedProofs": 3
+      }
+    },
+    {
+      "name": "signed then unsigned replay preserves existing proofs",
+      "outcome": "accepted",
+      "detail": {
+        "replayAttribution": [
+          "unverified"
+        ],
+        "exportedAttribution": [
+          "verified-local-key"
+        ],
+        "exportedProofs": 3
+      }
+    },
+    {
+      "name": "known valid proof upgrades prior unknown invalid proof",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "verified-local-key"
+        ]
+      }
+    },
+    {
+      "name": "unknown invalid replay cannot poison prior verified proof",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "verified-local-key"
+        ]
+      }
+    },
+    {
+      "name": "alternate base64 padding bits cannot erase verified evidence",
+      "outcome": "accepted",
+      "detail": {
+        "exportedAttribution": [
+          "unverified"
+        ],
+        "exportedProofs": 0
+      }
+    },
+    {
+      "name": "dependency-only identity conflict with new parent versions is atomic",
+      "outcome": "rejected",
+      "detail": "catalog-identity-conflict"
+    },
+    {
+      "name": "malformed dependency type at reader boundary",
+      "outcome": "rejected",
+      "detail": "malformed-shape"
+    },
+    {
+      "name": "duplicate runtime slot with conflicting requirements",
+      "outcome": "rejected",
+      "detail": "duplicate-runtime-slot"
+    },
+    {
+      "name": "private origin-shaped provenance is not detectable by importer",
+      "outcome": "accepted",
+      "detail": {
+        "privateReferencePresent": true,
+        "accepted": true,
+        "attribution": [
+          "unverified"
+        ]
+      }
+    }
+  ]
+}

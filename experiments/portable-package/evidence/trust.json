@@ -1,0 +1,9 @@
+{
+  "issuer-a": {
+    "public": "f14a1bff41a5d204b8f422667da5be7a743a1caad1a478cae71ad19f22b863da",
+    "scope": [
+      "installation-a",
+      "export-a"
+    ]
+  }
+}
