@@ -1,0 +1,169 @@
+{
+  "date": "2026-09-12T19:07:30.274Z",
+  "node": "v24.21.0",
+  "checks": 121,
+  "scenarios": 31,
+  "results": [
+    {
+      "name": "two clients concurrently insert Markdown and converge",
+      "checks": 3,
+      "ms": 338
+    },
+    {
+      "name": "delete changes content without advancing Yjs state vector",
+      "checks": 2,
+      "ms": 66
+    },
+    {
+      "name": "exact retry replays durable edit receipt; conflicting identity rejected",
+      "checks": 3,
+      "ms": 109
+    },
+    {
+      "name": "acknowledged edits survive killed worker and database restart",
+      "checks": 1,
+      "ms": 1690
+    },
+    {
+      "name": "process death before commit leaves no acknowledged edit",
+      "checks": 2,
+      "ms": 486
+    },
+    {
+      "name": "process death after commit replays lost acknowledgment",
+      "checks": 2,
+      "ms": 463
+    },
+    {
+      "name": "out-of-order CRDT dependency persists but blocks preview until integrated",
+      "checks": 4,
+      "ms": 515
+    },
+    {
+      "name": "snapshot freezes reviewed bytes while later edits continue",
+      "checks": 3,
+      "ms": 134
+    },
+    {
+      "name": "same submission identity replays and conflicting payload cannot change revision",
+      "checks": 2,
+      "ms": 55
+    },
+    {
+      "name": "competing submissions use head comparison and preserve both previews",
+      "checks": 3,
+      "ms": 190
+    },
+    {
+      "name": "submission lost acknowledgment retains immutable revision and outbox",
+      "checks": 2,
+      "ms": 430
+    },
+    {
+      "name": "graph concurrent fields converge; invalid intermediate graph cannot publish",
+      "checks": 5,
+      "ms": 313
+    },
+    {
+      "name": "same graph field converges to one value; both edits remain durable history",
+      "checks": 3,
+      "ms": 153
+    },
+    {
+      "name": "graph deletion and invalid behavioral values cannot change published version",
+      "checks": 7,
+      "ms": 266
+    },
+    {
+      "name": "stale agent proposal preserves bytes without overwriting newer human work",
+      "checks": 3,
+      "ms": 155
+    },
+    {
+      "name": "current agent proposal uses exact base and ordinary durable acceptance",
+      "checks": 2,
+      "ms": 65
+    },
+    {
+      "name": "human and agent proposals race under one source transaction lock",
+      "checks": 3,
+      "ms": 107
+    },
+    {
+      "name": "unauthorized ingress cannot persist or relabel accepted history",
+      "checks": 2,
+      "ms": 65
+    },
+    {
+      "name": "source submission and Execution observation are separate commits",
+      "checks": 5,
+      "ms": 100
+    },
+    {
+      "name": "out-of-order submission pauses with separate gap; older event cannot regress proposal",
+      "checks": 6,
+      "ms": 145
+    },
+    {
+      "name": "stale approval cannot resume an observed changed scope",
+      "checks": 2,
+      "ms": 77
+    },
+    {
+      "name": "second submitted revision invalidates an in-flight retain choice",
+      "checks": 2,
+      "ms": 171
+    },
+    {
+      "name": "retain replaces invalid wait; previous answer cannot approve replacement",
+      "checks": 5,
+      "ms": 112
+    },
+    {
+      "name": "accepted approval survives retaining same scope, without answering new wait",
+      "checks": 5,
+      "ms": 178
+    },
+    {
+      "name": "Execution process crash retains observed proposal and inbox verdict",
+      "checks": 2,
+      "ms": 521
+    },
+    {
+      "name": "adoption cannot clear writer, effects or checkpoint obligations",
+      "checks": 3,
+      "ms": 258
+    },
+    {
+      "name": "adoption needs new bounded admission; successor starts at entry without approvals",
+      "checks": 7,
+      "ms": 89
+    },
+    {
+      "name": "superseded predecessor cannot reopen or create a second successor",
+      "checks": 4,
+      "ms": 245
+    },
+    {
+      "name": "source context identity prevents Catalog/Knowledge aliasing",
+      "checks": 1,
+      "ms": 41
+    },
+    {
+      "name": "database roles prevent cross-context draft writes",
+      "checks": 1,
+      "ms": 45
+    },
+    {
+      "name": "five replicas: 50-KiB Markdown, 100 nodes, two reduced runs, 60-second disconnect",
+      "checks": 26,
+      "ms": 61222
+    }
+  ],
+  "sourceHashes": {
+    "model.mjs": "4276b19a96a3e2e4dd5d08f482a7d51401c8604c4b07e319543a5a4a486199e5",
+    "worker.mjs": "e00d7c46dc0a788495343a7b8da87809bf3727a29f2ddee0520a0e0c087a84a0",
+    "run-experiment.mjs": "3162c85a8146d452916ea586c07353d87e8b4488cd9ac4965c8315a06e53c1b9",
+    "package-lock.json": "b8eb1099e9614e9264d09251d0a2066e622f9ada1417169fc4abc2d2e1f51539"
+  }
+}

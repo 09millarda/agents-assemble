@@ -1,0 +1,205 @@
+{
+  "modelHash": "4276b19a96a3e2e4dd5d08f482a7d51401c8604c4b07e319543a5a4a486199e5",
+  "at": "2026-09-12T19:06:25.235Z",
+  "probes": {
+    "supersededReopen": {
+      "first": {
+        "status": "adopted",
+        "version": 2,
+        "successor": {
+          "id": "successor-1",
+          "pinned": "revision-1",
+          "start": "entry",
+          "approvals": [],
+          "consumed": 0,
+          "grant": 1,
+          "checkpoint": "verified",
+          "delivery": "fixture-delivery"
+        }
+      },
+      "afterFirstStatus": "superseded",
+      "secondObservation": {
+        "status": "superseded"
+      },
+      "second": {
+        "status": "superseded"
+      },
+      "finalStatus": "superseded",
+      "violation": false
+    },
+    "successorOverwrite": {
+      "first": {
+        "id": "successor-1",
+        "pinned": "revision-1",
+        "start": "entry",
+        "approvals": [],
+        "consumed": 0,
+        "grant": 1,
+        "checkpoint": "verified",
+        "delivery": "fixture-delivery"
+      },
+      "second": {
+        "status": "superseded"
+      },
+      "final": {
+        "id": "successor-1",
+        "pinned": "revision-1",
+        "start": "entry",
+        "approvals": [],
+        "consumed": 0,
+        "grant": 1,
+        "checkpoint": "verified",
+        "delivery": "fixture-delivery"
+      },
+      "violation": false
+    },
+    "pendingDeletion": {
+      "receipt": {
+        "id": "delete-first",
+        "actor": "alice",
+        "seq": 1,
+        "update": "AAGFtffIAwEAAw==",
+        "integrated": false,
+        "hash": "a43a44d43bde7778b013e978c44d9d5f06017c2c3ab3fc8fcb71481d82b67cf7"
+      },
+      "before": {
+        "status": "dependencies_missing"
+      },
+      "restart": {
+        "status": "dependencies_missing"
+      },
+      "after": {
+        "token": "2:a43a44d43bde7778b013e978c44d9d5f06017c2c3ab3fc8fcb71481d82b67cf7",
+        "seq": 2,
+        "digest": "a43a44d43bde7778b013e978c44d9d5f06017c2c3ab3fc8fcb71481d82b67cf7",
+        "content": {
+          "markdown": "",
+          "nodes": {},
+          "order": []
+        },
+        "update": "AQGFtffIAwABAQhtYXJrZG93bgMBhbX3yAMBAAM=",
+        "validation": []
+      },
+      "pass": true
+    },
+    "graphValidation": [
+      {
+        "content": {
+          "markdown": "",
+          "nodes": {
+            "a": {
+              "kind": "call",
+              "action": {
+                "unresolved": "alias"
+              }
+            }
+          },
+          "order": [
+            "a"
+          ]
+        },
+        "errors": [
+          "unsupported_or_incomplete_call"
+        ]
+      },
+      {
+        "content": {
+          "markdown": "",
+          "nodes": {
+            "a": {
+              "kind": "call",
+              "action": "test",
+              "unknownBehavior": "execute-shell"
+            }
+          },
+          "order": [
+            "a"
+          ]
+        },
+        "errors": [
+          "unsupported_or_incomplete_call"
+        ]
+      },
+      {
+        "content": {
+          "markdown": "",
+          "nodes": {
+            "a": {
+              "kind": "call",
+              "action": "test"
+            },
+            "b": {
+              "kind": "call",
+              "action": "build"
+            }
+          },
+          "order": [
+            "a",
+            "a"
+          ]
+        },
+        "errors": [
+          "duplicate_node",
+          "orphan_node"
+        ]
+      }
+    ],
+    "ownerIdentity": {
+      "knowledge": {
+        "owner": "knowledge",
+        "event": {
+          "id": "knowledge/same-id:1",
+          "source": "knowledge/same-id",
+          "seq": 1,
+          "revision": "revision-1",
+          "digest": "a43a44d43bde7778b013e978c44d9d5f06017c2c3ab3fc8fcb71481d82b67cf7"
+        }
+      },
+      "catalog": {
+        "owner": "catalog",
+        "event": {
+          "id": "catalog/same-id:1",
+          "source": "catalog/same-id",
+          "seq": 1,
+          "revision": "revision-1",
+          "digest": "a43a44d43bde7778b013e978c44d9d5f06017c2c3ab3fc8fcb71481d82b67cf7"
+        }
+      },
+      "collision": false
+    },
+    "retainAcceptedGate": {
+      "approval": {
+        "status": "approved"
+      },
+      "retained": {
+        "status": "retained",
+        "version": 2,
+        "successor": null
+      },
+      "wait": {
+        "id": "wait-0",
+        "revision": "baseline",
+        "valid": false,
+        "resolved": true
+      },
+      "approvals": [
+        {
+          "wait": "wait-0",
+          "revision": "baseline"
+        }
+      ],
+      "potentialExtraApproval": false
+    }
+  },
+  "checks": {
+    "supersededCannotReopen": true,
+    "successorCannotBeOverwritten": true,
+    "pendingDeletionSurvives": true,
+    "nonStringActionRejected": true,
+    "unknownBehaviorRejected": true,
+    "duplicateAndOrphanRejected": true,
+    "ownerIdentityDistinct": true,
+    "retainKeepsResolvedGate": true
+  },
+  "finalModelHash": "4276b19a96a3e2e4dd5d08f482a7d51401c8604c4b07e319543a5a4a486199e5"
+}

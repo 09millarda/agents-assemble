@@ -1,0 +1,30 @@
+{
+  "replicas": 5,
+  "reducedRuns": 2,
+  "nodes": 100,
+  "initialMarkdownBytes": 51200,
+  "disconnectMs": 60008.147471000004,
+  "oneWayArtificialDelayMs": 50,
+  "transport": "loopback HTTP; full-state pull; four connected clients; no browser/real WAN/harness",
+  "sampleCount": 16,
+  "latenciesMs": [
+    377.5169050000004,
+    392.20835700000134,
+    413.5322990000004,
+    429.89324099999976,
+    500.7588480000013,
+    544.0114720000001,
+    586.5625959999998,
+    613.784909,
+    629.6424490000009,
+    651.8091459999996,
+    689.9688659999993,
+    729.319832000001,
+    732.883471000001,
+    740.0549419999988,
+    842.9747850000003,
+    848.8011229999993
+  ],
+  "p95Ms": 848.8011229999993,
+  "reconnectMs": 681.4469239999889
+}

@@ -1,0 +1,13 @@
+{
+  "name": "collaborative-drafts",
+  "version": "0.0.0",
+  "description": "Throwaway architecture evidence for decision 12",
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "dependencies": {
+    "pg": "8.23.0",
+    "yjs": "13.6.32"
+  },
+  "private": true
+}
