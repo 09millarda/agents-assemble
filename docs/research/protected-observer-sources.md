@@ -12,7 +12,7 @@ Use an administrator-owned parent and a service-owned journal with restrictive p
 
 The system manager authorizes unit mutations through `org.freedesktop.systemd1.manage-units`. Do not grant that general authority to the workload. [systemd 259.5, manager security](https://github.com/systemd/systemd/blob/v259.5/man/org.freedesktop.systemd1.xml#L1765-L1785)
 
-**B — administrator-enforced AppArmor domains; native workload UID 1000.** Keep native account access but separate observer and workload through enforced policy, potentially retaining UID 1000 for both. AppArmor requires loaded policy to restrict access beyond DAC. Its rules mediate files, ptrace, signals, D-Bus, and UNIX sockets. [Kernel AppArmor documentation](https://docs.kernel.org/admin-guide/LSM/apparmor.html), [AppArmor policy reference, ptrace and signal](https://manpages.ubuntu.com/manpages/resolute/man5/apparmor.d.5.html#ptrace-rules), [D-Bus rules](https://manpages.ubuntu.com/manpages/resolute/man5/apparmor.d.5.html#dbus-rules)
+**B — administrator-enforced AppArmor domains; native workload UID 1000.** Keep native account access but separate observer and workload through enforced policy, potentially retaining UID 1000 for both. AppArmor requires loaded policy to restrict access beyond DAC. Its rules mediate files, ptrace, signals, D-Bus, and UNIX sockets. [Kernel AppArmor documentation](https://docs.kernel.org/admin-guide/LSM/apparmor.html), [AppArmor policy reference, ptrace and signal](https://manpages.ubuntu.com/manpages/resolute/man5/apparmor.d.5.html#PTrace_rules), [D-Bus rules](https://manpages.ubuntu.com/manpages/resolute/man5/apparmor.d.5.html#DBus_rules)
 
 Recommended policy obligations: observer-only credential/journal access; deny workload tracing/signaling the observer; constrain executable transitions and IPC helpers; prevent workload policy changes. A protected manager must still own launch/stop and scope custody. These obligations need a concrete loaded policy and native denial tests. Allowing arbitrary unconfined helpers would invalidate the intended boundary. B requires more policy and compatibility validation than A; it is not rejected.
 
@@ -20,7 +20,7 @@ For both profiles the trusted host administrator is the person controlling initi
 
 ## API authorization is separate from key secrecy
 
-`SO_PEERCRED` identifies the connected peer's PID/UID/GID at connection establishment, not its entitlement to attest arbitrary invocation IDs. [Linux `unix(7)`, `SO_PEERCRED`](https://man7.org/linux/man-pages/man7/unix.7.html#Socket_options)
+`SO_PEERCRED` identifies the connected peer's PID/UID/GID at connection establishment, not its entitlement to attest arbitrary invocation IDs. [Linux `unix(7)`, `SO_PEERCRED`](https://man7.org/linux/man-pages/man7/unix.7.html#DESCRIPTION)
 
 Recommended API: accept a service-issued grant, bind it once to the observer-created invocation and retained object, and derive receipt fields from that binding. Never expose “sign this receipt” or “attest this supplied cgroup path.” Test substituted grants, scope IDs, duplicate requests, and direct credential use. A denied key read alone does not prove this authorization property.
 
