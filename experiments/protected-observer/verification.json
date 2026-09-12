@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "check": "final_source_hash:run.py",
+      "passed": true
+    },
+    {
+      "check": "final_source_hash:vendor/authority.py",
+      "passed": true
+    },
+    {
+      "check": "final_source_hash:vendor/native_client.py",
+      "passed": true
+    },
+    {
+      "check": "temporary_root_tree_removed:aa-protected-observer-xkehqsfq",
+      "passed": true
+    },
+    {
+      "check": "temporary_root_tree_removed:aa-protected-observer-n2ej1_z1",
+      "passed": true
+    },
+    {
+      "check": "temporary_root_tree_removed:aa-protected-observer-ybpir_m2",
+      "passed": true
+    }
+  ],
+  "browser_checks": [
+    "scoped receipt remains takeover paused",
+    "recreated scope refuses a receipt"
+  ],
+  "review": "source audit only; no independent native run"
+}
