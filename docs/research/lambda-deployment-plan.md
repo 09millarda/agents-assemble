@@ -27,10 +27,12 @@ Only prerequisite observations were recorded; no cloud resource was created.
 
 ## Required environment and bounded resource proposal
 
-The owner must identify an AWS sandbox account and region, an authentication
-route (for example an existing local SSO profile), and a dedicated disposable
-GitHub repository to create or use. Record the permitted spend/duration and
-resource prefix before provisioning. Account/role/profile names are metadata;
+The owner selected AWS Europe (Ireland), `eu-west-1`, and the current repository,
+`09millarda/agents-assemble`, for the disposable fixture. This supersedes the
+earlier dedicated-repository proposal. The AWS account and authentication route
+remain to identify; a CLI profile is simply a locally named collection of
+connection/sign-in settings and need not already exist. Record the permitted
+spend/duration and resource prefix before provisioning. Account/role/profile names are metadata;
 credentials must be established through the normal local authentication flow,
 never included in issue comments, chat or evidence archives.
 
@@ -155,11 +157,13 @@ source-only. A toy state machine cannot satisfy a real Lambda row.
 
 ## Resume and decision completion
 
-Once the sandbox and dedicated repository are identified, validate identity and
+Once AWS authentication is established for the selected region/repository, validate identity and
 effective access read-only, finalize the bounded resource plan, and obtain any
 still-needed authorization for those concrete resources. Install only the tools
 needed for that plan, then implement the disposable Hono/SAM/workflow fixture on
-the scratch branch. Do not add production workflows to the planning repository.
+the scratch branch in `09millarda/agents-assemble`. Add only the minimum explicitly
+scoped dispatch workflow needed in the default branch if required by GitHub;
+retain disposable application/probe code on the scratch branch.
 
 Resolve #15 only after the evidence supports an explicit adapter verdict and the
 real deployment/health/restoration acceptance cases are established, or the owner
