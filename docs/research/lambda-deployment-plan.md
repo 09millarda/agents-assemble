@@ -4,7 +4,13 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 ## Current verdict
 
-**Prerequisites incomplete; decision open.** No real workflow dispatch, Lambda
+**Live AWS validation deferred at the owner’s request; decision open.** The owner
+asked to skip AWS setup after repeated sign-in failures. Stop authentication
+attempts and continue architecture planning with the provider evidence explicitly
+unproved. Resume AWS setup only when the owner asks to revisit it. This defers
+validation; it does not remove deployment automation from the release scope.
+
+No real workflow dispatch, Lambda
 deployment, production promotion, health failure or rollback has been exercised.
 The proposals below are experiment inputs, not an accepted ADR or passing result.
 They preserve the owner-approved [release contract](../first-release-contract.md)
@@ -30,8 +36,8 @@ Only prerequisite observations were recorded; no cloud resource was created.
 The owner selected the profile name `agents-assemble`. AWS CLI `2.36.44` was
 installed under the local user after the official installer verified its GPG
 signature. The profile has region `eu-west-1` and JSON output. Browser sign-in
-was initiated; account identity and permissions remain unverified until login
-completes. This supersedes only the initial CLI/profile absence observation,
+did not establish CLI credentials. The pending login was stopped at the owner’s
+request; account identity and permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
 not the archived preflight or unexercised deployment cases.
 
 ## Required environment and bounded resource proposal
@@ -166,7 +172,8 @@ source-only. A toy state machine cannot satisfy a real Lambda row.
 
 ## Resume and decision completion
 
-Once AWS authentication is established for the selected region/repository, validate identity and
+If the owner later resumes live validation, establish AWS authentication for the
+selected region/repository, then validate identity and
 effective access read-only, finalize the bounded resource plan, and obtain any
 still-needed authorization for those concrete resources. Install only the tools
 needed for that plan, then implement the disposable Hono/SAM/workflow fixture on
@@ -176,6 +183,6 @@ retain disposable application/probe code on the scratch branch.
 
 Resolve #15 only after the evidence supports an explicit adapter verdict and the
 real deployment/health/restoration acceptance cases are established, or the owner
-explicitly changes the acceptance scope. Until then retain the claim and open
-issue, update the map's frontier with the missing prerequisite, and publish no
+explicitly changes the acceptance scope. Until then keep the issue open and deferred,
+record the owner-directed pause in the map, and publish no
 accepted ADR. No speculative child decisions follow from unavailable access.
