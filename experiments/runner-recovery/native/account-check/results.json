@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-12T16:13:13Z",
+  "version": "codex-cli 0.153.4",
+  "platform": "Linux x86_64",
+  "interface": "app-server stdio JSON-RPC",
+  "identity": "same existing OS user; provider API key and host session environment excluded",
+  "workDirectory": "/tmp/aa-native-recovery-4kv88xau",
+  "status": "account_and_settings_only",
+  "baselineCommit": "084ff1eb95cee38e9bd864f49ae60cbde9a94f82",
+  "baselineTest": {
+    "exitCode": 1,
+    "output": "FF.\n======================================================================\nFAIL: test_negative (test_arithmetic.ArithmeticTest.test_negative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<workspace>/test_arithmetic.py\", line 8, in test_negative\n    self.assertEqual(add(-2, -3), -5)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nAssertionError: 1 != -5\n\n======================================================================\nFAIL: test_positive (test_arithmetic.ArithmeticTest.test_positive)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<workspace>/test_arithmetic.py\", line 6, in test_positive\n    self.assertEqual(add(2, 3), 5)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\nAssertionError: -1 != 5\n\n----------------------------------------------------------------------\nRan 3 tests in 0.003s\n\nFAILED (failures=2)\n"
+  },
+  "passedEnvironmentNames": [
+    "HOME",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "PATH",
+    "PYTHONDONTWRITEBYTECODE",
+    "TERM",
+    "XDG_RUNTIME_DIR"
+  ],
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true
+  },
+  "initialSettings": {
+    "requested": {
+      "sandbox": "workspace-write",
+      "networkAccess": false,
+      "approvalPolicy": "never",
+      "ephemeral": true,
+      "model": "omitted",
+      "effort": "omitted"
+    },
+    "effective": {
+      "model": "gpt-6-astra",
+      "modelProvider": "openai",
+      "reasoningEffort": "ultra",
+      "approvalPolicy": "never",
+      "sandbox": {
+        "type": "workspaceWrite",
+        "writableRoots": [],
+        "networkAccess": false,
+        "excludeTmpdirEnvVar": true,
+        "excludeSlashTmp": true
+      },
+      "activePermissionProfile": null
+    },
+    "threadEphemeral": true,
+    "nativeThreadAlias": "thread-1"
+  }
+}

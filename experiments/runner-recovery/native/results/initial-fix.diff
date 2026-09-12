@@ -1,0 +1,8 @@
+diff --git a/arithmetic.py b/arithmetic.py
+index 12ee743..4693ad3 100644
+--- a/arithmetic.py
++++ b/arithmetic.py
+@@ -1,2 +1,2 @@
+ def add(a, b):
+-    return a - b
++    return a + b

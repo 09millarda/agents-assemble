@@ -1,0 +1,19 @@
+{"event": "request", "method": "initialize", "request": 1}
+{"event": "response", "method": "initialize", "request": 1}
+{"event": "request", "method": "account/read", "request": 2}
+{"event": "response", "method": "account/read", "request": 2}
+{"event": "request", "method": "thread/start", "request": 3}
+{"event": "response", "method": "thread/start", "request": 3}
+{"effective": {"activePermissionProfile": null, "approvalPolicy": "never", "model": "gpt-6-astra", "modelProvider": "openai", "reasoningEffort": "ultra", "sandbox": {"excludeSlashTmp": true, "excludeTmpdirEnvVar": true, "networkAccess": false, "type": "workspaceWrite", "writableRoots": []}}, "event": "thread_settings", "nativeThreadAlias": "thread-1", "requested": {"approvalPolicy": "never", "effort": "omitted", "ephemeral": true, "model": "omitted", "networkAccess": false, "sandbox": "workspace-write"}, "threadEphemeral": true}
+{"event": "request", "method": "turn/start", "request": 4}
+{"event": "thread/started", "thread": "thread-1"}
+{"event": "response", "method": "turn/start", "request": 4}
+{"event": "thread/status/changed", "status": {"activeFlags": [], "type": "active"}, "thread": "thread-1"}
+{"event": "turn/started", "status": "inProgress", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "userMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/completed", "itemType": "agentMessage", "thread": "thread-1", "turn": "turn-1"}
+{"event": "item/started", "exitCode": null, "itemType": "commandExecution", "status": "inProgress", "thread": "thread-1", "turn": "turn-1"}
+{"event": "fault_injected", "fault": "SIGKILL probe-owned app-server after turn/start ack and local operation marker", "parentExitCode": -9}
+{"event": "probe_owned_process_exit", "forcedKill": false, "notificationCounts": {"item/agentMessage/delta": 16, "item/commandExecution/outputDelta": 1, "item/completed": 2, "item/started": 3, "mcpServer/startupStatus/updated": 11, "remoteControl/status/changed": 1, "thread/started": 1, "thread/status/changed": 1, "turn/started": 1}, "returnCode": -9, "stderrBytesDiscarded": 305}

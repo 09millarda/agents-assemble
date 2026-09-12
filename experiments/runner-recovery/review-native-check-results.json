@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "assertions": 25,
+  "checks": [
+    "native recorded completed initial turn",
+    "native recorded completed recovery turn",
+    "native recorded different thread identities",
+    "existing native ChatGPT account reported",
+    "archive manifest exact recorded hash",
+    "archive bundle exact manifest hash",
+    "baseline and checkpoint distinct",
+    "exact original recovery-test literal identified",
+    "consumer cloned archived self-contained bundle",
+    "consumer has no Git object alternates",
+    "baseline arithmetic contains the original defect",
+    "baseline really fails both signed addition cases",
+    "archived checkpoint content hash: arithmetic.py",
+    "archived checkpoint content hash: test_arithmetic.py",
+    "baseline is an ancestor of recovered checkpoint",
+    "archived checkpoint passes original three tests",
+    "archived recovery diff applies to exact checkpoint",
+    "independent archive reconstruction passes seven original tests",
+    "recovery diff changes only arithmetic.py",
+    "original tests preserved in archive reconstruction",
+    "retained live recovery tests exactly equal original fixture literal",
+    "retained live original tests match pinned manifest hash",
+    "retained live manifest matches original recorded hash",
+    "retained live tracked change set only arithmetic.py",
+    "retained live untracked set only declared manifest and tests"
+  ],
+  "retainedWorkspaceAudit": {
+    "available": true,
+    "recoveryTestSha256": "7e028ff0b2fc4f83170f1f25b86c34f6757dbca80d1923a767b7a1b5cb9aa481"
+  },
+  "scope": "Independent archive reconstruction and post-run fixture-integrity audit; no new native inference, no cross-machine or service-admission claim."
+}

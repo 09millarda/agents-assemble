@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "assertions": 25,
+  "source_sha256": "4e7634ac5e8f16bdec73c4eebf9d3252229614015be1568da7c7b449948e08f6",
+  "checks": [
+    "original result admitted before deadline",
+    "accepted exact result replay survives expiry",
+    "accepted exact result replay survives replacement generation",
+    "new result identity cannot advance replacement from stale grant",
+    "accepted result identity cannot change payload after replacement",
+    "result replay did not change replacement state",
+    "recovery consumer clone has no Git object alternates",
+    "wrong recovery class rejected",
+    "rejected admission identity cannot be repaired in place",
+    "verification absence rejected",
+    "later evidence cannot change prior admission verdict under same identity",
+    "valid verification cannot authorize different checkpoint",
+    "valid verification cannot authorize different input scope",
+    "self-inconsistent admission digest is rejected",
+    "all rejected admission attempts consumed no allowance",
+    "fresh valid recovery admitted",
+    "exact recovery replay returns committed admission",
+    "recovery replay charges once",
+    "fixture process binding registered",
+    "current generation rejects wrong process instance",
+    "current generation rejects wrong process PID",
+    "matching trusted stop report accepted only in fixture scope",
+    "old assignment stop report rejects after replacement",
+    "current-looking envelope cannot relabel old command/process binding",
+    "stale and relabeled stop did not mark replacement stopped"
+  ],
+  "observations": {
+    "resultReplay": {
+      "first": {
+        "verdict": "accepted",
+        "duplicate": false
+      },
+      "expired": {
+        "verdict": "accepted",
+        "duplicate": true
+      },
+      "replaced": {
+        "verdict": "accepted",
+        "duplicate": true
+      },
+      "newStaleIdentity": {
+        "verdict": "stale_generation_or_attempt",
+        "duplicate": false
+      },
+      "changedPayload": {
+        "verdict": "result_payload_conflict",
+        "duplicate": true
+      }
+    },
+    "recoveryAdmission": {
+      "wrongClass": {
+        "accepted": false,
+        "reason": "wrong_recovery_class"
+      },
+      "sameIdentityRepair": {
+        "accepted": false,
+        "reason": "admission_payload_conflict"
+      },
+      "verificationAbsent": {
+        "accepted": false,
+        "reason": "checkpoint_not_verified"
+      },
+      "laterVerification": {
+        "accepted": false,
+        "reason": "checkpoint_not_verified",
+        "duplicate": true
+      },
+      "differentCheckpoint": {
+        "accepted": false,
+        "reason": "verification_scope_mismatch"
+      },
+      "differentInput": {
+        "accepted": false,
+        "reason": "verification_scope_mismatch"
+      },
+      "badDigest": {
+        "accepted": false,
+        "reason": "invalid_payload_digest"
+      },
+      "valid": {
+        "accepted": true,
+        "consumed": 2
+      },
+      "duplicate": {
+        "accepted": true,
+        "consumed": 2,
+        "duplicate": true
+      }
+    },
+    "stopScope": {
+      "wrongInstance": {
+        "accepted": false,
+        "scope": "single_fixture_process_only",
+        "external_effects_accounted": false
+      },
+      "wrongPid": {
+        "accepted": false,
+        "scope": "single_fixture_process_only",
+        "external_effects_accounted": false
+      },
+      "trustedMatching": {
+        "accepted": true,
+        "scope": "single_fixture_process_only",
+        "external_effects_accounted": false
+      },
+      "stale": {
+        "accepted": false,
+        "scope": "single_fixture_process_only",
+        "external_effects_accounted": false
+      },
+      "currentLookingOldBinding": {
+        "accepted": false,
+        "scope": "single_fixture_process_only",
+        "external_effects_accounted": false
+      }
+    }
+  },
+  "scope": "Independent fixture scope/replay tests plus real Git consumer clone. Synthetic result, admission, and process reports are trusted inputs; no inference, native stop, transport authentication, or actual provider provenance is established."
+}

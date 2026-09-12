@@ -1,0 +1,7 @@
+{"event": "request", "method": "initialize", "request": 1}
+{"event": "response", "method": "initialize", "request": 1}
+{"event": "request", "method": "thread/read", "request": 2}
+{"code": -32600, "event": "rpc_error", "message": "thread not loaded: <lost-ephemeral-thread>", "method": "thread/read"}
+{"event": "request", "method": "thread/resume", "request": 3}
+{"code": -32600, "event": "rpc_error", "message": "no rollout found for thread id <lost-ephemeral-thread>", "method": "thread/resume"}
+{"event": "probe_owned_process_exit", "forcedKill": false, "notificationCounts": {"remoteControl/status/changed": 1}, "returnCode": 0, "stderrBytesDiscarded": 0}

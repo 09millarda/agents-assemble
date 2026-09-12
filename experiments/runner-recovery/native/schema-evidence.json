@@ -1,0 +1,13 @@
+{
+  "generator": "codex-cli 0.153.4: codex app-server generate-ts --out schema --experimental",
+  "files": {
+    "InitializeParams.ts": "bfc13b4fc9e37f629ee67b42d6e7f342ba38668ff528e738a911de5ebcfd545f",
+    "v2/GetAccountResponse.ts": "f16f348c9c37a760bd7b4c75c0b7d86a57d6cbd16bd6a1c4b06dffa39157b6a9",
+    "v2/ThreadStartParams.ts": "7a3fddbb0cf0585c52edbf19e3a1f6e691681f18ab509f7abfa416da7f0ac824",
+    "v2/ThreadStartResponse.ts": "056e252e32c78761d250c7688cb102752ce8b6f445e509ae87766ba5588a8924",
+    "v2/TurnStartParams.ts": "85713b9158fa110ac20b63e0ec6f76faff8872402d62531f14172cfc5b1eacf7",
+    "v2/Turn.ts": "5a0852e46a13446ccb3aa3f493c06a9151a43772d530521789ac741ed115da5f",
+    "v2/SandboxPolicy.ts": "f5a4b24c0de4945e77c1573306ae4cb98a29103a6c64ee23264dc9d35a977e85",
+    "v2/ThreadResumeParams.ts": "e4f64c88205dbba2bf87635d12b9c5803dd6f19b84b5682a71df7fdcf87862fb"
+  }
+}

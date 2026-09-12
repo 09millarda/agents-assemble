@@ -1,0 +1,46 @@
+{
+  "version": "codex-cli 0.153.4",
+  "workDirectory": "/tmp/aa-native-kill-w89gd9sd",
+  "operation": "write local started marker, sleep 30 seconds, write local finished marker",
+  "status": "blocked",
+  "noAutomaticTurnRetry": true,
+  "nativeTurnStarts": 1,
+  "account": {
+    "type": "chatgpt",
+    "requiresOpenaiAuth": true
+  },
+  "settings": {
+    "requested": {
+      "sandbox": "workspace-write",
+      "networkAccess": false,
+      "approvalPolicy": "never",
+      "ephemeral": true,
+      "model": "omitted",
+      "effort": "omitted"
+    },
+    "effective": {
+      "model": "gpt-6-astra",
+      "modelProvider": "openai",
+      "reasoningEffort": "ultra",
+      "approvalPolicy": "never",
+      "sandbox": {
+        "type": "workspaceWrite",
+        "writableRoots": [],
+        "networkAccess": false,
+        "excludeTmpdirEnvVar": true,
+        "excludeSlashTmp": true
+      },
+      "activePermissionProfile": null
+    },
+    "threadEphemeral": true,
+    "nativeThreadAlias": "thread-1"
+  },
+  "turnStartAcknowledged": true,
+  "acceptedTurnStatus": "inProgress",
+  "structuredCommandStartedObserved": true,
+  "localOperationStartedMarkerObserved": true,
+  "markerProcessInObservedDescendants": false,
+  "error": "",
+  "identifiedDescendantsRemainingAfterCleanup": 0,
+  "cleanupScope": "only exact observed Linux descendants; no universal escaped-descendant/remote-effect guarantee"
+}

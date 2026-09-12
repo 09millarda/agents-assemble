@@ -1,0 +1,8 @@
+{"event": "request", "method": "initialize", "request": 1}
+{"event": "response", "method": "initialize", "request": 1}
+{"event": "request", "method": "account/read", "request": 2}
+{"event": "response", "method": "account/read", "request": 2}
+{"event": "request", "method": "thread/start", "request": 3}
+{"event": "response", "method": "thread/start", "request": 3}
+{"effective": {"activePermissionProfile": null, "approvalPolicy": "never", "model": "gpt-6-astra", "modelProvider": "openai", "reasoningEffort": "ultra", "sandbox": {"excludeSlashTmp": true, "excludeTmpdirEnvVar": true, "networkAccess": false, "type": "workspaceWrite", "writableRoots": []}}, "event": "thread_settings", "nativeThreadAlias": "thread-1", "requested": {"approvalPolicy": "never", "effort": "omitted", "ephemeral": true, "model": "omitted", "networkAccess": false, "sandbox": "workspace-write"}, "threadEphemeral": true}
+{"event": "probe_owned_process_exit", "forcedKill": false, "notificationCounts": {"remoteControl/status/changed": 1}, "returnCode": 0, "stderrBytesDiscarded": 275}

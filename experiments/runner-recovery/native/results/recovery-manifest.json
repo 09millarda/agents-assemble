@@ -1,0 +1,15 @@
+{
+  "schema": "native-recovery-fixture/v1",
+  "repositoryIdentity": "disposable-arithmetic-fixture",
+  "originalFailingBaselineCommit": "a1a255f481307d3a3b0e7487c91117d4b7ac048f",
+  "workingCheckpointCommit": "a6ec3042758d957b856acbe1b28e50aa0a055586",
+  "gitBundleSha256": "0535e8a067db129a4742530f35da4bc492f7484433e93568e8cfcb602a8ae398",
+  "fileSha256": {
+    "arithmetic.py": "ba1a531f581d2e6094e978ed6f7aca7a8d92eeb62c6e7ad73ee692f7f18bc772",
+    "test_arithmetic.py": "e3ac460d733b5240675319ea689ef578866ff6d83d7c456bf7fe4f3e6a13aed2"
+  },
+  "acceptedDecision": "add(a,b) means arithmetic addition; original defect fixed and all three original tests pass.",
+  "recoveryClass": "fresh-session-from-verified-git-and-artifacts",
+  "invocationGrant": "fixture-new-bounded-grant-2",
+  "nextWork": "Add sum_many(values) in arithmetic.py using the recovered add implementation. Accept any iterable, return 0 when empty. Preserve existing add behavior and original tests. Run both unittest files."
+}
