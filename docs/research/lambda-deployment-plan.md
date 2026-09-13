@@ -4,13 +4,13 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 ## Current verdict
 
-**Local authentication verified; organization permission blocker remains.** The owner
-selected Proof of Concept, account `728616601473`, verified through STS and the
-account API using local profile `agents-assemble`. A real GitHub dispatch observed
-the repository's OIDC claims. The identity helper and workflow now target this
-account, but an organization SCP explicitly denies the required provider read.
-See [connection scope and evidence](aws-identity-connection.md). No IAM mutation
-was attempted; GitHub-to-AWS assumption remains pending.
+**GitHub-to-AWS authentication passed; decision open.** The owner continued with
+AWS after considering Cloudflare. The agent created the reviewed identity-only
+provider/role in Proof of Concept (`728616601473`), and GitHub run 34763931826
+successfully assumed it. See [actual connection evidence and staged Ireland
+policy amendment](aws-github-connection-result.md). The connection role grants no
+deployment access. Ireland remains blocked by an organization region policy;
+a one-region addition is staged for review, not saved.
 
 No Lambda deployment, production promotion, health failure or rollback has been exercised.
 The proposals below are experiment inputs, not an accepted ADR or passing result.

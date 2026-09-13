@@ -2,6 +2,10 @@
 
 Date: 2026-09-13. Decision #15 remains open.
 
+**Superseding result:** [GitHub successfully assumed the identity-only AWS role](aws-github-connection-result.md).
+The provider and probe role now exist. The earlier blockers and not-applied
+statements below are historical; Ireland policy review and deployment remain pending.
+
 The owner selected **Proof of Concept**, account `728616601473`. Actual local
 `sts:GetCallerIdentity` succeeded using profile `agents-assemble`, assumed role
 `AccountFullAccessRole`; `account:GetAccountInformation` confirmed the account
