@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       verify_aws:
-        description: Assume the identity-only AWS role after CloudShell setup
+        description: Assume the identity-only AWS role after authenticated CLI setup
         type: boolean
         default: false
 
@@ -48,7 +48,7 @@ jobs:
               raise SystemExit(0)
           data = urllib.parse.urlencode({
               'Action': 'AssumeRoleWithWebIdentity', 'Version': '2011-06-15',
-              'RoleArn': 'arn:aws:iam::749771281623:role/aa-wf15-identity-check',
+              'RoleArn': 'arn:aws:iam::728616601473:role/aa-wf15-identity-check',
               'RoleSessionName': 'github-' + os.environ['GITHUB_RUN_ID'],
               'DurationSeconds': '900', 'WebIdentityToken': token}).encode()
           with urllib.request.urlopen('https://sts.eu-west-1.amazonaws.com/', data=data, timeout=30) as response:
@@ -64,6 +64,6 @@ jobs:
                                    'eu-west-1', '--output', 'json', '--no-cli-pager'],
                                   env=env, capture_output=True, text=True, check=True)
           identity = json.loads(result.stdout)
-          assert identity['Account'] == '749771281623', 'Unexpected AWS account'
-          assert identity['Arn'].startswith('arn:aws:sts::749771281623:assumed-role/aa-wf15-identity-check/'), 'Unexpected role'
+          assert identity['Account'] == '728616601473', 'Unexpected AWS account'
+          assert identity['Arn'].startswith('arn:aws:sts::728616601473:assumed-role/aa-wf15-identity-check/'), 'Unexpected role'
           print(json.dumps(identity, indent=2))

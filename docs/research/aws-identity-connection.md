@@ -2,11 +2,30 @@
 
 Date: 2026-09-13. Decision #15 remains open.
 
-The owner resumed AWS authentication and supplied a successful CloudShell
-`GetCallerIdentity` response for account `749771281623`, assumed role
-`AccountFullAccessRole`. This is owner-supplied identity evidence, not an agent-run
-AWS check or proof of administrative permissions. Local browser login remains
-unresolved; CloudShell supplies an alternative bootstrap route.
+The owner selected **Proof of Concept**, account `728616601473`. Actual local
+`sts:GetCallerIdentity` succeeded using profile `agents-assemble`, assumed role
+`AccountFullAccessRole`; `account:GetAccountInformation` confirmed the account
+name and ID. This supersedes the earlier CloudShell account selection.
+Local authentication is now verified. The cause of earlier browser failures is
+not established by this success.
+
+## Current permission blocker
+
+Actual `iam:GetOpenIDConnectProvider` for
+`arn:aws:iam::728616601473:oidc-provider/token.actions.githubusercontent.com`
+was explicitly denied by organization service control policy `p-ie2he05n`.
+`iam:GetRole` for `aa-wf15-identity-check` returned `NoSuchEntity`.
+`iam:ListAccountAliases` was also explicitly denied by the same policy;
+`organizations:DescribeAccount` was denied, so the account name was obtained
+through the account API instead. No IAM write was attempted.
+
+The organization administrator must review the scoped bootstrap inventory below
+and permit the required operations under organization policy and the caller's
+IAM permissions. Only the provider read denial is established for this inventory;
+write permissions have not been tested. An
+[SCP limits role permissions even when an administrative IAM policy grants access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html).
+Do not remove the provider check, replace federation with long-lived keys, or
+switch accounts to work around this restriction. Keep #15 open pending access.
 
 ## Observed GitHub identity
 
@@ -25,12 +44,12 @@ for newly created repositories. The observed subject agrees with the repository
 and owner IDs returned by GitHub's repository API. Decoding claims is observation,
 not JWT signature verification or successful AWS federation. No AWS request was
 made by this first run. The dispatch workflow is the minimum prerequisite on main;
-the CloudShell helper remains on the disposable experiment branch.
+the CLI helper remains on the disposable experiment branch.
 
-## Concrete CloudShell change
+## Prepared CLI change — not applied
 
-[Reviewed setup source](https://github.com/09millarda/agents-assemble/blob/c3afc197eb862815ea05d4023c0d790381904149/experiments/lambda-deployment/connect_identity.py)
-has SHA-256 `4f3baf90186fa5fbe344760efd3401d1903b4d11c43b98de871c6639ff7ac887`.
+[Reviewed setup source](https://github.com/09millarda/agents-assemble/blob/8e3ac5017212c5f8988ca926220d2818318bf5ef/experiments/lambda-deployment/connect_identity.py)
+has SHA-256 `25a03bb5a4e08edc69fee367a4e54138df9bef52a4d74a1ecf653ca3a6855d16`.
 Running without arguments prints a plan and makes no AWS calls. `--apply` performs
 this inventory, only in the selected account:
 
@@ -53,7 +72,7 @@ excludes that operation and denies other operations. The [provider API](https://
 can retrieve certificate thumbprints when omitted; the helper does not alter a
 shared provider's certificate configuration or audiences.
 
-The CloudShell principal needs `iam:GetRole`, `iam:GetOpenIDConnectProvider`,
+The bootstrap principal needs `iam:GetRole`, `iam:GetOpenIDConnectProvider`,
 `iam:CreateOpenIDConnectProvider`/`iam:TagOpenIDConnectProvider` when absent,
 `iam:CreateRole`/`iam:TagRole`, `iam:PutRolePolicy`, `iam:GetRolePolicy`, and
 `iam:UpdateAssumeRolePolicy` for this inventory. The helper does not grant these
@@ -65,25 +84,22 @@ No metered application resource is created by this setup. Plan a single connecti
 check within 24 hours, then remove the role. This does not approve or provision
 Lambda, API Gateway, S3, deployment roles, or the later fixture budget.
 
-## Operator command and follow-up
+## Resume and cleanup
 
-Run in the already-authenticated CloudShell:
-
-```bash
-curl -fsSLo /tmp/aa-connect.py https://raw.githubusercontent.com/09millarda/agents-assemble/c3afc197eb862815ea05d4023c0d790381904149/experiments/lambda-deployment/connect_identity.py &&
-python3 /tmp/aa-connect.py --apply
-```
+The prior CloudShell command targeted a different account and is superseded.
+Do not apply the helper while the provider read is denied. Once the organization
+administrator permits the scoped setup, recheck account identity and provider
+access. The local profile is `agents-assemble`; use the installed AWS CLI at
+`/home/amillard98/.local/bin/aws`. The helper accepts standard `AWS_PROFILE` and
+`PATH` environment settings. It checks the selected account before any mutation.
 
 After `connection_created`, dispatch `aws-identity-check.yml` on main with
 `verify_aws=true` and verify the resulting account and role. Until that succeeds,
-GitHub-to-AWS authentication remains pending. No local profile is required.
+GitHub-to-AWS authentication remains pending.
 
-Cleanup after the connection experiment, from the same account's CloudShell:
-
-```bash
-aws iam delete-role-policy --role-name aa-wf15-identity-check --policy-name IdentityOnly &&
-aws iam delete-role --role-name aa-wf15-identity-check
-```
+After the connection experiment, delete the `IdentityOnly` inline policy from
+`aa-wf15-identity-check`, then delete that exact role using the same account and
+profile. No role has been created by the agent so far.
 
 Retain the provider if it was preexisting or has since become shared. If this
 experiment created it, inventory any other role trusts before deciding to remove
@@ -96,6 +112,8 @@ plan, and Git whitespace checks passed. Seven local simulated checks passed:
 plan-only, wrong account, existing role, denied provider read, incompatible
 provider, policy verification failure leaving trust inactive, and successful
 ordering with inactive initial trust. These check local guard behavior, not AWS
-IAM enforcement. The actual GitHub claims run passed. AWS bootstrap, trust
+IAM enforcement. The original GitHub claims run passed. The retargeted helper plan and Python
+compilation passed. Local AWS identity and account name were verified, and the
+provider permission blocker above was observed. AWS bootstrap, trust
 enforcement, role assumption, deployment, health checks and rollback remain
 unexercised by the agent.

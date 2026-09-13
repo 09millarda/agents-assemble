@@ -4,11 +4,13 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 ## Current verdict
 
-**Authentication resumed at the owner's request; decision open.** The owner supplied
-successful CloudShell identity evidence on 2026-09-13. A real GitHub dispatch
-observed the repository's OIDC claims; the identity-only CloudShell connection
-helper is prepared. See [connection scope and evidence](aws-identity-connection.md).
-Local browser login remains unresolved, and GitHub-to-AWS assumption is pending.
+**Local authentication verified; organization permission blocker remains.** The owner
+selected Proof of Concept, account `728616601473`, verified through STS and the
+account API using local profile `agents-assemble`. A real GitHub dispatch observed
+the repository's OIDC claims. The identity helper and workflow now target this
+account, but an organization SCP explicitly denies the required provider read.
+See [connection scope and evidence](aws-identity-connection.md). No IAM mutation
+was attempted; GitHub-to-AWS assumption remains pending.
 
 No Lambda deployment, production promotion, health failure or rollback has been exercised.
 The proposals below are experiment inputs, not an accepted ADR or passing result.
@@ -17,7 +19,7 @@ and [Execution/Integrations ownership](../architecture/0003-durable-execution-an
 See the [primary-source comparison](lambda-deployment-sources.md) for provider facts
 and the distinction between documented behavior and proposed adapter policy.
 
-A read-only probe found no `aws` or `sam` executable, AWS environment variable,
+The initial read-only probe found no `aws` or `sam` executable, AWS environment variable,
 or default AWS config/credentials file in this session. The planning repository
 has Actions enabled and no workflows, environments, repository secrets or
 repository variables. All five GitHub metadata queries succeeded. These findings
@@ -36,14 +38,16 @@ The owner selected the profile name `agents-assemble`. AWS CLI `2.36.44` was
 installed under the local user after the official installer verified its GPG
 signature. The profile has region `eu-west-1` and JSON output. Browser sign-in
 did not establish CLI credentials. The pending login was stopped at the owner’s
-request. The owner later supplied CloudShell identity evidence; effective permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
+request. The owner subsequently established local credentials: STS and the account
+API confirm Proof of Concept (`728616601473`). The required GitHub provider read
+is blocked by an organization SCP; write permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
 not the archived preflight or unexercised deployment cases.
 
 ## Required environment and bounded resource proposal
 
 The owner selected AWS Europe (Ireland), `eu-west-1`, and the current repository,
 `09millarda/agents-assemble`, for the disposable fixture. This supersedes the
-earlier dedicated-repository proposal. CloudShell account `749771281623` is now identified for bootstrap; a CLI profile is simply a locally named collection of
+earlier dedicated-repository proposal. Proof of Concept account `728616601473` is selected for bootstrap; a CLI profile is simply a locally named collection of
 connection/sign-in settings and need not already exist. Record the permitted
 spend/duration and resource prefix before provisioning. Account/role/profile names are metadata;
 credentials must be established through the provider authentication flow,
