@@ -1,3 +1,4 @@
+# Retired after the bounded probe; see docs/research/lambda-live-deployment-result.md.
 name: AWS deployment probe (decision 15)
 
 on:

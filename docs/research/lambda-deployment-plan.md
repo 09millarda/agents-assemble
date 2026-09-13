@@ -4,17 +4,21 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 ## Current verdict
 
-**GitHub-to-AWS authentication passed; decision open.** The owner continued with
+**Bounded live deployment/promotion/restoration passed; decision open.** The owner continued with
 AWS after considering Cloudflare. The agent created the reviewed identity-only
 provider/role in Proof of Concept (`728616601473`), and GitHub run 34763931826
 successfully assumed it. See [actual connection evidence and saved Ireland
 policy amendment](aws-github-connection-result.md). The connection role grants no
 deployment access. The owner-approved one-region addition is saved in the organization policy;
 a subsequent Lambda read in Ireland succeeded. The [bounded bootstrap review](lambda-fixture-bootstrap-review.md)
-records the next proposed resources, permission boundaries, cost and cleanup.
+records the owner-approved resource scope, permission boundaries, cost and cleanup.
 
-No Lambda deployment, production promotion, health failure or rollback has been exercised.
-The proposals below are experiment inputs, not an accepted ADR or passing result.
+The [live result](lambda-live-deployment-result.md) records six completed GitHub
+provider updates, including the same-artifact promotion and failed-health/recovery
+in both test environments, plus the initial failed attempt and operator repair.
+Manual dispatch and operator-triggered restoration do not prove durable production
+approval, automatic rollback, uncertain dispatch recovery or full adapter conformance.
+The broader protocol below remains an experiment input, not an accepted ADR.
 They preserve the owner-approved [release contract](../first-release-contract.md)
 and [Execution/Integrations ownership](../architecture/0003-durable-execution-and-recovery.md).
 See the [primary-source comparison](lambda-deployment-sources.md) for provider facts

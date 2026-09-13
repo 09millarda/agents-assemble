@@ -58,13 +58,12 @@ This verifies that operation after the amendment, not every deployment permissio
 
 ## Remaining work and cleanup
 
-The [bounded fixture review](lambda-fixture-bootstrap-review.md) records the
-proposed Hono/SAM resources, role boundaries, artifact storage, cost, lifetime and
-cleanup. Application provisioning and deployment permission grants remain pending. The identity-only role cannot deploy resources.
-The prepared fixture passed local healthy/unhealthy adapter and reproducible-ZIP
-checks; all real application deployment/health/rollback acceptance cases remain open.
-The local CLI login expired during a later template-validation attempt and must
-be refreshed before cloud work; that does not negate the earlier Ireland read.
+The owner approved the [bounded fixture](lambda-fixture-bootstrap-review.md).
+[Actual GitHub deployment, promotion, failed-health and artifact-restoration
+results](lambda-live-deployment-result.md) now supersede the earlier provisioning
+prerequisites. The identity-only connection role itself still cannot deploy.
+The CLI login was refreshed and set to Ireland for the authorized experiment.
+Full durable approval and uncertain-outcome recovery acceptance cases remain open.
 
 The created role and provider now exist and require accounting. Delete the
 `IdentityOnly` inline policy and the exact probe role after the connection check

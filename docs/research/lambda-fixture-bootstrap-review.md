@@ -2,7 +2,9 @@
 
 Date: 2026-09-13 · [Decision #15](https://github.com/09millarda/agents-assemble/issues/15)
 
-Status: primary-source design review, not deployed or a passing conformance result.
+Status: original design review with later cost/authorization updates.
+The [live result](lambda-live-deployment-result.md) supersedes its prepared-only
+status and candidate permissions; full #15 conformance remains open.
 Account `728616601473`, region `eu-west-1`, repository `09millarda/agents-assemble`.
 Ireland policy and GitHub identity verification are prerequisites reported by the
 coordinating task; this review does not independently certify them.
@@ -131,9 +133,8 @@ controls. This is retention against CI mutation, not regulatory Object Lock.
 
 ## Cost and duration estimate
 
-Proposed owner authorization: provision and test this inventory in Proof of Concept
-with a $1 planning envelope, then clean up within 24 hours. This budget has not yet
-been approved. Stop issuing new test requests at the experiment bounds or on
+Owner authorization received on 2026-09-13: provision and test this inventory in
+Proof of Concept with a $1 planning envelope, then clean up within 24 hours. Stop issuing new test requests at the experiment bounds or on
 unexpected resources/cost; do not widen policy scope automatically.
 
 Opinion: keep the live experiment within 24 hours, at most 10,000 total requests,
@@ -142,8 +143,16 @@ Assume every Lambda call takes the full three-second timeout at 128 MB and count
 all retained S3 versions. This yields roughly $0.14 before transfer, taxes and
 GitHub Actions usage; allow $1 as a planning envelope, not a provider-enforced
 cap. Public traffic or a runaway loop can exceed it. Use low API throttles,
-bounded scripts and cleanup; throttles are not a hard financial cap. Free-tier
-credits are excluded from this estimate.
+bounded scripts and cleanup; throttles are not a hard financial cap. Monthly free allowances and promotional credits are both excluded from this
+estimate; $0.14 is a gross usage estimate, not an observed charge. Lambda includes
+one million requests and 400,000 GB-seconds of free monthly usage. IAM roles and
+the GitHub OIDC connection have no IAM fee. The authenticated free-tier usage API
+returned an empty list, which does not establish remaining allowance or credits.
+A read-only visit to the management account Credits page subsequently showed zero
+active credits and $0 remaining; that page observation is not a complete inventory
+of other member-account credits or monthly free service allowances.
+See [Lambda pricing](https://aws.amazon.com/lambda/pricing/) and
+[IAM pricing](https://aws.amazon.com/iam/faqs/).
 
 Verified Ireland rates from AWS's regional price-list JSON, publication
 2026-09-11 (retrieved 2026-09-13):
@@ -167,5 +176,5 @@ Preserve sanitized evidence, delete both stacks with the local cleanup identity,
 then enumerate/delete all artifact object versions and delete markers before
 removing the bucket. Remove the six fixture roles after their dependent stacks;
 retain a shared OIDC provider. Report orphaned retained versions/log groups and
-failed deletions explicitly. This review grants no budget and proves none of
+failed deletions explicitly. The owner approved the budget separately in chat; this review proves none of
 #15's deployment, promotion or recovery cases.
