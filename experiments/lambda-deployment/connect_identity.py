@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CloudShell-only bootstrap for decision 15. Default: print plan, no AWS calls."""
+"""Authenticated CLI bootstrap for decision 15. Default: print plan, no AWS calls."""
 import argparse
 import datetime as dt
 import json
@@ -7,7 +7,7 @@ import os
 import subprocess
 import sys
 
-ACCOUNT = '749771281623'
+ACCOUNT = '728616601473'
 ROLE = 'aa-wf15-identity-check'
 PROVIDER = f'arn:aws:iam::{ACCOUNT}:oidc-provider/token.actions.githubusercontent.com'
 SUBJECT = 'repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main'
@@ -48,7 +48,7 @@ def main():
                      'scope': 'Identity only; no Lambda, S3, deployment, or IAM access',
                      'cleanup': 'Delete role inline policy, then role. Retain shared provider.'}, indent=2))
     if not args.apply:
-        print('Plan only. Pass --apply in authenticated AWS CloudShell to create this connection.')
+        print('Plan only. Pass --apply with an authenticated AWS CLI profile to create this connection.')
         return
     identity = aws('sts', 'get-caller-identity')
     if identity['Account'] != ACCOUNT:
