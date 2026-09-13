@@ -1,32 +1,63 @@
 # Agents Assemble
 
-An open-source agent software factory: define how software work proceeds, run existing coding-agent harnesses on machines you control, and collaborate through your existing tools or a shared web workspace.
+A durable control plane for collaborative coding agents. Playbooks, specifications, approvals, native runner attempts, pull requests, and deployment receipts retain their exact versions and history. The UI uses React and shadcn; JSON APIs use shared Zod validation and generated OpenAPI at `/api/v1/openapi.json`.
 
-Users install and authenticate Codex or Claude locally, then install the Agents Assemble CLI and start its daemon. The daemon connects outward to their chosen Agents Assemble deployment and invokes those installed harnesses using their existing local accounts. Harnesses may contact their model providers directly; Agents Assemble does not supply model credentials or proxy inference.
+## Local development
 
-**Status:** architecture discovery. This repository currently contains planning records, not a runnable application. The hosted service will charge per seat; self-hosting and personal-machine use will be free. [ADR 0011](docs/architecture/0011-open-source-licensing-and-edition-parity.md) selects Apache-2.0 and full self-hosted feature parity, with hosting/support revenue. The actual LICENSE addition is still pending as a separate reviewable change.
+Requires Linux, Node.js 24, npm, Docker Compose, Git, and OpenSSL. A runner additionally needs the qualified native Codex baseline and its existing native account login; see [runner installation](apps/runner/README.md).
 
-The [GitHub architecture map](https://github.com/09millarda/agents-assemble/issues/1) is the single canonical index of decisions and unresolved questions.
+```sh
+npm ci --ignore-scripts
+cp .env.example .env
+docker compose up -d --wait
+npm run db:migrate
+npm run bootstrap
+npm run dev
+```
 
-- [Product charter](docs/product-charter.md): requirements, proposed terminology, and the two starting playbooks.
-- [First release contract](docs/first-release-contract.md): owner-approved pilot scope, collaboration/community features, Lambda delivery journey and release qualification targets from #4.
-- [Domain context](CONTEXT.md): candidate ownership boundaries and architectural constraints.
-- [Control plane and runner boundary](docs/architecture/0001-control-plane-and-runners.md): the first decision and its limits.
-- [Playbook and action contract](docs/architecture/0002-playbook-and-action-contract.md): versioned definitions, structured execution, approval and recovery semantics; [illustrative definitions](docs/examples/playbook-contract.md).
-- [Playbook conformance experiment](docs/research/playbook-conformance.md): retained grammar, evidence-backed amendments and limits from disposable mock authoring/recovery probes; production durability remains to validate.
-- [Durable execution and recovery](docs/architecture/0003-durable-execution-and-recovery.md): PostgreSQL acceptance transactions, participant ownership, waits, fencing and publication recovery; [fault-injection evidence](docs/research/durable-execution-conformance.md) and [substrate comparison](docs/research/durable-substrate-comparison.md).
-- [Runner assignment and checkpoint recovery](docs/architecture/0004-runner-assignment-and-checkpoint-recovery.md): durable local receipts, launch uncertainty, result replay and verified fresh-session reconstruction; [daemon and native-harness evidence](docs/research/runner-recovery-conformance.md), including the observed tool process surviving App Server termination.
-- [Native-writer supervision](docs/architecture/0005-native-writer-supervision.md): retained delegated payloads, scoped stop receipts and takeover gates; [native, Linux and durable-protocol evidence](docs/research/native-writer-supervision.md), including a writer outside an empty service cgroup.
-- [Enrolled-runner authority](docs/architecture/0006-enrolled-runner-authority.md): mutual TLS, scoped observer authorization, immutable receipt history and revocation boundaries; [source comparison](docs/research/runner-authority-sources.md) and [authentication evidence](docs/research/runner-authority-conformance.md).
-- [Collaborative drafts and revision submission](docs/architecture/0007-collaborative-drafts-and-revision-submission.md): Yjs drafts, durable acceptance, exact review candidates and explicit Execution observation/adoption; [comparison](docs/research/collaboration-substrate-comparison.md) and [conformance evidence](docs/research/collaborative-drafts-conformance.md). The subsequent graph decision is ADR 0008.
-- [Semantic graph collaboration](docs/architecture/0008-semantic-graph-collaboration.md): stable editor entities, ordered placements and exact conflict/publication gates; [two-replica and authoring evidence](docs/research/semantic-graph-conformance.md) preserves the supported grammar while leaving the production editor and validator unproved.
-- [Shared harness conversation](docs/architecture/0009-shared-harness-conversation.md): ordered attributed inputs, one-use dispatch claims, exact-turn control and conservative replay/redirect; [native and durable evidence](docs/research/shared-conversation-conformance.md) demonstrates duplicate client IDs and preserves interruption/recovery limits.
-- [Portable community publication and moderation](docs/architecture/0010-portable-community-publication.md): owner-approved organization publishing, exact public snapshots, immutable offline imports, feedback/moderation and independently enforced quarantine holds; the bounded envelope/verifier contract follows in ADR 0012.
-- [Open-source licensing and edition parity](docs/architecture/0011-open-source-licensing-and-edition-parity.md): owner-selected Apache-2.0, full self-hosted parity, DCO contributions and open-source public software packages; distribution/license application remains separate.
-- [Portable package envelope and verification](docs/architecture/0012-portable-package-envelope-and-verification.md): strict stored ZIP, canonical metadata, complete offline closures, current local issuer trust and exact public ancestry; [conformance evidence](docs/research/portable-package-conformance.md) separates actual byte/signature/SQLite checks from reduced semantic and policy fixtures.
-- [Protected observer and retained-scope recovery](docs/architecture/0013-protected-observer-and-retained-scope-recovery.md): root-separated keeper/reporter custody, exact scoped receipts and conservative failure; [native evidence](docs/research/protected-observer-conformance.md) demonstrates reporter restart and mTLS replay while an outside writer keeps automatic takeover ineligible.
-- [Lambda deployment experiment plan](docs/research/lambda-deployment-plan.md) and [provider research](docs/research/lambda-deployment-sources.md): [actual GitHub-to-AWS identity verification passed](docs/research/aws-github-connection-result.md) for Proof of Concept; Ireland access is enabled. [Actual staging/promotion, failed-health and artifact-restoration probes passed](docs/research/lambda-live-deployment-result.md); [GitHub dispatch recovery and controlled durable claim tests](docs/research/deployment-authority-result.md) also passed. [Signed GitHub identity now reaches the claim gate](docs/research/deployment-oidc-claim-result.md) in a trusted job. The independent approval-to-AWS bridge and provider fault qualification remain open.
-- [Project scope and run admission](docs/architecture/0014-project-scope-and-run-admission.md): Projects owns registrations and policy; Execution freezes each admitted run. Multiple repositories per project and one writable repository per run are the stated first-release planning default; [consistency review](docs/research/project-admission-review.md) and [bounded conformance evidence](docs/research/project-scope-conformance.md) record the documentary and reduced local-runtime results.
-- [Harness research](docs/research/harness-capabilities.md), [environment delivery](docs/research/environment-delivery.md), and [failure review](docs/research/runtime-failure-review.md): evidence supporting the first decision.
+Open [the application](http://localhost:5173). Bootstrap asks for a local account and organization. Its password input is hidden. Noninteractive setup accepts `AA_ADMIN_EMAIL`, `AA_ADMIN_NAME`, `AA_ORGANIZATION`, and `AA_ADMIN_PASSWORD` through the environment. Do not commit credentials.
 
-TypeScript, PostgreSQL, Hono, and OpenAPI are selected inputs. AWS is the first hosted deployment target. Core domain behavior must remain portable, with infrastructure and vendor integrations behind ports and adapters.
+Configure a project, register a GitHub repository, set exact check commands, create a runtime and environment profile, and enroll a runner. Native model credentials remain with the runner's existing Codex installation. An unavailable capability or unresolved outcome blocks work with a visible cause.
+
+## Container installation
+
+The same API, worker, database contracts, and UI run in the self-hosted profile. WorkOS, billing, and the public registry are optional.
+
+```sh
+docker compose -f compose.yaml -f compose.control-plane.yaml build
+docker compose -f compose.yaml -f compose.control-plane.yaml up -d --wait
+docker compose -f compose.yaml -f compose.control-plane.yaml run --rm api node dist/bootstrap.mjs
+```
+
+Open [the installed application](http://localhost:3001). The browser API binds to loopback by default; expose it through your HTTPS reverse proxy and set `WEB_ORIGIN` to that exact origin. Runner enrollment and polling use the separate mTLS listener on port 3443. Set `RUNNER_HOSTNAME` before initial CA/server identity generation. Preserve the `control_plane_state` and `postgres_data` volumes.
+
+The example database passwords are for an isolated local installation. Set `POSTGRES_PASSWORD` and `APP_DATABASE_PASSWORD` before first initialization. Migrations run with the database owner; API and worker use the non-inheriting `aa_control_plane` role and enter one context role per transaction. Account bootstrap uses application permissions and does not migrate schemas.
+
+## Hosted identity and GitHub
+
+Local identity is the default. To enable the WorkOS adapter, set all of `WORKOS_CLIENT_ID`, `WORKOS_API_KEY`, and `WORKOS_REDIRECT_URI`. Configure that redirect URI to your application's origin and callback route. AuthKit login uses PKCE and a browser-held login proof, while organization authorization remains in Access. Provider session revocation is checked on authenticated requests. Provision the initial administrator with bootstrap; invitations establish further organization membership.
+
+With WorkOS configured, public package publication requires an installation invitation by default. The installation operator sets `INVITED_PUBLISHER_ORGANIZATIONS` to a comma-separated list of organization UUIDs; Access retains each policy revision. Restart API and worker together after changing it. Organization administrators cannot grant themselves this installation-level invitation. Self-hosted operators can require the same policy with `PUBLICATION_POLICY=invitation`, or select `local` explicitly.
+
+`GITHUB_TOKEN` belongs to the Integrations adapter. `GITHUB_WEBHOOK_SECRET` must contain at least 32 characters. Configure a repository route and exact immutable staging/production workflow profiles through the APIs/UI. The generated API document describes signed GitHub ingress and provider OIDC claims. The deployment reference is distributed under `examples/reference-delivery`; it does not deploy Agents Assemble itself.
+
+## Verification and operation
+
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run test:browser
+npm run build
+npm run inventory
+```
+
+Browser acceptance starts its own preview on port 5173. Run the API and worker separately with `npm run api` and `npm run worker`, leave that preview port free, and set `AA_BROWSER_EMAIL` and `AA_BROWSER_PASSWORD` to an existing local account. Without those credentials, authenticated browser cases are explicitly skipped.
+
+Tests use `agents_assemble_test`, separate from development data. The process-restart conformance test creates and removes its own PostgreSQL Docker container. It kills its own API/worker processes and restarts that database. Provider protocol fixtures are explicitly distinguished from live GitHub/AWS qualification. See [implementation and qualification evidence](docs/implementation/issue-20.md) and [operator procedures](docs/operations.md).
+
+The project is Apache-2.0. [Third-party notices](THIRD_PARTY_NOTICES.md), the [locked dependency inventory](docs/distribution/dependencies.json), and [contribution requirements](CONTRIBUTING.md) accompany distribution. There are no subscription or seat caps in the core product.
+
+Standalone CLI, web, and control-plane builds include full upstream license texts, a package-to-license index, and the source dependency inventory. The reference Lambda ZIP includes its project and bundled dependency licenses. Notice generation runs offline and rejects missing or mismatched dependency terms.
+
+The [architecture and retained research index](docs/architecture/index.md) preserves the accepted decisions and their original experiments.
