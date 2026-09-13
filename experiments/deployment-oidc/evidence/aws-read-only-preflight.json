@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-09-13T17:00:32.127606+00:00",
+  "read_only": true,
+  "account": "728616601473",
+  "region": "eu-west-1",
+  "vpc": {
+    "VpcId": "vpc-023b0f289a7470420",
+    "State": "available",
+    "IsDefault": true
+  },
+  "candidate_subnet": {
+    "SubnetId": "subnet-014ec45b3d7a1836e",
+    "AvailabilityZone": "eu-west-1a",
+    "MapPublicIpOnLaunch": true,
+    "State": "available"
+  },
+  "default_routes": [
+    {
+      "destination": "0.0.0.0/0",
+      "gateway": "igw-0de22787139a3f30e",
+      "state": "active"
+    }
+  ],
+  "ami_parameter": {
+    "Name": "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64",
+    "Value": "ami-0b3ba1acb76a70451",
+    "Version": 186
+  },
+  "limitations": [
+    "Does not establish launch capacity, quota, full routing/NACL reachability, IAM launch permissions or resource provisioning approval"
+  ]
+}
