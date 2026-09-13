@@ -28,19 +28,19 @@ and `GetCallerIdentity` returned account `728616601473`, role session
 printed or committed. This proves this OIDC connection at the observation time;
 it does not prove Lambda deployment, production approval, recovery or rollback.
 
-## Ireland amendment prepared, not applied
+## Ireland amendment saved and verified
 
 An actual `lambda:ListFunctions` request in `eu-west-1` was explicitly denied by
 SCP `p-kkji3i99`. In the management-account console, this is customer-managed
 `AdvancedModeRegionRestrictionSecurityControlPolicy`, attached to root `r-620v`.
-Its `RegionFloor` statement omits Ireland from the region exceptions.
+Its `RegionFloor` statement omitted Ireland from the region exceptions.
 
-The browser editor has the original policy with exactly one semantic change:
-append `eu-west-1` to
+The owner approved the amendment in chat. The agent saved the policy with exactly
+one semantic change: append `eu-west-1` to
 `Statement[Sid=RegionFloor].Condition.StringNotEquals[aws:RequestedRegion]`.
-The existing list is `eu-north-1`, `unspecified`, `us-east-1`, `us-west-2`.
+The previous list was `eu-north-1`, `unspecified`, `us-east-1`, `us-west-2`.
 The other statements, actions, and exceptions are unchanged. The staged editor
-was copied back and parsed to verify equality with the intended policy.
+was copied back and parsed to verify equality with the intended policy before saving.
 The minified document is 5,100 characters (original 5,088).
 
 This is an organization-root policy amendment, **not an account-only exception**.
@@ -49,19 +49,22 @@ and Identity Delegated Admin, as well as future member accounts inheriting it.
 Other permission policies still apply; the management account is not restricted
 by SCPs. See [AWS's SCP scope and permission rules](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html).
 
-The editor reports `Invalid Service In Action` for `builderid:*`, an entry already
-present in the original AWS-created policy. That entry was preserved; whether
-the save API accepts the existing entry remains untested. No policy save occurred.
-Obtain browser-required confirmation before applying this expanded regional
-access. Re-read the live original before saving if another actor may have edited it.
-After saving, retry the read-only Lambda request from the Proof of Concept profile.
+The editor reported `Invalid Service In Action` for `builderid:*`, an entry already
+present in the original AWS-created policy. That entry was preserved. AWS accepted
+the save and displayed a successful-update confirmation; the saved policy content
+contained the Ireland addition. A subsequent `lambda list-functions --max-items 1`
+from profile `agents-assemble` in `eu-west-1` succeeded and returned zero functions.
+This verifies that operation after the amendment, not every deployment permission.
 
 ## Remaining work and cleanup
 
-Prepare the concrete stateless Hono/SAM resource inventory, scoped deployment and
-service roles, artifact storage, budget, lifetime, approval gates and cleanup
-before application provisioning. The identity-only role cannot deploy resources.
-All real application deployment/health/rollback acceptance cases remain open.
+The [bounded fixture review](lambda-fixture-bootstrap-review.md) records the
+proposed Hono/SAM resources, role boundaries, artifact storage, cost, lifetime and
+cleanup. Application provisioning and deployment permission grants remain pending. The identity-only role cannot deploy resources.
+The prepared fixture passed local healthy/unhealthy adapter and reproducible-ZIP
+checks; all real application deployment/health/rollback acceptance cases remain open.
+The local CLI login expired during a later template-validation attempt and must
+be refreshed before cloud work; that does not negate the earlier Ireland read.
 
 The created role and provider now exist and require accounting. Delete the
 `IdentityOnly` inline policy and the exact probe role after the connection check

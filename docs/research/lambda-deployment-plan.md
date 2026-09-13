@@ -7,10 +7,11 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 **GitHub-to-AWS authentication passed; decision open.** The owner continued with
 AWS after considering Cloudflare. The agent created the reviewed identity-only
 provider/role in Proof of Concept (`728616601473`), and GitHub run 34763931826
-successfully assumed it. See [actual connection evidence and staged Ireland
+successfully assumed it. See [actual connection evidence and saved Ireland
 policy amendment](aws-github-connection-result.md). The connection role grants no
-deployment access. Ireland remains blocked by an organization region policy;
-a one-region addition is staged for review, not saved.
+deployment access. The owner-approved one-region addition is saved in the organization policy;
+a subsequent Lambda read in Ireland succeeded. The [bounded bootstrap review](lambda-fixture-bootstrap-review.md)
+records the next proposed resources, permission boundaries, cost and cleanup.
 
 No Lambda deployment, production promotion, health failure or rollback has been exercised.
 The proposals below are experiment inputs, not an accepted ADR or passing result.
@@ -39,8 +40,8 @@ installed under the local user after the official installer verified its GPG
 signature. The profile has region `eu-west-1` and JSON output. Browser sign-in
 did not establish CLI credentials. The pending login was stopped at the owner’s
 request. The owner subsequently established local credentials: STS and the account
-API confirm Proof of Concept (`728616601473`). The required GitHub provider read
-is blocked by an organization SCP; write permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
+API confirm Proof of Concept (`728616601473`). The earlier SCP-denied GitHub provider read was superseded by successful
+identity bootstrap after advanced activation; see the current result above. This supersedes only the initial CLI/profile absence observation,
 not the archived preflight or unexercised deployment cases.
 
 ## Required environment and bounded resource proposal

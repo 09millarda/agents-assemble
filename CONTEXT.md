@@ -105,8 +105,8 @@ The first release boundary is settled in #4. Before implementation tickets, vali
 After initially deferring #15, the owner resumed AWS authentication and supplied
 successful CloudShell identity evidence, then authenticated locally and selected
 Proof of Concept (`728616601473`), verified via STS and the account API. After advanced activation, [actual GitHub-to-AWS identity verification](docs/research/aws-github-connection-result.md)
-passed using the new identity-only role. Ireland policy review and deployment
-qualification remain pending. The owner continued with AWS after considering Cloudflare. ADR 0014/#18
+passed using the new identity-only role. The approved Ireland policy amendment
+is saved and a Lambda read succeeded; deployment qualification remains pending. The owner continued with AWS after considering Cloudflare. ADR 0014/#18
 settles project scope and admission ownership through documentary review. It does
 not establish integrated runtime conformance or remove deployment qualification
 from the release requirements.
