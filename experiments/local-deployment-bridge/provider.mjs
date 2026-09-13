@@ -67,7 +67,7 @@ try{
   let stack;for(let n=0;n<180;n++){stack=(await aws('cloudformation','describe-stacks','--stack-name',m.stack)).Stacks[0];if(!['UPDATE_IN_PROGRESS','UPDATE_COMPLETE_CLEANUP_IN_PROGRESS'].includes(stack.StackStatus))break;await wait(2000);}
   if(stack.StackStatus!=='UPDATE_COMPLETE')throw Error('provider outcome not successful: '+stack.StackStatus);
   const after=await observe();if(after.artifact!==m.artifact||digest(after.configuration)!==digest(m.configuration))throw Error('provider result mismatch');
-  const response=await fetch(m.health_url);const health={status:response.status,body:await response.json(),observed_at:new Date().toISOString()};
+  const response=await fetch(m.health_url,{signal:AbortSignal.timeout(15000)});const health={status:response.status,body:await response.json(),observed_at:new Date().toISOString()};
   if(![200,503].includes(health.status)||health.body.release!==m.artifact_source||health.body.environment!==m.environment||health.body.healthy!==(health.status===200))throw Error('unexpected health evidence');
   const events=(await aws('cloudformation','describe-stack-events','--stack-name',m.stack)).StackEvents.filter(e=>e.ClientRequestToken===executeToken);
   if(!events.some(e=>e.ResourceType==='AWS::CloudFormation::Stack'&&e.ResourceStatus==='UPDATE_COMPLETE'))throw Error('missing operation-token completion');
