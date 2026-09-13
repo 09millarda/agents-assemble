@@ -1,0 +1,63 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "Disposable aa-wf15 provider probe; no customer workloads",
+  "Parameters": {
+    "Environment": { "Type": "String", "AllowedValues": ["staging", "prod"] },
+    "ArtifactBucket": { "Type": "String", "AllowedValues": ["aa-wf15-728616601473-eu-west-1-artifacts"] },
+    "ArtifactKey": { "Type": "String", "AllowedPattern": "releases/[a-f0-9]{64}/function.zip" },
+    "ArtifactVersion": { "Type": "String", "MinLength": 1 },
+    "ArtifactSha256": { "Type": "String", "AllowedPattern": "[a-f0-9]{64}" }
+  },
+  "Resources": {
+    "Logs": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": { "Fn::Sub": "/aws/lambda/aa-wf15-${Environment}" },
+        "RetentionInDays": 1
+      }
+    },
+    "Api": {
+      "Type": "AWS::Serverless::HttpApi",
+      "Properties": {
+        "Name": { "Fn::Sub": "aa-wf15-${Environment}" },
+        "StageName": "$default",
+        "DefaultRouteSettings": { "ThrottlingBurstLimit": 2, "ThrottlingRateLimit": 1 }
+      }
+    },
+    "Function": {
+      "Type": "AWS::Serverless::Function",
+      "DependsOn": "Logs",
+      "Properties": {
+        "FunctionName": { "Fn::Sub": "aa-wf15-${Environment}" },
+        "Runtime": "nodejs22.x",
+        "Architectures": ["x86_64"],
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Timeout": 3,
+        "Role": { "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/aa-wf15-${Environment}-runtime" },
+        "CodeUri": {
+          "Bucket": { "Ref": "ArtifactBucket" },
+          "Key": { "Ref": "ArtifactKey" },
+          "Version": { "Ref": "ArtifactVersion" }
+        },
+        "AutoPublishAlias": "live",
+        "AutoPublishAliasAllProperties": true,
+        "AutoPublishCodeSha256": { "Ref": "ArtifactSha256" },
+        "Environment": { "Variables": { "PROBE_ENVIRONMENT": { "Ref": "Environment" } } },
+        "Events": {
+          "Health": {
+            "Type": "HttpApi",
+            "Properties": { "ApiId": { "Ref": "Api" }, "Path": "/health", "Method": "GET", "PayloadFormatVersion": "2.0" }
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "HealthUrl": { "Value": { "Fn::Sub": "https://${Api}.execute-api.${AWS::Region}.${AWS::URLSuffix}/health" } },
+    "FunctionName": { "Value": { "Ref": "Function" } },
+    "LiveAlias": { "Value": { "Ref": "Function.Alias" } },
+    "ApiId": { "Value": { "Ref": "Api" } }
+  }
+}

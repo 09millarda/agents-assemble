@@ -1,0 +1,11 @@
+{
+  "name": "aa-wf15-throwaway-lambda",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs && python3 package.py",
+    "check": "node check.mjs"
+  },
+  "dependencies": { "hono": "4.13.7" },
+  "devDependencies": { "esbuild": "0.28.2" }
+}
