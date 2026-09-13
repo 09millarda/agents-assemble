@@ -1,5 +1,7 @@
 # Signed GitHub identity reaches a durable deployment claim
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Date: 2026-09-13 · [Decision #15](https://github.com/09millarda/agents-assemble/issues/15) · **Bounded authentication result passed; full AWS bridge remains open.**
 
 A real GitHub-issued OIDC token now passes signature and execution-policy verification before an HTTP gate consumes a PostgreSQL deployment claim. This closes the earlier fixture's unauthenticated run-ID input gap within a trusted, co-resident experiment. It does not yet establish an independent controller that gates AWS.

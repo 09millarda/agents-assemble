@@ -1,5 +1,7 @@
 # AWS identity connection prerequisite
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Date: 2026-09-13. Decision #15 remains open.
 
 **Superseding result:** [GitHub successfully assumed the identity-only AWS role](aws-github-connection-result.md).

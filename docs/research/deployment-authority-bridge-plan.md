@@ -1,5 +1,7 @@
 # Candidate authenticated deployment bridge
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Decision [#15](https://github.com/09millarda/agents-assemble/issues/15), 2026-09-13. **Proposed experiment contract, not an accepted ADR or deployed service.** The [source audit](deployment-authority-bridge-sources.md) explains the AWS and GitHub enforcement boundaries. The [signed-token result](deployment-oidc-claim-result.md) validates one smaller part of this proposal.
 
 ## Selected direction for the next experiment

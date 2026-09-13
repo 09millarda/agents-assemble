@@ -1,5 +1,7 @@
 # Disposable deployment bridge host: feasibility and price sources
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Checked 2026-09-13. Bounded primary-source research only; no cloud mutations. This is a candidate host assessment, **not a complete or approved infrastructure inventory**. Execution would retain PostgreSQL ownership of approval/claim state; a separate Integrations process would retain provider credentials and perform the stored approved operation.
 
 ## Host price, without assuming credits

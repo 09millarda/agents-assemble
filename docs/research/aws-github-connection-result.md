@@ -1,5 +1,7 @@
 # GitHub to AWS identity: actual result
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Date: 2026-09-13. Decision #15 remains open. The owner returned to the AWS/GitHub
 deployment investigation after considering Cloudflare; no Cloudflare migration
 was applied.

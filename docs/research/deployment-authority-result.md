@@ -1,5 +1,7 @@
 # Deployment authority and dispatch recovery: bounded result
 
+**Current status:** [Closed at owner request; temporary resources and workflows retired](deployment-local-bridge-closure.md). The findings and proposed next steps below are historical.
+
 Date: 2026-09-13 · Decision [#15](https://github.com/09millarda/agents-assemble/issues/15) · **Decision remains open.**
 
 The investigation now has three separate evidence sets: the [six real Lambda updates and verified cleanup](lambda-live-deployment-result.md), three new non-deploying GitHub runs with four attempts, and a PostgreSQL process-fault experiment. Together they support a more precise candidate protocol. They do **not** establish that the local approval gate controlled the real AWS deployments.

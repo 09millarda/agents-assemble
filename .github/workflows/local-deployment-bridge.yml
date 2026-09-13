@@ -1,3 +1,4 @@
+# Retired 2026-09-13 at the owner's request; see docs/research/deployment-local-bridge-closure.md.
 name: Local deployment bridge (decision 15)
 run-name: aa-wf15l-${{ inputs.effect_id }}
 on:
@@ -22,7 +23,7 @@ on:
 permissions: {}
 jobs:
   request:
-    if: github.ref == 'refs/heads/main'
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     permissions:
