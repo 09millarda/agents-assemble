@@ -1,0 +1,3328 @@
+{
+  "database": {
+    "host": "127.0.0.1",
+    "port": 55432,
+    "database": "aa_scope_throwaway",
+    "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit"
+  },
+  "sourceHashes": {
+    "PROTOCOL.md": "b86f94890cc79615e856b683869950be184081b03a0169c05fb0debb12272b60",
+    "worker.mjs": "f11328dc56e7c0bd826f313bff21e7ae4b0d69b82a5b6f8bc20d771d1fa57282",
+    "run-experiment.mjs": "8ce8e5a2523503d2ead80be28d8ac210d7938c65af03f6e62bbc35020137534d",
+    "independent-review.mjs": "1de547098b8b9673a71c40b1c1d3a7ae7c1c22354281198d7ec73f3b0ae7ba9d",
+    "package-lock.json": "fcf47e10176be384ec40465562d815e715398e076f125d661c9b9bcdda05becf"
+  },
+  "scenarios": [
+    {
+      "name": "before-commit crash rolls back permit and outbox",
+      "status": "passed",
+      "assertions": 4,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "open",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:crash-before",
+              "request_id": "request:crash-before",
+              "run_id": "run:crash-before",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:crash-before",
+              "expires_at": "2026-09-13T18:02:44.595Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:crash-before",
+              "payload_hash": "61f2220debc45e950ab38b3a14e1800f65374625724906aee57b706dc391f790",
+              "payload": {
+                "id": "issue:crash-before",
+                "op": "issuePermit",
+                "runId": "run:crash-before",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:44.595Z",
+                "projectId": "project:1",
+                "requestId": "request:crash-before",
+                "scopeDigest": "scope:crash-before"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:crash-before",
+                "permitId": "permit:run:crash-before",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:crash-before:request:crash-before",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:crash-before",
+                "permitId": "permit:run:crash-before",
+                "expiresAt": "2026-09-13T18:02:44.595Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:crash-before"
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [],
+          "project_gate": [],
+          "hold": [],
+          "inbox": [],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [],
+          "effect": [],
+          "inbox": [],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "after-commit crash preserves permit and exact replay",
+      "status": "passed",
+      "assertions": 4,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "open",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:crash-after",
+              "request_id": "request:crash-after",
+              "run_id": "run:crash-after",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:crash-after",
+              "expires_at": "2026-09-13T18:02:45.983Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:crash-after",
+              "payload_hash": "7df828784f6717894cd315dddc7f55fef3348a9c4c9db72f1a0432cad9da7330",
+              "payload": {
+                "id": "issue:crash-after",
+                "op": "issuePermit",
+                "runId": "run:crash-after",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:45.983Z",
+                "projectId": "project:1",
+                "requestId": "request:crash-after",
+                "scopeDigest": "scope:crash-after"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:crash-after",
+                "permitId": "permit:run:crash-after",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:crash-after:request:crash-after",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:crash-after",
+                "permitId": "permit:run:crash-after",
+                "expiresAt": "2026-09-13T18:02:45.983Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:crash-after"
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [],
+          "project_gate": [],
+          "hold": [],
+          "inbox": [],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [],
+          "effect": [],
+          "inbox": [],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "archive waits for durable verdict and preserves admitted work",
+      "status": "passed",
+      "assertions": 8,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "archived",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": "2026-09-13T18:01:47.609Z",
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:1",
+              "request_id": "request:run:1",
+              "run_id": "run:1",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:1",
+              "expires_at": "2026-09-13T18:02:47.065Z",
+              "status": "accepted",
+              "verdict": {
+                "ok": true,
+                "reason": null,
+                "status": "accepted",
+                "budgetCharged": 1
+              }
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "archive:1",
+              "payload_hash": "ea78717f68e60de369baa66be163580354eba0a9074e53be77fbc9ce05cd83d1",
+              "payload": {
+                "id": "archive:1",
+                "op": "archive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "state": "closing"
+              }
+            },
+            {
+              "id": "complete:accepted",
+              "payload_hash": "23cf6aedff1504263b5fe5ab9e5e1986c1a989fb6bf03acaf7251415944ba29e",
+              "payload": {
+                "id": "complete:accepted",
+                "op": "completeArchive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "state": "archived"
+              }
+            },
+            {
+              "id": "complete:pending",
+              "payload_hash": "4d5ce9341087a9b8558ce336eb7392accf0578eef32fd8f0653719198fc469bd",
+              "payload": {
+                "id": "complete:pending",
+                "op": "completeArchive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "permit-verdicts-pending",
+                "pending": true
+              }
+            },
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:run:1",
+              "payload_hash": "504b9682fa8f46173ae7b6cafdf298b4de84414f8e74159c3001f57deb3803f9",
+              "payload": {
+                "id": "issue:run:1",
+                "op": "issuePermit",
+                "runId": "run:1",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:47.065Z",
+                "projectId": "project:1",
+                "requestId": "request:run:1",
+                "scopeDigest": "scope:run:1"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:1",
+                "permitId": "permit:run:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            },
+            {
+              "id": "verdict:run:1:accepted",
+              "payload_hash": "005b90057eb42bea7a5c24f6666d81aadfc888e99b51bd416d1858d34f1827fa",
+              "payload": {
+                "id": "verdict:run:1:accepted",
+                "op": "recordVerdict",
+                "context": "projects",
+                "verdict": {
+                  "ok": true,
+                  "reason": null,
+                  "status": "accepted",
+                  "budgetCharged": 1
+                },
+                "permitId": "permit:run:1"
+              },
+              "outcome": {
+                "ok": true,
+                "status": "accepted"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:1:request:run:1",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:1",
+                "permitId": "permit:run:1",
+                "expiresAt": "2026-09-13T18:02:47.065Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:1"
+              },
+              "delivered": true
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:1",
+              "run_id": "run:1",
+              "project_id": "project:1",
+              "permit_id": "permit:run:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:1",
+              "expires_at": "2026-09-13T18:02:47.065Z",
+              "state": "accepted",
+              "verdict": {
+                "reason": null,
+                "status": "accepted"
+              },
+              "budget_charged": 1,
+              "workspace_state": null
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 1,
+              "project_hold": false
+            }
+          ],
+          "hold": [],
+          "inbox": [
+            {
+              "id": "admit:run:1",
+              "payload_hash": "d2600753427f5733f835d074bd6909fea284091abf33701a505fccecd03825a1",
+              "payload": {
+                "id": "admit:run:1",
+                "op": "admit",
+                "runId": "run:1",
+                "context": "execution",
+                "permitId": "permit:run:1",
+                "scopeDigest": "scope:run:1"
+              },
+              "outcome": {
+                "ok": true,
+                "reason": null,
+                "status": "accepted",
+                "budgetCharged": 1
+              }
+            },
+            {
+              "id": "scope:run:1:request:run:1",
+              "payload_hash": "a5135d77a85ad93891955b9a5503188e637f3a504d4018eb6398c0fda01694b3",
+              "payload": {
+                "id": "scope:run:1:request:run:1",
+                "op": "receivePermit",
+                "runId": "run:1",
+                "context": "execution",
+                "permitId": "permit:run:1",
+                "expiresAt": "2026-09-13T18:02:47.065Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:1"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:1",
+                "permitId": "permit:run:1"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "workspace:run:1",
+              "recipient": "execution",
+              "payload": {
+                "op": "prepareWorkspace",
+                "runId": "run:1"
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "integrations": {
+          "consumer": [],
+          "effect": [],
+          "inbox": [],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "expiry reconciliation closes unused permission without resurrecting it",
+      "status": "passed",
+      "assertions": 6,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "archived",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": "2026-09-13T18:01:49.440Z",
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:expired",
+              "request_id": "request:run:expired",
+              "run_id": "run:expired",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:expired",
+              "expires_at": "2026-09-13T18:01:47.868Z",
+              "status": "expired-unused",
+              "verdict": {
+                "reason": "expiry-reconciled",
+                "status": "expired-unused"
+              }
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "archive:expired",
+              "payload_hash": "06f56650ec3cc33489654092a8ea30bd3db9c5e6683775a69d49530a03f35210",
+              "payload": {
+                "id": "archive:expired",
+                "op": "archive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "state": "closing"
+              }
+            },
+            {
+              "id": "complete:expired",
+              "payload_hash": "b680dce4cc391e3bb12b564602e1cfdd3e1d4c3c4f50ce427353df2bb5206355",
+              "payload": {
+                "id": "complete:expired",
+                "op": "completeArchive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "state": "archived"
+              }
+            },
+            {
+              "id": "complete:expired-before-reconcile",
+              "payload_hash": "55a032f72ff920fcd272bc85aea6798d6ed9e4fba580b42f92bf1d481d8e4c63",
+              "payload": {
+                "id": "complete:expired-before-reconcile",
+                "op": "completeArchive",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "permit-verdicts-pending",
+                "pending": true
+              }
+            },
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:run:expired",
+              "payload_hash": "bbf9a8751398cbf1fd939d62288c40fff6d928997fc61f663bc1318bb9625650",
+              "payload": {
+                "id": "issue:run:expired",
+                "op": "issuePermit",
+                "runId": "run:expired",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:01:47.868Z",
+                "projectId": "project:1",
+                "requestId": "request:run:expired",
+                "scopeDigest": "scope:run:expired"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:expired",
+                "permitId": "permit:run:expired",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "reconcile:expired",
+              "payload_hash": "27419e63fa9bf5346863643b864229edf00658cfa103e2089a2c698435b8cf9b",
+              "payload": {
+                "id": "reconcile:expired",
+                "op": "reconcileExpiry",
+                "context": "projects",
+                "permitId": "permit:run:expired"
+              },
+              "outcome": {
+                "ok": true,
+                "status": "expired-unused"
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:expired:request:run:expired",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:expired",
+                "permitId": "permit:run:expired",
+                "expiresAt": "2026-09-13T18:01:47.868Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:expired"
+              },
+              "delivered": true
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:expired",
+              "run_id": "run:expired",
+              "project_id": "project:1",
+              "permit_id": "permit:run:expired",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:expired",
+              "expires_at": "2026-09-13T18:01:47.868Z",
+              "state": "expired-unused",
+              "verdict": {
+                "reason": "scope-permit-expired",
+                "status": "expired-unused"
+              },
+              "budget_charged": 0,
+              "workspace_state": null
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 1,
+              "project_hold": false
+            }
+          ],
+          "hold": [],
+          "inbox": [
+            {
+              "id": "admit:run:expired",
+              "payload_hash": "475c3860ed0b62b14eccc82ad96a60bfad92accd32db09d66a5a08cef05fe307",
+              "payload": {
+                "id": "admit:run:expired",
+                "op": "admit",
+                "runId": "run:expired",
+                "context": "execution",
+                "permitId": "permit:run:expired",
+                "scopeDigest": "scope:run:expired"
+              },
+              "outcome": {
+                "ok": true,
+                "reason": "scope-permit-expired",
+                "status": "expired-unused",
+                "budgetCharged": 0
+              }
+            },
+            {
+              "id": "scope:run:expired:request:run:expired",
+              "payload_hash": "2b557f9816078292042f2b04989f243f52a637141a8bf50adefcfc85efb7c5ed",
+              "payload": {
+                "id": "scope:run:expired:request:run:expired",
+                "op": "receivePermit",
+                "runId": "run:expired",
+                "context": "execution",
+                "permitId": "permit:run:expired",
+                "expiresAt": "2026-09-13T18:01:47.868Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:expired"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:expired",
+                "permitId": "permit:run:expired"
+              }
+            }
+          ],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [],
+          "effect": [],
+          "inbox": [],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "workspace failure keeps admission and budget history",
+      "status": "passed",
+      "assertions": 6,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "open",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:workspace",
+              "request_id": "request:run:workspace",
+              "run_id": "run:workspace",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:workspace",
+              "expires_at": "2026-09-13T18:02:51.054Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:run:workspace",
+              "payload_hash": "c350ebc567a3cd12a4e41f45286c76500ba67c9457def72bc1f31fe9aac0a679",
+              "payload": {
+                "id": "issue:run:workspace",
+                "op": "issuePermit",
+                "runId": "run:workspace",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:51.054Z",
+                "projectId": "project:1",
+                "requestId": "request:run:workspace",
+                "scopeDigest": "scope:run:workspace"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:workspace",
+                "permitId": "permit:run:workspace",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:workspace:request:run:workspace",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:workspace",
+                "permitId": "permit:run:workspace",
+                "expiresAt": "2026-09-13T18:02:51.054Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:workspace"
+              },
+              "delivered": true
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:workspace",
+              "run_id": "run:workspace",
+              "project_id": "project:1",
+              "permit_id": "permit:run:workspace",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:workspace",
+              "expires_at": "2026-09-13T18:02:51.054Z",
+              "state": "accepted",
+              "verdict": {
+                "reason": null,
+                "status": "accepted"
+              },
+              "budget_charged": 1,
+              "workspace_state": "failed"
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 1,
+              "project_hold": false
+            }
+          ],
+          "hold": [],
+          "inbox": [
+            {
+              "id": "admit:run:workspace",
+              "payload_hash": "ee9731a9e3ae5091ee3a9de2e6f396bc25bb05e852ca79acdecb71f07a25e3cd",
+              "payload": {
+                "id": "admit:run:workspace",
+                "op": "admit",
+                "runId": "run:workspace",
+                "context": "execution",
+                "permitId": "permit:run:workspace",
+                "scopeDigest": "scope:run:workspace"
+              },
+              "outcome": {
+                "ok": true,
+                "reason": null,
+                "status": "accepted",
+                "budgetCharged": 1
+              }
+            },
+            {
+              "id": "scope:run:workspace:request:run:workspace",
+              "payload_hash": "c45480cda2c0a4c4e4cffe72b3c5d64cf652e196b585374d4464638db8db7f43",
+              "payload": {
+                "id": "scope:run:workspace:request:run:workspace",
+                "op": "receivePermit",
+                "runId": "run:workspace",
+                "context": "execution",
+                "permitId": "permit:run:workspace",
+                "expiresAt": "2026-09-13T18:02:51.054Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:workspace"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:workspace",
+                "permitId": "permit:run:workspace"
+              }
+            },
+            {
+              "id": "workspace:failure",
+              "payload_hash": "bde8687022fd235075375ba7416d29afffd3543ee4b67647d4b7f7d5da2bbc49",
+              "payload": {
+                "id": "workspace:failure",
+                "op": "prepareWorkspace",
+                "runId": "run:workspace",
+                "result": "failed",
+                "context": "execution"
+              },
+              "outcome": {
+                "ok": true,
+                "workspace": "failed",
+                "budgetCharged": 1,
+                "admissionState": "accepted"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "workspace:run:workspace",
+              "recipient": "execution",
+              "payload": {
+                "op": "prepareWorkspace",
+                "runId": "run:workspace"
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "integrations": {
+          "consumer": [],
+          "effect": [],
+          "inbox": [],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "status": "passed",
+      "assertions": 7,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "suspended",
+              "policy_epoch": 2,
+              "suspension_epoch": 2,
+              "archive_requested_at": null,
+              "cutoff_complete": true
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:suspend",
+              "request_id": "request:run:suspend",
+              "run_id": "run:suspend",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:suspend",
+              "expires_at": "2026-09-13T18:02:52.874Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 2
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 2
+            }
+          ],
+          "inbox": [
+            {
+              "id": "ack:execution",
+              "payload_hash": "c05598bda9d057dd68fa684703122b036f3c1451487b986f92f00f7bfe89b843",
+              "payload": {
+                "id": "ack:execution",
+                "op": "recordAck",
+                "epoch": 2,
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "ack:integrations",
+              "payload_hash": "5abec9e6ae50b58f3b4863c56059c868b44cc00d231d0229a36872cadde94ea9",
+              "payload": {
+                "id": "ack:integrations",
+                "op": "recordAck",
+                "epoch": 2,
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "consumer": "integrations"
+              }
+            },
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "cutoff:complete",
+              "payload_hash": "68dc6cee37eb74f60345e3af3b8e7be9bfd34f99740e942028e1464810763995",
+              "payload": {
+                "id": "cutoff:complete",
+                "op": "completeSuspension",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "cutoffComplete": true
+              }
+            },
+            {
+              "id": "issue:run:suspend",
+              "payload_hash": "de2870ab6bb8de36dcfb4da096ed4d20f406496409479fb08da4270f3bb4101d",
+              "payload": {
+                "id": "issue:run:suspend",
+                "op": "issuePermit",
+                "runId": "run:suspend",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:52.874Z",
+                "projectId": "project:1",
+                "requestId": "request:run:suspend",
+                "scopeDigest": "scope:run:suspend"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:suspend",
+                "permitId": "permit:run:suspend",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            },
+            {
+              "id": "suspend:1",
+              "payload_hash": "6b33636292b3e36874b45b6facea981876ae344d1d9c88b1c45f070509c3b415",
+              "payload": {
+                "id": "suspend:1",
+                "op": "suspend",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumers": [
+                  "execution",
+                  "integrations"
+                ],
+                "suspensionEpoch": 2
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:suspend:request:run:suspend",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:suspend",
+                "permitId": "permit:run:suspend",
+                "expiresAt": "2026-09-13T18:02:52.874Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:suspend"
+              },
+              "delivered": true
+            },
+            {
+              "id": "suspend:project:1:2:execution",
+              "recipient": "execution",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": true
+            },
+            {
+              "id": "suspend:project:1:2:integrations",
+              "recipient": "integrations",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": true
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:suspend",
+              "run_id": "run:suspend",
+              "project_id": "project:1",
+              "permit_id": "permit:run:suspend",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:suspend",
+              "expires_at": "2026-09-13T18:02:52.874Z",
+              "state": "rejected",
+              "verdict": {
+                "reason": "project-suspension-cutoff",
+                "status": "rejected"
+              },
+              "budget_charged": 0,
+              "workspace_state": null
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 2,
+              "project_hold": true
+            }
+          ],
+          "hold": [],
+          "inbox": [
+            {
+              "id": "admit:run:suspend",
+              "payload_hash": "6bfdbca37041a684455ab56feaa1a026643fbeb4bf702000b3a09bfab996bc15",
+              "payload": {
+                "id": "admit:run:suspend",
+                "op": "admit",
+                "runId": "run:suspend",
+                "context": "execution",
+                "permitId": "permit:run:suspend",
+                "scopeDigest": "scope:run:suspend"
+              },
+              "outcome": {
+                "ok": true,
+                "reason": "project-suspension-cutoff",
+                "status": "rejected",
+                "budgetCharged": 0
+              }
+            },
+            {
+              "id": "scope:run:suspend:request:run:suspend",
+              "payload_hash": "fe2cbc60a8fa40f2777ffd5c57e40ec08c3818183730a56dbf27f09fde588fcb",
+              "payload": {
+                "id": "scope:run:suspend:request:run:suspend",
+                "op": "receivePermit",
+                "runId": "run:suspend",
+                "context": "execution",
+                "permitId": "permit:run:suspend",
+                "expiresAt": "2026-09-13T18:02:52.874Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:suspend"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:suspend",
+                "permitId": "permit:run:suspend"
+              }
+            },
+            {
+              "id": "suspend:project:1:2:execution",
+              "payload_hash": "49e3c0bbf3249ddf18b270f2c20f5eaf30d69f20ab1b79b163445faadf355a9f",
+              "payload": {
+                "id": "suspend:project:1:2:execution",
+                "op": "applySuspension",
+                "context": "execution",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "acknowledged": true
+              }
+            }
+          ],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "known_epoch": 1,
+              "installed_epoch": 1,
+              "ack_epoch": 1,
+              "cutoff_epoch": 2
+            }
+          ],
+          "effect": [],
+          "inbox": [
+            {
+              "id": "ack:suspend",
+              "payload_hash": "101e4e3d2d118dcaf534b7d52f578b7325bd73ea3b7c3d4eadd6c8d46d9f13d0",
+              "payload": {
+                "id": "ack:suspend",
+                "op": "ackCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": true,
+                "acknowledgedEpoch": 1
+              }
+            },
+            {
+              "id": "enroll:suspend",
+              "payload_hash": "f00858454294f45a9f8ce90bf9bfc6632ca48b9f9f402cf30a6260f663595aaf",
+              "payload": {
+                "id": "enroll:suspend",
+                "op": "enroll",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": false,
+                "enrolledEpoch": 1
+              }
+            },
+            {
+              "id": "install:suspend",
+              "payload_hash": "6eb4fb063d0b9dc082c84235cae975ecc026d4d35f67f8835754d2ad87abdecc",
+              "payload": {
+                "id": "install:suspend",
+                "op": "installCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "installedEpoch": 1
+              }
+            },
+            {
+              "id": "suspend:project:1:2:integrations",
+              "payload_hash": "7a0dfed48fdc14f097db765110cd024e5590343d8aca65a657393fcc8392fb74",
+              "payload": {
+                "id": "suspend:project:1:2:integrations",
+                "op": "applySuspension",
+                "context": "integrations",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "acknowledged": true
+              }
+            }
+          ],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "consumer restart must install current checkpoint before inherited effect",
+      "status": "passed",
+      "assertions": 8,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "open",
+              "policy_epoch": 1,
+              "suspension_epoch": 0,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:consumer",
+              "request_id": "request:run:consumer",
+              "run_id": "run:consumer",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:consumer",
+              "expires_at": "2026-09-13T18:02:55.928Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:run:consumer",
+              "payload_hash": "39063b9904e7b43c7c3046b749e211af1b8cbc1dc51c581f8125f6dfe3e4bdbf",
+              "payload": {
+                "id": "issue:run:consumer",
+                "op": "issuePermit",
+                "runId": "run:consumer",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:02:55.928Z",
+                "projectId": "project:1",
+                "requestId": "request:run:consumer",
+                "scopeDigest": "scope:run:consumer"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:consumer",
+                "permitId": "permit:run:consumer",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "scope:run:consumer:request:run:consumer",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:consumer",
+                "permitId": "permit:run:consumer",
+                "expiresAt": "2026-09-13T18:02:55.928Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:consumer"
+              },
+              "delivered": true
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:consumer",
+              "run_id": "run:consumer",
+              "project_id": "project:1",
+              "permit_id": "permit:run:consumer",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:consumer",
+              "expires_at": "2026-09-13T18:02:55.928Z",
+              "state": "candidate",
+              "verdict": null,
+              "budget_charged": 0,
+              "workspace_state": null
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 1,
+              "project_hold": false
+            }
+          ],
+          "hold": [],
+          "inbox": [
+            {
+              "id": "scope:run:consumer:request:run:consumer",
+              "payload_hash": "ba0e7a876bc63edfcb905f958e9990ff1dd14bedd27d46d66b846a47fdf6d932",
+              "payload": {
+                "id": "scope:run:consumer:request:run:consumer",
+                "op": "receivePermit",
+                "runId": "run:consumer",
+                "context": "execution",
+                "permitId": "permit:run:consumer",
+                "expiresAt": "2026-09-13T18:02:55.928Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:consumer"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:consumer",
+                "permitId": "permit:run:consumer"
+              }
+            }
+          ],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "known_epoch": 1,
+              "installed_epoch": 1,
+              "ack_epoch": 1,
+              "cutoff_epoch": 0
+            }
+          ],
+          "effect": [
+            {
+              "id": "effect:old",
+              "project_id": "project:1",
+              "permit_epoch": 1,
+              "status": "in-flight"
+            }
+          ],
+          "inbox": [
+            {
+              "id": "ack:current",
+              "payload_hash": "51e434624bd2c197c4463ef9d975debad9f25d3707e21c5c6466a484618e2bc8",
+              "payload": {
+                "id": "ack:current",
+                "op": "ackCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": true,
+                "acknowledgedEpoch": 1
+              }
+            },
+            {
+              "id": "effect:inflight",
+              "payload_hash": "ac5d8646fa3f3e01c10ac8c5dbc5591f96b0e05b413b80e4da6959e31480badd",
+              "payload": {
+                "id": "effect:inflight",
+                "op": "acceptEffect",
+                "context": "integrations",
+                "effectId": "effect:old",
+                "projectId": "project:1",
+                "permitEpoch": 1
+              },
+              "outcome": {
+                "ok": true,
+                "status": "in-flight",
+                "effectId": "effect:old"
+              }
+            },
+            {
+              "id": "effect:not-ready",
+              "payload_hash": "c75d0ccde646539c1611b1dad180ed4e6370ea99bab98be46583fd1bd5a69a83",
+              "payload": {
+                "id": "effect:not-ready",
+                "op": "acceptEffect",
+                "context": "integrations",
+                "effectId": "effect:old",
+                "projectId": "project:1",
+                "permitEpoch": 1
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "consumer-checkpoint-not-acknowledged"
+              }
+            },
+            {
+              "id": "enroll:current",
+              "payload_hash": "a335b27898bced39cbe320f2d210b5d45dbf3c603c429cef8d8d37f866adbb91",
+              "payload": {
+                "id": "enroll:current",
+                "op": "enroll",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": false,
+                "enrolledEpoch": 1
+              }
+            },
+            {
+              "id": "install:current",
+              "payload_hash": "60ff29fbde32324a3a0f23c072607634b37c633e372cd188958b77c9cd2daec1",
+              "payload": {
+                "id": "install:current",
+                "op": "installCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "installedEpoch": 1
+              }
+            }
+          ],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "queued old effect is cut off while accepted effect remains in flight",
+      "status": "passed",
+      "assertions": 4,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "suspended",
+              "policy_epoch": 2,
+              "suspension_epoch": 2,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            },
+            {
+              "id": "suspend:effect",
+              "payload_hash": "d120c9a11b1c9d585a7e075d0cc1aed8c75e4d1d514ada9821d9820a1e517f5b",
+              "payload": {
+                "id": "suspend:effect",
+                "op": "suspend",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumers": [
+                  "execution",
+                  "integrations"
+                ],
+                "suspensionEpoch": 2
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "suspend:project:1:2:execution",
+              "recipient": "execution",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": false
+            },
+            {
+              "id": "suspend:project:1:2:integrations",
+              "recipient": "integrations",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [],
+          "project_gate": [],
+          "hold": [],
+          "inbox": [],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "known_epoch": 1,
+              "installed_epoch": 1,
+              "ack_epoch": 1,
+              "cutoff_epoch": 2
+            }
+          ],
+          "effect": [
+            {
+              "id": "effect:accepted",
+              "project_id": "project:1",
+              "permit_epoch": 1,
+              "status": "in-flight"
+            }
+          ],
+          "inbox": [
+            {
+              "id": "ack:effect",
+              "payload_hash": "f9163a88dfd550a74056d85e9cddd709a17e56c5a79cf2b5aa582bd2d31317b5",
+              "payload": {
+                "id": "ack:effect",
+                "op": "ackCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": true,
+                "acknowledgedEpoch": 1
+              }
+            },
+            {
+              "id": "apply:effect",
+              "payload_hash": "2a641fc1823fe7ecc920543d8138a9dccc81b17ded7bb1112c08183fc82f4bef",
+              "payload": {
+                "id": "apply:effect",
+                "op": "applySuspension",
+                "context": "integrations",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "acknowledged": true
+              }
+            },
+            {
+              "id": "effect:accepted",
+              "payload_hash": "3592016de9bbbfd0dbc8b3fa8e6f295ddc9964169b43634619f9b53d46a668cc",
+              "payload": {
+                "id": "effect:accepted",
+                "op": "acceptEffect",
+                "context": "integrations",
+                "effectId": "effect:accepted",
+                "projectId": "project:1",
+                "permitEpoch": 1
+              },
+              "outcome": {
+                "ok": true,
+                "status": "in-flight",
+                "effectId": "effect:accepted"
+              }
+            },
+            {
+              "id": "effect:queued",
+              "payload_hash": "949ef78f4cb07a60333c429b27f31ba90f78df14517fc04094f1fdf02cbfa7e8",
+              "payload": {
+                "id": "effect:queued",
+                "op": "acceptEffect",
+                "context": "integrations",
+                "effectId": "effect:queued",
+                "projectId": "project:1",
+                "permitEpoch": 1
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "effect-before-acknowledged-cutoff"
+              }
+            },
+            {
+              "id": "enroll:effect",
+              "payload_hash": "d160edba0bc1f0d7f8dfac55d5b738bf50dbca1f1af42364c3fda00d38908865",
+              "payload": {
+                "id": "enroll:effect",
+                "op": "enroll",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": false,
+                "enrolledEpoch": 1
+              }
+            },
+            {
+              "id": "install:effect",
+              "payload_hash": "17b6b6f65352ceeb7d51c003a3ac8256639079856fa568ba42916c9391017a3e",
+              "payload": {
+                "id": "install:effect",
+                "op": "installCheckpoint",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "installedEpoch": 1
+              }
+            }
+          ],
+          "outbox": []
+        }
+      }
+    },
+    {
+      "name": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "status": "passed",
+      "assertions": 8,
+      "snapshot": {
+        "projects": {
+          "project": [
+            {
+              "id": "project:1",
+              "lifecycle": "open",
+              "policy_epoch": 3,
+              "suspension_epoch": 2,
+              "archive_requested_at": null,
+              "cutoff_complete": false
+            }
+          ],
+          "permit": [
+            {
+              "id": "permit:run:hold",
+              "request_id": "request:run:hold",
+              "run_id": "run:hold",
+              "project_id": "project:1",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:hold",
+              "expires_at": "2026-09-13T18:03:00.784Z",
+              "status": "issued",
+              "verdict": null
+            }
+          ],
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "consumer": "execution",
+              "ack_epoch": 0
+            },
+            {
+              "project_id": "project:1",
+              "consumer": "integrations",
+              "ack_epoch": 0
+            }
+          ],
+          "inbox": [
+            {
+              "id": "create:project:1",
+              "payload_hash": "5026aa9c641f8eb817e81a92caede9e9bc29a57022ac90054096d34a3ede87ef",
+              "payload": {
+                "id": "create:project:1",
+                "op": "createProject",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "projectId": "project:1",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "issue:run:hold",
+              "payload_hash": "8a85a91a0244c03b9362fbd3a111d66faa5fee0f585666f30e241a230e172407",
+              "payload": {
+                "id": "issue:run:hold",
+                "op": "issuePermit",
+                "runId": "run:hold",
+                "context": "projects",
+                "expiresAt": "2026-09-13T18:03:00.784Z",
+                "projectId": "project:1",
+                "requestId": "request:run:hold",
+                "scopeDigest": "scope:run:hold"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:hold",
+                "permitId": "permit:run:hold",
+                "policyEpoch": 1
+              }
+            },
+            {
+              "id": "register:execution:project:1",
+              "payload_hash": "98b3a64e1f00306437d49580c4d9b5664d74642cd165c8c6e53f906a6dfd17f3",
+              "payload": {
+                "id": "register:execution:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "execution",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "execution"
+              }
+            },
+            {
+              "id": "register:integrations:project:1",
+              "payload_hash": "aad4d1acb54bc54fcff0f2ca67a2fcf808a427a7469b25522cf549344df7e0de",
+              "payload": {
+                "id": "register:integrations:project:1",
+                "op": "registerConsumer",
+                "context": "projects",
+                "consumer": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumer": "integrations"
+              }
+            },
+            {
+              "id": "resume:hold",
+              "payload_hash": "6fcadea51528083594a3ebda5f85cdf68545d54486b4beb5efd6bbcd0f12d02d",
+              "payload": {
+                "id": "resume:hold",
+                "op": "resume",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "resumeEpoch": 3
+              }
+            },
+            {
+              "id": "suspend:hold",
+              "payload_hash": "ee7bfbdfd08585faee6c3c3023a05a3771cd319eab3b551ec55d315c2b22ba7d",
+              "payload": {
+                "id": "suspend:hold",
+                "op": "suspend",
+                "context": "projects",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "consumers": [
+                  "execution",
+                  "integrations"
+                ],
+                "suspensionEpoch": 2
+              }
+            }
+          ],
+          "outbox": [
+            {
+              "id": "resume:project:1:3",
+              "recipient": "execution",
+              "payload": {
+                "op": "applyResume",
+                "projectId": "project:1",
+                "resumeEpoch": 3
+              },
+              "delivered": false
+            },
+            {
+              "id": "scope:run:hold:request:run:hold",
+              "recipient": "execution",
+              "payload": {
+                "op": "receivePermit",
+                "runId": "run:hold",
+                "permitId": "permit:run:hold",
+                "expiresAt": "2026-09-13T18:03:00.784Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:hold"
+              },
+              "delivered": true
+            },
+            {
+              "id": "suspend:project:1:2:execution",
+              "recipient": "execution",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": false
+            },
+            {
+              "id": "suspend:project:1:2:integrations",
+              "recipient": "integrations",
+              "payload": {
+                "op": "applySuspension",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "delivered": false
+            }
+          ]
+        },
+        "execution": {
+          "candidate": [
+            {
+              "id": "run:run:hold",
+              "run_id": "run:hold",
+              "project_id": "project:1",
+              "permit_id": "permit:run:hold",
+              "policy_epoch": 1,
+              "scope_digest": "scope:run:hold",
+              "expires_at": "2026-09-13T18:03:00.784Z",
+              "state": "rejected",
+              "verdict": {
+                "reason": "independent-hold:catalog-quarantine",
+                "status": "rejected"
+              },
+              "budget_charged": 0,
+              "workspace_state": null
+            }
+          ],
+          "project_gate": [
+            {
+              "project_id": "project:1",
+              "project_epoch": 3,
+              "project_hold": false
+            }
+          ],
+          "hold": [
+            {
+              "hold": "catalog-quarantine",
+              "active": true
+            }
+          ],
+          "inbox": [
+            {
+              "id": "admit:run:hold",
+              "payload_hash": "2c5be5483c5f1c9e5c37d0d0eed9f5f4f854eca76052317551b412db59c1d905",
+              "payload": {
+                "id": "admit:run:hold",
+                "op": "admit",
+                "runId": "run:hold",
+                "context": "execution",
+                "permitId": "permit:run:hold",
+                "scopeDigest": "scope:run:hold"
+              },
+              "outcome": {
+                "ok": true,
+                "reason": "independent-hold:catalog-quarantine",
+                "status": "rejected",
+                "budgetCharged": 0
+              }
+            },
+            {
+              "id": "apply:hold",
+              "payload_hash": "9f50e6bd24dc2a9d0f739980ff3ee97cf73541fbc0a51549d7111b02adefc9c4",
+              "payload": {
+                "id": "apply:hold",
+                "op": "applySuspension",
+                "context": "execution",
+                "projectId": "project:1",
+                "suspensionEpoch": 2
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 2,
+                "acknowledged": true
+              }
+            },
+            {
+              "id": "apply:resume:hold",
+              "payload_hash": "bd188be7d82badaa2779c3d62fc905e8a063a31786b038792246427461f8ddfa",
+              "payload": {
+                "id": "apply:resume:hold",
+                "op": "applyResume",
+                "context": "execution",
+                "projectId": "project:1",
+                "resumeEpoch": 3
+              },
+              "outcome": {
+                "ok": true,
+                "epoch": 3,
+                "projectHold": false
+              }
+            },
+            {
+              "id": "apply:resume:stale",
+              "payload_hash": "b8c87d8271f6a4bce6bdda43c106cfc588078ab84f6451f437574309f7ff947b",
+              "payload": {
+                "id": "apply:resume:stale",
+                "op": "applyResume",
+                "context": "execution",
+                "projectId": "project:1",
+                "resumeEpoch": 2
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "stale-resume-epoch"
+              }
+            },
+            {
+              "id": "hold:catalog",
+              "payload_hash": "fc5df29a6030d2038af56ae5f632f6277f9d6400b18caf9145b290f83c9c6c3f",
+              "payload": {
+                "id": "hold:catalog",
+                "op": "setHold",
+                "hold": "catalog-quarantine",
+                "context": "execution"
+              },
+              "outcome": {
+                "ok": true,
+                "hold": "catalog-quarantine",
+                "active": true
+              }
+            },
+            {
+              "id": "scope:run:hold:request:run:hold",
+              "payload_hash": "3cf4906b181f2591c5d25e4848005417e0cd933c63998a18adf65c5fb7399e8d",
+              "payload": {
+                "id": "scope:run:hold:request:run:hold",
+                "op": "receivePermit",
+                "runId": "run:hold",
+                "context": "execution",
+                "permitId": "permit:run:hold",
+                "expiresAt": "2026-09-13T18:03:00.784Z",
+                "projectId": "project:1",
+                "policyEpoch": 1,
+                "scopeDigest": "scope:run:hold"
+              },
+              "outcome": {
+                "ok": true,
+                "runId": "run:hold",
+                "permitId": "permit:run:hold"
+              }
+            }
+          ],
+          "outbox": []
+        },
+        "integrations": {
+          "consumer": [
+            {
+              "project_id": "project:1",
+              "known_epoch": 1,
+              "installed_epoch": 0,
+              "ack_epoch": 0,
+              "cutoff_epoch": 0
+            }
+          ],
+          "effect": [],
+          "inbox": [
+            {
+              "id": "enroll:gap",
+              "payload_hash": "256f1e00d2482c6feb1b8dbb1777b45704ba8ce08140cfd4e7780c0a13469e3b",
+              "payload": {
+                "id": "enroll:gap",
+                "op": "enroll",
+                "epoch": 3,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": false,
+                "reason": "epoch-gap"
+              }
+            },
+            {
+              "id": "enroll:gap:baseline",
+              "payload_hash": "214fea7434bd6efd438fc3262035eed07ac2b9424372165237d7503dbf32410b",
+              "payload": {
+                "id": "enroll:gap:baseline",
+                "op": "enroll",
+                "epoch": 1,
+                "context": "integrations",
+                "projectId": "project:1"
+              },
+              "outcome": {
+                "ok": true,
+                "ready": false,
+                "enrolledEpoch": 1
+              }
+            }
+          ],
+          "outbox": []
+        }
+      }
+    }
+  ],
+  "assertions": 55,
+  "failures": 0,
+  "events": [
+    {
+      "scenario": "before-commit crash rolls back permit and outbox",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "before-commit crash rolls back permit and outbox",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "before-commit crash rolls back permit and outbox",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "before-commit crash rolls back permit and outbox",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:crash-before",
+      "result": {
+        "crashed": true,
+        "signal": "SIGKILL",
+        "code": null
+      }
+    },
+    {
+      "scenario": "before-commit crash rolls back permit and outbox",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:crash-before",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:crash-before",
+        "runId": "run:crash-before",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:crash-after",
+      "result": {
+        "crashed": true,
+        "signal": "SIGKILL",
+        "code": null
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:crash-after",
+      "result": {
+        "ok": true,
+        "runId": "run:crash-after",
+        "permitId": "permit:run:crash-after",
+        "policyEpoch": 1,
+        "replay": true
+      }
+    },
+    {
+      "scenario": "after-commit crash preserves permit and exact replay",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:crash-after",
+      "result": {
+        "ok": false,
+        "conflict": true,
+        "error": "message payload conflict"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:1",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:1",
+        "runId": "run:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:1:request:run:1",
+      "result": {
+        "ok": true,
+        "runId": "run:1",
+        "permitId": "permit:run:1"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "archive",
+      "id": "archive:1",
+      "result": {
+        "ok": true,
+        "state": "closing"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:1",
+      "result": {
+        "ok": true,
+        "status": "accepted",
+        "reason": null,
+        "budgetCharged": 1
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "completeArchive",
+      "id": "complete:pending",
+      "result": {
+        "ok": false,
+        "pending": true,
+        "reason": "permit-verdicts-pending"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "recordVerdict",
+      "id": "verdict:run:1:accepted",
+      "result": {
+        "ok": true,
+        "status": "accepted"
+      }
+    },
+    {
+      "scenario": "archive waits for durable verdict and preserves admitted work",
+      "context": "projects",
+      "op": "completeArchive",
+      "id": "complete:accepted",
+      "result": {
+        "ok": true,
+        "state": "archived"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:expired",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:expired",
+        "runId": "run:expired",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:expired:request:run:expired",
+      "result": {
+        "ok": true,
+        "runId": "run:expired",
+        "permitId": "permit:run:expired"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "archive",
+      "id": "archive:expired",
+      "result": {
+        "ok": true,
+        "state": "closing"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "completeArchive",
+      "id": "complete:expired-before-reconcile",
+      "result": {
+        "ok": false,
+        "pending": true,
+        "reason": "permit-verdicts-pending"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "reconcileExpiry",
+      "id": "reconcile:expired",
+      "result": {
+        "ok": true,
+        "status": "expired-unused"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "projects",
+      "op": "completeArchive",
+      "id": "complete:expired",
+      "result": {
+        "ok": true,
+        "state": "archived"
+      }
+    },
+    {
+      "scenario": "expiry reconciliation closes unused permission without resurrecting it",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:expired",
+      "result": {
+        "ok": true,
+        "status": "expired-unused",
+        "reason": "scope-permit-expired",
+        "budgetCharged": 0
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:workspace",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:workspace",
+        "runId": "run:workspace",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:workspace:request:run:workspace",
+      "result": {
+        "ok": true,
+        "runId": "run:workspace",
+        "permitId": "permit:run:workspace"
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:workspace",
+      "result": {
+        "ok": true,
+        "status": "accepted",
+        "reason": null,
+        "budgetCharged": 1
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "execution",
+      "op": "prepareWorkspace",
+      "id": "workspace:failure",
+      "result": {
+        "ok": true,
+        "workspace": "failed",
+        "admissionState": "accepted",
+        "budgetCharged": 1
+      }
+    },
+    {
+      "scenario": "workspace failure keeps admission and budget history",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:workspace",
+      "result": {
+        "ok": true,
+        "reason": null,
+        "status": "accepted",
+        "budgetCharged": 1,
+        "replay": true
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:suspend",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:suspend",
+        "runId": "run:suspend",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:suspend:request:run:suspend",
+      "result": {
+        "ok": true,
+        "runId": "run:suspend",
+        "permitId": "permit:run:suspend"
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "integrations",
+      "op": "enroll",
+      "id": "enroll:suspend",
+      "result": {
+        "ok": true,
+        "enrolledEpoch": 1,
+        "ready": false
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "integrations",
+      "op": "installCheckpoint",
+      "id": "install:suspend",
+      "result": {
+        "ok": true,
+        "installedEpoch": 1
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "integrations",
+      "op": "ackCheckpoint",
+      "id": "ack:suspend",
+      "result": {
+        "ok": true,
+        "acknowledgedEpoch": 1,
+        "ready": true
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "suspend",
+      "id": "suspend:1",
+      "result": {
+        "ok": true,
+        "suspensionEpoch": 2,
+        "consumers": [
+          "execution",
+          "integrations"
+        ]
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "execution",
+      "op": "applySuspension",
+      "id": "suspend:project:1:2:execution",
+      "result": {
+        "ok": true,
+        "epoch": 2,
+        "acknowledged": true
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "recordAck",
+      "id": "ack:execution",
+      "result": {
+        "ok": true,
+        "consumer": "execution",
+        "epoch": 2
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "integrations",
+      "op": "applySuspension",
+      "id": "suspend:project:1:2:integrations",
+      "result": {
+        "ok": true,
+        "epoch": 2,
+        "acknowledged": true
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "recordAck",
+      "id": "ack:integrations",
+      "result": {
+        "ok": true,
+        "consumer": "integrations",
+        "epoch": 2
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "projects",
+      "op": "completeSuspension",
+      "id": "cutoff:complete",
+      "result": {
+        "ok": true,
+        "cutoffComplete": true,
+        "epoch": 2
+      }
+    },
+    {
+      "scenario": "suspension requires checkpoint installation and all consumer acknowledgments",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:suspend",
+      "result": {
+        "ok": true,
+        "status": "rejected",
+        "reason": "project-suspension-cutoff",
+        "budgetCharged": 0
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:consumer",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:consumer",
+        "runId": "run:consumer",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:consumer:request:run:consumer",
+      "result": {
+        "ok": true,
+        "runId": "run:consumer",
+        "permitId": "permit:run:consumer"
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "enroll",
+      "id": "enroll:current",
+      "result": {
+        "ok": true,
+        "enrolledEpoch": 1,
+        "ready": false
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "acceptEffect",
+      "id": "effect:not-ready",
+      "result": {
+        "ok": false,
+        "reason": "consumer-checkpoint-not-acknowledged"
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "installCheckpoint",
+      "id": "install:current",
+      "result": {
+        "ok": true,
+        "installedEpoch": 1
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "ackCheckpoint",
+      "id": "ack:current",
+      "result": {
+        "ok": true,
+        "acknowledgedEpoch": 1,
+        "ready": true
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "acceptEffect",
+      "id": "effect:inflight",
+      "result": {
+        "ok": true,
+        "status": "in-flight",
+        "effectId": "effect:old"
+      }
+    },
+    {
+      "scenario": "consumer restart must install current checkpoint before inherited effect",
+      "context": "integrations",
+      "op": "acceptEffect",
+      "id": "effect:inflight",
+      "result": {
+        "ok": true,
+        "status": "in-flight",
+        "effectId": "effect:old",
+        "replay": true
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "enroll",
+      "id": "enroll:effect",
+      "result": {
+        "ok": true,
+        "enrolledEpoch": 1,
+        "ready": false
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "installCheckpoint",
+      "id": "install:effect",
+      "result": {
+        "ok": true,
+        "installedEpoch": 1
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "ackCheckpoint",
+      "id": "ack:effect",
+      "result": {
+        "ok": true,
+        "acknowledgedEpoch": 1,
+        "ready": true
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "acceptEffect",
+      "id": "effect:accepted",
+      "result": {
+        "ok": true,
+        "status": "in-flight",
+        "effectId": "effect:accepted"
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "projects",
+      "op": "suspend",
+      "id": "suspend:effect",
+      "result": {
+        "ok": true,
+        "suspensionEpoch": 2,
+        "consumers": [
+          "execution",
+          "integrations"
+        ]
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "applySuspension",
+      "id": "apply:effect",
+      "result": {
+        "ok": true,
+        "epoch": 2,
+        "acknowledged": true
+      }
+    },
+    {
+      "scenario": "queued old effect is cut off while accepted effect remains in flight",
+      "context": "integrations",
+      "op": "acceptEffect",
+      "id": "effect:queued",
+      "result": {
+        "ok": false,
+        "reason": "effect-before-acknowledged-cutoff"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "createProject",
+      "id": "create:project:1",
+      "result": {
+        "ok": true,
+        "projectId": "project:1",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:execution:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "execution"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "registerConsumer",
+      "id": "register:integrations:project:1",
+      "result": {
+        "ok": true,
+        "consumer": "integrations"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "integrations",
+      "op": "enroll",
+      "id": "enroll:gap:baseline",
+      "result": {
+        "ok": true,
+        "enrolledEpoch": 1,
+        "ready": false
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "integrations",
+      "op": "enroll",
+      "id": "enroll:gap",
+      "result": {
+        "ok": false,
+        "reason": "epoch-gap"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "issuePermit",
+      "id": "issue:run:hold",
+      "result": {
+        "ok": true,
+        "permitId": "permit:run:hold",
+        "runId": "run:hold",
+        "policyEpoch": 1
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "receivePermit",
+      "id": "scope:run:hold:request:run:hold",
+      "result": {
+        "ok": true,
+        "runId": "run:hold",
+        "permitId": "permit:run:hold"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "setHold",
+      "id": "hold:catalog",
+      "result": {
+        "ok": true,
+        "hold": "catalog-quarantine",
+        "active": true
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:hold",
+      "result": {
+        "ok": true,
+        "status": "rejected",
+        "reason": "independent-hold:catalog-quarantine",
+        "budgetCharged": 0
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "suspend",
+      "id": "suspend:hold",
+      "result": {
+        "ok": true,
+        "suspensionEpoch": 2,
+        "consumers": [
+          "execution",
+          "integrations"
+        ]
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "applySuspension",
+      "id": "apply:hold",
+      "result": {
+        "ok": true,
+        "epoch": 2,
+        "acknowledged": true
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "projects",
+      "op": "resume",
+      "id": "resume:hold",
+      "result": {
+        "ok": true,
+        "resumeEpoch": 3
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "applyResume",
+      "id": "apply:resume:hold",
+      "result": {
+        "ok": true,
+        "epoch": 3,
+        "projectHold": false
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "applyResume",
+      "id": "apply:resume:stale",
+      "result": {
+        "ok": false,
+        "reason": "stale-resume-epoch"
+      }
+    },
+    {
+      "scenario": "gaps, stale resumes, conflicts, and independent holds remain explicit",
+      "context": "execution",
+      "op": "admit",
+      "id": "admit:run:hold",
+      "result": {
+        "ok": true,
+        "reason": "independent-hold:catalog-quarantine",
+        "status": "rejected",
+        "budgetCharged": 0,
+        "replay": true
+      }
+    }
+  ]
+}
