@@ -1,0 +1,16 @@
+{
+  "artifact_versions": 4,
+  "artifact_bytes": 282996,
+  "log_groups": [
+    {
+      "name": "/aws/lambda/aa-wf15-prod",
+      "stored_bytes": 0,
+      "retention_days": 1
+    },
+    {
+      "name": "/aws/lambda/aa-wf15-staging",
+      "stored_bytes": 0,
+      "retention_days": 1
+    }
+  ]
+}

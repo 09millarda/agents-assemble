@@ -1,0 +1,222 @@
+{
+  "account": "728616601473",
+  "region": "eu-west-1",
+  "created_at": "2026-09-13T15:15:59.881313+00:00",
+  "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+  "roles": [
+    "aa-wf15-staging-runtime",
+    "aa-wf15-staging-cloudformation",
+    "aa-wf15-prod-runtime",
+    "aa-wf15-prod-cloudformation",
+    "aa-wf15-staging-github",
+    "aa-wf15-prod-github"
+  ],
+  "stacks": {
+    "staging": {
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-stage-tags/801f30f0-aa2e-49f6-81e5-92df670ca967",
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+      "executed": true,
+      "outputs": {
+        "FunctionName": "aa-wf15-staging",
+        "HealthUrl": "https://mgb6g2svy6.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "mgb6g2svy6",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live"
+      },
+      "narrowed": true,
+      "github_trust_expires": "2026-09-14T15:34:38Z"
+    },
+    "prod": {
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-stage-tags/4e3ae825-e3b4-43d9-908d-0563f74e8a3e",
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+      "executed": true,
+      "outputs": {
+        "FunctionName": "aa-wf15-prod",
+        "HealthUrl": "https://gv4ul4ugj1.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "gv4ul4ugj1",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live"
+      },
+      "narrowed": true,
+      "github_trust_expires": "2026-09-14T15:34:38Z"
+    }
+  },
+  "artifacts": {
+    "healthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+      "version": "Pv0tzbb2_lvPGs4JvxqHZbEs8BgG6AIx",
+      "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+      "bytes": 70748
+    },
+    "unhealthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/617fd5aadf96cc931a0466fa0396ce5a0a94768dd51ed4fe524fa413624f2ae5/function.zip",
+      "version": "yyCFJnO1mma1X0c0zF7_UE.3sknFj4D4",
+      "sha256": "617fd5aadf96cc931a0466fa0396ce5a0a94768dd51ed4fe524fa413624f2ae5",
+      "bytes": 70750
+    }
+  },
+  "bucket_created": true,
+  "failed_changesets": [
+    {
+      "environment": "staging",
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap/c3cd97d7-c17c-4d84-8d35-22fbb3e6f2a9",
+      "reason": "User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: cloudformation:CreateChangeSet on resource: arn:aws:cloudformation:eu-west-1:aws:transform/Serverless-2016-10-31 because no identity-based policy allows the cloudformation:CreateChangeSet action"
+    },
+    {
+      "environment": "prod",
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap/34bb2563-4136-49f7-bad0-88869633b373",
+      "reason": "User: arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-cloudformation/AWSCloudFormation is not authorized to perform: cloudformation:CreateChangeSet on resource: arn:aws:cloudformation:eu-west-1:aws:transform/Serverless-2016-10-31 because no identity-based policy allows the cloudformation:CreateChangeSet action"
+    },
+    {
+      "environment": "staging",
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-v2/123b163d-87b5-4382-91e9-de897f18270d",
+      "reason": "User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: cloudformation:CreateChangeSet on resource: arn:aws:cloudformation:eu-west-1:aws:transform/Serverless-2016-10-31 because no identity-based policy allows the cloudformation:CreateChangeSet action"
+    },
+    {
+      "environment": "prod",
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-v2/6f76cd09-fb51-4633-bacc-249a2ad50b07",
+      "reason": "User: arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-cloudformation/AWSCloudFormation is not authorized to perform: cloudformation:CreateChangeSet on resource: arn:aws:cloudformation:eu-west-1:aws:transform/Serverless-2016-10-31 because no identity-based policy allows the cloudformation:CreateChangeSet action"
+    }
+  ],
+  "release_artifacts": {
+    "healthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+      "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+      "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+      "bytes": 70748,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    },
+    "unhealthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+      "version": "I.RqnPCTJQpvQ0Xm4Aen79md6pHvZWW3",
+      "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+      "bytes": 70750,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    }
+  },
+  "failed_stacks": [
+    {
+      "stack": {
+        "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-expanded/0720088b-e050-4714-81c1-2cdbfcd4ded5",
+        "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/1d578730-af86-11f1-bd7f-0aee833d3a2f",
+        "executed": true
+      },
+      "failures": [
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/1d578730-af86-11f1-bd7f-0aee833d3a2f",
+          "EventId": "Api-CREATE_FAILED-2026-09-13T15:27:09.007Z",
+          "StackName": "aa-wf15-staging",
+          "OperationId": "838857ca-0efc-4a89-9004-6d69e99c254b",
+          "LogicalResourceId": "Api",
+          "PhysicalResourceId": "",
+          "ResourceType": "AWS::ApiGatewayV2::Api",
+          "Timestamp": "2026-09-13T15:27:09.007000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: apigateway:POST on resource: arn:aws:apigateway:eu-west-1::/tags/arn%3Aaws%3Aapigateway%3Aeu-west-1%3A%3A%2Fv2%2Fapis%2F* because no identity-based policy allows the apigateway:POST action (Service: AmazonApiGatewayV2; Status Code: 403; Error Code: AccessDeniedException; Request ID: 1881b9a8-29b2-4380-a3fd-c63d69bcee54; Proxy: null)\" (RequestToken: ab9a798e-cbb8-5a5e-1d2a-fa062b2c9ad2, HandlerErrorCode: AccessDenied)",
+          "ResourceProperties": "{\"Body\":{\"openapi\":\"3.0.1\",\"paths\":{\"/health\":{\"get\":{\"responses\":{},\"x-amazon-apigateway-integration\":{\"payloadFormatVersion\":\"2.0\",\"httpMethod\":\"POST\",\"type\":\"aws_proxy\",\"uri\":\"arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live/invocations\"}}}},\"info\":{\"title\":\"aa-wf15-staging\",\"version\":\"1.0\"},\"tags\":[{\"x-amazon-apigateway-tag-value\":\"SAM\",\"name\":\"httpapi:createdBy\"}]}}",
+          "ClientRequestToken": "aa-wf15-bootstrap-staging"
+        }
+      ]
+    },
+    {
+      "stack": {
+        "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-expanded/1765d6d2-03f0-48f0-ad5c-4ffc3964f47f",
+        "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/798f02d0-af86-11f1-bea9-0a13c0b85e5f",
+        "executed": true
+      },
+      "failures": [
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/798f02d0-af86-11f1-bea9-0a13c0b85e5f",
+          "EventId": "Api-CREATE_FAILED-2026-09-13T15:27:12.403Z",
+          "StackName": "aa-wf15-prod",
+          "OperationId": "1d43b566-2c16-474f-83e8-802c09379ec0",
+          "LogicalResourceId": "Api",
+          "PhysicalResourceId": "",
+          "ResourceType": "AWS::ApiGatewayV2::Api",
+          "Timestamp": "2026-09-13T15:27:12.403000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-cloudformation/AWSCloudFormation is not authorized to perform: apigateway:POST on resource: arn:aws:apigateway:eu-west-1::/tags/arn%3Aaws%3Aapigateway%3Aeu-west-1%3A%3A%2Fv2%2Fapis%2F* because no identity-based policy allows the apigateway:POST action (Service: AmazonApiGatewayV2; Status Code: 403; Error Code: AccessDeniedException; Request ID: 1b3686c9-cc1a-4834-8bcc-f4b4be3a2e86; Proxy: null)\" (RequestToken: fa50d901-9a87-f737-b3a5-ab815a5556ca, HandlerErrorCode: AccessDenied)",
+          "ResourceProperties": "{\"Body\":{\"openapi\":\"3.0.1\",\"paths\":{\"/health\":{\"get\":{\"responses\":{},\"x-amazon-apigateway-integration\":{\"payloadFormatVersion\":\"2.0\",\"httpMethod\":\"POST\",\"type\":\"aws_proxy\",\"uri\":\"arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live/invocations\"}}}},\"info\":{\"title\":\"aa-wf15-prod\",\"version\":\"1.0\"},\"tags\":[{\"x-amazon-apigateway-tag-value\":\"SAM\",\"name\":\"httpapi:createdBy\"}]}}",
+          "ClientRequestToken": "aa-wf15-bootstrap-prod"
+        }
+      ]
+    },
+    {
+      "stack": {
+        "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-tags/91ecb32a-8287-4e7f-b6f2-fa35802152cb",
+        "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/fbc280f0-af87-11f1-a59c-0ac722fba30d",
+        "executed": true
+      },
+      "failures": [
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/fbc280f0-af87-11f1-a59c-0ac722fba30d",
+          "EventId": "FunctionHealthPermission-CREATE_FAILED-2026-09-13T15:30:56.286Z",
+          "StackName": "aa-wf15-staging",
+          "OperationId": "913fb17a-1879-4df2-a500-8b7dc66405c4",
+          "LogicalResourceId": "FunctionHealthPermission",
+          "PhysicalResourceId": "aa-wf15-staging-FunctionHealthPermission-yi43sksr9suJ",
+          "ResourceType": "AWS::Lambda::Permission",
+          "Timestamp": "2026-09-13T15:30:56.286000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource creation cancelled",
+          "ResourceProperties": "{\"FunctionName\":\"arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live\",\"Action\":\"lambda:InvokeFunction\",\"SourceArn\":\"arn:aws:execute-api:eu-west-1:728616601473:tawmjff5zf/*/GET/health\",\"Principal\":\"apigateway.amazonaws.com\"}",
+          "ClientRequestToken": "aa-wf15-bootstrap-staging"
+        },
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/fbc280f0-af87-11f1-a59c-0ac722fba30d",
+          "EventId": "ApiApiGatewayDefaultStage-CREATE_FAILED-2026-09-13T15:30:56.053Z",
+          "StackName": "aa-wf15-staging",
+          "OperationId": "913fb17a-1879-4df2-a500-8b7dc66405c4",
+          "LogicalResourceId": "ApiApiGatewayDefaultStage",
+          "PhysicalResourceId": "$default",
+          "ResourceType": "AWS::ApiGatewayV2::Stage",
+          "Timestamp": "2026-09-13T15:30:56.053000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: apigateway:TagResource on resource: arn:aws:apigateway:eu-west-1::/apis/tawmjff5zf/stages because no identity-based policy allows the apigateway:TagResource action (Service: ApiGatewayV2, Status Code: 403, Request ID: 945a67bf-b25e-4742-bb39-19312f098f02) (SDK Attempt Count: 1)\" (RequestToken: debc5583-0a67-71a4-9cdb-6565e172fb3d, HandlerErrorCode: AccessDenied)",
+          "ResourceProperties": "{\"AutoDeploy\":\"true\",\"StageName\":\"$default\",\"ApiId\":\"tawmjff5zf\",\"DefaultRouteSettings\":{\"ThrottlingBurstLimit\":\"2\",\"ThrottlingRateLimit\":\"1\"},\"Tags\":{\"httpapi:createdBy\":\"SAM\"}}",
+          "ClientRequestToken": "aa-wf15-bootstrap-staging"
+        }
+      ]
+    },
+    {
+      "stack": {
+        "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-bootstrap-tags/6669b29f-11a0-46ca-859d-d6ce4fcfea18",
+        "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/02cc42f0-af88-11f1-a997-069746358811",
+        "executed": true
+      },
+      "failures": [
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/02cc42f0-af88-11f1-a997-069746358811",
+          "EventId": "FunctionHealthPermission-CREATE_FAILED-2026-09-13T15:31:01.158Z",
+          "StackName": "aa-wf15-prod",
+          "OperationId": "e61b3834-3021-454e-9a13-5c3916a70032",
+          "LogicalResourceId": "FunctionHealthPermission",
+          "PhysicalResourceId": "aa-wf15-prod-FunctionHealthPermission-YrZLTPCchMHd",
+          "ResourceType": "AWS::Lambda::Permission",
+          "Timestamp": "2026-09-13T15:31:01.158000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource creation cancelled",
+          "ResourceProperties": "{\"FunctionName\":\"arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live\",\"Action\":\"lambda:InvokeFunction\",\"SourceArn\":\"arn:aws:execute-api:eu-west-1:728616601473:1orxzbsrmh/*/GET/health\",\"Principal\":\"apigateway.amazonaws.com\"}",
+          "ClientRequestToken": "aa-wf15-bootstrap-prod"
+        },
+        {
+          "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/02cc42f0-af88-11f1-a997-069746358811",
+          "EventId": "ApiApiGatewayDefaultStage-CREATE_FAILED-2026-09-13T15:31:00.857Z",
+          "StackName": "aa-wf15-prod",
+          "OperationId": "e61b3834-3021-454e-9a13-5c3916a70032",
+          "LogicalResourceId": "ApiApiGatewayDefaultStage",
+          "PhysicalResourceId": "$default",
+          "ResourceType": "AWS::ApiGatewayV2::Stage",
+          "Timestamp": "2026-09-13T15:31:00.857000+00:00",
+          "ResourceStatus": "CREATE_FAILED",
+          "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-cloudformation/AWSCloudFormation is not authorized to perform: apigateway:TagResource on resource: arn:aws:apigateway:eu-west-1::/apis/1orxzbsrmh/stages because no identity-based policy allows the apigateway:TagResource action (Service: ApiGatewayV2, Status Code: 403, Request ID: d2568e7b-b2cd-4af8-b727-17e8b5332d2a) (SDK Attempt Count: 1)\" (RequestToken: 2cce8789-6822-85de-2c28-af5790379ef1, HandlerErrorCode: AccessDenied)",
+          "ResourceProperties": "{\"AutoDeploy\":\"true\",\"StageName\":\"$default\",\"ApiId\":\"1orxzbsrmh\",\"DefaultRouteSettings\":{\"ThrottlingBurstLimit\":\"2\",\"ThrottlingRateLimit\":\"1\"},\"Tags\":{\"httpapi:createdBy\":\"SAM\"}}",
+          "ClientRequestToken": "aa-wf15-bootstrap-prod"
+        }
+      ]
+    }
+  ],
+  "cleanup_completed_at": "2026-09-13T15:50:49.982714+00:00"
+}

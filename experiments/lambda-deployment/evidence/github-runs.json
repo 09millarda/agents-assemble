@@ -1,0 +1,1103 @@
+[
+  {
+    "run": {
+      "conclusion": "failure",
+      "createdAt": "2026-09-13T15:36:06Z",
+      "databaseId": 34766091078,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:36:53Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766091078"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZIPFUDXUD:github-34766091078",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-github/github-34766091078"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "1208ae4bc670ce731abdba8c2e54f87f5423688c0ba3de29cb1356aa4f1b2e4f",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+          "environment": "staging",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "bytes": 70748,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "3",
+            "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "environment": "staging"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766091078",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "95a988bc495b4edeba5d30538a551b1bc5995a6d16da3bb7ee838e849de0f251"
+      },
+      {
+        "effect": "aa-wf15-34766091078-staging",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766091078-staging/9aada531-8219-42ec-9fde-a9904e8cfab0"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersion5453e5580c.Version"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersione3e985a5c5",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:3",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-staging",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "success",
+      "createdAt": "2026-09-13T15:38:50Z",
+      "databaseId": 34766225454,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:39:48Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766225454"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZIPFUDXUD:github-34766225454",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-github/github-34766225454"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "1208ae4bc670ce731abdba8c2e54f87f5423688c0ba3de29cb1356aa4f1b2e4f",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+          "environment": "staging",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "bytes": 70748,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "3",
+            "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "environment": "staging"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766225454",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "4363b8b792a574de2160fb917e1a9ec646bbd3657d15183c1a8e64791b62514f"
+      },
+      {
+        "effect": "aa-wf15-34766225454-staging",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766225454-staging/a7ba6ba3-3fb5-487e-a4f6-1a4fb5f247ec"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersion5453e5580c.Version"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersione3e985a5c5",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:3",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-staging",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "5",
+          "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "environment": "staging"
+        },
+        "health": {
+          "status": 200,
+          "body": {
+            "healthy": true,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "staging"
+          }
+        },
+        "application_health": "healthy",
+        "manifest_sha256": "4363b8b792a574de2160fb917e1a9ec646bbd3657d15183c1a8e64791b62514f",
+        "effect": "aa-wf15-34766225454-staging"
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "success",
+      "createdAt": "2026-09-13T15:40:26Z",
+      "databaseId": 34766307372,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:41:24Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766307372"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZVIAP2WSI:github-34766307372",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-github/github-34766307372"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "1208ae4bc670ce731abdba8c2e54f87f5423688c0ba3de29cb1356aa4f1b2e4f",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+          "environment": "prod",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "bytes": 70748,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "3",
+            "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "environment": "prod"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766307372",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "830b7fe5faef2906b9efb3e33f200cf06960d121646a5f9ef3f99ca6edc04f7b"
+      },
+      {
+        "effect": "aa-wf15-34766307372-prod",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766307372-prod/6ec7c520-0024-4857-8c70-264d42171e04"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersion5453e5580c.Version"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersione3e985a5c5",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:3",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-prod",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "4",
+          "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "environment": "prod"
+        },
+        "health": {
+          "status": 200,
+          "body": {
+            "healthy": true,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "prod"
+          }
+        },
+        "application_health": "healthy",
+        "manifest_sha256": "830b7fe5faef2906b9efb3e33f200cf06960d121646a5f9ef3f99ca6edc04f7b",
+        "effect": "aa-wf15-34766307372-prod"
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "failure",
+      "createdAt": "2026-09-13T15:40:28Z",
+      "databaseId": 34766308978,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:41:27Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766308978"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZIPFUDXUD:github-34766308978",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-github/github-34766308978"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "f4894a02ecb4af2c4817744d624a21bd4a021497c731bc8cd116e17bae571c1b",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+          "environment": "staging",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+            "version": "I.RqnPCTJQpvQ0Xm4Aen79md6pHvZWW3",
+            "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+            "bytes": 70750,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "5",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "environment": "staging"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766308978",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "ea6e22100648aee967efb9871234e5e6a3831078d0afc3632350ff9f6cf3de36"
+      },
+      {
+        "effect": "aa-wf15-34766308978-staging",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766308978-staging/e8f01663-01c4-4e5e-a5dc-164e1ec983bc"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersionfb1f9e4237.Version"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:5",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersionfb1f9e4237",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-staging",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "6",
+          "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+          "environment": "staging"
+        },
+        "health": {
+          "status": 503,
+          "body": {
+            "healthy": false,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "staging"
+          }
+        },
+        "application_health": "failed",
+        "manifest_sha256": "ea6e22100648aee967efb9871234e5e6a3831078d0afc3632350ff9f6cf3de36",
+        "effect": "aa-wf15-34766308978-staging"
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "success",
+      "createdAt": "2026-09-13T15:41:52Z",
+      "databaseId": 34766374171,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:42:50Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766374171"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZIPFUDXUD:github-34766374171",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-github/github-34766374171"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "1208ae4bc670ce731abdba8c2e54f87f5423688c0ba3de29cb1356aa4f1b2e4f",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+          "environment": "staging",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "bytes": 70748,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "6",
+            "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+            "environment": "staging"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766374171",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "1eb84d296cd7c402b12efca19cafa8c758d8acff45f55c9aaef8fda5555e88d2"
+      },
+      {
+        "effect": "aa-wf15-34766374171-staging",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766374171-staging/54a01166-c59f-4360-a7e7-e9d8a93dafd6"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersion5453e5580c.Version"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersionfb1f9e4237",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:6",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-staging",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "7",
+          "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "environment": "staging"
+        },
+        "health": {
+          "status": 200,
+          "body": {
+            "healthy": true,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "staging"
+          }
+        },
+        "application_health": "healthy",
+        "manifest_sha256": "1eb84d296cd7c402b12efca19cafa8c758d8acff45f55c9aaef8fda5555e88d2",
+        "effect": "aa-wf15-34766374171-staging"
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "failure",
+      "createdAt": "2026-09-13T15:41:54Z",
+      "databaseId": 34766375507,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:42:52Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766375507"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZVIAP2WSI:github-34766375507",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-github/github-34766375507"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "f4894a02ecb4af2c4817744d624a21bd4a021497c731bc8cd116e17bae571c1b",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+          "environment": "prod",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+            "version": "I.RqnPCTJQpvQ0Xm4Aen79md6pHvZWW3",
+            "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+            "bytes": 70750,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "4",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "environment": "prod"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766375507",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "230a3b7cf7de3770465e97a3547eac26202ce5c3693a10286b0976f89390f83b"
+      },
+      {
+        "effect": "aa-wf15-34766375507-prod",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766375507-prod/53b0028e-1ae0-4f24-bebd-aeb9f1c46e05"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersionfb1f9e4237.Version"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:4",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersionfb1f9e4237",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-prod",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "5",
+          "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+          "environment": "prod"
+        },
+        "health": {
+          "status": 503,
+          "body": {
+            "healthy": false,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "prod"
+          }
+        },
+        "application_health": "failed",
+        "manifest_sha256": "230a3b7cf7de3770465e97a3547eac26202ce5c3693a10286b0976f89390f83b",
+        "effect": "aa-wf15-34766375507-prod"
+      }
+    ]
+  },
+  {
+    "run": {
+      "conclusion": "success",
+      "createdAt": "2026-09-13T15:43:23Z",
+      "databaseId": 34766446905,
+      "headSha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+      "status": "completed",
+      "updatedAt": "2026-09-13T15:44:16Z",
+      "url": "https://github.com/09millarda/agents-assemble/actions/runs/34766446905"
+    },
+    "observations": [
+      {
+        "identity": {
+          "UserId": "AROA2TJHPA6AZVIAP2WSI:github-34766446905",
+          "Account": "728616601473",
+          "Arn": "arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-github/github-34766446905"
+        }
+      },
+      {
+        "manifest": {
+          "template_sha256": "1208ae4bc670ce731abdba8c2e54f87f5423688c0ba3de29cb1356aa4f1b2e4f",
+          "target": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+          "environment": "prod",
+          "artifact": {
+            "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+            "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+            "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "bytes": 70748,
+            "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+          },
+          "expected_prior": {
+            "version": "5",
+            "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+            "environment": "prod"
+          },
+          "workflow_sha": "9fae05bf9e9eec9b7c69837757cfcbf22c371aa4",
+          "run_id": "34766446905",
+          "run_attempt": "1"
+        },
+        "manifest_sha256": "024fe725e12e0bdf9d39e8ff8da0494374bde8b34bb4723429ee38894f2bdf6d"
+      },
+      {
+        "effect": "aa-wf15-34766446905-prod",
+        "change_set": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-34766446905-prod/d9ed8f7c-dae6-4dd0-b120-c25aa1c8b394"
+      },
+      {
+        "reviewed_changes": [
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "FunctionAliaslive",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live",
+              "ResourceType": "AWS::Lambda::Alias",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "ResourceAttribute",
+                  "CausingEntity": "FunctionVersion5453e5580c.Version"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "FunctionVersion",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Dynamic",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Add",
+              "LogicalResourceId": "FunctionVersion5453e5580c",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "PolicyAction": "Retain",
+              "Action": "Remove",
+              "LogicalResourceId": "FunctionVersionfb1f9e4237",
+              "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:5",
+              "ResourceType": "AWS::Lambda::Version",
+              "Scope": [],
+              "Details": []
+            }
+          },
+          {
+            "Type": "Resource",
+            "ResourceChange": {
+              "Action": "Modify",
+              "LogicalResourceId": "Function",
+              "PhysicalResourceId": "aa-wf15-prod",
+              "ResourceType": "AWS::Lambda::Function",
+              "Replacement": "False",
+              "Scope": [
+                "Properties"
+              ],
+              "Details": [
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Code",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                },
+                {
+                  "Target": {
+                    "Attribute": "Properties",
+                    "Name": "Description",
+                    "RequiresRecreation": "Never"
+                  },
+                  "Evaluation": "Static",
+                  "ChangeSource": "DirectModification"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "provider_update": "confirmed",
+        "lambda": {
+          "version": "6",
+          "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "environment": "prod"
+        },
+        "health": {
+          "status": 200,
+          "body": {
+            "healthy": true,
+            "release": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "environment": "prod"
+          }
+        },
+        "application_health": "healthy",
+        "manifest_sha256": "024fe725e12e0bdf9d39e8ff8da0494374bde8b34bb4723429ee38894f2bdf6d",
+        "effect": "aa-wf15-34766446905-prod"
+      }
+    ]
+  }
+]

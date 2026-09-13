@@ -1,8 +1,9 @@
 # Disposable Lambda deployment probe
 
 Decision [#15](https://github.com/09millarda/agents-assemble/issues/15).
-Throwaway provider experiment, never production application code. The identity
-probe has passed; this application template has not been provisioned.
+Throwaway provider experiment, never production application code. Identity, actual staging/promotion, deliberate failed-health and artifact-restoration
+probes have run. See `evidence/` for final observations and the mainline result
+for cleanup status. This does not certify the full #15 approval/recovery protocol.
 
 ## Local application checks
 
@@ -41,7 +42,17 @@ Local transformation is not an AWS change-set or permission validation.
 
 The mainline [bootstrap review](https://github.com/09millarda/agents-assemble/blob/main/docs/research/lambda-fixture-bootstrap-review.md)
 records resource scope, proposed IAM boundaries, cost/duration and cleanup.
-No application resources or deployment roles have been created. Do not deploy
+Actual resources and deployment roles were created for the approved bounded test.
+Do not replay the initial bootstrap or recovery helpers: some deliberately archive
+failed setup attempts, and their receipts refer to specific disposable resources.
+The provider rejected its SAM transform path despite the scoped permission;
+`expand_templates.py` uses pinned SAM translator 1.113.0 to generate the reviewed
+plain CloudFormation templates locally. API setup required both encoded tag-route
+POST and TagResource permissions. CloudFormation UpdateAlias authorizes against
+the function ARN; the effective release grant covers that one function, with no
+alias-creation or unrelated-function access.
+
+Do not deploy
 without the agreed resource/budget scope, refreshed CLI identity, actual processed
 change-set inspection and scoped effective permissions. CloudFormation alone
 owns alias changes and restoration to a retained healthy artifact.
@@ -54,4 +65,6 @@ printing credentials. Its old `prerequisites.json` is historical, not live state
 this account; do not rerun it against the existing role/provider. The identity
 role cannot deploy and has a finite trust expiry, recorded in the mainline result.
 
-All actual app deployment, promotion, failed-health and rollback cases remain open.
+The scoped live release/health/restoration results do not validate lost dispatch
+acknowledgments, duplicate recovery, cancellation/revocation races, automatic
+production approval or an integrated durable deployment adapter.

@@ -1,0 +1,14 @@
+[
+  {
+    "LogicalResourceId": "aa-wf15-prod",
+    "ResourceStatus": "DELETE_FAILED",
+    "ResourceStatusReason": "The following resource(s) failed to delete: [FunctionHealthPermission]. ",
+    "PhysicalResourceId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17"
+  },
+  {
+    "LogicalResourceId": "FunctionHealthPermission",
+    "ResourceStatus": "DELETE_FAILED",
+    "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-prod-cloudformation/AWSCloudFormation is not authorized to perform: lambda:RemovePermission on resource: arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live because no identity-based policy allows the lambda:RemovePermission action (Service: Lambda, Status Code: 403, Request ID: 78259c9f-e6cd-4d2b-a8d4-92e20fda741f) (SDK Attempt Count: 1)\" (RequestToken: 123941ee-b66d-6e49-0573-63fb4475aff9, HandlerErrorCode: GeneralServiceException)",
+    "PhysicalResourceId": "aa-wf15-prod-FunctionHealthPermission-W1qydAySvkJj"
+  }
+]

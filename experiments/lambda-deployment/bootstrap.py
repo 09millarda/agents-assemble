@@ -50,7 +50,7 @@ def executor(env, bootstrap=True, api_id=None):
     if not bootstrap:
         statements[0] = allow(READS, [fn, fn+':*'])
         statements.extend([allow([a for a in WRITES if a != 'lambda:UpdateAlias'], fn),
-                           allow('lambda:UpdateAlias', fn+':live')])
+                           allow('lambda:UpdateAlias', fn)])
     return policy(statements)
 
 

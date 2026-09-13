@@ -1,0 +1,43 @@
+[
+  {
+    "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+    "EventId": "f984a970-af88-11f1-9851-0297341e5b49",
+    "StackName": "aa-wf15-staging",
+    "OperationId": "1591185b-aeca-4e9b-8455-564cc35137d9",
+    "LogicalResourceId": "aa-wf15-staging",
+    "PhysicalResourceId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+    "ResourceType": "AWS::CloudFormation::Stack",
+    "Timestamp": "2026-09-13T15:37:06.162000+00:00",
+    "ResourceStatus": "UPDATE_ROLLBACK_FAILED",
+    "ResourceStatusReason": "The following resource(s) failed to update: [FunctionAliaslive]. ",
+    "ClientRequestToken": "aa-wf15-34766091078-staging"
+  },
+  {
+    "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+    "EventId": "FunctionAliaslive-UPDATE_FAILED-2026-09-13T15:37:05.907Z",
+    "StackName": "aa-wf15-staging",
+    "OperationId": "1591185b-aeca-4e9b-8455-564cc35137d9",
+    "LogicalResourceId": "FunctionAliaslive",
+    "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+    "ResourceType": "AWS::Lambda::Alias",
+    "Timestamp": "2026-09-13T15:37:05.907000+00:00",
+    "ResourceStatus": "UPDATE_FAILED",
+    "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: lambda:UpdateAlias on resource: arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging because no identity-based policy allows the lambda:UpdateAlias action (Service: Lambda, Status Code: 403, Request ID: 4937d8a3-8f1a-4d35-953c-d92b9fe9f1d7) (SDK Attempt Count: 1)\" (RequestToken: 7f3df12e-3157-1bc1-1f6f-d3738a96aea0, HandlerErrorCode: AccessDenied)",
+    "ResourceProperties": "{\"FunctionName\":\"aa-wf15-staging\",\"FunctionVersion\":\"3\",\"Name\":\"live\"}",
+    "ClientRequestToken": "aa-wf15-34766091078-staging"
+  },
+  {
+    "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+    "EventId": "FunctionAliaslive-UPDATE_FAILED-2026-09-13T15:36:49.260Z",
+    "StackName": "aa-wf15-staging",
+    "OperationId": "ef11c359-b43d-4f32-ad62-41d243c3cb82",
+    "LogicalResourceId": "FunctionAliaslive",
+    "PhysicalResourceId": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live",
+    "ResourceType": "AWS::Lambda::Alias",
+    "Timestamp": "2026-09-13T15:36:49.260000+00:00",
+    "ResourceStatus": "UPDATE_FAILED",
+    "ResourceStatusReason": "Resource handler returned message: \"User: arn:aws:sts::728616601473:assumed-role/aa-wf15-staging-cloudformation/AWSCloudFormation is not authorized to perform: lambda:UpdateAlias on resource: arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging because no identity-based policy allows the lambda:UpdateAlias action (Service: Lambda, Status Code: 403, Request ID: 8adeb441-0ea1-4d4c-ae77-4a43054538d4) (SDK Attempt Count: 1)\" (RequestToken: f63f5d8c-c1fe-acc5-9da3-49dfcfcf1b72, HandlerErrorCode: AccessDenied)",
+    "ResourceProperties": "{\"FunctionName\":\"aa-wf15-staging\",\"FunctionVersion\":\"4\",\"Name\":\"live\"}",
+    "ClientRequestToken": "aa-wf15-34766091078-staging"
+  }
+]

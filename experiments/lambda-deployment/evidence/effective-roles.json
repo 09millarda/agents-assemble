@@ -1,0 +1,408 @@
+{
+  "aa-wf15-staging-runtime": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-staging-runtime",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource": "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-staging:*"
+        }
+      ]
+    },
+    "attached": []
+  },
+  "aa-wf15-staging-cloudformation": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-staging-cloudformation",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "cloudformation.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:GetFunction",
+            "lambda:GetFunctionConfiguration",
+            "lambda:GetFunctionCodeSigningConfig",
+            "lambda:GetFunctionRecursionConfig",
+            "lambda:GetRuntimeManagementConfig",
+            "lambda:GetFunctionScalingConfig",
+            "lambda:GetProvisionedConcurrencyConfig",
+            "lambda:ListVersionsByFunction",
+            "lambda:ListTags",
+            "lambda:GetPolicy",
+            "lambda:GetAlias",
+            "lambda:ListAliases"
+          ],
+          "Resource": [
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging",
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:GetObjectVersion"
+          ],
+          "Resource": "arn:aws:s3:::aa-wf15-728616601473-eu-west-1-artifacts/releases/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": "iam:PassRole",
+          "Resource": "arn:aws:iam::728616601473:role/aa-wf15-staging-runtime",
+          "Condition": {
+            "StringEquals": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            }
+          }
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:DescribeLogGroups",
+            "logs:DescribeResourcePolicies"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:ListTagsForResource",
+            "logs:GetDataProtectionPolicy",
+            "logs:DescribeIndexPolicies"
+          ],
+          "Resource": [
+            "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-staging",
+            "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-staging:*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "apigateway:GET"
+          ],
+          "Resource": [
+            "arn:aws:apigateway:eu-west-1::/apis/mgb6g2svy6",
+            "arn:aws:apigateway:eu-west-1::/apis/mgb6g2svy6/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:UpdateFunctionCode",
+            "lambda:UpdateFunctionConfiguration",
+            "lambda:PublishVersion",
+            "lambda:TagResource",
+            "lambda:UntagResource"
+          ],
+          "Resource": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging"
+        },
+        {
+          "Effect": "Allow",
+          "Action": "lambda:UpdateAlias",
+          "Resource": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging"
+        }
+      ]
+    },
+    "attached": []
+  },
+  "aa-wf15-prod-runtime": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-prod-runtime",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource": "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-prod:*"
+        }
+      ]
+    },
+    "attached": []
+  },
+  "aa-wf15-prod-cloudformation": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-prod-cloudformation",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "cloudformation.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:GetFunction",
+            "lambda:GetFunctionConfiguration",
+            "lambda:GetFunctionCodeSigningConfig",
+            "lambda:GetFunctionRecursionConfig",
+            "lambda:GetRuntimeManagementConfig",
+            "lambda:GetFunctionScalingConfig",
+            "lambda:GetProvisionedConcurrencyConfig",
+            "lambda:ListVersionsByFunction",
+            "lambda:ListTags",
+            "lambda:GetPolicy",
+            "lambda:GetAlias",
+            "lambda:ListAliases"
+          ],
+          "Resource": [
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod",
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:GetObjectVersion"
+          ],
+          "Resource": "arn:aws:s3:::aa-wf15-728616601473-eu-west-1-artifacts/releases/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": "iam:PassRole",
+          "Resource": "arn:aws:iam::728616601473:role/aa-wf15-prod-runtime",
+          "Condition": {
+            "StringEquals": {
+              "iam:PassedToService": "lambda.amazonaws.com"
+            }
+          }
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:DescribeLogGroups",
+            "logs:DescribeResourcePolicies"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:ListTagsForResource",
+            "logs:GetDataProtectionPolicy",
+            "logs:DescribeIndexPolicies"
+          ],
+          "Resource": [
+            "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-prod",
+            "arn:aws:logs:eu-west-1:728616601473:log-group:/aws/lambda/aa-wf15-prod:*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "apigateway:GET"
+          ],
+          "Resource": [
+            "arn:aws:apigateway:eu-west-1::/apis/gv4ul4ugj1",
+            "arn:aws:apigateway:eu-west-1::/apis/gv4ul4ugj1/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:UpdateFunctionCode",
+            "lambda:UpdateFunctionConfiguration",
+            "lambda:PublishVersion",
+            "lambda:TagResource",
+            "lambda:UntagResource"
+          ],
+          "Resource": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod"
+        },
+        {
+          "Effect": "Allow",
+          "Action": "lambda:UpdateAlias",
+          "Resource": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod"
+        }
+      ]
+    },
+    "attached": []
+  },
+  "aa-wf15-staging-github": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-staging-github",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::728616601473:oidc-provider/token.actions.githubusercontent.com"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringEquals": {
+              "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+              "token.actions.githubusercontent.com:sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main"
+            },
+            "DateLessThan": {
+              "aws:CurrentTime": "2026-09-14T15:34:38Z"
+            }
+          }
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "cloudformation:CreateChangeSet",
+            "cloudformation:DescribeChangeSet",
+            "cloudformation:ExecuteChangeSet",
+            "cloudformation:DeleteChangeSet",
+            "cloudformation:DescribeStacks",
+            "cloudformation:DescribeStackEvents",
+            "cloudformation:DescribeStackResources",
+            "cloudformation:ListStackResources",
+            "cloudformation:ListChangeSets",
+            "cloudformation:GetTemplate"
+          ],
+          "Resource": [
+            "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+            "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-*-staging/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:GetObjectVersion"
+          ],
+          "Resource": "arn:aws:s3:::aa-wf15-728616601473-eu-west-1-artifacts/releases/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:GetAlias",
+            "lambda:GetFunction"
+          ],
+          "Resource": [
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging",
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:*"
+          ]
+        }
+      ]
+    },
+    "attached": []
+  },
+  "aa-wf15-prod-github": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-prod-github",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::728616601473:oidc-provider/token.actions.githubusercontent.com"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringEquals": {
+              "token.actions.githubusercontent.com:sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+              "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            },
+            "DateLessThan": {
+              "aws:CurrentTime": "2026-09-14T15:34:38Z"
+            }
+          }
+        }
+      ]
+    },
+    "inline": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "cloudformation:CreateChangeSet",
+            "cloudformation:DescribeChangeSet",
+            "cloudformation:ExecuteChangeSet",
+            "cloudformation:DeleteChangeSet",
+            "cloudformation:DescribeStacks",
+            "cloudformation:DescribeStackEvents",
+            "cloudformation:DescribeStackResources",
+            "cloudformation:ListStackResources",
+            "cloudformation:ListChangeSets",
+            "cloudformation:GetTemplate"
+          ],
+          "Resource": [
+            "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+            "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15-*-prod/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:GetObjectVersion"
+          ],
+          "Resource": "arn:aws:s3:::aa-wf15-728616601473-eu-west-1-artifacts/releases/*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:GetAlias",
+            "lambda:GetFunction"
+          ],
+          "Resource": [
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod",
+            "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:*"
+          ]
+        }
+      ]
+    },
+    "attached": []
+  }
+}
