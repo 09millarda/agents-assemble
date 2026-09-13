@@ -493,6 +493,37 @@ export class ContextStore {
       }));
     });
   }
+  /** One bounded operational observation; this never grants execution authority. */
+  async observeWorker(incarnation: string) {
+    await this.transaction("worker-observation", async (client) => {
+      await client.query(
+        `INSERT INTO ${this.context}.worker_observation(singleton,incarnation,last_seen) VALUES(true,$1,clock_timestamp()) ON CONFLICT(singleton) DO UPDATE SET incarnation=EXCLUDED.incarnation,last_seen=EXCLUDED.last_seen`,
+        [incarnation],
+      );
+    });
+  }
+  async workerObservation() {
+    return this.transaction("worker-observation", async (client) => {
+      const result = await client.query<{
+        status: "unknown" | "recent" | "stale";
+        last_seen: Date | null;
+        stale_at: Date | null;
+        observed_at: Date;
+      }>(
+        `WITH observation AS MATERIALIZED (SELECT clock_timestamp() AS now)
+        SELECT CASE WHEN w.last_seen IS NULL THEN 'unknown' WHEN w.last_seen+interval '30 seconds'<=o.now THEN 'stale' ELSE 'recent' END AS status,
+        w.last_seen,w.last_seen+interval '30 seconds' AS stale_at,o.now AS observed_at
+        FROM observation o LEFT JOIN ${this.context}.worker_observation w ON w.singleton`,
+      );
+      const row = result.rows[0];
+      return {
+        status: row.status,
+        lastSeen: row.last_seen?.toISOString() ?? null,
+        staleAt: row.stale_at?.toISOString() ?? null,
+        observedAt: row.observed_at.toISOString(),
+      };
+    });
+  }
   async health(organizationId?: string) {
     return this.transaction("health", async (client) => {
       const result = await client.query<{

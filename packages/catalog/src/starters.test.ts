@@ -7,7 +7,7 @@ it.each(["new-feature", "bug-fix"] as const)(
   (kind) => {
     const definition = starterPlaybook(kind);
     expect(normalizeDefinition(JSON.parse(JSON.stringify(definition)))).toEqual(definition);
-    expect(toTypeScript(definition)).toContain('"productionApproval"');
+    expect(toTypeScript(definition)).toContain("productionApproval");
     expect(Object.keys(definition.dependencies)).toEqual(
       expect.arrayContaining([
         "approveSpec",

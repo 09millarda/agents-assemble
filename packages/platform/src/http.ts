@@ -34,6 +34,7 @@ interface Endpoint<B, Q, R> {
   auth?: AccessLevel;
   body?: z.ZodType<B>;
   query?: z.ZodType<Q>;
+  params?: z.ZodType<Record<string, string>>;
   response: z.ZodType<R>;
   operationHeader?: string;
   verifyRaw?: (request: Request, bytes: Uint8Array) => Promise<void>;
@@ -93,12 +94,23 @@ export class ApiRouter {
     const pathParams = [...spec.path.matchAll(/:([A-Za-z][A-Za-z0-9_]*)/g)].map(
       (match) => match[1],
     );
+    const paramsSchema =
+      spec.params ??
+      z.strictObject(
+        Object.fromEntries(
+          pathParams.map((name) => [
+            name,
+            name === "id" || name.endsWith("Id") ? z.uuid() : z.string().min(1).max(160),
+          ]),
+        ),
+      );
+    const documentedParams = schema(paramsSchema).properties ?? {};
     const documentedPath = path.replace(/:([A-Za-z][A-Za-z0-9_]*)/g, "{$1}");
     const parameters: unknown[] = pathParams.map((name) => ({
       name,
       in: "path",
       required: true,
-      schema: { type: "string" },
+      schema: documentedParams[name] ?? { type: "string" },
     }));
     if (auth !== "public" && auth !== "user")
       parameters.push({
@@ -217,10 +229,13 @@ export class ApiRouter {
           throw new DomainError("invalid_query", "The query parameters are invalid", 400);
         query = result.data;
       }
+      const params = paramsSchema.safeParse(context.req.param());
+      if (!params.success)
+        throw new DomainError("invalid_path", "The path parameters are invalid", 400);
       const request: ApiRequest<B, Q> = {
         body,
         query,
-        params: context.req.param(),
+        params: params.data,
         get actor() {
           if (!actor) throw new DomainError("unauthorized", "Organization access is required", 401);
           return actor;

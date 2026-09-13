@@ -562,20 +562,45 @@ export function validateDefinition(value: unknown): Definition {
         "dependency_digest",
         `Action ${action.id} digest does not match its complete contract`,
       );
+    if (action.adapterVersion !== "1.0.0")
+      throw new DefinitionError(
+        "unsupported_adapter_version",
+        `Action ${action.id} requires unsupported adapter version ${action.adapterVersion}; this release implements 1.0.0`,
+      );
     if (
-      action.retry.maxAttempts > 1 &&
-      (!action.retry.conformance || !action.retry.safeErrorClasses.length)
+      (action.kind === "deterministic" &&
+        (!(action.executor === "runner" ? ["prepare", "check"] : ["echo"]).includes(
+          action.adapter,
+        ) ||
+          (action.executor === "service" && action.effect !== "read"))) ||
+      (action.kind === "integration" &&
+        ![
+          "publishPR",
+          "waitMerge",
+          "staging",
+          "production",
+          "verifyHealth",
+          "recoverProduction",
+        ].includes(action.adapter))
     )
-      throw new DefinitionError("unsafe_retry", "Retries require pinned safe-class conformance");
+      throw new DefinitionError(
+        "unsupported_adapter",
+        `Action ${action.id} names unsupported ${action.kind} ${action.executor} adapter ${action.adapter}`,
+      );
+    if (action.retry.maxAttempts > 1)
+      throw new DefinitionError(
+        "unsafe_retry",
+        "This release has no qualified automatic invocation retry adapter; maxAttempts must be 1. A supplied conformance digest does not grant retry authority.",
+      );
     if (action.permissions.some((permission) => !definition.permissions.includes(permission)))
       throw new DefinitionError("permission_gap", "Action permissions exceed declared closure");
     if (
       (action.kind === "agent" && action.executor !== "runner") ||
-      (action.kind === "human" && action.executor !== "service")
+      (["human", "integration"].includes(action.kind) && action.executor !== "service")
     )
       throw new DefinitionError(
         "executor_mismatch",
-        "Agent actions run on runners; human waits run on the service",
+        "Agent actions run on runners; human waits and integrations run on the service",
       );
   }
   const counter = { count: 0 };
@@ -914,5 +939,5 @@ export function normalizeDefinition(value: unknown): Definition {
   return JSON.parse(canonical(validateDefinition(value))) as Definition;
 }
 export function toTypeScript(value: unknown): string {
-  return `import { definePlaybook } from "@aa/catalog/builder";\n\nexport default definePlaybook(${JSON.stringify(normalizeDefinition(value), null, 2)});\n`;
+  return `import { definePlaybook } from "@aa/catalog/builder";\n\nexport default definePlaybook(JSON.parse(${JSON.stringify(canonical(normalizeDefinition(value)))}));\n`;
 }

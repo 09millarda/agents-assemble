@@ -31,17 +31,21 @@ export async function migrate(databaseUrl: string) {
         CREATE INDEX IF NOT EXISTS delivery_due ON ${name}.delivery(available_at) WHERE delivered_at IS NULL;
         CREATE TABLE IF NOT EXISTS ${name}.inbox(organization_id uuid NOT NULL,source text NOT NULL,message_id uuid NOT NULL,aggregate_id uuid NOT NULL,sequence int NOT NULL,payload_digest text NOT NULL,processed_at timestamptz NOT NULL DEFAULT clock_timestamp(),PRIMARY KEY(organization_id,source,message_id),UNIQUE(organization_id,source,aggregate_id,sequence));
         CREATE TABLE IF NOT EXISTS ${name}.inbox_cursor(organization_id uuid NOT NULL,source text NOT NULL,aggregate_id uuid NOT NULL,sequence int NOT NULL,PRIMARY KEY(organization_id,source,aggregate_id));
+        CREATE TABLE IF NOT EXISTS ${name}.worker_observation(singleton boolean PRIMARY KEY DEFAULT true CHECK(singleton),incarnation uuid NOT NULL,last_seen timestamptz NOT NULL);
         CREATE INDEX IF NOT EXISTS aggregates_filter ON ${name}.aggregates USING GIN(data jsonb_path_ops);
         CREATE OR REPLACE FUNCTION ${name}.protect_accepted_records() RETURNS trigger LANGUAGE plpgsql AS $guard$
         DECLARE node record;
         BEGIN
-          IF OLD.kind IN ('version','revision','candidate','checkpoint','receipt','component','package_blob','publisher_evidence','runtime_profile','admission-snapshot','consumer-checkpoint-receipt','effect-result-evidence','human-expiry-evidence','deployment-profile') THEN
+          IF OLD.kind IN ('version','revision','candidate','checkpoint','receipt','component','package_blob','publisher_evidence','runtime_profile','admission-snapshot','consumer-checkpoint-receipt','effect-result-evidence','human-expiry-evidence','deployment-profile','public_candidate','publication','decision','appeal_decision','human-acceptance','launch-grant','output','export_origin','exported_component','fork_source','issue-intent','verified-issue-request','deployment-claim','deployment-receipt','delivery-build') OR (TG_TABLE_SCHEMA='integrations' AND OLD.kind='release') THEN
             RAISE EXCEPTION 'accepted_record_is_immutable';
           END IF;
+          IF OLD.kind='assignment' AND (NEW.data-'status'-'native') IS DISTINCT FROM (OLD.data-'status'-'native') THEN RAISE EXCEPTION 'assignment_authority_is_immutable'; END IF;
+          IF OLD.kind='conversation' AND (NEW.data-'status') IS DISTINCT FROM (OLD.data-'status') THEN RAISE EXCEPTION 'conversation_command_is_immutable'; END IF;
           IF OLD.kind='run' THEN
+            IF OLD.data->'engine'->'output' IS NOT NULL AND NEW.data->'engine'->'output' IS DISTINCT FROM OLD.data->'engine'->'output' THEN RAISE EXCEPTION 'accepted_run_output_is_immutable'; END IF;
             IF OLD.data->'manifest' IS NOT NULL AND NEW.data->'manifest' IS DISTINCT FROM OLD.data->'manifest' THEN RAISE EXCEPTION 'admitted_manifest_is_immutable'; END IF;
             IF OLD.data->'admissionVerdict' IS NOT NULL AND NEW.data->'admissionVerdict' IS DISTINCT FROM OLD.data->'admissionVerdict' THEN RAISE EXCEPTION 'admission_verdict_is_immutable'; END IF;
-            IF OLD.data->>'status' IN ('completed','canceled','rejected','superseded') AND NEW.data->>'status' IS DISTINCT FROM OLD.data->>'status' THEN RAISE EXCEPTION 'terminal_verdict_is_immutable'; END IF;
+            IF OLD.data->>'status' IN ('completed','canceled','rejected','superseded','failed') AND NEW.data->>'status' IS DISTINCT FROM OLD.data->>'status' THEN RAISE EXCEPTION 'terminal_verdict_is_immutable'; END IF;
             FOR node IN SELECT key,value FROM jsonb_each(COALESCE(OLD.data->'engine'->'nodes','{}'::jsonb)) LOOP
               IF node.value->>'status'='completed' AND NEW.data->'engine'->'nodes'->node.key IS DISTINCT FROM node.value THEN RAISE EXCEPTION 'accepted_output_is_immutable'; END IF;
             END LOOP;
@@ -54,6 +58,7 @@ export async function migrate(databaseUrl: string) {
         CREATE TRIGGER protect_accepted BEFORE UPDATE ON ${name}.aggregates FOR EACH ROW EXECUTE FUNCTION ${name}.protect_accepted_records();
         GRANT SELECT,INSERT,UPDATE ON ${name}.aggregates,${name}.delivery TO aa_${name};
         GRANT SELECT,INSERT,UPDATE ON ${name}.inbox_cursor TO aa_${name};
+        GRANT SELECT,INSERT,UPDATE ON ${name}.worker_observation TO aa_${name};
         GRANT SELECT,INSERT ON ${name}.inbox TO aa_${name};
         GRANT SELECT,INSERT ON ${name}.revisions,${name}.idempotency,${name}.outbox TO aa_${name};`);
     }

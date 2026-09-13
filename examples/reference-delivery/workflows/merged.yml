@@ -1,0 +1,20 @@
+name: Agents Assemble human merge notification
+on:
+  pull_request_target:
+    types: [closed]
+permissions: {contents: read, actions: write}
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-24.04
+    steps:
+      # Only trusted base workflow code runs here; no pull-request checkout or build.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with: {persist-credentials: false}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: '24'}
+      - run: npm ci --ignore-scripts --prefix examples/reference-delivery
+      - run: node examples/reference-delivery/scripts/workflow.ts notify
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AA_WORKFLOW_REF: ${{ vars.AA_WORKFLOW_REF }}

@@ -12,13 +12,23 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "tsx scripts/dev.ts",
+    "api": "tsx apps/api/src/main.ts",
+    "worker": "tsx apps/worker/src/main.ts",
     "db:migrate": "tsx scripts/migrate.ts",
+    "bootstrap": "tsx scripts/bootstrap.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:integration": "vitest run tests/integration",
+    "test:browser": "playwright test",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "build": "tsc --noEmit",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build"
+    "build": "tsx scripts/build.ts",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "inventory": "tsx scripts/inventory.ts",
+    "dco": "tsx scripts/dco.ts",
+    "backup": "tsx scripts/backup.ts",
+    "restore": "tsx scripts/restore.ts"
   },
   "dependencies": {
     "@hono/node-server": "2.1.1",

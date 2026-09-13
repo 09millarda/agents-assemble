@@ -1,3 +1,8 @@
+import { execFile } from "node:child_process";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { promisify } from "node:util";
 import { describe, expect, it } from "vitest";
 import {
   type Definition,
@@ -19,7 +24,7 @@ export function fixture(body: Node = { id: "entry", type: "sequence", children: 
     version: "1.0.0",
     kind: "deterministic" as const,
     executor: "service" as const,
-    adapter: "check",
+    adapter: "echo",
     adapterVersion: "1.0.0",
     inputs: empty,
     outputs: empty,
@@ -50,6 +55,29 @@ export function fixture(body: Node = { id: "entry", type: "sequence", children: 
 }
 const call = (id: string): Node => ({ id, type: "call", action: "check", with: { literal: {} } });
 describe("public canonical definition contract", () => {
+  it("executes generated TypeScript without interpreting reserved JSON keys as JavaScript prototype syntax", async () => {
+    const source = fixture({
+      id: "finish",
+      type: "end",
+      result: { literal: JSON.parse('{"__proto__":{"retained":true},"text":"Unicode ☃"}') },
+    });
+    source.outputs = {};
+    const directory = await mkdtemp(join(process.cwd(), ".generated-playbook-"));
+    try {
+      const path = join(directory, "playbook.ts");
+      await writeFile(path, toTypeScript(source));
+      const result = await promisify(execFile)(process.execPath, [
+        "--import=tsx",
+        "--input-type=module",
+        "-e",
+        "const module = await import(process.argv[1]); process.stdout.write(JSON.stringify(module.default));",
+        pathToFileURL(path).href,
+      ]);
+      expect(JSON.parse(result.stdout)).toEqual(source);
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
   it("round trips without losing policy, presentation or lexical IDs", () => {
     const source = fixture({
       id: "entry",
@@ -59,7 +87,7 @@ describe("public canonical definition contract", () => {
     });
     source.presentation = { "editor:data": JSON.parse('{"__proto__":{"x":1}}') };
     expect(normalizeDefinition(JSON.parse(JSON.stringify(source)))).toEqual(source);
-    expect(toTypeScript(source)).toContain('"__proto__"');
+    expect(toTypeScript(source)).toContain("__proto__");
   });
   it("rejects hidden behavior, unresolved dependency and tampered pinned action", () => {
     expect(() => validateDefinition({ ...fixture(), script: "execute()" })).toThrow();
@@ -69,6 +97,33 @@ describe("public canonical definition contract", () => {
     const value = fixture();
     value.dependencies.check.timeoutSeconds++;
     expect(() => validateDefinition(value)).toThrow(/digest/);
+  });
+  it("rejects self-claimed automatic retry conformance before publication", () => {
+    const source = fixture();
+    const { digest: _prior, ...action } = source.dependencies.check;
+    action.retry = {
+      maxAttempts: 2,
+      safeErrorClasses: ["claimed_safe"],
+      conformance: "a".repeat(64),
+    };
+    source.dependencies.check = { ...action, digest: digest(action) };
+    expect(() => validateDefinition(source)).toThrow(
+      /no qualified automatic invocation retry adapter/,
+    );
+  });
+  it.each([
+    { adapterVersion: "2.0.0" },
+    { adapter: "check" },
+    { effect: "workspace_write" as const },
+    { executor: "runner" as const, adapter: "unknown" },
+    { kind: "integration" as const, adapter: "unknown" },
+    { kind: "integration" as const, executor: "runner" as const, adapter: "publishPR" },
+  ])("rejects unavailable adapter semantics even with a matching content digest: %j", (change) => {
+    const source = fixture();
+    const { digest: _prior, ...prior } = source.dependencies.check;
+    const action = { ...prior, ...change };
+    source.dependencies.check = { ...action, digest: digest(action) };
+    expect(() => validateDefinition(source)).toThrow(/unsupported|integrations run on the service/);
   });
   it("rejects out-of-scope references, visible shadowing and concurrent sibling reads", () => {
     expect(() =>

@@ -33,6 +33,8 @@ export const runtimeSchema = z.strictObject({
 export const environmentSchema = z.strictObject({
   profileId: id,
   revision: digest,
+  resolverPolicy: z.literal("local-file"),
+  rotationPolicy: z.literal("refresh_per_attempt"),
   variables: z.record(z.string().regex(/^[A-Z_][A-Z0-9_]*$/), z.string().max(8192)),
   secretBindings: z
     .array(z.strictObject({ name: z.string().regex(/^[A-Z_][A-Z0-9_]*$/), logicalName: id }))

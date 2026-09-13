@@ -1,0 +1,16 @@
+Agents Assemble reference delivery
+Copyright 2026 Agents Assemble contributors
+
+Project-owned source, documentation and workflow scripts are licensed under
+Apache License 2.0. See LICENSE for the complete license text.
+
+The Lambda bundle includes Hono and Zod, each licensed under the MIT License.
+Their original copyright notices and complete license texts are copied from
+the exact installed packages into dist/licenses/hono-LICENSE and
+dist/licenses/zod-LICENSE during the build. The deployment ZIP retains these
+files under licenses/. Linked legal-comment notices, when emitted by esbuild,
+are also retained alongside the generated handler.
+
+Third-party components retain their own licenses and notices. The build checks
+its actual bundled inputs and rejects additional dependencies until their full
+license texts are explicitly included.
