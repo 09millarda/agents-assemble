@@ -1,0 +1,1 @@
+{"operation":"CreateChangeSet","stack":"aa-wf15l-staging","outcome":"ValidationError: role invalid or cannot be assumed","role":"aa-wf15l-staging-cloudformation","interpretation":"Explicit rejection; inspect role/stack state before resuming. IAM propagation is a hypothesis until verified."}

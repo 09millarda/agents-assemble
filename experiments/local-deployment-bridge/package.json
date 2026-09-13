@@ -1,0 +1,10 @@
+{
+  "name": "local-deployment-bridge-throwaway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "jose": "6.2.12",
+    "pg": "8.16.3"
+  }
+}
