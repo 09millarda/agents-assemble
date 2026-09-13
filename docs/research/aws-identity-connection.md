@@ -27,6 +27,28 @@ write permissions have not been tested. An
 Do not remove the provider check, replace federation with long-lived keys, or
 switch accounts to work around this restriction. Keep #15 open pending access.
 
+## Browser diagnosis: AWS-managed simplified experience
+
+The owner requested browser operation and offered to sign in. The browser was
+already authenticated to Proof of Concept. Opening Organizations displayed
+“Service AWS Organizations unavailable” and “Activate advanced features to access
+this service.” AWS Settings exposes an advanced activation form, currently left
+open before email verification and final activation. No account setting changed.
+
+This refines the earlier generic organization-administrator diagnosis: the
+restrictions belong to AWS's simplified new-account experience. The supported
+activation flow transfers organization administration to the owner. AWS documents
+that [advanced activation is irreversible and removes simplified spend limits](https://docs.aws.amazon.com/accounts/latest/reference/activate-advanced-features.html).
+It also enables additional services and regional controls; the Ireland target
+still requires checking the effective regional policy after activation.
+
+The form requires a team name and verified management-account email. The owner
+must complete email verification in the browser. Review the actual activation
+confirmation and obtain any required approval before submitting this broader
+account change. Keep the existing identity source; do not change it incidentally.
+No activation, organization-policy edit, provider creation, or role creation has
+been performed. GitHub federation remains pending.
+
 ## Observed GitHub identity
 
 [Actual run 34757336433, attempt 1](https://github.com/09millarda/agents-assemble/actions/runs/34757336433)
