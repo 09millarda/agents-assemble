@@ -4,14 +4,13 @@ Date: 2026-09-12 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 ## Current verdict
 
-**Live AWS validation deferred at the owner’s request; decision open.** The owner
-asked to skip AWS setup after repeated sign-in failures. Stop authentication
-attempts and continue architecture planning with the provider evidence explicitly
-unproved. Resume AWS setup only when the owner asks to revisit it. This defers
-validation; it does not remove deployment automation from the release scope.
+**Authentication resumed at the owner's request; decision open.** The owner supplied
+successful CloudShell identity evidence on 2026-09-13. A real GitHub dispatch
+observed the repository's OIDC claims; the identity-only CloudShell connection
+helper is prepared. See [connection scope and evidence](aws-identity-connection.md).
+Local browser login remains unresolved, and GitHub-to-AWS assumption is pending.
 
-No real workflow dispatch, Lambda
-deployment, production promotion, health failure or rollback has been exercised.
+No Lambda deployment, production promotion, health failure or rollback has been exercised.
 The proposals below are experiment inputs, not an accepted ADR or passing result.
 They preserve the owner-approved [release contract](../first-release-contract.md)
 and [Execution/Integrations ownership](../architecture/0003-durable-execution-and-recovery.md).
@@ -37,18 +36,17 @@ The owner selected the profile name `agents-assemble`. AWS CLI `2.36.44` was
 installed under the local user after the official installer verified its GPG
 signature. The profile has region `eu-west-1` and JSON output. Browser sign-in
 did not establish CLI credentials. The pending login was stopped at the owner’s
-request; account identity and permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
+request. The owner later supplied CloudShell identity evidence; effective permissions remain unverified. This supersedes only the initial CLI/profile absence observation,
 not the archived preflight or unexercised deployment cases.
 
 ## Required environment and bounded resource proposal
 
 The owner selected AWS Europe (Ireland), `eu-west-1`, and the current repository,
 `09millarda/agents-assemble`, for the disposable fixture. This supersedes the
-earlier dedicated-repository proposal. The AWS account and authentication route
-remain to identify; a CLI profile is simply a locally named collection of
+earlier dedicated-repository proposal. CloudShell account `749771281623` is now identified for bootstrap; a CLI profile is simply a locally named collection of
 connection/sign-in settings and need not already exist. Record the permitted
 spend/duration and resource prefix before provisioning. Account/role/profile names are metadata;
-credentials must be established through the normal local authentication flow,
+credentials must be established through the provider authentication flow,
 never included in issue comments, chat or evidence archives.
 
 Prepare a concrete resource inventory after those inputs are known: one artifact
@@ -183,6 +181,5 @@ retain disposable application/probe code on the scratch branch.
 
 Resolve #15 only after the evidence supports an explicit adapter verdict and the
 real deployment/health/restoration acceptance cases are established, or the owner
-explicitly changes the acceptance scope. Until then keep the issue open and deferred,
-record the owner-directed pause in the map, and publish no
-accepted ADR. No speculative child decisions follow from unavailable access.
+explicitly changes the acceptance scope. Until then keep the issue open, record current prerequisite status in the map,
+and publish no accepted ADR. No speculative child decisions follow from unavailable access.

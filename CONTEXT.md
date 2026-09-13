@@ -102,9 +102,9 @@ Decision #6's [conformance report](docs/research/playbook-conformance.md) retain
 
 The first release boundary is settled in #4. Before implementation tickets, validate the integrated definition/execution contract, apply the owner-selected #5 license/parity policy and settle the remaining graduated decision #15, and prove the complete harness-to-human-to-checkpoint-to-deployment journey. #8 supplies separate native-account/fresh-session and daemon fault evidence; it does not yet connect real native human waits, production Execution, authenticated transport and verified publication. Later decisions must include actual aggregate invariants, command/event schemas, compatibility policy, testable recovery guarantees, and examples of concurrent human/agent behavior. This document preserves the destination while those details remain open.
 
-The owner subsequently deferred #15's live AWS setup/validation and asked to
-continue architecture planning. Keep that evidence gap explicit while independent
-specification work proceeds; no further AWS sign-in is requested. ADR 0014/#18
+After initially deferring #15, the owner resumed AWS authentication and supplied
+successful CloudShell identity evidence. The [identity connection setup](docs/research/aws-identity-connection.md)
+is prepared; GitHub-to-AWS assumption and deployment qualification remain pending. ADR 0014/#18
 settles project scope and admission ownership through documentary review. It does
 not establish integrated runtime conformance or remove deployment qualification
 from the release requirements.
