@@ -1,0 +1,431 @@
+{
+  "evidence_class": "actual-github-oidc-with-controlled-co-resident-claim-gate",
+  "runtime": "v22.23.2",
+  "claims": {
+    "iss": "https://token.actions.githubusercontent.com",
+    "aud": "urn:agents-assemble:decision-15:claim:dab66613-0764-4432-8883-0c38acda9e58",
+    "sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+    "repository_id": "1366483946",
+    "repository_owner_id": "11366827",
+    "ref": "refs/heads/main",
+    "sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+    "event_name": "workflow_dispatch",
+    "workflow_ref": "09millarda/agents-assemble/.github/workflows/deployment-oidc-claim-probe.yml@refs/heads/main",
+    "workflow_sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+    "run_id": "34769912699",
+    "run_attempt": "1",
+    "iat": 1789318409,
+    "nbf": 1789318109,
+    "exp": 1789318709
+  },
+  "checks": [
+    {
+      "name": "real token signature, issuer, audience, time and exact execution policy verified",
+      "passed": true
+    },
+    {
+      "name": "valid signed token rejected by mismatched repository, owner, workflow, ref, run or attempt policy",
+      "passed": true
+    },
+    {
+      "name": "HTTP gate denies absent token, real wrong-audience token and tampered signed payload",
+      "passed": true
+    },
+    {
+      "name": "changed manifest digest and caller-selected identity rejected without consuming authority",
+      "passed": true
+    },
+    {
+      "name": "two HTTP requests admit one durable claim; token replay cannot consume authority again",
+      "passed": true
+    },
+    {
+      "name": "valid authenticated job cannot claim revoked authority",
+      "passed": true
+    }
+  ],
+  "observations": [
+    {
+      "stage": "authentication",
+      "verdict": "rejected"
+    },
+    {
+      "stage": "authentication",
+      "verdict": "rejected"
+    },
+    {
+      "stage": "authentication",
+      "verdict": "rejected"
+    },
+    {
+      "stage": "binding",
+      "verdict": "rejected"
+    },
+    {
+      "stage": "input",
+      "verdict": "rejected"
+    },
+    {
+      "stage": "claim",
+      "effect": "approved",
+      "claims": {
+        "iss": "https://token.actions.githubusercontent.com",
+        "aud": "urn:agents-assemble:decision-15:claim:dab66613-0764-4432-8883-0c38acda9e58",
+        "sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+        "repository_id": "1366483946",
+        "repository_owner_id": "11366827",
+        "ref": "refs/heads/main",
+        "sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "event_name": "workflow_dispatch",
+        "workflow_ref": "09millarda/agents-assemble/.github/workflows/deployment-oidc-claim-probe.yml@refs/heads/main",
+        "workflow_sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "run_id": "34769912699",
+        "run_attempt": "1",
+        "iat": 1789318409,
+        "nbf": 1789318109,
+        "exp": 1789318709
+      },
+      "result": {
+        "verdict": "claim-admitted",
+        "generation": 1,
+        "consumed_at": "2026-09-13T16:53:30.115Z"
+      }
+    },
+    {
+      "stage": "claim",
+      "effect": "approved",
+      "claims": {
+        "iss": "https://token.actions.githubusercontent.com",
+        "aud": "urn:agents-assemble:decision-15:claim:dab66613-0764-4432-8883-0c38acda9e58",
+        "sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+        "repository_id": "1366483946",
+        "repository_owner_id": "11366827",
+        "ref": "refs/heads/main",
+        "sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "event_name": "workflow_dispatch",
+        "workflow_ref": "09millarda/agents-assemble/.github/workflows/deployment-oidc-claim-probe.yml@refs/heads/main",
+        "workflow_sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "run_id": "34769912699",
+        "run_attempt": "1",
+        "iat": 1789318409,
+        "nbf": 1789318109,
+        "exp": 1789318709
+      },
+      "result": {
+        "verdict": "rejected",
+        "reason": "already-consumed"
+      }
+    },
+    {
+      "stage": "claim",
+      "effect": "approved",
+      "claims": {
+        "iss": "https://token.actions.githubusercontent.com",
+        "aud": "urn:agents-assemble:decision-15:claim:dab66613-0764-4432-8883-0c38acda9e58",
+        "sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+        "repository_id": "1366483946",
+        "repository_owner_id": "11366827",
+        "ref": "refs/heads/main",
+        "sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "event_name": "workflow_dispatch",
+        "workflow_ref": "09millarda/agents-assemble/.github/workflows/deployment-oidc-claim-probe.yml@refs/heads/main",
+        "workflow_sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "run_id": "34769912699",
+        "run_attempt": "1",
+        "iat": 1789318409,
+        "nbf": 1789318109,
+        "exp": 1789318709
+      },
+      "result": {
+        "verdict": "rejected",
+        "reason": "already-consumed"
+      }
+    },
+    {
+      "stage": "claim",
+      "effect": "revoked",
+      "claims": {
+        "iss": "https://token.actions.githubusercontent.com",
+        "aud": "urn:agents-assemble:decision-15:claim:dab66613-0764-4432-8883-0c38acda9e58",
+        "sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+        "repository_id": "1366483946",
+        "repository_owner_id": "11366827",
+        "ref": "refs/heads/main",
+        "sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "event_name": "workflow_dispatch",
+        "workflow_ref": "09millarda/agents-assemble/.github/workflows/deployment-oidc-claim-probe.yml@refs/heads/main",
+        "workflow_sha": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+        "run_id": "34769912699",
+        "run_attempt": "1",
+        "iat": 1789318409,
+        "nbf": 1789318109,
+        "exp": 1789318709
+      },
+      "result": {
+        "verdict": "rejected",
+        "reason": "authority-closed"
+      }
+    }
+  ],
+  "snapshot": {
+    "environments": [
+      {
+        "id": "approved",
+        "owner": "approved",
+        "current_release": "fixture-prior",
+        "generation": 1,
+        "hold": false
+      },
+      {
+        "id": "revoked",
+        "owner": null,
+        "current_release": "fixture-prior",
+        "generation": 0,
+        "hold": false
+      }
+    ],
+    "effects": [
+      {
+        "id": "approved",
+        "env": "approved",
+        "manifest": {
+          "artifact": "fixture-sha256",
+          "environment": "approved",
+          "configuration": {
+            "mode": "test"
+          },
+          "health_policy": "fixture-health",
+          "expected_prior": "fixture-prior",
+          "rollback_policy": "fixture-rollback",
+          "rollback_target": {
+            "artifact": "fixture-prior"
+          },
+          "staging_receipt": "seeded-verified-staging",
+          "artifact_version": "fixture-immutable-version",
+          "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+          "environment_generation": 0
+        },
+        "digest": "b33b5493a646f234263fa36418a776f13ef07522f176746dffe682fec91d86dc",
+        "expected_prior": "fixture-prior",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T16:58:30.001Z",
+        "rollback_until": "2026-09-13T16:58:30.001Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "claimed",
+        "claim_run": "34769912699",
+        "claim_attempt": 1,
+        "consumed_at": "2026-09-13T16:53:30.115Z",
+        "receipt": null
+      },
+      {
+        "id": "revoked",
+        "env": "revoked",
+        "manifest": {
+          "artifact": "fixture-sha256",
+          "environment": "revoked",
+          "configuration": {
+            "mode": "test"
+          },
+          "health_policy": "fixture-health",
+          "expected_prior": "fixture-prior",
+          "rollback_policy": "fixture-rollback",
+          "rollback_target": {
+            "artifact": "fixture-prior"
+          },
+          "staging_receipt": "seeded-verified-staging",
+          "artifact_version": "fixture-immutable-version",
+          "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+          "environment_generation": 0
+        },
+        "digest": "6a0c424818084f31d4ad1cb136730717252ca77a1b66b08ed039c3a758790ee2",
+        "expected_prior": "fixture-prior",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T16:58:30.003Z",
+        "rollback_until": "2026-09-13T16:58:30.003Z",
+        "revoked": true,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      }
+    ],
+    "inbox": [],
+    "outbox": [
+      {
+        "id": "claim:approved",
+        "payload": {
+          "run": "34769912699",
+          "digest": "b33b5493a646f234263fa36418a776f13ef07522f176746dffe682fec91d86dc",
+          "effect": "approved",
+          "attempt": 1,
+          "generation": 1,
+          "consumed_at": "2026-09-13T16:53:30.115Z"
+        }
+      }
+    ],
+    "journal": [
+      {
+        "id": "1",
+        "command": {
+          "id": "approved",
+          "op": "claim",
+          "env": "approved",
+          "run": "34769912699",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "artifact": "fixture-sha256",
+            "environment": "approved",
+            "configuration": {
+              "mode": "test"
+            },
+            "health_policy": "fixture-health",
+            "expected_prior": "fixture-prior",
+            "rollback_policy": "fixture-rollback",
+            "rollback_target": {
+              "artifact": "fixture-prior"
+            },
+            "staging_receipt": "seeded-verified-staging",
+            "artifact_version": "fixture-immutable-version",
+            "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+            "environment_generation": 0
+          }
+        },
+        "result": {
+          "verdict": "claim-admitted",
+          "generation": 1,
+          "consumed_at": "2026-09-13T16:53:30.115Z"
+        }
+      },
+      {
+        "id": "2",
+        "command": {
+          "id": "approved",
+          "op": "claim",
+          "env": "approved",
+          "run": "34769912699",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "artifact": "fixture-sha256",
+            "environment": "approved",
+            "configuration": {
+              "mode": "test"
+            },
+            "health_policy": "fixture-health",
+            "expected_prior": "fixture-prior",
+            "rollback_policy": "fixture-rollback",
+            "rollback_target": {
+              "artifact": "fixture-prior"
+            },
+            "staging_receipt": "seeded-verified-staging",
+            "artifact_version": "fixture-immutable-version",
+            "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+            "environment_generation": 0
+          }
+        },
+        "result": {
+          "reason": "already-consumed",
+          "verdict": "rejected"
+        }
+      },
+      {
+        "id": "3",
+        "command": {
+          "id": "approved",
+          "op": "claim",
+          "env": "approved",
+          "run": "34769912699",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "artifact": "fixture-sha256",
+            "environment": "approved",
+            "configuration": {
+              "mode": "test"
+            },
+            "health_policy": "fixture-health",
+            "expected_prior": "fixture-prior",
+            "rollback_policy": "fixture-rollback",
+            "rollback_target": {
+              "artifact": "fixture-prior"
+            },
+            "staging_receipt": "seeded-verified-staging",
+            "artifact_version": "fixture-immutable-version",
+            "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+            "environment_generation": 0
+          }
+        },
+        "result": {
+          "reason": "already-consumed",
+          "verdict": "rejected"
+        }
+      },
+      {
+        "id": "4",
+        "command": {
+          "id": "revoked",
+          "op": "revoke",
+          "env": "revoked",
+          "context": "execution"
+        },
+        "result": {
+          "verdict": "future-admission-closed",
+          "already_in_flight": false
+        }
+      },
+      {
+        "id": "5",
+        "command": {
+          "id": "revoked",
+          "op": "claim",
+          "env": "revoked",
+          "run": "34769912699",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "artifact": "fixture-sha256",
+            "environment": "revoked",
+            "configuration": {
+              "mode": "test"
+            },
+            "health_policy": "fixture-health",
+            "expected_prior": "fixture-prior",
+            "rollback_policy": "fixture-rollback",
+            "rollback_target": {
+              "artifact": "fixture-prior"
+            },
+            "staging_receipt": "seeded-verified-staging",
+            "artifact_version": "fixture-immutable-version",
+            "workflow_revision": "a938cc3822e9fab63ae0b82c966fd232aa10f5ef",
+            "environment_generation": 0
+          }
+        },
+        "result": {
+          "reason": "authority-closed",
+          "verdict": "rejected"
+        }
+      }
+    ]
+  },
+  "source_sha256": {
+    "gate.mjs": "85a51527babbc32f536ba0f03cffa64e6b83b81148316fe625e1d77351d25b51",
+    "probe.mjs": "a41fc7206fbbea7c53d8e69b53f6fc0026910e04f2f7b9a3c1718a5adc80b05e",
+    "schema.sql": "377f95dee5c84effd083322068b7f77c7c9ecd92b9bb4b26aab54f4d6fd43f8c",
+    "package-lock.json": "42b4a2cf48fd8d5c0ebfa22cbe0c0f350c225eaa4966841983b45433d113ae05",
+    "../deployment-authority/worker.mjs": "f7e37ff902cf9215f70743f73f53003a8d37f4440b3ec35346221e5402742ea0"
+  },
+  "limitations": [
+    "Accepted approval and staging receipt are seeded, not an authenticated human decision",
+    "Client, verifier and PostgreSQL share one trusted workflow host; no hostile-workload/process isolation claim",
+    "No AWS authority, provider operation, automatic restoration or cross-host gateway exercised",
+    "Token expiry is checked by jose; actual expiration while waiting/key-rotation faults not exercised"
+  ]
+}

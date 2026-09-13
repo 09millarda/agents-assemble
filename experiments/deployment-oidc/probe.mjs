@@ -31,9 +31,9 @@ pass('valid signed token rejected by mismatched repository, owner, workflow, ref
 const manifest={artifact:'fixture-sha256',artifact_version:'fixture-immutable-version',environment:'fixture-prod',environment_generation:0,
   configuration:{mode:'test'},workflow_revision:policy.workflowSha,expected_prior:'fixture-prior',staging_receipt:'seeded-verified-staging',
   rollback_target:{artifact:'fixture-prior'},health_policy:'fixture-health',rollback_policy:'fixture-rollback'};
-for(const id of ['approved','revoked']){
+for(const id of ['approved','revoked','wrong-workflow']){
   await db.query('INSERT INTO execution.environments(id,current_release) VALUES($1,$2)',[id,'fixture-prior']);
-  const m={...manifest,environment:id};
+  const m={...manifest,environment:id,...(id==='wrong-workflow'?{workflow_revision:'different-approved-workflow'}:{})};
   await db.query(`INSERT INTO execution.effects(id,env,manifest,digest,expected_prior,kind,expires_at,rollback_until)
     VALUES($1,$1,$2,$3,'fixture-prior','deploy',clock_timestamp()+interval '5 minutes',clock_timestamp()+interval '5 minutes')`,[id,m,digest(m)]);
 }
@@ -54,6 +54,10 @@ assert.equal((await call(token,{...approved,digest:'0'.repeat(64)})).status,409)
 assert.equal((await call(token,{...approved,run:'caller-selected-run'})).status,400);
 assert.equal((await db.query("SELECT state FROM execution.effects WHERE id='approved'")).rows[0].state,'approved');
 pass('changed manifest digest and caller-selected identity rejected without consuming authority');
+const wrongWorkflow={...manifest,environment:'wrong-workflow',workflow_revision:'different-approved-workflow'};
+assert.equal((await call(token,{effect:'wrong-workflow',digest:digest(wrongWorkflow)})).body.error,'effect-workflow-mismatch');
+assert.equal((await db.query("SELECT state FROM execution.effects WHERE id='wrong-workflow'")).rows[0].state,'approved');
+pass('authenticated job cannot claim an effect approved for a different workflow revision');
 const concurrent=await Promise.all([call(token,approved),call(token,approved)]);
 assert.deepEqual(concurrent.map(x=>x.status).sort(),[201,409]);
 assert.equal((await call(token,approved)).status,409);

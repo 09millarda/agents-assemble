@@ -49,6 +49,7 @@ export async function startGate(policy) {
         || !/^[a-f0-9]{64}$/.test(input.digest)) throw Error('invalid-input');
       const effect=(await db.query('SELECT * FROM execution.effects WHERE id=$1',[input.effect])).rows[0];
       if(!effect || input.digest!==effect.digest){observations.push({stage:'binding',verdict:'rejected'});return respond(409,{error:'manifest-mismatch'});}
+      if(effect.manifest.workflow_revision!==claims.workflow_sha){observations.push({stage:'effect-workflow-binding',verdict:'rejected'});return respond(409,{error:'effect-workflow-mismatch'});}
       // Complete manifest/environment come from the accepted owner record, not caller fields.
       const result=await worker({context:'execution',op:'claim',id:effect.id,env:effect.env,manifest:effect.manifest,
         run:claims.run_id,attempt:Number(claims.run_attempt)});
