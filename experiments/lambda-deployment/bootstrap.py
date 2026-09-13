@@ -44,6 +44,10 @@ def executor(env, bootstrap=True, api_id=None):
       allow(['apigateway:GET','apigateway:POST','apigateway:PATCH','apigateway:PUT','apigateway:DELETE'] if bootstrap else ['apigateway:GET'],
         [f'arn:aws:apigateway:{REGION}::/apis',f'arn:aws:apigateway:{REGION}::/apis/*'] if bootstrap else
         [f'arn:aws:apigateway:{REGION}::/apis/{api_id}',f'arn:aws:apigateway:{REGION}::/apis/{api_id}/*'])]
+    if not bootstrap:
+        statements[0] = allow(READS, [fn, fn+':*'])
+        statements.extend([allow([a for a in WRITES if a != 'lambda:UpdateAlias'], fn),
+                           allow('lambda:UpdateAlias', fn+':live')])
     return policy(statements)
 
 
