@@ -1,4 +1,5 @@
-# Disposable identity-only probe for decision 15. No cloud authority.
+# Retired and disabled after decision 15's dispatch identity observations.
+# See docs/research/deployment-authority-result.md. No cloud authority.
 name: Deployment dispatch identity probe (decision 15)
 run-name: aa-wf15-dispatch-${{ inputs.effect_id }}-${{ inputs.nonce }}
 

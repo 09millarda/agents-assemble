@@ -107,8 +107,7 @@ successful CloudShell identity evidence, then authenticated locally and selected
 Proof of Concept (`728616601473`), verified via STS and the account API. After advanced activation, [actual GitHub-to-AWS identity verification](docs/research/aws-github-connection-result.md)
 passed using the new identity-only role. The approved Ireland policy amendment
 is saved. [Actual GitHub release and restoration probes](docs/research/lambda-live-deployment-result.md)
-passed in two disposable environments; durable approval, dispatch uncertainty and
-integrated deployment qualification remain pending. The owner continued with AWS after considering Cloudflare. ADR 0014/#18
+passed in two disposable environments. [Actual GitHub dispatch/rerun observations and controlled PostgreSQL authority/recovery tests](docs/research/deployment-authority-result.md) now pass separately. The live authenticated claim-to-AWS bridge, automatic restoration and provider uncertainty qualification remain pending. The owner continued with AWS after considering Cloudflare. ADR 0014/#18
 settles project scope and admission ownership through documentary review. It does
 not establish integrated runtime conformance or remove deployment qualification
 from the release requirements.

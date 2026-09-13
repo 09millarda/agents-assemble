@@ -18,15 +18,16 @@ provider updates, including the same-artifact promotion and failed-health/recove
 in both test environments, plus the initial failed attempt and operator repair.
 Manual dispatch and operator-triggered restoration do not prove durable production
 approval, automatic rollback, uncertain dispatch recovery or full adapter conformance.
+The [dispatch and durable authority result](deployment-authority-result.md) adds three actual GitHub runs/four attempts and sixteen controlled PostgreSQL scenario groups. It validates selected claim, generation, receipt and rollback-authority rules separately from the earlier AWS operations. The live authenticated claim-to-AWS bridge and provider fault paths remain unqualified.
 The broader protocol below remains an experiment input, not an accepted ADR.
 They preserve the owner-approved [release contract](../first-release-contract.md)
 and [Execution/Integrations ownership](../architecture/0003-durable-execution-and-recovery.md).
 See the [primary-source comparison](lambda-deployment-sources.md) for provider facts
 and the distinction between documented behavior and proposed adapter policy.
 
-The initial read-only probe found no `aws` or `sam` executable, AWS environment variable,
-or default AWS config/credentials file in this session. The planning repository
-has Actions enabled and no workflows, environments, repository secrets or
+Historically, the initial read-only probe found no `aws` or `sam` executable, AWS environment variable,
+or default AWS config/credentials file in this session. At that point the planning repository
+had Actions enabled and no workflows, environments, repository secrets or
 repository variables. All five GitHub metadata queries succeeded. These findings
 do not inventory other repositories, organization secrets, browser sessions,
 instance roles or AWS accounts; no authenticated AWS identity was established.
@@ -155,38 +156,36 @@ effect. Code restoration cannot undo arbitrary writes or migrations.
 
 ## Required observations
 
-All rows remain **unexercised**. Each run must retain sanitized request/response
-metadata, full reduced owner state at barriers, provider IDs and pinned source
-hashes. Mark every observation as actual provider, controlled fault/model, or
-source-only. A toy state machine cannot satisfy a real Lambda row.
+Evidence is now mixed. The [live AWS report](lambda-live-deployment-result.md) and [dispatch/authority report](deployment-authority-result.md) distinguish actual provider observations from controlled process faults and seeded authority/receipts. Partial evidence does not qualify the complete row. Retain request/response metadata, owner snapshots, provider IDs and pinned source hashes; a local state machine cannot satisfy a real Lambda row.
 
-| Case | Evidence and required interpretation |
-| --- | --- |
-| Trusted build | Build the merged commit once; retain exact ZIP and packaged template. Verify versioned object and build provenance, including workflow/action revision. Reject artifact or template substitution. |
-| Automatic staging | Observe dispatch identity, stack/change-set/deployment, Lambda code/version/config, endpoint routing and healthy release receipt in the sandbox. |
-| Production promotion | Accept explicit approval for the production manifest and staging receipt; deploy the same code bytes with the approved production configuration; verify endpoint/alias and code digest. |
-| Changed approved inputs | Change merged output, artifact, workflow, environment, config, target or health/rollback policy individually. A mismatched approval cannot authorize the altered deployment. |
-| Duplicate/conflicting inputs | Repeat source events, effect dispatch and workflow rerun; submit different payload under the same effect. Retain all external runs/attempts and prove at most the admitted effect mutates. |
-| Lost dispatch acknowledgment | Drop a real dispatch response after request transmission. Reconcile returned/listed/workflow-attested identity; empty/inconclusive lookup remains unknown. No blind redispatch. |
-| Claim and provider crash barriers | Stop after durable claim, before/after AWS request, and before receipt persistence. Query the original change set/stack/deployment/token. Do not equate a used claim with successful mutation or a failed job with no effect. |
-| Receipt handoff | Persist provider success in Integrations, lose delivery/acknowledgment to Execution, then redeliver the same receipt. Execution accepts once without redispatch; stale or conflicting receipts cannot complete another release/environment. Retain both context snapshots and distinct verdicts. |
-| Reordered/late observations | Deliver status events out of order and from an earlier attempt/release. Re-query authoritative identity/current environment; stale events cannot overwrite a newer verdict. |
-| Environment contention | Overlap two releases, include canceled/queued workflows and a lost old worker. The next effect cannot bypass an unresolved environment obligation; predecessor checks reject stale promotion/rollback. |
-| Approval cutoff | Expire/revoke before the environment wait completes, before effect claim, after credential issuance and after provider start. Record the actual effective cutoff and any admitted in-flight window. |
-| Failed health and restoration | Deploy an intentionally unhealthy stateless build, observe failed health, execute the declared rollback, verify exact retained healthy code/configuration/routing and retain both failure and restoration receipts. |
-| Uncertain/failed rollback | Drop acknowledgment or deny the fixture rollback permission; reconcile or expose manual recovery. Do not deploy a different release or retry indefinitely to hide the unknown. Restore permissions only in the bounded fixture. |
-| Cleanup | Retain evidence, then delete only inventoried fixture resources and artifact versions. Record retained/deletion-failed resources, logs and residual costs. Cleanup success is separate from historical rollback proof. |
+| Case | Evidence and required interpretation | Current evidence (2026-09-13) |
+| --- | --- | --- |
+| Trusted build | Build the merged commit once; retain exact ZIP and packaged template. Verify versioned object and build provenance, including workflow/action revision. Reject artifact or template substitution. | Partial actual: retained source/ZIP/template/object versions verified; trusted merged CI build and substitution rejection are not integrated. |
+| Automatic staging | Observe dispatch identity, stack/change-set/deployment, Lambda code/version/config, endpoint routing and healthy release receipt in the sandbox. | Partial actual: manual staging dispatch and provider verification passed; automatic trigger/admission unproved. |
+| Production promotion | Accept explicit approval for the production manifest and staging receipt; deploy the same code bytes with the approved production configuration; verify endpoint/alias and code digest. | Partial actual: same stored bytes promoted; exact approval binding tested only in the controlled model. |
+| Changed approved inputs | Change merged output, artifact, workflow, environment, config, target or health/rollback policy individually. A mismatched approval cannot authorize the altered deployment. | Controlled: all 21 model manifest fields substituted and rejected; live authority bridge unproved. |
+| Duplicate/conflicting inputs | Repeat source events, effect dispatch and workflow rerun; submit different payload under the same effect. Retain all external runs/attempts and prove at most the admitted effect mutates. | Actual GitHub: duplicate dispatch creates two runs; rerun increments attempt. Controlled concurrent claim admits one; AWS gating unproved. |
+| Lost dispatch acknowledgment | Drop a real dispatch response after request transmission. Reconcile returned/listed/workflow-attested identity; empty/inconclusive lookup remains unknown. No blind redispatch. | Actual GitHub with controlled response-body loss recovered one run without redispatch; CLI success remained visible. Network timeout/negative-query completeness unproved. |
+| Claim and provider crash barriers | Stop after durable claim, before/after AWS request, and before receipt persistence. Query the original change set/stack/deployment/token. Do not equate a used claim with successful mutation or a failed job with no effect. | Controlled: durable claim survives SIGKILL and retains ownership. Actual AWS create/execute acknowledgement-loss/query recovery unproved. |
+| Receipt handoff | Persist provider success in Integrations, lose delivery/acknowledgment to Execution, then redeliver the same receipt. Execution accepts once without redispatch; stale or conflicting receipts cannot complete another release/environment. Retain both context snapshots and distinct verdicts. | Controlled: separate owner commit/ack crashes and replay passed; authenticated transport and crash-atomic rejection journaling unproved. |
+| Reordered/late observations | Deliver status events out of order and from an earlier attempt/release. Re-query authoritative identity/current environment; stale events cannot overwrite a newer verdict. | Controlled: stale/conflicting attempt/effect/generation receipts rejected; real delayed-provider reconciliation unproved. |
+| Environment contention | Overlap two releases, include canceled/queued workflows and a lost old worker. The next effect cannot bypass an unresolved environment obligation; predecessor checks reject stale promotion/rollback. | Controlled: concurrent claims, unknown owner, stale predecessor and A-to-B-to-A generation fence passed; live overlapping provider operations unproved. |
+| Approval cutoff | Expire/revoke before the environment wait completes, before effect claim, after credential issuance and after provider start. Record the actual effective cutoff and any admitted in-flight window. | Controlled: pre-claim revoke/cancel/expiry and actual PostgreSQL lock wait passed; admitted completion preserved. Live environment wait/STS/provider cutoff unproved. |
+| Failed health and restoration | Deploy an intentionally unhealthy stateless build, observe failed health, execute the declared rollback, verify exact retained healthy code/configuration/routing and retain both failure and restoration receipts. | Actual AWS: failed health and explicit restoration passed in both environments. Automatic rollback and live approval envelope unproved. |
+| Uncertain/failed rollback | Drop acknowledgment or deny the fixture rollback permission; reconcile or expose manual recovery. Do not deploy a different release or retry indefinitely to hide the unknown. Restore permissions only in the bounded fixture. | Controlled: uncertain rollback claim blocks successors and expired/undeclared authority is rejected. Actual denied/uncertain AWS restoration unproved. |
+| Cleanup | Retain evidence, then delete only inventoried fixture resources and artifact versions. Record retained/deletion-failed resources, logs and residual costs. Cleanup success is separate from historical rollback proof. | Actual AWS: all inventoried temporary deployment resources deleted and verified. Non-deploying GitHub probe disabled; local test containers removed. |
 
 ## Resume and decision completion
 
-If the owner later resumes live validation, establish AWS authentication for the
-selected region/repository, then validate identity and
-effective access read-only, finalize the bounded resource plan, and obtain any
-still-needed authorization for those concrete resources. Install only the tools
-needed for that plan, then implement the disposable Hono/SAM/workflow fixture on
-the scratch branch in `09millarda/agents-assemble`. Add only the minimum explicitly
-scoped dispatch workflow needed in the default branch if required by GitHub;
-retain disposable application/probe code on the scratch branch.
+The next bounded live experiment must connect authenticated claim admission to
+AWS authority and reconcile the original CloudFormation operation across real
+request/receipt failures. Also integrate trusted merged-build provenance,
+automatic staging and explicit production approval. The earlier AWS resources
+are deleted; do not re-enable their retired workflow or replay the old bootstrap
+as if the fixture still existed. Prepare any new resource/authority inventory
+and determine which existing owner authorization applies before provisioning.
+Keep disposable implementation on the scratch branch and only the minimum
+reviewed dispatch entry point on the default branch when GitHub requires it.
 
 Resolve #15 only after the evidence supports an explicit adapter verdict and the
 real deployment/health/restoration acceptance cases are established, or the owner
