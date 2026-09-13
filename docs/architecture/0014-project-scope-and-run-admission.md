@@ -1,6 +1,6 @@
 # ADR 0014: project scope and feature-run admission
 
-Status: **Accepted as a planning contract, with one writable repository per run as an explicit agent-selected first-release default. Documentary review only; runtime conformance remains unproved.** Decision [#18](https://github.com/09millarda/agents-assemble/issues/18); [map #1](https://github.com/09millarda/agents-assemble/issues/1).
+Status: **Accepted as a planning contract, with one writable repository per run as an explicit agent-selected first-release default. The bounded local conformance prototype for #19 passed; integrated runtime and release conformance remain unproved.** Decision [#18](https://github.com/09millarda/agents-assemble/issues/18); [map #1](https://github.com/09millarda/agents-assemble/issues/1).
 
 ## Context and decision
 
@@ -214,6 +214,10 @@ runtime test. The owner was asked about multi-repository writes and received the
 stated working default without replying during this episode. That default is
 amendable and must not be presented as an owner-approved feature exclusion.
 
-The next bounded decision is [#19, project scope permit and suspension conformance](https://github.com/09millarda/agents-assemble/issues/19):
-exercise the exact archive/admission and enrollment/suspension races in a local
-persistence fixture. It requires no AWS access and does not resume #15.
+Decision [#19, project scope permit and suspension conformance](https://github.com/09millarda/agents-assemble/issues/19)
+exercised the exact archive/admission and enrollment/suspension cases in a local
+PostgreSQL persistence fixture; the bounded contract passed without amendment.
+See the [conformance note](../research/project-scope-conformance.md). It
+required no AWS access and did not resume #15. Concrete production schemas,
+authenticated transport, and integrated runtime qualification remain separate
+work.
