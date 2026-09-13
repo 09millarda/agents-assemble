@@ -47,8 +47,11 @@ def main():
     registry=json.loads((ROOT/'releases.json').read_text());target=registry['stacks'][args.environment];artifact=registry['artifacts'][args.candidate]
     credentials(args.environment)
     identity=aws('sts','get-caller-identity');assert identity['Account']==ACCOUNT
+    assert identity['Arn'].startswith(f'arn:aws:sts::{ACCOUNT}:assumed-role/aa-wf15-{args.environment}-github/')
+    print(json.dumps({'identity':identity}),flush=True)
     before=observe(target);assert before['sha256']==args.expected_prior and before['environment']==args.environment
-    manifest={'target':target['StackId'],'environment':args.environment,'artifact':artifact,'expected_prior':before,
+    template=ROOT/'templates'/f'{args.environment}-{args.candidate}.json'
+    manifest={'template_sha256':hashlib.sha256(template.read_bytes()).hexdigest(),'target':target['StackId'],'environment':args.environment,'artifact':artifact,'expected_prior':before,
         'workflow_sha':os.environ['GITHUB_SHA'],'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':os.environ['GITHUB_RUN_ATTEMPT']}
     digest=hashlib.sha256(json.dumps(manifest,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     print(json.dumps({'manifest':manifest,'manifest_sha256':digest}),flush=True)
@@ -59,7 +62,7 @@ def main():
     values={'Environment':args.environment,'ArtifactBucket':artifact['bucket'],'ArtifactKey':artifact['key'],
         'ArtifactVersion':artifact['version'],'ArtifactSha256':artifact['sha256']}
     result=aws('cloudformation','create-change-set','--stack-name',target['StackId'],'--change-set-name',effect,
-        '--change-set-type','UPDATE','--template-body','file://'+str(ROOT/'template.json'),
+        '--change-set-type','UPDATE','--template-body','file://'+str(ROOT/'templates'/f'{args.environment}-{args.candidate}.json'),
         '--parameters',json.dumps([{'ParameterKey':k,'ParameterValue':v} for k,v in values.items()]),
         '--capabilities','CAPABILITY_AUTO_EXPAND','--client-token',effect,'--description','Manifest SHA256 '+digest)
     print(json.dumps({'effect':effect,'change_set':result['Id']}),flush=True)

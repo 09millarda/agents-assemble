@@ -20,7 +20,6 @@ for env,target in state['stacks'].items():
   'DescribeStacks','DescribeStackEvents','DescribeStackResources','ListStackResources','ListChangeSets','GetTemplate']]
  function=f'arn:aws:lambda:{REGION}:{ACCOUNT}:function:aa-wf15-{env}'
  doc=policy([allow(stack_actions,[target['StackId'],f'arn:aws:cloudformation:{REGION}:{ACCOUNT}:changeSet/aa-wf15-*-{env}/*']),
-  allow('cloudformation:CreateChangeSet',f'arn:aws:cloudformation:{REGION}:aws:transform/Serverless-2016-10-31'),
   allow(['s3:GetObject','s3:GetObjectVersion'],f'arn:aws:s3:::{BUCKET}/releases/*'),
   allow(['lambda:GetAlias','lambda:GetFunction'],[function,function+':*'])])
  aws('iam','create-role','--role-name',name,'--assume-role-policy-document',json.dumps(trust('2000-01-01T00:00:00Z')),

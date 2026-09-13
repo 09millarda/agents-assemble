@@ -41,9 +41,12 @@ def executor(env, bootstrap=True, api_id=None):
       allow(['logs:DescribeLogGroups','logs:DescribeResourcePolicies'],'*'),
       allow(['logs:ListTagsForResource','logs:GetDataProtectionPolicy','logs:DescribeIndexPolicies']+
         (['logs:CreateLogGroup','logs:DeleteLogGroup','logs:PutRetentionPolicy','logs:TagResource','logs:UntagResource'] if bootstrap else []),[log,log+':*']),
-      allow(['apigateway:GET','apigateway:POST','apigateway:PATCH','apigateway:PUT','apigateway:DELETE'] if bootstrap else ['apigateway:GET'],
+      allow(['apigateway:GET','apigateway:POST','apigateway:PATCH','apigateway:PUT','apigateway:DELETE','apigateway:TagResource'] if bootstrap else ['apigateway:GET'],
         [f'arn:aws:apigateway:{REGION}::/apis',f'arn:aws:apigateway:{REGION}::/apis/*'] if bootstrap else
         [f'arn:aws:apigateway:{REGION}::/apis/{api_id}',f'arn:aws:apigateway:{REGION}::/apis/{api_id}/*'])]
+    if bootstrap:
+        statements.append(allow(['apigateway:POST','apigateway:GET','apigateway:DELETE'],
+          f'arn:aws:apigateway:{REGION}::/tags/arn%3Aaws%3Aapigateway%3A{REGION}%3A%3A%2Fv2%2Fapis%2F*'))
     if not bootstrap:
         statements[0] = allow(READS, [fn, fn+':*'])
         statements.extend([allow([a for a in WRITES if a != 'lambda:UpdateAlias'], fn),

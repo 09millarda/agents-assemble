@@ -1,0 +1,50 @@
+{
+  "account": "728616601473",
+  "region": "eu-west-1",
+  "stacks": {
+    "staging": {
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-staging/60ef3ae0-af88-11f1-9b34-02317b53c82b",
+      "outputs": {
+        "FunctionName": "aa-wf15-staging",
+        "HealthUrl": "https://mgb6g2svy6.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "mgb6g2svy6",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-staging:live"
+      }
+    },
+    "prod": {
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15-prod/676632c0-af88-11f1-a3f3-02852ee2bb17",
+      "outputs": {
+        "FunctionName": "aa-wf15-prod",
+        "HealthUrl": "https://gv4ul4ugj1.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "gv4ul4ugj1",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15-prod:live"
+      }
+    }
+  },
+  "artifacts": {
+    "healthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+      "version": "L4UYrAfABGWHWefk2B4mSSmYTVA._YwH",
+      "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+      "bytes": 70748,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    },
+    "unhealthy": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+      "version": "I.RqnPCTJQpvQ0Xm4Aen79md6pHvZWW3",
+      "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+      "bytes": 70750,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    },
+    "baseline": {
+      "bucket": "aa-wf15-728616601473-eu-west-1-artifacts",
+      "key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+      "version": "Pv0tzbb2_lvPGs4JvxqHZbEs8BgG6AIx",
+      "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+      "bytes": 70748,
+      "source": "23f34a34d07529f09ec1ced68003e98c694c1bce"
+    }
+  }
+}
