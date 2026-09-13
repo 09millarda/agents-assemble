@@ -4,6 +4,8 @@ Date: 2026-09-13 · Decision [#15](https://github.com/09millarda/agents-assemble
 
 The investigation now has three separate evidence sets: the [six real Lambda updates and verified cleanup](lambda-live-deployment-result.md), three new non-deploying GitHub runs with four attempts, and a PostgreSQL process-fault experiment. Together they support a more precise candidate protocol. They do **not** establish that the local approval gate controlled the real AWS deployments.
 
+The subsequent [signed OIDC claim probe](deployment-oidc-claim-result.md) verifies actual GitHub identity before the durable gate in one trusted job. The independent AWS controller and integrated provider-fault qualification remain open.
+
 ## Actual GitHub observations
 
 The repository-owned [minimal workflow at its executed revision](https://github.com/09millarda/agents-assemble/blob/87be475fd628e1f5bb58ce06c55e9616168679ac/.github/workflows/deployment-dispatch-probe.yml) had no token permissions, secrets, checkout/action dependencies or cloud calls. It ran only on `main` and printed allowlisted identity fields. All four attempts completed successfully. The workflow was disabled after collection; neither AWS probe was re-enabled and no AWS resources were created.

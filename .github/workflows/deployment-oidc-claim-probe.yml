@@ -1,4 +1,5 @@
-# Bounded real OIDC / controlled durable claim experiment. No AWS calls.
+# Retired and disabled after the bounded real OIDC / controlled claim probe.
+# See docs/research/deployment-oidc-claim-result.md. No AWS calls.
 name: Deployment OIDC claim probe (decision 15)
 on:
   workflow_dispatch:
