@@ -1,0 +1,44 @@
+# Bounded real OIDC / controlled durable claim experiment. No AWS calls.
+name: Deployment OIDC claim probe (decision 15)
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  claim:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      id-token: write
+    services:
+      postgres:
+        image: postgres:17.9@sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545
+        env:
+          POSTGRES_PASSWORD: throwaway
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Fetch pinned disposable source
+        run: |
+          set -euo pipefail
+          git init "$RUNNER_TEMP/aa-oidc"
+          git -C "$RUNNER_TEMP/aa-oidc" remote add origin https://github.com/09millarda/agents-assemble.git
+          git -C "$RUNNER_TEMP/aa-oidc" fetch --depth=1 origin ce9893f04ad0a3c83c6ab13428d941763398ef00
+          git -C "$RUNNER_TEMP/aa-oidc" checkout --detach FETCH_HEAD
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/aa-oidc/experiments/deployment-authority"
+          npm ci --ignore-scripts --no-audit --no-fund --prefix "$RUNNER_TEMP/aa-oidc/experiments/deployment-oidc"
+      - name: Verify real OIDC before claiming seeded authority
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGDATABASE: postgres
+          PGUSER: postgres
+          PGPASSWORD: throwaway
+        run: |
+          cd "$RUNNER_TEMP/aa-oidc/experiments/deployment-oidc"
+          node probe.mjs
