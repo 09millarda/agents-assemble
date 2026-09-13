@@ -9,7 +9,7 @@ for(const env of ['staging','prod'])await db.query('INSERT INTO execution.enviro
 function target(env,candidate){const a=r.artifacts[candidate];return {artifact:a.sha256,artifact_version:a.version,artifact_key:a.key,artifact_source:a.source,template_sha256:templates[env+'-'+candidate],configuration:{PROBE_ENVIRONMENT:env},candidate};}
 function manifest(env,candidate,prior,generation,fault){return {account:r.account,region:r.region,environment:env,environment_generation:generation,
  stack:r.stacks[env].StackId,function:r.stacks[env].outputs.FunctionName,health_url:r.stacks[env].outputs.HealthUrl,
- workflow_revision:workflowSha,...target(env,candidate),bucket:r.bucket,expected_prior:r.artifacts[prior].sha256,
+ workflow_revision:workflowSha,controller_revision:process.argv[3],...target(env,candidate),bucket:r.bucket,expected_prior:r.artifacts[prior].sha256,
  rollback_target:target(env,prior),health_policy:'one-bounded-health-sample-v1',rollback_policy:'restore-retained-on-failed-health-v1',fault};}
 const cases=[['staging-release','staging','healthy','baseline',0,'create'],['prod-release','prod','healthy','baseline',0,'execute'],
  ['staging-failure','staging','unhealthy','healthy',1,'none'],['prod-failure','prod','unhealthy','healthy',1,'none'],

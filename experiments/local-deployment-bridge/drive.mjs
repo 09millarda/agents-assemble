@@ -23,7 +23,11 @@ async function relay(){
 }
 async function restore(){
  for(const parent of await q(ex,"SELECT * FROM execution.effects WHERE state='failed' AND kind='deploy'")){
-  const id=parent.id+'-restore';if((await q(ex,'SELECT id FROM execution.effects WHERE id=$1',[id])).length)continue;
+  const id=parent.id+'-restore';const existing=(await q(ex,'SELECT * FROM execution.effects WHERE id=$1',[id]))[0];
+  if(existing){
+   if(existing.state==='approved'){const resumed=await owner({context:'execution',op:'claim',id,env:existing.env,manifest:existing.manifest,run:parent.claim_run,attempt:parent.claim_attempt});if(resumed.verdict!=='claim-admitted')throw Error('existing rollback claim not admitted');record({resumed_rollback_claim:id,resumed});}
+   continue;
+  }
   await ex.query('BEGIN');const env=(await q(ex,'SELECT * FROM execution.environments WHERE id=$1 FOR UPDATE',[parent.env]))[0];
   if(env.owner!==parent.id)throw Error('rollback ownership changed');
   const m={...parent.manifest,...parent.manifest.rollback_target,expected_prior:parent.manifest.artifact,environment_generation:env.generation,

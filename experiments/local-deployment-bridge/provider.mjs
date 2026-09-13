@@ -9,7 +9,7 @@ let intent=(await q('SELECT * FROM integrations.intents WHERE id=$1',[id]))[0];i
 const m=intent.manifest;const r=resources();const detail={...intent.detail};
 const AWS='/home/amillard98/.local/bin/aws';
 function cli(args,env){return new Promise((resolve,reject)=>{const p=spawn(AWS,[...args,'--region',r.region,'--output','json','--no-cli-pager'],{env});let out='',err='';p.stdout.on('data',x=>out+=x);p.stderr.on('data',x=>err+=x);p.on('error',reject);p.on('close',c=>c?reject(Error(err.trim())):resolve(out.trim()?JSON.parse(out):{}));});}
-const session=await cli(['sts','assume-role','--profile','agents-assemble','--role-arn',r.controller_role,'--role-session-name','local-'+id,'--duration-seconds','900'],process.env);
+const session=await cli(['sts','assume-role','--profile','agents-assemble','--role-arn',r.controller_role,'--role-session-name','local-'+id,'--duration-seconds','900','--policy',JSON.stringify({Version:'2012-10-17',Statement:[{Effect:'Allow',Action:'*',Resource:'*'},{Effect:'Deny',Action:['cloudformation:CreateChangeSet','cloudformation:ExecuteChangeSet'],Resource:'*',Condition:{DateGreaterThanEquals:{'aws:CurrentTime':detail.permit_expires}}}]})],process.env);
 const awsEnv={PATH:process.env.PATH,HOME:process.env.HOME,AWS_EC2_METADATA_DISABLED:'true',AWS_ACCESS_KEY_ID:session.Credentials.AccessKeyId,
  AWS_SECRET_ACCESS_KEY:session.Credentials.SecretAccessKey,AWS_SESSION_TOKEN:session.Credentials.SessionToken};
 const aws=(...args)=>cli(args,awsEnv);
@@ -42,6 +42,7 @@ try{
   if(Buffer.from(head.ChecksumSHA256,'base64').toString('hex')!==m.artifact)throw Error('stored object checksum mismatch');
   await state('create-possible',{change_name:changeName,create_token:createToken,execute_token:executeToken,before,controller_identity:identity});
   const values={Environment:m.environment,ArtifactBucket:m.bucket,ArtifactKey:m.artifact_key,ArtifactVersion:m.artifact_version,ArtifactSha256:m.artifact};
+  mutationOpen();
   await aws('cloudformation','create-change-set','--stack-name',m.stack,'--change-set-name',changeName,'--change-set-type','UPDATE',
    '--template-body','file://'+process.cwd()+'/'+templatePath,'--parameters',JSON.stringify(Object.entries(values).map(([ParameterKey,ParameterValue])=>({ParameterKey,ParameterValue}))),
    '--client-token',createToken,'--description','Effect '+id+' manifest '+intent.digest);
@@ -54,6 +55,7 @@ try{
   mutationOpen();const before=await observe();if(digest(before)!==digest(detail.before))throw Error('provider changed before execution');
   const c=await queryOriginal();if(c.ExecutionStatus!=='AVAILABLE')throw Error('change set unexpectedly consumed');
   await state('execute-possible');
+  mutationOpen();
   await aws('cloudformation','execute-change-set','--stack-name',m.stack,'--change-set-name',changeName,'--client-request-token',executeToken);
   if(m.fault==='execute'){console.log('FAULT: accepted ExecuteChangeSet response discarded; killing provider worker');process.kill(process.pid,'SIGKILL');}
  }
