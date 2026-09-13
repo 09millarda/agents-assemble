@@ -1,0 +1,193 @@
+{
+  "api_version": "2022-11-28",
+  "started": "2026-09-13T16:01:57.075697+00:00",
+  "workflow": "deployment-dispatch-probe.yml",
+  "workflow_commit": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+  "evidence_class": "actual-github-with-controlled-response-loss",
+  "dispatches": [
+    {
+      "label": "first",
+      "request": {
+        "ref": "main",
+        "return_run_details": true,
+        "inputs": {
+          "effect_id": "duplicate-b9ed59b26fdc",
+          "nonce": "b9ed59b26fdc",
+          "manifest_sha256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f"
+        }
+      },
+      "state": "acknowledged",
+      "response": {
+        "workflow_run_id": 34767353281,
+        "run_url": "https://api.github.com/repos/09millarda/agents-assemble/actions/runs/34767353281",
+        "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767353281"
+      }
+    },
+    {
+      "label": "duplicate",
+      "request": {
+        "ref": "main",
+        "return_run_details": true,
+        "inputs": {
+          "effect_id": "duplicate-b9ed59b26fdc",
+          "nonce": "b9ed59b26fdc",
+          "manifest_sha256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f"
+        }
+      },
+      "state": "acknowledged",
+      "response": {
+        "workflow_run_id": 34767354530,
+        "run_url": "https://api.github.com/repos/09millarda/agents-assemble/actions/runs/34767354530",
+        "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767354530"
+      }
+    },
+    {
+      "label": "lost-response",
+      "request": {
+        "ref": "main",
+        "return_run_details": true,
+        "inputs": {
+          "effect_id": "lost-b9ed59b26fdc",
+          "nonce": "b9ed59b26fdc",
+          "manifest_sha256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f"
+        }
+      },
+      "state": "unknown-response-discarded",
+      "response": null
+    }
+  ],
+  "runs": [
+    {
+      "id": 34767355441,
+      "run_attempt": 1,
+      "display_title": "aa-wf15-dispatch-lost-b9ed59b26fdc-b9ed59b26fdc",
+      "event": "workflow_dispatch",
+      "path": ".github/workflows/deployment-dispatch-probe.yml",
+      "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+      "head_branch": "main",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767355441",
+      "created_at": "2026-09-13T16:02:01Z",
+      "repository_id": 1366483946,
+      "attempts": [
+        {
+          "id": 34767355441,
+          "run_attempt": 1,
+          "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767355441",
+          "observation": {
+            "EFFECT_ID": "lost-b9ed59b26fdc",
+            "GITHUB_REF": "refs/heads/main",
+            "GITHUB_REPOSITORY": "09millarda/agents-assemble",
+            "GITHUB_REPOSITORY_ID": "1366483946",
+            "GITHUB_RUN_ATTEMPT": "1",
+            "GITHUB_RUN_ID": "34767355441",
+            "GITHUB_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "GITHUB_WORKFLOW_REF": "09millarda/agents-assemble/.github/workflows/deployment-dispatch-probe.yml@refs/heads/main",
+            "GITHUB_WORKFLOW_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "MANIFEST_SHA256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f",
+            "NONCE": "b9ed59b26fdc"
+          }
+        }
+      ]
+    },
+    {
+      "id": 34767354530,
+      "run_attempt": 1,
+      "display_title": "aa-wf15-dispatch-duplicate-b9ed59b26fdc-b9ed59b26fdc",
+      "event": "workflow_dispatch",
+      "path": ".github/workflows/deployment-dispatch-probe.yml",
+      "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+      "head_branch": "main",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767354530",
+      "created_at": "2026-09-13T16:01:59Z",
+      "repository_id": 1366483946,
+      "attempts": [
+        {
+          "id": 34767354530,
+          "run_attempt": 1,
+          "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767354530",
+          "observation": {
+            "EFFECT_ID": "duplicate-b9ed59b26fdc",
+            "GITHUB_REF": "refs/heads/main",
+            "GITHUB_REPOSITORY": "09millarda/agents-assemble",
+            "GITHUB_REPOSITORY_ID": "1366483946",
+            "GITHUB_RUN_ATTEMPT": "1",
+            "GITHUB_RUN_ID": "34767354530",
+            "GITHUB_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "GITHUB_WORKFLOW_REF": "09millarda/agents-assemble/.github/workflows/deployment-dispatch-probe.yml@refs/heads/main",
+            "GITHUB_WORKFLOW_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "MANIFEST_SHA256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f",
+            "NONCE": "b9ed59b26fdc"
+          }
+        }
+      ]
+    },
+    {
+      "id": 34767353281,
+      "run_attempt": 2,
+      "display_title": "aa-wf15-dispatch-duplicate-b9ed59b26fdc-b9ed59b26fdc",
+      "event": "workflow_dispatch",
+      "path": ".github/workflows/deployment-dispatch-probe.yml",
+      "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+      "head_branch": "main",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767353281",
+      "created_at": "2026-09-13T16:01:58Z",
+      "repository_id": 1366483946,
+      "attempts": [
+        {
+          "id": 34767353281,
+          "run_attempt": 1,
+          "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767353281",
+          "observation": {
+            "EFFECT_ID": "duplicate-b9ed59b26fdc",
+            "GITHUB_REF": "refs/heads/main",
+            "GITHUB_REPOSITORY": "09millarda/agents-assemble",
+            "GITHUB_REPOSITORY_ID": "1366483946",
+            "GITHUB_RUN_ATTEMPT": "1",
+            "GITHUB_RUN_ID": "34767353281",
+            "GITHUB_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "GITHUB_WORKFLOW_REF": "09millarda/agents-assemble/.github/workflows/deployment-dispatch-probe.yml@refs/heads/main",
+            "GITHUB_WORKFLOW_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "MANIFEST_SHA256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f",
+            "NONCE": "b9ed59b26fdc"
+          }
+        },
+        {
+          "id": 34767353281,
+          "run_attempt": 2,
+          "head_sha": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/09millarda/agents-assemble/actions/runs/34767353281",
+          "observation": {
+            "EFFECT_ID": "duplicate-b9ed59b26fdc",
+            "GITHUB_REF": "refs/heads/main",
+            "GITHUB_REPOSITORY": "09millarda/agents-assemble",
+            "GITHUB_REPOSITORY_ID": "1366483946",
+            "GITHUB_RUN_ATTEMPT": "2",
+            "GITHUB_RUN_ID": "34767353281",
+            "GITHUB_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "GITHUB_WORKFLOW_REF": "09millarda/agents-assemble/.github/workflows/deployment-dispatch-probe.yml@refs/heads/main",
+            "GITHUB_WORKFLOW_SHA": "87be475fd628e1f5bb58ce06c55e9616168679ac",
+            "MANIFEST_SHA256": "e54e14301c29496b934b4f387ad54a05cfcb1316557526154eedcad2076ec13f",
+            "NONCE": "b9ed59b26fdc"
+          }
+        }
+      ]
+    }
+  ]
+}

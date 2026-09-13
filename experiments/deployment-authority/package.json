@@ -1,0 +1,10 @@
+{
+  "name": "durable-execution-throwaway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Disposable architecture experiment for decision 7; no production dependency selection.",
+  "dependencies": {
+    "pg": "8.16.3"
+  }
+}

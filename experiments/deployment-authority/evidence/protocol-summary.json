@@ -1,0 +1,86 @@
+{
+  "evidence_class": "controlled-postgresql-process-fault-model",
+  "postgres": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "source_sha256": {
+    "worker.mjs": "f7e37ff902cf9215f70743f73f53003a8d37f4440b3ec35346221e5402742ea0",
+    "run.mjs": "e1c4d3165bf28bcd26434b960d1f2323e3fe77f4fd3873816268d77dcc410a54",
+    "run.sh": "c7528deb3d34bf17aed93ed55734c22e756d7942a9f8c55072c8faf2cf3deb50"
+  },
+  "github_run_ids": [
+    "34767353281",
+    "34767354530"
+  ],
+  "checks": [
+    {
+      "name": "concurrent actual run identifiers: one local claim; duplicate and rerun denied",
+      "passed": true
+    },
+    {
+      "name": "every bound manifest field substitution rejected",
+      "passed": true
+    },
+    {
+      "name": "dispatch intent survives process kill; replay does not authorize redispatch; payload conflict rejected",
+      "passed": true
+    },
+    {
+      "name": "expiry, revocation and cancellation before claim deny admission",
+      "passed": true
+    },
+    {
+      "name": "database clock after environment lock rejects approval expired during wait",
+      "passed": true
+    },
+    {
+      "name": "claim process kill and cancellation retain unknown environment obligation",
+      "passed": true
+    },
+    {
+      "name": "already admitted effect can complete after expiry/revocation/cancel; no fictional remote revocation",
+      "passed": true
+    },
+    {
+      "name": "two context-local commit/ack crashes; immutable receipt replay and late conflict cannot redispatch or change success",
+      "passed": true
+    },
+    {
+      "name": "cross-effect, environment, manifest, run, attempt, generation and artifact receipts rejected",
+      "passed": true
+    },
+    {
+      "name": "separate authorized restoration restores predecessor and preserves original failed release",
+      "passed": true
+    },
+    {
+      "name": "A-to-B-to-A cannot revive stale generation-bound approval; rollback configuration substitution denied",
+      "passed": true
+    },
+    {
+      "name": "failed health does not manufacture undeclared restoration authority",
+      "passed": true
+    },
+    {
+      "name": "separate rollback claim cannot outlive the finite parent rollback envelope",
+      "passed": true
+    },
+    {
+      "name": "uncertain restoration remains owned and blocks newer deployment after cancellation",
+      "passed": true
+    },
+    {
+      "name": "stale predecessor and independent recovery hold block claim",
+      "passed": true
+    },
+    {
+      "name": "database roles prohibit either context from reading the other owner state",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Seeded accepted approval; no Human Interaction flow or authentic claim endpoint",
+    "Run identities imported from real GitHub records; local callers unauthenticated",
+    "AWS receipts fabricated; no credentials, provider requests, rollback automation or network fault exercised",
+    "Reduced single-tenant fixture and serialization; no production canonical wire format or HA qualification"
+  ],
+  "transition_count": 83
+}

@@ -1,0 +1,33 @@
+# Independent deployment-authority fixture audit
+
+Reviewed 2026-09-13 by the dispatch-sources research subagent, including targeted re-review after corrections. Static inspection only: no fixture edits and no execution. Scope: `worker.mjs` and `run.mjs` under `/tmp/agents-assemble-lambda-deployment/experiments/deployment-authority`. Runtime results belong to the primary agent's evidence. This updated audit supersedes its initial findings where marked resolved.
+
+## Targeted corrections verified in source
+
+| Initial finding | Resolution within this reduced model |
+| --- | --- |
+| Generation counted but not fenced | **Resolved.** Claim compares current generation with the manifest's expected generation (`worker.mjs:50`); receipt compares its generation with both claimed generation and current environment (`75`). The manifest is stored in the effect, and the claim outbox records the resulting generation (`61`). The A→B→A case rejects the seeded stale generation after restoration (`run.mjs:180–190`). |
+| Rollback checks only an artifact string and lacks parent deadline | **Resolved for the declared fixture envelope.** The worker checks `parent.rollback_until`, and compares every key in the parent's declared `rollback_target` against the child manifest (`worker.mjs:55–57`). That target now binds artifact, object version, template digest and configuration (`run.mjs:68`). Positive restoration copies those fields; configuration substitution and expired parent envelope have explicit rejection cases (`181–204`). |
+| Same-ID conflicts never journaled in the owning context | **Corrected for completed rejection calls.** Both contexts now own a journal. Success-path journal writes commit with state changes (`worker.mjs:88`); caught rejections write to the owner journal after rollback (`95–98`). The test checks the conflicting inbox rejection is present (`run.mjs:167`). See the remaining crash-window limit below. |
+| Claim timestamp is returned only | **Resolved.** `consumed_at` persists in the effect update and the claim outbox in the same transaction (`worker.mjs:59–61`). It is therefore no longer dependent on receiving the worker's successful response. |
+| Expiry-under-lock test does not prove the worker waited | **Resolved in test synchronization.** The worker has a distinct application name. The test refreshes the statistics snapshot, observes that named worker in `wait_event_type='Lock'`, asserts observation before expiry, archives the observation, and only then waits past expiry and releases its lock (`run.mjs:124–137`). A passing execution can now support expiry during an observed database lock wait. |
+
+The revised source supports the narrower claims above. I found no additional correction required before reporting these as local-model observations, provided the actual run passes and the evidence retains the limitations below.
+
+## Remaining qualification limits
+
+1. **No authenticated authority or AWS bridge.** Local callers choose their run ID and attempt. Imported real GitHub run IDs remain strings, not verified claimant identity. `dispatch-intent` is not tied to authenticated accepted Execution authority, and the Execution claim outbox is not consumed to issue credentials or make provider requests. Source comments and emitted limitations correctly disclose this (`worker.mjs:1`, `run.mjs:1`, `236–239`). No conclusion that real AWS is gated follows from this fixture.
+
+2. **The rollback envelope is declared and seeded, not derived from a real accepted approval and retained healthy receipt.** The now-tested target comparison is useful but does not independently establish that its seed describes the actual previously healthy artifact/configuration, nor that the parent deadline came from a human-authorized envelope. It compares the fields declared in the target; it does not establish a complete production manifest schema. The model's environment revision and configuration fields are not reconciled against external infrastructure. Actual unknown-provider acknowledgements, automatic rollback, and failed remote restoration remain untested.
+
+3. **Rejection journaling still has a crash gap between transaction rollback and the separate journal insert.** Completed calls now retain conflict history, and success-path journal entries are atomic with their state changes. A process kill after `ROLLBACK` but before the rejection insert could lose that rejection observation. There is no fault barrier/test at this window. Do not describe all rejected verdicts as crash-atomic with the attempted operation. This is a bounded evidence limit rather than a reason to expand the throwaway experiment into a generic durable consumer.
+
+4. **Context isolation is demonstrated at database roles, not the full authority handoff.** Workers use separate roles and their own schemas. The privileged supervisor seeds both owners and transports receipts directly. The fixture lacks the authentic Human Interaction → Execution acceptance flow and an operational inbox/outbox dispatcher. It cannot qualify a distributed context handoff merely from access denial and sequential receipt calls.
+
+5. **Some concurrency/recovery paths remain unexercised.** Initial concurrent creation of a missing Integrations intent/receipt is not tested. `SELECT ... FOR UPDATE` on an absent row does not serialize the inserts; the primary key should reject the loser, but it receives a generic rejected result rather than replay. Tested intent replay is sequential after commit. The independent hold test covers a single preexisting boolean hold, not multiple independently owned holds. The unknown-restoration case is a local committed claim crash, not a provider operation with uncertain outcome.
+
+## Defensible result
+
+Claim, revoke and cancel serialize on the environment row; duplicate claims consume one approved local effect; exact manifest and current generation checks fence substitutions and stale local generation; consumed state, time, owner and outbox survive a post-commit process kill; received matching receipts can finish an already admitted effect after later cancellation/expiry; failed health retains ownership until separately admitted restoration, and the original failed release remains failed.
+
+These are selected durable PostgreSQL/process-fault observations. GitHub dispatch/rerun observations and the earlier AWS deployment/restoration observations remain separate evidence classes. Keeping issue #15 open for the live authenticated claim-to-AWS bridge and actual unknown-provider/automatic-restoration fault evidence is justified. The corrected local findings should not continue to be listed as wholly untested gaps, but they also do not establish an end-to-end deployment adapter.
