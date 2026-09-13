@@ -1,0 +1,69 @@
+{
+  "account": "728616601473",
+  "region": "eu-west-1",
+  "created_at": "2026-09-13T17:17:53.548172+00:00",
+  "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+  "roles": [
+    "aa-wf15l-staging-runtime",
+    "aa-wf15l-staging-cloudformation",
+    "aa-wf15l-prod-runtime",
+    "aa-wf15l-prod-cloudformation",
+    "aa-wf15l-controller"
+  ],
+  "stacks": {
+    "staging": {
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15l-bootstrap/6299f32d-7277-4b0e-96ba-545c154fb52c",
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+      "executed": true,
+      "outputs": {
+        "FunctionName": "aa-wf15l-staging",
+        "HealthUrl": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "1h4l6ktvd1",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15l-staging:live"
+      },
+      "narrowed": true
+    },
+    "prod": {
+      "Id": "arn:aws:cloudformation:eu-west-1:728616601473:changeSet/aa-wf15l-bootstrap/f5f69da3-0b25-4ef0-8c9c-fd35e7946f35",
+      "StackId": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-prod/9c8265f0-af97-11f1-bd12-0ab828536263",
+      "executed": true,
+      "outputs": {
+        "FunctionName": "aa-wf15l-prod",
+        "HealthUrl": "https://jkxzl96f6l.execute-api.eu-west-1.amazonaws.com/health",
+        "ApiId": "jkxzl96f6l",
+        "LiveAlias": "arn:aws:lambda:eu-west-1:728616601473:function:aa-wf15l-prod:live"
+      },
+      "narrowed": true
+    }
+  },
+  "artifacts": {
+    "baseline": {
+      "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+      "key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+      "version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis",
+      "sha256": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+      "bytes": 70748,
+      "source": "23f34a34d07529f09ec1ced68003e98c694c1bce"
+    },
+    "healthy": {
+      "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+      "key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+      "version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+      "sha256": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+      "bytes": 70748,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    },
+    "unhealthy": {
+      "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+      "key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+      "version": "T0zXWcyF3VpUwhTgzjxCRwoBrvSvb07b",
+      "sha256": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+      "bytes": 70750,
+      "source": "3d59892ff3fc689b65e030f1c63b5706978d27b1"
+    }
+  },
+  "bucket_created": true,
+  "controller_role": "arn:aws:iam::728616601473:role/aa-wf15l-controller",
+  "mutation_deadline": "2026-09-13T21:27:00Z",
+  "cleanup_completed_at": "2026-09-13T17:37:28.485571+00:00"
+}

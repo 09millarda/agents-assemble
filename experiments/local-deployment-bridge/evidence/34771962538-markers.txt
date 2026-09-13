@@ -1,0 +1,1 @@
+request	Authenticate, request registered effect and observe result	2026-09-13T17:34:02.9083388Z AA_LOCAL_CLAIM={"effect":"staging-release","status":202,"body":{"verdict":"claim-admitted","generation":1,"consumed_at":"2026-09-13T17:34:02.770Z"}}

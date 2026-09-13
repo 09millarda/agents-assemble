@@ -1,0 +1,2 @@
+request	Authenticate, request registered effect and observe result	2026-09-13T17:34:00.5092956Z AA_LOCAL_CLAIM={"effect":"wrong-workflow","status":403,"body":{"error":"effect-binding"}}
+request	Authenticate, request registered effect and observe result	2026-09-13T17:34:00.5171356Z AA_LOCAL_RESULT={"effect":"wrong-workflow","denied":true,"result":{"status":403,"body":{"error":"effect-binding"}}}

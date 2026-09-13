@@ -1,0 +1,712 @@
+{
+  "execution": {
+    "environments": [
+      {
+        "id": "prod",
+        "owner": null,
+        "current_release": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "generation": 0,
+        "hold": false
+      },
+      {
+        "id": "staging",
+        "owner": "staging-release",
+        "current_release": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "generation": 1,
+        "hold": false
+      }
+    ],
+    "effects": [
+      {
+        "id": "prod-release",
+        "env": "prod",
+        "manifest": {
+          "fault": "execute",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-prod/9c8265f0-af97-11f1-bd12-0ab828536263",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-prod",
+          "candidate": "healthy",
+          "health_url": "https://jkxzl96f6l.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "prod",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "prod"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "staging_effect": "staging-release",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "prod"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "digest": "85085cb15f6e355c65eb771d9e0f181643672bedfdede401f48758baef135c58",
+        "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.065Z",
+        "rollback_until": "2026-09-13T20:33:02.065Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "staging-failure",
+        "env": "staging",
+        "manifest": {
+          "fault": "none",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+          "function": "aa-wf15l-staging",
+          "candidate": "unhealthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "candidate": "healthy",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI"
+          },
+          "template_sha256": "92b3507095c8bb00ac534c6d16021907633722e7602bda7a4aa9af97a7ceb8fb",
+          "artifact_version": "T0zXWcyF3VpUwhTgzjxCRwoBrvSvb07b",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 1
+        },
+        "digest": "46c195277286c6220b3f98d6afe54814be33421e1b5e8343d43ecfd0c4541dae",
+        "expected_prior": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.072Z",
+        "rollback_until": "2026-09-13T20:33:02.072Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "prod-failure",
+        "env": "prod",
+        "manifest": {
+          "fault": "none",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-prod/9c8265f0-af97-11f1-bd12-0ab828536263",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb",
+          "function": "aa-wf15l-prod",
+          "candidate": "unhealthy",
+          "health_url": "https://jkxzl96f6l.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "prod",
+          "artifact_key": "releases/fb1f9e4237d6a8643223ed8cf29e65af80733268f61397bf03684f3ce0f899fb/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "prod"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "candidate": "healthy",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "prod"
+            },
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI"
+          },
+          "template_sha256": "92b3507095c8bb00ac534c6d16021907633722e7602bda7a4aa9af97a7ceb8fb",
+          "artifact_version": "T0zXWcyF3VpUwhTgzjxCRwoBrvSvb07b",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 1
+        },
+        "digest": "519fd48bfef32900871ac27d6d0a3843aab91e2c675d1ee56e99f0578d250479",
+        "expected_prior": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.078Z",
+        "rollback_until": "2026-09-13T20:33:02.078Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "revoked",
+        "env": "staging",
+        "manifest": {
+          "fault": "none",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-staging",
+          "candidate": "healthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8",
+        "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.086Z",
+        "rollback_until": "2026-09-13T20:33:02.086Z",
+        "revoked": true,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "expired",
+        "env": "staging",
+        "manifest": {
+          "fault": "none",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-staging",
+          "candidate": "healthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8",
+        "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T17:33:01.092Z",
+        "rollback_until": "2026-09-13T20:33:02.092Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "wrong-workflow",
+        "env": "staging",
+        "manifest": {
+          "fault": "none",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-staging",
+          "candidate": "healthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "0000000000000000000000000000000000000000",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "digest": "b19427ac4cbb8677f18a5a4579f06e6e73c23f75bed2e496fcfa88420de148d3",
+        "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.101Z",
+        "rollback_until": "2026-09-13T20:33:02.101Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "approved",
+        "claim_run": null,
+        "claim_attempt": null,
+        "consumed_at": null,
+        "receipt": null
+      },
+      {
+        "id": "staging-release",
+        "env": "staging",
+        "manifest": {
+          "fault": "create",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-staging",
+          "candidate": "healthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d",
+        "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+        "kind": "deploy",
+        "parent": null,
+        "expires_at": "2026-09-13T20:33:02.057Z",
+        "rollback_until": "2026-09-13T20:33:02.057Z",
+        "revoked": false,
+        "canceled": false,
+        "allow_rollback": true,
+        "state": "claimed",
+        "claim_run": "34771962538",
+        "claim_attempt": 1,
+        "consumed_at": "2026-09-13T17:34:02.770Z",
+        "receipt": null
+      }
+    ],
+    "inbox": [],
+    "journal": [
+      {
+        "id": "1",
+        "command": {
+          "id": "revoked",
+          "op": "claim",
+          "env": "staging",
+          "run": "34771958467",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "fault": "none",
+            "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+            "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+            "region": "eu-west-1",
+            "account": "728616601473",
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "function": "aa-wf15l-staging",
+            "candidate": "healthy",
+            "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+            "environment": "staging",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "health_policy": "one-bounded-health-sample-v1",
+            "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "rollback_policy": "restore-retained-on-failed-health-v1",
+            "rollback_target": {
+              "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+              "candidate": "baseline",
+              "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+              "configuration": {
+                "PROBE_ENVIRONMENT": "staging"
+              },
+              "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+              "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+              "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+            },
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+            "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+            "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+            "environment_generation": 0
+          },
+          "authentication_expiry": 1789321136
+        },
+        "result": {
+          "reason": "authority-closed",
+          "verdict": "rejected"
+        }
+      },
+      {
+        "id": "2",
+        "command": {
+          "id": "expired",
+          "op": "claim",
+          "env": "staging",
+          "run": "34771959663",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "fault": "none",
+            "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+            "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+            "region": "eu-west-1",
+            "account": "728616601473",
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "function": "aa-wf15l-staging",
+            "candidate": "healthy",
+            "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+            "environment": "staging",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "health_policy": "one-bounded-health-sample-v1",
+            "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "rollback_policy": "restore-retained-on-failed-health-v1",
+            "rollback_target": {
+              "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+              "candidate": "baseline",
+              "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+              "configuration": {
+                "PROBE_ENVIRONMENT": "staging"
+              },
+              "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+              "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+              "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+            },
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+            "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+            "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+            "environment_generation": 0
+          },
+          "authentication_expiry": 1789321140
+        },
+        "result": {
+          "reason": "authority-closed",
+          "verdict": "rejected"
+        }
+      },
+      {
+        "id": "3",
+        "command": {
+          "id": "staging-release",
+          "op": "claim",
+          "env": "staging",
+          "run": "34771962538",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "fault": "create",
+            "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+            "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+            "region": "eu-west-1",
+            "account": "728616601473",
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "function": "aa-wf15l-staging",
+            "candidate": "healthy",
+            "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+            "environment": "staging",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "health_policy": "one-bounded-health-sample-v1",
+            "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "rollback_policy": "restore-retained-on-failed-health-v1",
+            "rollback_target": {
+              "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+              "candidate": "baseline",
+              "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+              "configuration": {
+                "PROBE_ENVIRONMENT": "staging"
+              },
+              "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+              "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+              "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+            },
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+            "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+            "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+            "environment_generation": 0
+          },
+          "authentication_expiry": 1789321142
+        },
+        "result": {
+          "verdict": "claim-admitted",
+          "generation": 1,
+          "consumed_at": "2026-09-13T17:34:02.770Z"
+        }
+      },
+      {
+        "id": "4",
+        "command": {
+          "id": "staging-release",
+          "op": "claim",
+          "env": "staging",
+          "run": "34771963758",
+          "attempt": 1,
+          "context": "execution",
+          "manifest": {
+            "fault": "create",
+            "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+            "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+            "region": "eu-west-1",
+            "account": "728616601473",
+            "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+            "function": "aa-wf15l-staging",
+            "candidate": "healthy",
+            "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+            "environment": "staging",
+            "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "health_policy": "one-bounded-health-sample-v1",
+            "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+            "rollback_policy": "restore-retained-on-failed-health-v1",
+            "rollback_target": {
+              "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+              "candidate": "baseline",
+              "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+              "configuration": {
+                "PROBE_ENVIRONMENT": "staging"
+              },
+              "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+              "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+              "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+            },
+            "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+            "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+            "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+            "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+            "environment_generation": 0
+          },
+          "authentication_expiry": 1789321147
+        },
+        "result": {
+          "reason": "already-consumed",
+          "verdict": "rejected"
+        }
+      }
+    ],
+    "dispatches": [
+      {
+        "run_id": "34771958467",
+        "effect": "revoked",
+        "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8",
+        "workflow_sha": "3d2359e61d986f0db8ca7218fc8e3251a41a6103"
+      },
+      {
+        "run_id": "34771959663",
+        "effect": "expired",
+        "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8",
+        "workflow_sha": "3d2359e61d986f0db8ca7218fc8e3251a41a6103"
+      },
+      {
+        "run_id": "34771961118",
+        "effect": "wrong-workflow",
+        "digest": "b19427ac4cbb8677f18a5a4579f06e6e73c23f75bed2e496fcfa88420de148d3",
+        "workflow_sha": "3d2359e61d986f0db8ca7218fc8e3251a41a6103"
+      },
+      {
+        "run_id": "34771962538",
+        "effect": "staging-release",
+        "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d",
+        "workflow_sha": "3d2359e61d986f0db8ca7218fc8e3251a41a6103"
+      },
+      {
+        "run_id": "34771963758",
+        "effect": "staging-release",
+        "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d",
+        "workflow_sha": "3d2359e61d986f0db8ca7218fc8e3251a41a6103"
+      }
+    ],
+    "outbox": [
+      {
+        "id": "claim:staging-release",
+        "payload": {
+          "run": "34771962538",
+          "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d",
+          "effect": "staging-release",
+          "attempt": 1,
+          "generation": 1,
+          "consumed_at": "2026-09-13T17:34:02.770Z"
+        },
+        "delivered": true
+      }
+    ]
+  },
+  "integrations": {
+    "receipts": [],
+    "journal": [],
+    "intents": [
+      {
+        "id": "staging-release",
+        "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d",
+        "state": "accepted",
+        "manifest": {
+          "fault": "create",
+          "stack": "arn:aws:cloudformation:eu-west-1:728616601473:stack/aa-wf15l-staging/20936890-af97-11f1-879a-0afb2c52a213",
+          "bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "region": "eu-west-1",
+          "account": "728616601473",
+          "artifact": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+          "function": "aa-wf15l-staging",
+          "candidate": "healthy",
+          "health_url": "https://1h4l6ktvd1.execute-api.eu-west-1.amazonaws.com/health",
+          "environment": "staging",
+          "artifact_key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "configuration": {
+            "PROBE_ENVIRONMENT": "staging"
+          },
+          "health_policy": "one-bounded-health-sample-v1",
+          "expected_prior": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+          "artifact_source": "3d59892ff3fc689b65e030f1c63b5706978d27b1",
+          "rollback_policy": "restore-retained-on-failed-health-v1",
+          "rollback_target": {
+            "artifact": "e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17",
+            "candidate": "baseline",
+            "artifact_key": "releases/e3e985a5c588bcc4db8b1d52c14d09c4613ed9b429a72c5bb69fb5dd01738b17/function.zip",
+            "configuration": {
+              "PROBE_ENVIRONMENT": "staging"
+            },
+            "artifact_source": "23f34a34d07529f09ec1ced68003e98c694c1bce",
+            "template_sha256": "266077f52a321c716a596793c09952cb16e1d629fb48aad09f1d2891fd4f9b77",
+            "artifact_version": "n50J6uoiBZXtkGaXzJMxzNuZ3w5Zhgis"
+          },
+          "template_sha256": "fe1b9f134056db40168f0d2ca06496001cfc72addaaaa5a405fdfb6eeef242f3",
+          "artifact_version": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI",
+          "workflow_revision": "3d2359e61d986f0db8ca7218fc8e3251a41a6103",
+          "controller_revision": "f3abe7fbc95a145d46e2814f5f48a1ccc0cf97f8",
+          "environment_generation": 0
+        },
+        "detail": {
+          "run": "34771962538",
+          "attempt": 1,
+          "permit_expires": "2026-09-13T20:33:02.057Z"
+        }
+      }
+    ],
+    "outbox": []
+  }
+}

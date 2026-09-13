@@ -7,13 +7,13 @@ if controller in s['roles']:
     aws('iam','put-role-policy','--role-name',controller,'--policy-name','FixtureOnly','--policy-document',json.dumps(policy([{'Effect':'Deny','Action':'*','Resource':'*'}])))
 for env,t in s['stacks'].items():
     api=t.get('outputs',{}).get('ApiId')
-    if api:
+    if api and '--resume' not in os.sys.argv:
         fn=f'arn:aws:lambda:{REGION}:{ACCOUNT}:function:{PREFIX}-{env}';log=f'arn:aws:logs:{REGION}:{ACCOUNT}:log-group:/aws/lambda/{PREFIX}-{env}'
         doc=policy([allow(READS+['lambda:DeleteFunction','lambda:DeleteAlias','lambda:RemovePermission'],[fn,fn+':*']),
           allow(['apigateway:GET','apigateway:DELETE'],[f'arn:aws:apigateway:{REGION}::/apis/{api}',f'arn:aws:apigateway:{REGION}::/apis/{api}/*',f'arn:aws:apigateway:{REGION}::/tags/arn%3Aaws%3Aapigateway%3A{REGION}%3A%3A%2Fv2%2Fapis%2F{api}*']),
           allow(['logs:DescribeLogGroups','logs:DescribeResourcePolicies'],'*'),allow(['logs:DeleteLogGroup','logs:ListTagsForResource','logs:GetDataProtectionPolicy','logs:DescribeIndexPolicies'],[log,log+':*'])])
         aws('iam','put-role-policy','--role-name',f'{PREFIX}-{env}-cloudformation','--policy-name','FixtureOnly','--policy-document',json.dumps(doc))
-    aws('cloudformation','delete-stack','--stack-name',t['StackId'],'--client-request-token',f'{PREFIX}-cleanup-{env}')
+    aws('cloudformation','delete-stack','--stack-name',t['StackId'],'--client-request-token',f'{PREFIX}-cleanup-resume-{env}' if '--resume' in os.sys.argv else f'{PREFIX}-cleanup-{env}')
     print('Cleanup requested '+env,flush=True)
 for env,t in s['stacks'].items():
     for _ in range(90):

@@ -1,0 +1,12 @@
+{
+  "gateway": "stopped",
+  "controller_supervisor": "stopped",
+  "provider_worker": "stopped",
+  "cloudflare_quick_tunnel": "stopped",
+  "postgres_container": "aa-wf15l-db removed after pg_dump and JSON snapshot",
+  "docker_desktop": "stopped; no other running containers",
+  "github_workflows": [
+    "local-deployment-bridge.yml disabled",
+    "aws-identity-check.yml disabled"
+  ]
+}

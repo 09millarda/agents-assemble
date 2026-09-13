@@ -1,0 +1,200 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Disposable aa-wf15l provider probe; no customer workloads",
+  "Outputs": {
+    "ApiId": {
+      "Value": {
+        "Ref": "Api"
+      }
+    },
+    "FunctionName": {
+      "Value": {
+        "Ref": "Function"
+      }
+    },
+    "HealthUrl": {
+      "Value": {
+        "Fn::Sub": "https://${Api}.execute-api.${AWS::Region}.${AWS::URLSuffix}/health"
+      }
+    },
+    "LiveAlias": {
+      "Value": {
+        "Ref": "FunctionAliaslive"
+      }
+    }
+  },
+  "Parameters": {
+    "ArtifactBucket": {
+      "AllowedValues": [
+        "aa-wf15l-728616601473-eu-west-1-artifacts"
+      ],
+      "Type": "String"
+    },
+    "ArtifactKey": {
+      "AllowedPattern": "releases/[a-f0-9]{64}/function.zip",
+      "Type": "String"
+    },
+    "ArtifactSha256": {
+      "AllowedPattern": "[a-f0-9]{64}",
+      "Type": "String"
+    },
+    "ArtifactVersion": {
+      "MinLength": 1,
+      "Type": "String"
+    },
+    "Environment": {
+      "AllowedValues": [
+        "staging",
+        "prod"
+      ],
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "Api": {
+      "Properties": {
+        "Body": {
+          "info": {
+            "title": {
+              "Fn::Sub": "aa-wf15l-${Environment}"
+            },
+            "version": "1.0"
+          },
+          "openapi": "3.0.1",
+          "paths": {
+            "/health": {
+              "get": {
+                "responses": {},
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "payloadFormatVersion": "2.0",
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FunctionAliaslive}/invocations"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            {
+              "name": "httpapi:createdBy",
+              "x-amazon-apigateway-tag-value": "SAM"
+            }
+          ]
+        }
+      },
+      "Type": "AWS::ApiGatewayV2::Api"
+    },
+    "ApiApiGatewayDefaultStage": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "Api"
+        },
+        "AutoDeploy": true,
+        "DefaultRouteSettings": {
+          "ThrottlingBurstLimit": 2,
+          "ThrottlingRateLimit": 1
+        },
+        "StageName": "$default",
+        "Tags": {
+          "httpapi:createdBy": "SAM"
+        }
+      },
+      "Type": "AWS::ApiGatewayV2::Stage"
+    },
+    "Function": {
+      "DependsOn": "Logs",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Code": {
+          "S3Bucket": "aa-wf15l-728616601473-eu-west-1-artifacts",
+          "S3Key": "releases/5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e/function.zip",
+          "S3ObjectVersion": "1bKgxlvkbp5uDwndsKINrxNr360IyVeI"
+        },
+        "Description": "5453e5580c753ce16ec1617f45a6d1e5bef14b51403dda7a9ede9aca77e27d0e",
+        "Environment": {
+          "Variables": {
+            "PROBE_ENVIRONMENT": {
+              "Ref": "Environment"
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "aa-wf15l-${Environment}"
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/aa-wf15l-${Environment}-runtime"
+        },
+        "Runtime": "nodejs22.x",
+        "Tags": [
+          {
+            "Key": "lambda:createdBy",
+            "Value": "SAM"
+          }
+        ],
+        "Timeout": 3
+      },
+      "Type": "AWS::Lambda::Function"
+    },
+    "FunctionAliaslive": {
+      "Properties": {
+        "FunctionName": {
+          "Ref": "Function"
+        },
+        "FunctionVersion": {
+          "Fn::GetAtt": [
+            "FunctionVersion5453e5580c",
+            "Version"
+          ]
+        },
+        "Name": "live"
+      },
+      "Type": "AWS::Lambda::Alias"
+    },
+    "FunctionHealthPermission": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "FunctionAliaslive"
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": [
+            "arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/GET/health",
+            {
+              "__ApiId__": {
+                "Ref": "Api"
+              },
+              "__Stage__": "*"
+            }
+          ]
+        }
+      },
+      "Type": "AWS::Lambda::Permission"
+    },
+    "FunctionVersion5453e5580c": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "CodeSha256": "VFPlWAx1POFuwWF/RabR5b7xS1FAPdp6nt6aynfifQ4=",
+        "FunctionName": {
+          "Ref": "Function"
+        }
+      },
+      "Type": "AWS::Lambda::Version"
+    },
+    "Logs": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/aa-wf15l-${Environment}"
+        },
+        "RetentionInDays": 1
+      },
+      "Type": "AWS::Logs::LogGroup"
+    }
+  }
+}

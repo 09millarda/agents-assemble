@@ -1,0 +1,30 @@
+{
+  "staging-release": {
+    "effect": "staging-release",
+    "digest": "755e63b8716b44a0472af6cf7ffc939c2de32bdc21a73405a378b3aa6dc19a4d"
+  },
+  "prod-release": {
+    "effect": "prod-release",
+    "digest": "85085cb15f6e355c65eb771d9e0f181643672bedfdede401f48758baef135c58"
+  },
+  "staging-failure": {
+    "effect": "staging-failure",
+    "digest": "46c195277286c6220b3f98d6afe54814be33421e1b5e8343d43ecfd0c4541dae"
+  },
+  "prod-failure": {
+    "effect": "prod-failure",
+    "digest": "519fd48bfef32900871ac27d6d0a3843aab91e2c675d1ee56e99f0578d250479"
+  },
+  "revoked": {
+    "effect": "revoked",
+    "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8"
+  },
+  "expired": {
+    "effect": "expired",
+    "digest": "a5cdfa1a68b002f55c97bf4600f5e00ff408032f63770b87cb14828b6573c0d8"
+  },
+  "wrong-workflow": {
+    "effect": "wrong-workflow",
+    "digest": "b19427ac4cbb8677f18a5a4579f06e6e73c23f75bed2e496fcfa88420de148d3"
+  }
+}

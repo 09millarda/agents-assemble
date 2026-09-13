@@ -1,0 +1,56 @@
+{
+  "at": "2026-09-13T17:37:42.170426+00:00",
+  "account": "728616601473",
+  "checks": {
+    "staging-stack": "DELETE_COMPLETE",
+    "staging-function": "absent",
+    "staging-api": "absent",
+    "staging-logs": "absent",
+    "prod-stack": "DELETE_COMPLETE",
+    "prod-function": "absent",
+    "prod-api": "absent",
+    "prod-logs": "absent",
+    "bucket": "absent",
+    "aa-wf15l-staging-runtime": "absent",
+    "aa-wf15l-staging-cloudformation": "absent",
+    "aa-wf15l-prod-runtime": "absent",
+    "aa-wf15l-prod-cloudformation": "absent",
+    "aa-wf15l-controller": "absent",
+    "aa-wf15-identity-check": "absent"
+  },
+  "identity_probe_before_removal": {
+    "arn": "arn:aws:iam::728616601473:role/aa-wf15-identity-check",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Federated": "arn:aws:iam::728616601473:oidc-provider/token.actions.githubusercontent.com"
+          },
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Condition": {
+            "StringEquals": {
+              "token.actions.githubusercontent.com:sub": "repo:09millarda@11366827/agents-assemble@1366483946:ref:refs/heads/main",
+              "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            },
+            "DateLessThan": {
+              "aws:CurrentTime": "2026-09-14T14:52:08Z"
+            }
+          }
+        }
+      ]
+    },
+    "policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Deny",
+          "NotAction": "sts:GetCallerIdentity",
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  "retained": "Account-wide GitHub OIDC provider and existing local AWS sign-in/profile; no experiment workloads remain."
+}

@@ -1,0 +1,2 @@
+request	Authenticate, request registered effect and observe result	2026-09-13T17:33:57.3874983Z AA_LOCAL_CLAIM={"effect":"revoked","status":409,"body":{"verdict":"rejected","reason":"authority-closed"}}
+request	Authenticate, request registered effect and observe result	2026-09-13T17:33:57.3877183Z AA_LOCAL_RESULT={"effect":"revoked","denied":true,"result":{"status":409,"body":{"verdict":"rejected","reason":"authority-closed"}}}
