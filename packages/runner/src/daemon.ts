@@ -1,4 +1,5 @@
 import { execFile } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -98,14 +99,20 @@ export class RunnerDaemon {
     );
     const started = performance.now();
     const response = reconcileResponseSchema.parse(
-      await this.transport.post("/api/v1/runner/reconcile", {
-        version: PROTOCOL_VERSION,
-        runnerId: this.config.runnerId,
-        journalId: this.journal.journalId,
-        sequence: this.journal.sequence,
-        capabilities: this.capabilities,
-        receipts: this.journal.pendingReceipts(),
-      }),
+      await this.transport.post(
+        "/api/v1/runner/reconcile",
+        {
+          version: PROTOCOL_VERSION,
+          runnerId: this.config.runnerId,
+          journalId: this.journal.journalId,
+          sequence: this.journal.sequence,
+          capabilities: this.capabilities,
+          receipts: this.journal.pendingReceipts(),
+        },
+        // A new presence observation is distinct even when the durable journal is idle.
+        // Receipts retain their own identities when a prior response was lost.
+        randomUUID(),
+      ),
     );
     this.connectedAt = performance.now();
     this.serverAt = Date.parse(response.serverTime) + (this.connectedAt - started);

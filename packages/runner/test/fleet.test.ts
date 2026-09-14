@@ -12,6 +12,7 @@ import { createRunnerTlsServer } from "../../../apps/api/src/tls.ts";
 import { migrate } from "../../../scripts/migrate.ts";
 import { ApiRouter } from "../../platform/src/http.ts";
 import { ContextStore } from "../../platform/src/store.ts";
+import { RunnerDaemon } from "../src/daemon.ts";
 import { doctor } from "../src/native.ts";
 import { PROTOCOL_VERSION } from "../src/protocol.ts";
 import { RunnerTransport, runnerConfigSchema } from "../src/transport.ts";
@@ -139,6 +140,28 @@ describe("real CLI enrollment and mTLS Fleet boundary", () => {
     expect(JSON.stringify(items)).not.toContain("PRIVATE KEY");
     expect(JSON.stringify(items)).not.toContain(authorization.enrollmentToken);
   });
+  it("refreshes presence on quiet daemon ticks without advancing the durable journal", async () => {
+    const config = runnerConfigSchema.parse(
+      JSON.parse(await readFile(join(runnerDirectory, "config.json"), "utf8")),
+    );
+    const daemon = new RunnerDaemon(runnerDirectory, config);
+    try {
+      await daemon.tick();
+      const before = (await (await request("/runners")).json()).items[0];
+      const sequence = daemon.journal.sequence;
+      expect(daemon.journal.pendingReceipts()).toEqual([]);
+      await daemon.tick();
+      const after = (await (await request("/runners")).json()).items[0];
+      expect(daemon.journal.sequence).toBe(sequence);
+      expect(after.lastSequence).toBe(before.lastSequence);
+      expect(Date.parse(after.lastSeenAt)).toBeGreaterThan(Date.parse(before.lastSeenAt));
+      expect(await fleet.eligibleRunners(organizationId)).toContainEqual(
+        expect.objectContaining({ id: config.runnerId, journalId: config.journalId }),
+      );
+    } finally {
+      daemon.journal.close();
+    }
+  });
   it("rejects a claimed runner header and unauthenticated TLS even with valid JSON identities", async () => {
     const config = runnerConfigSchema.parse(
       JSON.parse(await readFile(join(runnerDirectory, "config.json"), "utf8")),
@@ -167,6 +190,34 @@ describe("real CLI enrollment and mTLS Fleet boundary", () => {
     await expect(anonymous.post("/api/v1/runner/reconcile", payload)).rejects.toThrow(
       "runner_http_401",
     );
+  });
+  it("keeps exact heartbeat retries idempotent and records a new observation independently", async () => {
+    const config = runnerConfigSchema.parse(
+      JSON.parse(await readFile(join(runnerDirectory, "config.json"), "utf8")),
+    );
+    const transport = new RunnerTransport(url, config);
+    const payload = {
+      version: PROTOCOL_VERSION,
+      runnerId: config.runnerId,
+      journalId: config.journalId,
+      sequence: 0,
+      capabilities: await doctor(config.codexBinary),
+      receipts: [],
+    };
+    const operationId = randomUUID();
+    await transport.post("/api/v1/runner/reconcile", payload, operationId);
+    const first = (await (await request("/runners")).json()).items[0];
+    await transport.post("/api/v1/runner/reconcile", payload, operationId);
+    const replay = (await (await request("/runners")).json()).items[0];
+    expect(replay).toEqual(first);
+    await transport.post("/api/v1/runner/reconcile", payload, randomUUID());
+    const next = (await (await request("/runners")).json()).items[0];
+    expect(Date.parse(next.lastSeenAt)).toBeGreaterThan(Date.parse(first.lastSeenAt));
+    expect(next.lastSequence).toBe(first.lastSequence);
+    await transport.post("/api/v1/runner/reconcile", payload);
+    const defaultFirst = (await (await request("/runners")).json()).items[0];
+    await transport.post("/api/v1/runner/reconcile", payload);
+    expect((await (await request("/runners")).json()).items[0]).toEqual(defaultFirst);
   });
   it("rotates the certificate without changing journal identity and revokes old-key operations", async () => {
     const config = runnerConfigSchema.parse(

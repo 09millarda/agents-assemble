@@ -30,7 +30,7 @@ export class RunnerTransport {
     if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash)
       throw new Error("runner_requires_https_service");
   }
-  async post(path: string, payload: unknown): Promise<unknown> {
+  async post(path: string, payload: unknown, idempotencyKey?: string): Promise<unknown> {
     const ca = await readFile(this.options.caFile);
     const cert = this.options.certificateFile
       ? await readFile(this.options.certificateFile)
@@ -54,7 +54,9 @@ export class RunnerTransport {
           headers: {
             "content-type": "application/json",
             "content-length": bytes.length,
-            "idempotency-key": operation.success ? operation.data.operationId : sha256(bytes),
+            "idempotency-key": operation.success
+              ? operation.data.operationId
+              : (idempotencyKey ?? sha256(bytes)),
           },
           timeout: 15000,
         },
