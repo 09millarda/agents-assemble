@@ -1,0 +1,7 @@
+{
+  "name": "@factory/workflow", "version": "0.0.0", "type": "module",
+  "main": "./dist/index.js", "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "scripts": { "build": "tsc -p tsconfig.json", "test": "bun test src", "typecheck": "tsc --noEmit -p tsconfig.json", "lint": "echo 'no linter configured yet'" },
+  "devDependencies": { "bun-types": "^1.4.2" }
+}

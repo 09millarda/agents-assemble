@@ -1,0 +1,26 @@
+{
+  "name": "@factory/cli",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": {
+    "cli": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts -- --help",
+    "build": "tsc -p tsconfig.json",
+    "test": "bun test src",
+    "lint": "echo 'no linter configured yet'",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@factory/shared-domain": "workspace:*",
+    "commander": "^12.0.0",
+    "ws": "^8.18.0",
+    "@factory/workflow": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "@types/ws": "^8.5.0",
+    "bun-types": "^1.4.2"
+  }
+}

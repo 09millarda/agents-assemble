@@ -1,52 +1,27 @@
 {
-  "name": "agents-assemble",
-  "version": "0.1.0",
+  "name": "agent-software-factory",
+  "version": "0.0.0",
   "private": true,
-  "type": "module",
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=24.0.0"
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "cli": "bun run packages/cli/src/index.ts",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:migrate": "turbo run db:migrate --filter=@factory/api",
+    "docker:up": "docker compose up --build -d",
+    "docker:heartbeat": "docker compose ps && curl -fsS http://localhost:3001/health && docker compose exec -T postgres pg_isready -U \"${POSTGRES_USER:-factory}\"",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.0"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "scripts": {
-    "dev": "tsx scripts/dev.ts",
-    "api": "tsx apps/api/src/main.ts",
-    "worker": "tsx apps/worker/src/main.ts",
-    "db:migrate": "tsx scripts/migrate.ts",
-    "bootstrap": "tsx scripts/bootstrap.ts",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:integration": "vitest run tests/integration",
-    "test:browser": "playwright test",
-    "lint": "biome check .",
-    "format": "biome check --write .",
-    "build": "tsx scripts/build.ts",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build",
-    "inventory": "tsx scripts/inventory.ts",
-    "dco": "tsx scripts/dco.ts",
-    "backup": "tsx scripts/backup.ts",
-    "restore": "tsx scripts/restore.ts"
-  },
-  "dependencies": {
-    "@hono/node-server": "2.1.1",
-    "hono": "4.13.7",
-    "pg": "8.23.0",
-    "ws": "8.21.3",
-    "yjs": "13.6.27",
-    "zod": "4.6.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.5.13",
-    "@playwright/test": "1.58.2",
-    "@types/node": "24.10.1",
-    "@types/pg": "8.15.6",
-    "@types/ws": "8.18.1",
-    "esbuild": "0.27.0",
-    "tsx": "4.21.0",
-    "typescript": "5.9.3",
-    "vitest": "4.1.11"
-  }
+  ]
 }

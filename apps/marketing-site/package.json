@@ -1,0 +1,14 @@
+{
+  "name": "@factory/marketing-site",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 3002",
+    "build": "astro build",
+    "preview": "astro preview --port 3002",
+    "test": "echo 'no tests yet'",
+    "lint": "echo 'no linter configured yet'",
+    "typecheck": "astro check"
+  },
+  "dependencies": { "astro": "^4.0.0" }
+}

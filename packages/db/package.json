@@ -1,0 +1,32 @@
+{
+  "name": "@factory/db",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "bun test src",
+    "lint": "echo 'no linter configured yet'",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "db:migrate": "bun run src/migrate.ts",
+    "db:generate": "drizzle-kit generate"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.33.0",
+    "postgres": "^3.4.0",
+    "@factory/workflow": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "@types/pg": "^8.11.0",
+    "bun-types": "^1.4.2",
+    "drizzle-kit": "^0.24.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@factory/api",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun run src/infrastructure/openapi/generateOpenApi.ts --check && tsc -p tsconfig.json",
+    "start": "bun run src/index.ts",
+    "test": "bun test src",
+    "lint": "echo 'no linter configured yet'",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "db:migrate": "pnpm --filter @factory/db run db:migrate",
+    "db:generate": "pnpm --filter @factory/db run db:generate",
+    "openapi:generate": "bun run src/infrastructure/openapi/generateOpenApi.ts",
+    "openapi:check": "bun run src/infrastructure/openapi/generateOpenApi.ts --check"
+  },
+  "dependencies": {
+    "@factory/shared-domain": "workspace:*",
+    "@hono/swagger-ui": "^0.6.1",
+    "@hono/zod-openapi": "^1.6.3",
+    "hono": "^4.0.0",
+    "ws": "^8.18.0",
+    "zod": "^4.6.5",
+    "@factory/db": "workspace:*",
+    "@factory/workflow": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "@types/ws": "^8.5.0",
+    "bun-types": "^1.4.2"
+  }
+}

@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-factory}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-factory}
+      POSTGRES_DB: ${POSTGRES_DB:-factory}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  coordinator:
+    build:
+      context: .
+      dockerfile: ./apps/coordinator/Dockerfile
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-factory}:${POSTGRES_PASSWORD:-factory}@postgres:5432/${POSTGRES_DB:-factory}
+      COORDINATOR_PORT: "3003"
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-factory}:${POSTGRES_PASSWORD:-factory}@postgres:5432/${POSTGRES_DB:-factory}
+      PORT: "3001"
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+
+  portal-site:
+    build:
+      context: .
+      dockerfile: ./apps/portal-site/Dockerfile
+    environment:
+      VITE_FACTORY_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  marketing-site:
+    build: ./apps/marketing-site
+    ports:
+      - "3002:3002"
+
+volumes:
+  pgdata:

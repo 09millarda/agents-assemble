@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+:root {
+  --background: 216 32% 97%;
+  --foreground: 221 39% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 221 39% 13%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 221 39% 13%;
+  --primary: 221 39% 16%;
+  --primary-foreground: 45 100% 97%;
+  --secondary: 215 25% 93%;
+  --secondary-foreground: 221 39% 18%;
+  --muted: 214 25% 94%;
+  --muted-foreground: 215 16% 45%;
+  --accent: 38 100% 89%;
+  --accent-foreground: 221 39% 17%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 216 24% 88%;
+  --input: 216 24% 83%;
+  --ring: 38 92% 58%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  background: hsl(var(--background));
+}
+
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 82% -10%, rgba(246, 183, 86, 0.13), transparent 28rem),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, a, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(246, 183, 86, 0.45);
+  color: #172338;
+}
+
+.portal-grid {
+  background-image: linear-gradient(rgba(31, 48, 78, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 48, 78, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.portal-eyebrow {
+  color: #bd761d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.portal-display {
+  letter-spacing: -0.045em;
+}
+
+.run-markdown { line-height: 1.65; font-size: 0.875rem; }
+.run-markdown > * + * { margin-top: 0.85rem; }
+.run-markdown h1, .run-markdown h2, .run-markdown h3, .run-markdown h4 { font-weight: 650; line-height: 1.3; margin-top: 1.2rem; }
+.run-markdown h1 { font-size: 1.5rem; }
+.run-markdown h2 { font-size: 1.25rem; }
+.run-markdown h3 { font-size: 1.1rem; }
+.run-markdown ul, .run-markdown ol { padding-left: 1.5rem; }
+.run-markdown ul { list-style: disc; }
+.run-markdown ol { list-style: decimal; }
+.run-markdown pre { overflow-x: auto; padding: 0.8rem; border-radius: 0.4rem; background: #0f172a; color: #f1f5f9; }
+.run-markdown code { font-size: 0.8rem; }
+.run-markdown a { text-decoration: underline; color: #1d4ed8; }
+.run-markdown table { display: block; overflow-x: auto; border-collapse: collapse; }
+.run-markdown th, .run-markdown td { padding: 0.4rem 0.7rem; border: 1px solid #cbd5e1; }
+.run-markdown blockquote { padding-left: 1rem; border-left: 3px solid #cbd5e1; color: #475569; }

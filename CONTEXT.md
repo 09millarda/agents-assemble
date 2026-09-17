@@ -1,144 +1,228 @@
-# Domain context
+# Agent Software Factory — Context
 
-Date: 2026-09-12. Constraints below come from the user's brief. Bounded contexts remain a provisional architecture sketch. ADR 0001 settles the control-plane/runner boundary; ADR 0002 settles the playbook vocabulary and definition/execution baseline, retained with #6 amendments. ADR 0003 selects the durable substrate and context-local acceptance protocol using a reduced PostgreSQL fault experiment. ADR 0004 records the customer-daemon receipt/recovery protocol, supported by separate durable-fixture and actual Codex native-account/checkpoint probes. ADR 0005 records conditional Linux writer supervision and scoped stop evidence. ADR 0006 defines enrolled-runner authentication and receipt authority. ADR 0007 selects the bounded collaborative draft and exact revision submission profile. ADR 0008 selects stable graph entities with ordered child placements and explicit conflict gates; ADR 0009 selects ordered shared conversation with exact-turn steering, one-use dispatch claims and conservative interruption/replay. ADR 0010 records owner-approved community publication/moderation and portable package ownership; ADR 0011 selects Apache-2.0, full self-hosted parity, DCO contributions and open-source public software packages; ADR 0012 selects bounded portable envelopes, offline verification and separate evidence history; ADR 0013 selects protected keeper/reporter scope custody across reporter restart, with complete writer coverage and automatic takeover still ineligible; full interpreter durability and integrated production adapter conformance remain to validate. Consult the [canonical map](https://github.com/09millarda/agents-assemble/issues/1) and [product charter](docs/product-charter.md).
+Open-source factory for running agent software workflows on user-owned machines via containerised services, with a paid hosted deployment built from the same codebase.
 
-## Architectural direction
+## Language
 
-Start with a modular control-plane application and separately deployable workers/runners. A bounded context is an ownership boundary, not a requirement to create a network service on day one. Customer runners are a separate deployment/trust boundary from the start.
+**Agent Software Factory**:
+The overall system: portal, API, daemons, and connector CLI that together let users run agent models to build software.
+_Avoid_: platform, suite
 
-Service enrollment belongs to Fleet under Organization and Access authorization; Execution still owns invocation grants and accepted recovery decisions. [ADR 0006](docs/architecture/0006-enrolled-runner-authority.md) specifies outbound mutual TLS, certificate-to-enrollment registry binding, immutable receipt history and current per-operation authorization. Service credential rotation preserves logical observer history. Cross-context revocation requires an explicit effective cutoff; a stale Fleet projection cannot silently supply current authority.
+**Machine-Run Daemon**:
+Long-lived process running on a user's own machine that executes workflow activities through the configured local Codex app-server. The daemon is the stable per-machine channel for workflow execution: one daemon identity survives re-login and reconnects.
+_Avoid_: worker, runner, agent (for the process itself)
 
-The installable Agents Assemble CLI starts and manages the local runner daemon. The daemon connects outward to the chosen control plane and invokes user-installed, already-authenticated Codex/Claude executables under the intended local user identity. Service enrollment and harness authentication are separate; model account credentials remain with the native local harness.
+**Harness**:
+The local agent runtime used by a workflow activity (`codex` in v1), with its model and effort settings resolved by the workflow definition.
+_Avoid_: provider
 
-TypeScript domain and application modules depend on domain-owned ports. Hono HTTP routes, persistence, vendor clients, identity providers, billing, messaging, and harness control implement adapters at the edge. Domain modules do not import Hono, PostgreSQL drivers, AWS SDKs, WorkOS, Stripe, or harness SDKs. Composition roots choose strategies and adapters; business code does not accumulate provider-name conditionals.
+**Codex Model**:
+A model from the static catalogue used by a workflow step (`gpt-5.6-sol` or `gpt-5.3-codex`) with effort `low`, `medium`, or `high`.
+_Avoid_: model (unqualified), LLM
 
-## Candidate bounded contexts
+**Portal Site**:
+React web app for workflows, projects, activity editors, documents, conversations, browser notifications, and daemon management.
+_Avoid_: dashboard, frontend, console
 
-### Project scope terms (#18)
+**Marketing Site**:
+Public Astro static site describing the factory and the paid hosted offering.
+_Avoid_: landing page (as a component name), website (ambiguous)
 
-- **Project**: an organization-owned coordination scope with a stable identity,
-  lifecycle and policy history. It can contain several repository registrations.
-- **Repository registration**: a project-local identity for a verified upstream
-  repository, with historical binding revisions. It is distinct from its URL,
-  provider connection and local workspace.
-- **Scope permit**: finite permission for one reserved run and exact project/
-  repository/policy scope. It does not itself authorize execution or publication.
-- **Run scope**: the immutable set of project, repository, input, policy and
-  authority references accepted for a run. One writable repository per run is
-  the agent-selected first-release default, amendable by owner steering.
-- **Archive** closes new scope permission while preserving admitted work and
-  history. **Suspend** also requests independent holds on affected execution;
-  neither means that previously issued work has physically stopped.
+**Factory API**:
+HTTP API backing the portal, maintaining daemon connections, and accepting workflow commands and execution facts.
+_Avoid_: backend, server (ambiguous)
 
-The [project scope contract](docs/architecture/0014-project-scope-and-run-admission.md)
-selects the Projects ownership boundary below. Its failure walkthroughs are
-documentary requirements, with runtime behavior still to qualify.
+**Factory CLI:**
+Single TypeScript + Commander CLI (`cli`) run on the user's own machine. `auth login` approves this machine via the device flow, `daemon start` holds the outbound daemon WebSocket. Replaces the old split connector/daemon CLIs.
+_Avoid_: installer, setup script, client, factory-connect, factory-daemon
 
-| Context | Owns | Representative collaborations |
-| --- | --- | --- |
-| Organization and Access | Organizations, membership, role/policy decisions, external identity links | Authenticates principals through replaceable identity adapters; grants organization-scoped access to other contexts. |
-| Projects | Project identity/lifecycle, repository registrations and project policy revisions, finite scope permits | Supplies exact project/repository scope permission to Execution; keeps provider connections, artifact ownership and invocation grants with their existing owners. |
-| Automation Catalog | Draft/published playbooks, action definitions, skill references, runtime profiles, version compatibility | Supplies immutable definition snapshots to Execution; imports/exports community packages. |
-| Execution | Runs, action attempts, authoritative assignments/leases and fencing generations, durable waits, scheduling decisions, execution history, orchestration sagas | Selects eligible runners from Fleet information; pins artifact references; coordinates human requests and integration effects. |
-| Runner Fleet and Workspaces | Device enrollment, capabilities, liveness observations, session metadata, worktree/checkpoint metadata | Prepares machines/workspaces, controls existing harnesses through runner adapters, reports work outcomes. |
-| Knowledge | Versioned Markdown/artifacts, editing history, durable context references | Supplies revisions for attempts; accepts results and human edits with concurrency checks. |
-| Human Interaction | Questions, approval requests, response state, revision binding | Receives authorized replies from web/integration surfaces and publishes decisions back to Execution. |
-| Integrations | Connections, external work-item mapping, inbound deduplication, outbound effect/reconciliation records | Translates external systems into domain commands; projects progress, questions, and PR/work-item updates. |
-| Environments | Environment-profile revisions, configuration declarations, secret bindings and delivery policy | Provides reproducible bindings to eligible runners without exposing runner secrets to unrelated contexts. |
-| Community | Public releases, discovery, ratings, comments, bookmarks, reports, moderation, advisories and approved provenance | Publishes exact approved Catalog export candidates; Catalog imports a complete immutable local copy under ADR 0010. No private aggregate visibility toggle or execution authority is implied. |
-| Billing | Customer/subscription state, seats, entitlement projections | Consumes organization facts, adapts Stripe events, exposes hosted entitlements without making payment a self-hosted dependency. |
+**Daemon Connection**:
+The authenticated channel between the Factory API and a specific machine-run daemon, established via the Factory CLI device flow. Stable per machine: re-login reuses the stored daemon ID for the same API URL; a fresh identity needs an explicit reset or a logout first.
+_Avoid_: link, pairing (as a persistent noun), tunnel (unless it really is one)
 
-Project identifiers may be shared references, but a project cannot become a shared mutable record owned by every context. ADR 0014 selects Projects for repository registration and project policy; Integrations retains connections and external mappings, and Execution owns admission and delivery lineage. The context split is an ownership model, not a commitment to one deployed service per context.
+**Daemon Communication**:
+The authenticated daemon WebSocket carries workflow commands from the Factory API and execution facts back from the daemon. The portal manages daemons and workflows through the Factory API; it does not open a prompt socket to a daemon.
+_Avoid_: chat (too narrow), job dispatch (implementation detail)
 
-Execution validates its authoritative assignment generation and lease in the same local transaction that accepts an execution transition. Fleet liveness is scheduling input, not an authoritative fence. Commands to other contexts carry scoped assignment grants and are reauthorized according to the effect protocol; no cross-context transaction or stale Fleet projection is used to prove exclusive execution ownership.
+**Pairing Code** (deprecated):
+Former short-lived registration code. Replaced by the device flow below; do not use as a persistent noun or add new pairing-code endpoints.
 
-## Data and event rules
+**Device Authorization**:
+RFC 8628-style flow that authorizes a machine-run daemon without pre-shared credentials. The CLI requests a grant, the user approves the user code in the portal, then the CLI polls for daemon credentials.
 
-Each context has its own schema or explicitly owned tables, repository interfaces, migrations, inbox, and outbox. A command transaction updates only that context's records and its outbox. A consumer transaction records its inbox deduplication entry together with its local state changes and new outbox messages. Cross-context transactions, direct writes, shared ORM entity graphs, and foreign-key cascades are disallowed. Cross-context read models are maintained by events or queried through public interfaces; joins do not become hidden domain coupling.
+**Device Code**:
+High-entropy bearer identifier the CLI polls with. Never shown to the user and never typed anywhere.
+_Avoid_: pairing code, token (when meaning this identifier)
 
-Use at-least-once delivery with idempotent consumers. Persist a stable event/message ID, organization ID, source context, aggregate ID/version, schema version, causation/correlation IDs, and creation time. Consumers track the source sequence when their behavior needs ordering and reconcile gaps. Ordering is scoped to a source aggregate or run stream where explicitly guaranteed; no global event order is assumed.
+**User Code**:
+Short 8-character code (shown as `XXXX-XXXX`) the CLI displays and the user types into the portal to approve a specific machine.
+_Avoid_: pairing code, invite code, activation key
 
-Commands carry idempotency keys and expected versions when concurrency matters. Idempotency is scoped to tenant and operation, with payload-conflict behavior defined. A retry does not mean repeat every side effect: preserve logical operation identity while distinguishing attempts. Timeouts create an unknown outcome where needed; they are not proof an external action failed.
+**Verification URI**:
+Portal page (`/device`) where the user enters the user code and approves or denies the grant. No user login in v0; approval alone authorizes the daemon.
 
-Execution owns a persisted saga/process manager for operations spanning contexts, such as preparing a workspace and then dispatching work. Participants perform local transactions and emit outcomes. The orchestrator records progress, deadlines, retries, compensation requests, and manual-recovery state. Compensation is a domain action, not a database rollback; a published PR, comment, or user-visible message may require reconciliation rather than deletion.
+**Daemon Registry**:
+The persisted record of known daemons, their connection state, and their auth tokens, stored in Postgres via Drizzle.
+_Avoid_: device table, worker pool
 
-Read models can lag. Security-sensitive operations use current authorization or explicit bounded grants, rather than treating a stale membership projection as indefinitely valid. Define deletion, revocation, and retention propagation before enabling those operations across contexts.
+**Deregistered Daemon**:
+A daemon whose registry row is retained with `deregistered` status after `POST /v1/daemons/{daemonId}/deregister` (or `cli daemon delete`). Hidden from default lists, force-disconnected, with its old token permanently rejected; returning requires a fresh identity.
+_Avoid_: deleted daemon (implies row removal), deactivated daemon
 
-## Portable deployment sketch
+**DTO (Data Transfer Object)**:
+Zod schema in `features/<feature>/adapters/inbound/dto/` that owns the wire shape of one request or response. The single source of truth for the API contract; Drizzle rows never substitute for it.
+_Avoid_: model (when meaning the wire shape), schema (unqualified)
 
-| Mode | Control plane | Agent execution | Vendor requirements |
-| --- | --- | --- | --- |
-| Hosted | AWS reference deployment of API/UI and orchestration/integration workers with PostgreSQL | Enrolled customer-controlled machines | WorkOS and Stripe adapters for the hosted business; user-configured model authentication on runners. |
-| Self-hosted | The same core modules under the operator's deployment | Operator/customer-controlled runners | Replace identity/infrastructure adapters; billing not required. |
-| Personal machine | Local control plane and PostgreSQL with a local runner; packaging still undecided | Local installed harness processes and worktrees | No WorkOS/Stripe dependency; network needs depend on Git, chosen harness/provider, and enabled integrations. |
+**Problem Details**:
+RFC 9457 `application/problem+json` error body with `type`, `title`, `status`, `detail`, `code`, `instance`. The only error shape the Factory API returns.
+_Avoid_: `{ success, data }` envelopes, ad-hoc `{ error }` bodies
 
-The user confirmed the boundary in [ADR 0001](docs/architecture/0001-control-plane-and-runners.md): the local daemon invokes existing harnesses using the user's authenticated accounts. Those harnesses may call their normal model providers directly. Agents Assemble performs no inference or model credential proxying. Compatibility with the existing native account login is an adapter acceptance requirement. The [#8 native probe](docs/research/runner-recovery-conformance.md) verifies Codex 0.153.4 App Server with the existing ChatGPT login under the current Linux OS user and a fresh session reconstructed from verified Git/artifact inputs. Background-service identity, reauthentication, other versions/harnesses/OSs and full adapter integration remain unproved.
+**Cursor Pagination**:
+Opaque base64url `cursor` paging over a stable order, returned as `{ data, pagination: { nextCursor, limit } }` with an RFC 8288 `Link` header. Default `limit` 20, max 100.
+_Avoid_: offset paging (except tiny fixed config lists), client-constructed cursors
 
-[ADR 0004](docs/architecture/0004-runner-assignment-and-checkpoint-recovery.md) distinguishes Execution's admitted grant, the daemon's durable receipt, and Execution's accepted result. Persist launch uncertainty before calling the harness; an uncertain start cannot be blindly replayed. Reconnect reconciles stable identities, and fresh reconstruction requires its declared recovery class and new bounded admission. An actual App Server SIGKILL left identified tool descendants alive, so parent exit cannot settle the local writer obligation. [ADR 0005](docs/architecture/0005-native-writer-supervision.md) selects a bounded Linux reference using retained delegated payload cgroups and exact scoped stop receipts. Native and OS probes validate local observations, while a separate durable model exercises receipt/restart gates. An empty cgroup does not cover a writer launched into another user service: automatic takeover still requires complete writer coverage, trusted receipt provenance, independently reconciled effects and verified checkpoint/fresh admission. ADR 0006 supplies the authentication and authority contract; it does not make an unrestricted same-user observer trustworthy. Accepted history and current recovery eligibility remain separate, including after compromise, journal replacement or key rotation.
+**Command**:
+Application use case that mutates state and returns a `Result` (`requestDeviceAuthorization`, `approveDeviceAuthorization`, `denyDeviceAuthorization`). Lives in `application/commands/`.
+_Avoid_: mutation (unqualified), writer
 
-AWS runtime, object storage, secret services, queue services, and infrastructure-as-code tooling are deployment decisions. They must not define the domain's semantics. [ADR 0003](docs/architecture/0003-durable-execution-and-recovery.md) selects Execution-owned PostgreSQL state transitions and context-local inbox/outbox workers. No mandatory workflow service, scheduler library or production schema is selected. An optional Temporal adapter needs evidence that its operating benefits justify the extra boundary; Kubernetes and frontend choices remain open.
+**Query**:
+Application use case that reads without mutating (`listDaemons`, `getDeviceAuthorizationStatus`, `pollForDeviceToken`). Lives in `application/queries/`.
+_Avoid_: getter, fetcher
 
-## Candidate ports
+**Project**:
+Named absolute path on the daemon machine (e.g. a git checkout). Global workflows are enabled independently for each project. Each run starts from a committed local branch in a separate worktree.
+_Avoid_: repo (ambiguous), workspace (unqualified)
 
-Examples to make seams concrete, not finalized TypeScript interfaces: `IdentityProvider`, `Authorization`, `BillingGateway`, `WorkItemSource`, `ConversationChannel`, `SourceControlHost`, `HarnessController`, `RunnerTransport`, `SecretResolver`, `ArtifactStore`, `EventPublisher`, and context-owned repositories.
+**Workspace Path**:
+The absolute path of the project’s original checkout; distinct from a run’s retained worktree path.
+_Avoid_: relative path, per-daemon override (v2)
 
-Keep capabilities explicit: work-item systems do not all have identical hierarchy, comments, or transitions; harnesses do not all support the same models, effort knobs, interruption, or session export. Capability negotiation and visible unsupported behavior are preferable to silent approximation.
+**Git Gate**:
+Daemon-authoritative check (`git rev-parse --git-dir`) that the workspace path exists and is a git checkout. Failures block runs with typed codes (`PROJECT_NOT_FOUND`, `NOT_A_GIT_REPO`, `GIT_UNAVAILABLE`).
+_Avoid_: silent skip, portal-side check
 
-## Accepted definition and execution baseline
+## Workflows
 
-[ADR 0002](docs/architecture/0002-playbook-and-action-contract.md) selects canonical declarative JSON with local TypeScript authoring and semantic UI round trips; immutable package/run manifests; typed agent, human, integration and deterministic actions; and structured sequence, choice, parallel-all, bounded repeat and bounded for-each. Logical node occurrences, invocation attempts and external-effect identities are distinct. Published packages pin static dependencies and runtime-slot requirements; admission pins chosen organization runtime profiles and grants.
+**Workflow**:
+A globally defined graph of steps, outcome handoffs, and canvas positions. Projects choose which workflows may start there. The canvas may be empty.
+_Avoid_: Flow, pipeline
 
-Approval binds an exact operation/artifact/code manifest. Relevant specification revisions pause dependent work after observation and require explicit retain/adopt review. Adoption uses a linked successor run starting at entry with verified checkpoint/artifact inputs and inherited external-resource mappings. Completed history is not rewritten. The owner-approved [release contract](docs/first-release-contract.md) refines the edit boundary: live collaborative Markdown/graph drafts do not change a running manifest; explicit revision submission proposes an execution-relevant change. [ADR 0007](docs/architecture/0007-collaborative-drafts-and-revision-submission.md) selects Yjs drafts behind owner-local durable acceptance, immutable review candidates and expected-head submission. Draft state remains in Knowledge/Catalog; Execution separately observes ordered proposals. Retain replaces only invalidated unresolved waits; a superseded predecessor stays terminal. The reduced evidence covers actual Yjs/PostgreSQL recovery, not the full editor. ADR 0008/#16 selects stable editor entities and ordered child placements, separate lexical author IDs, exact conflict review and lossless normalized authoring round trips in a bounded actual-Yjs experiment. Production semantic ingress validation and the complete editor remain unproved. The substrate is selected in ADR 0003; schema/wire implementation and actual adapter conformance remain undecided. See the [examples](docs/examples/playbook-contract.md).
+**Workflow Description**:
+A UI-facing summary of what a Workflow is for. It is stored with the workflow definition and never sent to the Harness.
+_Avoid_: Activity Description (when meaning the workflow summary)
 
-## First release boundary
+**Activity**:
+A configured unit of agent work within a workflow, including its name, UI-only description, instructions, execution settings, human input mode, and named outcomes. The portal calls an activity a Step and renders it as a Node on the graph canvas.
+_Avoid_: built-in action, document producer
 
-Decision #4 selects an invited hosted/local pilot for a small team, Linux/Codex runners, new-feature delivery from GitHub Issue through approved specification, implementation/review and PR to human merge, automatic staging and approved production deployment. Live co-editing of Markdown and graphs, a visual graph editor, shared native harness conversation and the full selected community feature set are required. Browser terminals are excluded and paid subscriptions deferred. The [release contract](docs/first-release-contract.md) records explicit deferrals and measurable qualification targets; no current probe proves release readiness.
+**Step**:
+The portal word for an Activity: one node on the workflow graph canvas.
+_Avoid_: Activity (in portal copy), stage
 
-The deployment reference is a Hono API on Lambda/API Gateway through a repository-owned GitHub Actions/SAM workflow. It does not select Agents Assemble's own hosting topology or replace Execution's PostgreSQL substrate. #13/ADR 0009 resolves the bounded native conversation delivery/interruption contract; #14/ADR 0010 resolves community publication/moderation, with the bounded envelope/verifier contract resolved by #17/ADR 0012; #15 addresses deployment identity/recovery. Native conversation carries no implicit approval authority; remote deployments remain scoped, reconciled effects. The #11/ADR 0013 scoped observer result does not certify complete writer coverage or automatic recovery.
+**Node**:
+One Step rendered on the graph canvas at its stored position. Deleting a node deletes its edges.
+_Avoid_: card, box
 
-## Specification readiness
+**Description**:
+UI-only step text that never reaches the harness. Instructions are the sole system prompt.
+_Avoid_: prompt text, instructions (when meaning this field)
 
-Decision #6's [conformance report](docs/research/playbook-conformance.md) retains the grammar and makes ordered source edit observations, canonical scope/publication receipts, independent recovery obligations and explicitly admitted successor budgets concrete. The mock model passes 25 authoring probes and 25 runtime scenarios; it does not prove context-local database/outbox transactions, durable timers, leases or real harness behavior. The separate [#7 fault experiment](docs/research/durable-execution-conformance.md) exercises reduced context transitions with real PostgreSQL, context roles, process death, concurrent commands and database restart. This supports ADR 0003's protocol; it is not full interpreter or adapter certification.
+**Human Input**:
+Per-step mode: `off` (no questions), `approval` (outcome handoffs may wait for approval), or `input` (the step may interview the user).
+_Avoid_: prohibited, allowed, required
 
-The first release boundary is settled in #4. Before implementation tickets, validate the integrated definition/execution contract, apply the owner-selected #5 license/parity policy and settle the remaining graduated decision #15, and prove the complete harness-to-human-to-checkpoint-to-deployment journey. #8 supplies separate native-account/fresh-session and daemon fault evidence; it does not yet connect real native human waits, production Execution, authenticated transport and verified publication. Later decisions must include actual aggregate invariants, command/event schemas, compatibility policy, testable recovery guarantees, and examples of concurrent human/agent behavior. This document preserves the destination while those details remain open.
+**Static Model Catalogue**:
+The hardcoded workflow editor harness/model/effort list: harness `codex`, models `gpt-5.6-sol` and `gpt-5.3-codex`, efforts `low`/`medium`/`high` with default `medium`. Runtime daemon capabilities are advertised for execution compatibility, not for portal prompt selection.
+_Avoid_: advertised capabilities, daemon-gated models
 
-After initially deferring #15, the owner resumed AWS authentication and supplied
-successful CloudShell identity evidence, then authenticated locally and selected
-Proof of Concept (`728616601473`), verified via STS and the account API. After advanced activation, [actual GitHub-to-AWS identity verification](docs/research/aws-github-connection-result.md)
-passed using the new identity-only role. The approved Ireland policy amendment
-is saved. [Actual GitHub release and restoration probes](docs/research/lambda-live-deployment-result.md)
-passed in two disposable environments. [Actual GitHub dispatch/rerun observations and controlled PostgreSQL authority/recovery tests](docs/research/deployment-authority-result.md) now pass separately. [Signed GitHub OIDC-to-claim verification](docs/research/deployment-oidc-claim-result.md) now passes within a trusted job; the [candidate bridge](docs/research/deployment-authority-bridge-plan.md) keeps AWS credentials in a separate Integrations controller. That independent trust boundary, automatic restoration and provider uncertainty qualification remain pending. The owner continued with AWS after considering Cloudflare. ADR 0014/#18
-settles project scope and admission ownership through documentary review. Decision
-#19's bounded local PostgreSQL conformance fixture passed the project-scope
-permit/archive/suspension contract without amendment. This does not establish
-integrated runtime conformance or remove deployment qualification from the
-release requirements.
+**Workflow Run**:
+One execution of a frozen workflow definition and resolved activity settings for a project, with its own worktree, conversations, and history.
+_Avoid_: Flow Run, job
 
-## Shared native conversation
+**Cancellation**:
+A user-directed request to stop a nonterminal Workflow Run, preventing further activity dispatch and ending the run as cancelled after the daemon has stopped the active work.
+_Avoid_: abort, delete
 
-[ADR 0009](docs/architecture/0009-shared-harness-conversation.md) assigns admitted conversation inputs and their immutable sender/sequence/target ledger to Execution. Fleet supplies authenticated transport and daemon observations; Human Interaction retains approval authority. Actual Codex 0.153.4 accepts repeated and changed messages under the same client ID, and turn/start can steer an active turn. Deduplicate before native dispatch, require exact-turn steering and a fresh exclusive dispatch claim, preserve unknown outcomes without replay, and gate continuation during interruption. Native acknowledgment/terminal state supplies no stopped-writer or replacement-admission proof. Output uses service-owned cursors and explicit capture gaps. Separate durable/native evidence does not qualify integrated production delivery or supersede ADR 0013’s independent observer/coverage requirements.
+**Cancellation Requested**:
+The state of a Workflow Run after cancellation has been requested but before any active work has confirmed that it stopped.
+_Avoid_: cancelled, running
 
-## Accepted community boundary
+**Run Deletion**:
+The permanent removal of a stopped Workflow Run and its Factory-owned run history and local execution resources. External Git commits, branches, and pull requests are not part of the deletion.
+_Avoid_: cancellation, archive, hide
 
-[ADR 0010](docs/architecture/0010-portable-community-publication.md) separates Catalog's private authoring/immutable local copies from Community's explicitly approved public releases and feedback/moderation. Organizations own packages; hosted pilot publication needs delegated publisher authority and an invitation. Public candidates exclude private artifacts, identifiers and bindings throughout their closure; changed public bytes need a distinct reviewed digest. Complete permitted import/export works without the registry and grants no execution authority. Every included component needs applicable redistribution permission; #5/ADR 0011 selects Apache-2.0 for project-owned material and requires OSI-approved software licenses for public registry packages, with suitable compatible terms for other resources. Private packages may remain proprietary; actual license application and third-party review remain separate.
+**Enabled Workflows**:
+The project’s allow-list of globally defined workflows that may start runs in that project.
+_Avoid_: flow permissions, activity permissions
 
-Withdrawal/quarantine blocks new public retrieval while preserving local copies and historical pins. Verified advisories become execution blocks only at Execution's durable policy cutoff; received-but-unapplied policy stays visibly pending. Admission/continuation checks cover the complete resolved closure, and independent quarantine, interruption, review and recovery holds cannot clear each other. Explicit local-admin overrides are scoped/versioned; already-issued effects remain separately accounted. Public feedback includes authenticated comments/ratings, private bookmarks/reports and reasoned moderation/appeals. The owner accepted the policy; no runtime conformance is claimed. #17/ADR 0012 selects portable envelopes, provenance and offline import verification within its reduced conformance scope.
+**Activity Execution**:
+One visit to an activity in a run, with a fresh harness conversation. A cycle return starts another execution; a question continues the current execution.
+_Avoid_: loop pass, harness turn, recovery attempt
 
-## Accepted licensing and edition parity
+**Harness Turn**:
+One exchange with the harness within an activity execution. Questions, answers, progress, and permissions belong to that execution’s persisted conversation.
+_Avoid_: activity execution, loop pass
 
-[ADR 0011](docs/architecture/0011-open-source-licensing-and-edition-parity.md) records the owner's Apache-2.0 choice for project-owned software, documentation and starter materials, with DCO 1.1 contributions and no separate CLA or assignment. Competing commercial hosts and proprietary forks are accepted consequences. Public registry software needs an OSI-approved license; other resources retain suitable explicit terms, and all components need redistribution permission. The actual LICENSE addition remains a separate reviewable change; the architecture record is not itself a license grant.
+**Recovery Attempt**:
+A separately identified, user-authorized attempt to recover interrupted or failed work.
+_Avoid_: automatic retry, review pass
 
-The complete product source and feature set remain available to free self-hosters at the same release, including collaboration, security, integrations and community functionality. WorkOS and Stripe cannot be mandatory local dependencies, and no self-hosted paid seat/runner cap is selected. Revenue comes from managed hosting and support; the pilot still defers subscriptions. Hosted registry access rules and third-party infrastructure costs remain deployment-specific. Complete permitted package portability and authorized retained organization-data export are required; private export schemas, retention/restore, dependency compatibility and distribution notices remain to specify or verify.
+**Outcome**:
+The explicit named result of a successfully completed activity, used to choose a handoff. An execution error is a separate state.
+_Avoid_: prose inference, success/failure node result
 
-## Accepted portable envelope boundary
+**Handoff**:
+The continuation from a named outcome to another activity or the end of a run, either automatically or after human approval. The start step is the node with no incoming edges; terminal outcomes end the run; cycles are free.
+_Avoid_: tool permission, harness approval
 
-[ADR 0012](docs/architecture/0012-portable-package-envelope-and-verification.md) selects strict ZIP_STORED with bounded canonical metadata and exact content-addressed blobs. Each component and complete pinned closure retain immutable origin/version/digests across disconnected Catalogs. Signature evidence accumulates separately from content and is checked against current locally configured issuer scope; unknown claims remain unverified, and export selects bounded evidence without granting execution. Public transformation repins every changed reference and requires complete approved ancestry origin/version/digest mappings while retaining private mappings locally.
+## Documents and human interaction
 
-The disposable probe demonstrates actual archive/cryptographic checks, two SQLite Catalogs and process-crash atomicity with a reduced definition schema and synthetic permission/trust policy. PostgreSQL remains the production substrate. Full semantic validation, authenticated source allocation/approval, current upstream trust, actual redistribution rights, production storage and advisory/admission composition remain unproved. Import never selects runtime/environment bindings or supplies a grant.
+**Context Document**:
+A workflow-named Markdown document with generation instructions and required headings, stored as immutable run-local revisions.
+_Avoid_: editable artifact, shared global document
 
+**Document Revision**:
+An immutable version of a Context Document, identifying its producer execution and consumed input revisions.
+_Avoid_: latest document (when approving or binding inputs)
 
-## Protected keeper and reporter
+**Document Binding**:
+The exact document revision selected as an input when an activity execution starts. Selection controls supplied context and does not isolate other workspace information.
+_Avoid_: workspace isolation, live document reference
 
-[ADR 0013](docs/architecture/0013-protected-observer-and-retained-scope-recovery.md) resolves #11 conditionally: separate root-owned keeper custody and a restartable reporter from the native user. The keeper retains the original payload/descriptor and protected launch/stop journal; the reporter checks original activation, binding, custody and closed gate before persisting and delivering a scoped receipt. Actual native and mTLS evidence validates reporter restart with the keeper/manager/service surviving. Missing/recreated scope objects, journal discontinuity or keeper loss remain unknown. Native model login remains under the existing ordinary user; no account credentials are copied.
+**Human Interaction**:
+A persisted outstanding question, harness permission, approval, loop decision, or recovery decision associated with an execution.
+_Avoid_: blocking model slot, transient dialog
 
-The measured direct UID/NNP profile denies 14 tested credential, journal, process, cgroup, API, sudo and system-manager operations. It is not a complete sandbox: a separate same-UID/NNP user-manager probe creates an outside writer and regains supplementary groups. That writer survives original-payload emptiness. Keep the current profile at authenticated scoped observation and automatic takeover ineligible. Whole-keeper/host/storage restart, indirect privileged helper authority, complete workload coverage and full production integration remain unproved. The [report](docs/research/protected-observer-conformance.md) separates actual observations, reduced service policy and repaired evidence-reader flaws.
+**Publication Approval**:
+Approval of exact output revisions and reviewed code content before creating a pull request. A content change invalidates the approval and requires another review.
+_Avoid_: Git permission, tool approval
+
+## Execution and delivery
+
+**Workflow Coordinator**:
+The sole owner of run progression, consuming persisted commands and daemon facts and producing durable dispatches and human waits.
+_Avoid_: Factory API interpreter, parallel interpreter
+
+**Daemon Command**:
+A persisted instruction addressed to a daemon with stable command, run, and execution identities.
+_Avoid_: best-effort dispatch, portal-reported completion
+
+**Execution Journal**:
+The daemon’s durable record of received commands, activity effects, and results used to detect duplicates and reconcile interrupted work.
+_Avoid_: transcript, process memory
+
+**Run Worktree**:
+The retained branch and worktree created for one run from a pinned committed revision, excluding uncommitted changes in the project’s original checkout.
+_Avoid_: project checkout, disposable workspace
+
+**Publication Intent**:
+The durable record of reviewed content and the resolved GitHub destination used to reconcile a commit, push, or pull request after interruption.
+_Avoid_: publish retry, optimistic PR creation
+
+**Browser Recipient**:
+The stable opted-in browser identity selected when starting a run, with a replaceable push subscription and browser-specific management token.
+_Avoid_: user account, global notification target
+
+**Notification Record**:
+A persisted run notification independent of push delivery, retaining its identity across delivery retries.
+_Avoid_: successful push, publication result
