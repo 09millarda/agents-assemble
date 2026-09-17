@@ -65,6 +65,30 @@ Portal page (`/device`) where the user enters the user code and approves or deni
 The persisted record of known daemons, their connection state, and their auth tokens, stored in Postgres via Drizzle.
 _Avoid_: device table, worker pool
 
+**Daemon Display Name**:
+The user-maintained name shown in the Portal Site and Factory CLI for a Machine-Run Daemon. It is independent of the machine name reported by the daemon and survives reconnects.
+_Avoid_: machine name, hostname
+
+**Reported Machine Name**:
+The machine label supplied by the Factory CLI when a daemon connects. It describes the current host identity and never replaces the Daemon Display Name.
+_Avoid_: daemon name, display name
+
+**Daemon Configuration**:
+The Factory API-owned desired settings and annotations for a Machine-Run Daemon, including its display name, Harness Capacity, location, device label, purpose, owner team, tags, and operator notes. A connected daemon acknowledges the configuration it has applied.
+_Avoid_: local daemon settings, startup overrides
+
+**Harness Capacity**:
+The configured maximum number of harness turns a Machine-Run Daemon may execute at once. Waiting for human input consumes no capacity; queued work starts when a slot becomes available.
+_Avoid_: worker count, thread count
+
+**Daemon Connection Session**:
+One authenticated lifetime of a daemon's outbound WebSocket. Reconnecting starts a new session even when the stable daemon identity is unchanged.
+_Avoid_: daemon identity, login session
+
+**Live Daemon Diagnostics**:
+Best-effort raw daemon and Harness traffic visible only while a Portal Site viewer is subscribed during the current Daemon Connection Session. Diagnostics are never durable history.
+_Avoid_: audit log, execution transcript
+
 **Deregistered Daemon**:
 A daemon whose registry row is retained with `deregistered` status after `POST /v1/daemons/{daemonId}/deregister` (or `cli daemon delete`). Hidden from default lists, force-disconnected, with its old token permanently rejected; returning requires a fresh identity.
 _Avoid_: deleted daemon (implies row removal), deactivated daemon
@@ -110,6 +134,26 @@ _Avoid_: Flow, pipeline
 **Workflow Description**:
 A UI-facing summary of what a Workflow is for. It is stored with the workflow definition and never sent to the Harness.
 _Avoid_: Activity Description (when meaning the workflow summary)
+
+**Workflow Status**:
+The lifecycle state of a Workflow: Draft or Published. Deleted workflows are physically removed rather than represented by a status.
+_Avoid_: run status (when meaning workflow lifecycle)
+
+**Draft Workflow**:
+A Workflow that is still being prepared and cannot be enabled for a project or used to start a new Workflow Run.
+_Avoid_: unpublished run
+
+**Published Workflow**:
+A Workflow that has passed validation and is available for project enablement and new Workflow Runs.
+_Avoid_: active workflow (when meaning publication)
+
+**Workflow Tag**:
+A user-assigned label attached to a Workflow for catalog organization and filtering.
+_Avoid_: activity tag
+
+**Workflow Deletion**:
+The physical removal of a Workflow definition. Deletion is not a persisted Workflow Status.
+_Avoid_: deleted workflow status
 
 **Activity**:
 A configured unit of agent work within a workflow, including its name, UI-only description, instructions, execution settings, human input mode, and named outcomes. The portal calls an activity a Step and renders it as a Node on the graph canvas.

@@ -2,6 +2,11 @@ import { describe, expect, test } from "bun:test";
 import { renderToString } from "react-dom/server";
 import { createMemoryHistory, createRootRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { DaemonList } from "./DaemonList";
+import type { DaemonSummary } from "@factory/shared-domain";
+
+function daemon(daemonId: string, machineName: string, status: "online" | "offline"): DaemonSummary {
+  return { daemonId, machineName, displayName: machineName, status, maxParallelHarnesses: 1, appliedMaxParallelHarnesses: 1, activeHarnesses: 0, queuedCommands: 0 };
+}
 
 async function renderWithRouter(ui: React.ReactElement): Promise<string> {
   const rootRoute = createRootRoute({ component: () => ui });
@@ -42,8 +47,8 @@ describe("DaemonList", () => {
     const html = await renderWithRouter(
       <DaemonList
         daemons={[
-          { daemonId: "daemon-1", machineName: "studio", status: "online" },
-          { daemonId: "daemon-2", machineName: "laptop", status: "offline" },
+          daemon("daemon-1", "studio", "online"),
+          daemon("daemon-2", "laptop", "offline"),
         ]}
         onRefresh={() => {}}
         isLoading={false}
@@ -54,8 +59,8 @@ describe("DaemonList", () => {
     expect(html).toContain("online");
     expect(html).toContain("Actions for studio");
     expect(html).toContain("Actions for laptop");
-    expect(html).not.toContain('href="/daemons/daemon-1"');
-    expect(html).not.toContain('href="/daemons/daemon-2"');
+    expect(html).toContain('href="/daemons/daemon-1"');
+    expect(html).toContain('href="/daemons/daemon-2"');
     expect(html).not.toContain("Open chat");
   });
 
@@ -63,7 +68,7 @@ describe("DaemonList", () => {
     async function renderWithDeregister(withHandler: boolean): Promise<string> {
       return renderWithRouter(
         <DaemonList
-          daemons={[{ daemonId: "daemon-1", machineName: "studio", status: "online" }]}
+          daemons={[daemon("daemon-1", "studio", "online")]}
           onRefresh={() => {}}
           isLoading={false}
           {...(withHandler ? { onDeregisterDaemon: async () => {} } : {})}

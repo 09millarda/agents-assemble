@@ -5,6 +5,19 @@ import type { Server } from "node:http";
 import { WebSocketServer, WebSocket } from "ws";
 import type { DaemonRegistryPort } from "../domain/DaemonConnectionPort";
 import type { DaemonSocketRegistry } from "../infrastructure/daemonSocketRegistry";
+import type {
+  DaemonConfigurationStatePort,
+  DaemonQueryPort,
+  DaemonRuntimeFactsPort,
+} from "../domain/DaemonConfigurationPort";
+import {
+  DaemonRuntimeFactsSchema,
+  DaemonTelemetrySchema,
+} from "./inbound/dto/daemonDto";
+
+type DaemonSocketControlPort = DaemonQueryPort &
+  DaemonConfigurationStatePort &
+  DaemonRuntimeFactsPort;
 
 function readBearerToken(
   authorizationHeader: string | string[] | undefined,
@@ -21,6 +34,7 @@ async function handleDaemonSocket(
   registry: DaemonRegistryPort,
   daemonSockets: DaemonSocketRegistry,
   workflowGateway?: WorkflowDaemonGatewayPort,
+  daemonControl?: DaemonSocketControlPort,
 ): Promise<void> {
   const authToken = readBearerToken(request.headers.authorization);
   socket.once("message", async (raw) => {
@@ -28,7 +42,7 @@ async function handleDaemonSocket(
       type?: unknown;
       daemonId?: unknown;
       machineName?: unknown;
-      capabilities?: unknown;
+      runtimeFacts?: unknown;
     };
     try {
       hello = JSON.parse(String(raw));
@@ -40,6 +54,16 @@ async function handleDaemonSocket(
       socket.close(4400, "expected daemon.hello first");
       return;
     }
+    const runtimeFacts = DaemonRuntimeFactsSchema.safeParse(hello.runtimeFacts);
+    if (
+      typeof hello.machineName !== "string" ||
+      hello.machineName.length === 0 ||
+      !runtimeFacts.success ||
+      runtimeFacts.data.machineName !== hello.machineName
+    ) {
+      socket.close(4400, "invalid daemon runtime facts");
+      return;
+    }
     const isAuthenticated = await registry.verifyDaemonToken(
       hello.daemonId,
       authToken,
@@ -48,21 +72,30 @@ async function handleDaemonSocket(
       socket.close(4401, "invalid daemon credentials");
       return;
     }
-    if (
-      typeof hello?.machineName === "string" &&
-      hello.machineName.length > 0
-    ) {
-      await registry.updateDaemonOnHello(hello.daemonId, hello.machineName);
+    await registry.updateDaemonOnHello(hello.daemonId, hello.machineName);
+    const connectionSessionId = daemonSockets.attachDaemonSocket(hello.daemonId, socket);
+    daemonSockets.publishInboundFrame(hello.daemonId, connectionSessionId, String(raw));
+    if (daemonControl) {
+      await daemonControl.recordRuntimeFacts(hello.daemonId, {
+        ...runtimeFacts.data,
+        lastSeenAt: new Date().toISOString(),
+      });
     }
-    daemonSockets.attachDaemonSocket(hello.daemonId, socket);
     console.log(`daemon ${hello.daemonId} authenticated`);
-    socket.send(
+    daemonSockets.sendToDaemon(
+      hello.daemonId,
       JSON.stringify({ type: "daemon.welcome", daemonId: hello.daemonId }),
     );
     const authenticatedDaemonId = hello.daemonId;
     socket.on("message", async (frameRaw) => {
+      const rawPayload = String(frameRaw);
+      daemonSockets.publishInboundFrame(
+        authenticatedDaemonId,
+        connectionSessionId,
+        rawPayload,
+      );
       try {
-        const frame = JSON.parse(String(frameRaw));
+        const frame = JSON.parse(rawPayload);
         if (frame?.type === "workflow.fact" && workflowGateway) {
           const parsed = WorkflowFactSchema.safeParse(frame.fact);
           if (
@@ -72,7 +105,8 @@ async function handleDaemonSocket(
               parsed.data,
             ))
           )
-            socket.send(
+            daemonSockets.sendToDaemon(
+              authenticatedDaemonId,
               JSON.stringify({
                 type: "error",
                 message: "Unrecognized workflow execution fact.",
@@ -80,18 +114,78 @@ async function handleDaemonSocket(
             );
           return;
         }
+        if (
+          frame?.type === "daemon.configuration.applied" &&
+          Number.isInteger(frame.revision) &&
+          daemonControl
+        ) {
+          await daemonControl.recordAppliedConfiguration(
+            authenticatedDaemonId,
+            frame.revision,
+          );
+          return;
+        }
+        if (
+          frame?.type === "daemon.configuration.rejected" &&
+          Number.isInteger(frame.revision) &&
+          typeof frame.reason === "string" &&
+          daemonControl
+        ) {
+          await daemonControl.recordRejectedConfiguration(
+            authenticatedDaemonId,
+            frame.revision,
+            frame.reason,
+          );
+          return;
+        }
+        if (frame?.type === "daemon.telemetry") {
+          const telemetry = DaemonTelemetrySchema.safeParse(frame.telemetry);
+          if (!telemetry.success) throw new Error("invalid telemetry");
+          daemonSockets.recordDaemonTelemetry(
+            authenticatedDaemonId,
+            telemetry.data,
+          );
+          return;
+        }
+        if (
+          frame?.type === "daemon.log" &&
+          [
+            "daemon-stdout",
+            "daemon-stderr",
+            "harness-stdout",
+            "harness-stderr",
+          ].includes(frame.source) &&
+          typeof frame.payload === "string"
+        ) {
+          daemonSockets.publishLocalLog(
+            authenticatedDaemonId,
+            connectionSessionId,
+            frame.source,
+            frame.payload,
+          );
+          return;
+        }
       } catch {
-        socket.send(
+        daemonSockets.sendToDaemon(
+          authenticatedDaemonId,
           JSON.stringify({ type: "error", message: "invalid frame" }),
         );
       }
     });
+    if (daemonControl) {
+      const details = await daemonControl.findDaemon(authenticatedDaemonId);
+      if (details) {
+        daemonSockets.sendConfiguration(
+          authenticatedDaemonId,
+          details.configuration.revision,
+          details.configuration.desired,
+        );
+      }
+    }
     if (workflowGateway)
       await workflowGateway.connectDaemon(
         authenticatedDaemonId,
-        Array.isArray(hello.capabilities)
-          ? (hello.capabilities as HarnessCapability[])
-          : [],
+        runtimeFacts.data.capabilities as HarnessCapability[],
       );
   });
 }
@@ -101,6 +195,7 @@ export function attachSocketGateway(
   registry: DaemonRegistryPort,
   daemonSockets: DaemonSocketRegistry,
   workflowGateway?: WorkflowDaemonGatewayPort,
+  daemonControl?: DaemonSocketControlPort,
 ): void {
   new WebSocketServer({ server }).on(
     "connection",
@@ -113,6 +208,7 @@ export function attachSocketGateway(
           registry,
           daemonSockets,
           workflowGateway,
+          daemonControl,
         );
       } else {
         socket.close(4404, "unknown socket path");

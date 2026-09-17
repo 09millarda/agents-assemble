@@ -80,6 +80,8 @@ export function createFeatureBuildingWorkflow(
     workflowId: "feature-building",
     name: "Build a feature",
     description: "Turn an agreed goal into a tested implementation through planning, building, and review.",
+    status: "draft",
+    tags: [],
     activities,
     positions: {
       requirements: { x: 40, y: 40 },

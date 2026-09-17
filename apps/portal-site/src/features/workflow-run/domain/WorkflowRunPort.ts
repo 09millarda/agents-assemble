@@ -26,4 +26,5 @@ export interface WorkflowRunPort {
   getRun(runId: string): Promise<WorkflowRun>;
   listNotifications(runId: string): Promise<RunNotification[]>;
   submitCommand(response: HumanResponse): Promise<void>;
+  deleteRun(runId: string): Promise<void>;
 }

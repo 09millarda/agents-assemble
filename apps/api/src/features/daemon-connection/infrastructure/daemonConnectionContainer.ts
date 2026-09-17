@@ -1,14 +1,26 @@
 import { DrizzleDaemonRegistryAdapter } from "../adapters/DrizzleDaemonRegistryAdapter";
 import { createDatabaseConnection } from "@factory/db";
 import type { DaemonDisconnectionPort, DaemonPresencePort, DaemonRegistryPort } from "../domain/DaemonConnectionPort";
+import type {
+  DaemonConfigurationPort,
+  DaemonConfigurationStatePort,
+  DaemonQueryPort,
+  DaemonRuntimeFactsPort,
+} from "../domain/DaemonConfigurationPort";
 import type { Database } from "@factory/db";
 
-export function createDaemonRegistry(database?: Database): DaemonRegistryPort {
+export type CompleteDaemonRegistry = DaemonRegistryPort &
+  DaemonQueryPort &
+  DaemonConfigurationPort &
+  DaemonConfigurationStatePort &
+  DaemonRuntimeFactsPort;
+
+export function createDaemonRegistry(database?: Database): CompleteDaemonRegistry {
   return new DrizzleDaemonRegistryAdapter(database ?? createDatabaseConnection(process.env.DATABASE_URL ?? ""));
 }
 
 export function buildDaemonConnectionModule(
-  registry: DaemonRegistryPort = createDaemonRegistry(),
+  registry: CompleteDaemonRegistry = createDaemonRegistry(),
   presence?: DaemonPresencePort,
   disconnection?: DaemonDisconnectionPort
 ) {

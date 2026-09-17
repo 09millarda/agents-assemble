@@ -6,6 +6,8 @@ test("saving trims workflow and step names while preserving positions and approv
     workflowId: "build",
     name: "  Build  ",
     description: "A workflow",
+    status: "draft",
+    tags: [" Planning ", "planning"],
     positions: { a: { x: 10, y: 20 } },
     activities: [
       {
@@ -22,6 +24,7 @@ test("saving trims workflow and step names while preserving positions and approv
   const saved = await saveWorkflowDraft({ async updateWorkflow(definition) { return definition; } }, draft);
   expect(saved.name).toBe("Build");
   expect(saved.description).toBe("A workflow");
+  expect(saved.tags).toEqual(["planning"]);
   expect(saved.activities[0]!.name).toBe("First");
   expect(saved.positions).toEqual({ a: { x: 10, y: 20 } });
   expect(saved.activities[0]!.outcomes).toEqual([

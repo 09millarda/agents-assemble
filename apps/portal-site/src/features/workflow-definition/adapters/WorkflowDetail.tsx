@@ -8,9 +8,17 @@ import { WorkflowGraph } from "./WorkflowGraph";
 export function WorkflowDetail({
   definition,
   onDelete,
+  onPublish,
+  onUnpublish,
+  lifecycleBusy = false,
+  lifecycleError = null,
 }: {
   definition: WorkflowDefinition;
   onDelete: () => void;
+  onPublish?: () => void;
+  onUnpublish?: () => void;
+  lifecycleBusy?: boolean;
+  lifecycleError?: string | null;
 }) {
   return (
     <div className="grid gap-6">
@@ -30,6 +38,10 @@ export function WorkflowDetail({
           <div className="mt-3 flex flex-wrap gap-2">
             <Badge variant="secondary">{definition.activities.length} steps</Badge>
             <Badge variant="secondary">Global workflow</Badge>
+            <Badge variant={definition.status === "published" ? "success" : "secondary"}>
+              {definition.status === "published" ? "Published" : "Draft"}
+            </Badge>
+            {definition.tags.map((tag) => <Badge key={tag} variant="outline">{tag}</Badge>)}
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -41,8 +53,19 @@ export function WorkflowDetail({
           <Button type="button" variant="destructive" onClick={onDelete}>
             <Trash2 className="h-4 w-4" /> Delete workflow
           </Button>
+          {definition.status === "published" && onUnpublish ? (
+            <Button type="button" variant="outline" disabled={lifecycleBusy} onClick={onUnpublish}>
+              {lifecycleBusy ? "Unpublishing…" : "Unpublish workflow"}
+            </Button>
+          ) : null}
+          {definition.status === "draft" && onPublish ? (
+            <Button type="button" disabled={lifecycleBusy} onClick={onPublish}>
+              {lifecycleBusy ? "Publishing…" : "Publish workflow"}
+            </Button>
+          ) : null}
         </div>
       </header>
+      {lifecycleError ? <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{lifecycleError}</p> : null}
       <section className="grid gap-3 rounded-2xl border border-border/80 bg-white p-4 shadow-sm md:p-5">
         <div>
           <h2 className="text-lg font-bold">Workflow graph</h2>

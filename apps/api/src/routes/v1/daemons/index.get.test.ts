@@ -10,8 +10,8 @@ function fakeRegistry(): DaemonRegistryPort {
     updateDaemonOnHello: async () => {},
     listKnownDaemons: async () => [],
     listDaemons: async () => [
-      { daemonId: "daemon-b", machineName: "laptop", status: "offline" },
-      { daemonId: "daemon-a", machineName: "workstation", status: "offline" },
+      { daemonId: "daemon-b", machineName: "laptop", displayName: "Laptop", status: "offline", maxParallelHarnesses: 2, appliedMaxParallelHarnesses: 1, activeHarnesses: 0, queuedCommands: 0 },
+      { daemonId: "daemon-a", machineName: "workstation", displayName: "Builder", status: "offline", maxParallelHarnesses: 4, appliedMaxParallelHarnesses: 4, activeHarnesses: 0, queuedCommands: 0 },
     ],
     verifyDaemonToken: async () => true,
     deregisterDaemon: async () => "not-found",
@@ -19,16 +19,17 @@ function fakeRegistry(): DaemonRegistryPort {
 }
 
 const offlinePresence: DaemonPresencePort = { isDaemonConnected: () => false };
+const noTelemetry = { getDaemonTelemetry: () => null };
 
 test("GET /v1/daemons returns a paged daemon collection", async () => {
   const app = new OpenAPIHono();
-  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence });
+  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence, telemetry: noTelemetry });
 
   const response = await app.request("/v1/daemons?limit=1");
 
   expect(response.status).toBe(200);
   expect(await response.json()).toEqual({
-    data: [{ daemonId: "daemon-a", machineName: "workstation", status: "offline" }],
+    data: [{ daemonId: "daemon-a", machineName: "workstation", displayName: "Builder", status: "offline", maxParallelHarnesses: 4, appliedMaxParallelHarnesses: 4, activeHarnesses: 0, queuedCommands: 0 }],
     pagination: { nextCursor: "ZGFlbW9uLWE", limit: 1 },
   });
   expect(response.headers.get("link")).toBe('</v1/daemons?limit=1&cursor=ZGFlbW9uLWE>; rel="next"');
@@ -36,7 +37,7 @@ test("GET /v1/daemons returns a paged daemon collection", async () => {
 
 test("GET /v1/daemons rejects an out-of-range limit as a problem", async () => {
   const app = new OpenAPIHono({ defaultHook: validationHook });
-  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence });
+  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence, telemetry: noTelemetry });
 
   const response = await app.request("/v1/daemons?limit=500");
 
@@ -47,7 +48,7 @@ test("GET /v1/daemons rejects an out-of-range limit as a problem", async () => {
 
 test("the unversioned daemon path is gone", async () => {
   const app = new OpenAPIHono();
-  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence });
+  registerListDaemonsRoute(app, { registry: fakeRegistry(), presence: offlinePresence, telemetry: noTelemetry });
 
   expect((await app.request("/daemons")).status).toBe(404);
 });

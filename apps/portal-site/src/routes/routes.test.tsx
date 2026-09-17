@@ -93,14 +93,14 @@ describe("console routes", () => {
     expect(html).toContain("Activity");
     expect(html).not.toContain(">Device<");
     expect(html).not.toContain("/device");
+    expect(html).not.toContain("Factory API connected");
   });
 
-  test("connection health exposes the daemon refresh control and 30-second cadence", async () => {
+  test("connection health exposes the daemon refresh control", async () => {
     const html = await renderAtPath("/");
 
     expect(html).toContain("Connection health");
     expect(html).toContain('aria-label="Refresh daemon connection health"');
-    expect(html).toContain('title="Daemon status refreshes every 30 seconds"');
   });
 
   test("daemon management route has no conversation controls", async () => {
@@ -111,8 +111,11 @@ describe("console routes", () => {
     expect(html).not.toContain("Open chat");
   });
 
-  test("daemon detail route is no longer registered", async () => {
-    expect(await matchedRouteIds("/daemons/daemon-1")).toEqual(["__root__"]);
+  test("daemon detail route is registered", async () => {
+    expect(await matchedRouteIds("/daemons/daemon-1")).toEqual([
+      "__root__",
+      "/daemons/$daemonId",
+    ]);
   });
 
   test("device route floats outside the console shell", async () => {
@@ -169,5 +172,19 @@ describe("workflow and project routes", () => {
       "/projects/$projectId",
       "/projects/$projectId/runs/new",
     ]);
+  });
+
+  test("project-nested run detail carries both ids", async () => {
+    expect(await matchedRouteIds("/projects/project-7/runs/run-1")).toEqual([
+      "__root__",
+      "/projects/$projectId",
+      "/projects/$projectId/runs/$runId",
+    ]);
+  });
+
+  test("the old flat run url no longer matches a run route", async () => {
+    expect(await matchedRouteIds("/workflow-runs/run-1")).not.toContain(
+      "/workflow-runs/$runId",
+    );
   });
 });

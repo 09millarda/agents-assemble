@@ -11,6 +11,7 @@ import {
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Textarea } from "../../../components/ui/textarea";
+import { WorkflowTagInput } from "./WorkflowTagInput";
 import { createWorkflowDraft } from "../application/createWorkflowDraft";
 import {
   createWorkflowFromTemplate,
@@ -31,6 +32,7 @@ export function WorkflowCreationForm({
   const [templateId, setTemplateId] = useState<WorkflowTemplateId>(DEFAULT_TEMPLATE_ID);
   const [name, setName] = useState(defaultWorkflow.name);
   const [description, setDescription] = useState(defaultWorkflow.description);
+  const [tags, setTags] = useState(defaultWorkflow.tags);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -39,6 +41,7 @@ export function WorkflowCreationForm({
     setTemplateId(nextTemplateId);
     setName(nextWorkflow.name);
     setDescription(nextWorkflow.description);
+    setTags(nextWorkflow.tags);
   }
 
   async function create() {
@@ -52,6 +55,7 @@ export function WorkflowCreationForm({
           crypto.randomUUID(),
           name.trim(),
           description.trim(),
+          tags,
         ),
       );
       onCancel();
@@ -101,6 +105,10 @@ export function WorkflowCreationForm({
           placeholder="Name this workflow"
           aria-required="true"
         />
+      </label>
+      <label className="grid gap-1.5 text-sm font-semibold">
+        Workflow tags
+        <WorkflowTagInput tags={tags} onChange={setTags} />
       </label>
       <label className="grid gap-1.5 text-sm font-semibold">
         Workflow description

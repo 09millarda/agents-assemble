@@ -80,6 +80,33 @@ describe("stable daemon channel", () => {
   });
 });
 
+describe("daemon configuration", () => {
+  test("new daemons start with one harness slot and the reported machine name as their display name", async () => {
+    const { createDefaultDaemonConfiguration } = await import("./index");
+
+    expect(createDefaultDaemonConfiguration("studio-machine")).toEqual({
+      displayName: "studio-machine",
+      maxParallelHarnesses: 1,
+      location: "",
+      deviceLabel: "",
+      purpose: "",
+      ownerTeam: "",
+      tags: [],
+      notes: "",
+    });
+  });
+
+  test("harness capacity accepts only whole numbers from one through ten", async () => {
+    const { isDaemonHarnessCapacityValid } = await import("./index");
+
+    expect(isDaemonHarnessCapacityValid(1)).toBe(true);
+    expect(isDaemonHarnessCapacityValid(10)).toBe(true);
+    expect(isDaemonHarnessCapacityValid(0)).toBe(false);
+    expect(isDaemonHarnessCapacityValid(11)).toBe(false);
+    expect(isDaemonHarnessCapacityValid(1.5)).toBe(false);
+  });
+});
+
 describe("compareDaemonIds", () => {
   test("orders daemon ids lexicographically for stable pagination", async () => {
     const { compareDaemonIds } = await import("./index");

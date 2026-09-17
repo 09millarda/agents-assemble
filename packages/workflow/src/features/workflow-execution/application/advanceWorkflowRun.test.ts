@@ -8,6 +8,8 @@ function definition(): WorkflowDefinition {
     workflowId: "feature",
     name: "Feature building",
     description: "",
+    status: "published",
+    tags: [],
     positions: {
       requirements: { x: 10, y: 20 },
       implement: { x: 300, y: 20 },
@@ -68,7 +70,7 @@ test("free cycles pass and empty canvas completes", () => {
   workflow.activities[1]!.outcomes = [{ name: "again", handoff: { targetActivityId: "requirements", continuation: "automatic" } }];
   const started = advanceWorkflowRun(queued(workflow), { kind: "start", messageId: "start-1" }, now);
   expect(started.run.executions[0]!.activityId).toBe("requirements");
-  const empty = advanceWorkflowRun(queued({ workflowId: "blank", name: "Blank", description: "", activities: [], positions: {} }), { kind: "start", messageId: "start-1" }, now);
+  const empty = advanceWorkflowRun(queued({ workflowId: "blank", name: "Blank", description: "", status: "published", tags: [], activities: [], positions: {} }), { kind: "start", messageId: "start-1" }, now);
   expect(empty.run.status).toBe("completed");
 });
 test("description never reaches the harness prompt", () => {

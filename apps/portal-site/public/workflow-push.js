@@ -1,5 +1,8 @@
 // src/features/browser-recipient/adapters/workflowPushWorker.ts
 var workflowWorker = self;
+function isSafeRelativeUrl(value) {
+  return typeof value === "string" && value.startsWith("/") && !value.startsWith("//") && !value.includes("\\");
+}
 workflowWorker.addEventListener("push", (event) => {
   let notification;
   try {
@@ -14,16 +17,26 @@ workflowWorker.addEventListener("push", (event) => {
     tag: notification.notificationId,
     data: {
       runId: notification.runId,
-      notificationId: notification.notificationId
+      notificationId: notification.notificationId,
+      ...isSafeRelativeUrl(notification.url) ? { url: notification.url } : {}
     }
   }));
 });
 workflowWorker.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const runId = event.notification.data?.runId;
-  if (typeof runId !== "string")
+  const data = event.notification.data;
+  const safeUrl = typeof data === "object" && data !== null && "url" in data ? data.url : undefined;
+  if (isSafeRelativeUrl(safeUrl)) {
+    const target = new URL(safeUrl, workflowWorker.location.origin).href;
+    event.waitUntil(workflowWorker.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (windows) => {
+      const existing = windows.find((window) => window.url === target);
+      if (existing)
+        return existing.focus();
+      return workflowWorker.clients.openWindow(target);
+    }));
     return;
-  const target = new URL(`/workflow-runs/${encodeURIComponent(runId)}`, workflowWorker.location.origin).href;
+  }
+  const target = new URL("/", workflowWorker.location.origin).href;
   event.waitUntil(workflowWorker.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (windows) => {
     const existing = windows.find((window) => window.url === target);
     if (existing)

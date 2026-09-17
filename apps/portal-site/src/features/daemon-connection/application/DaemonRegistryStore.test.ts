@@ -24,7 +24,12 @@ function createRegistry(overrides: Partial<DaemonRegistryPort> = {}): DaemonRegi
 const onlineDaemon: DaemonSummary = {
   daemonId: "daemon-1",
   machineName: "studio",
+  displayName: "Studio",
   status: "online",
+  maxParallelHarnesses: 2,
+  appliedMaxParallelHarnesses: 2,
+  activeHarnesses: 1,
+  queuedCommands: 0,
 };
 
 describe("DaemonRegistryStore", () => {

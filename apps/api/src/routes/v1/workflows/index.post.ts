@@ -10,7 +10,7 @@ const saveWorkflowDefinitionRoute = createRoute({
   request: {
     body: {
       required: true,
-      content: { "application/json": { schema: dto.WorkflowDefinitionSchema } },
+      content: { "application/json": { schema: dto.WorkflowDefinitionInputSchema } },
     },
   },
   responses: workflowResponseSchemas(dto.WorkflowDefinitionSchema),

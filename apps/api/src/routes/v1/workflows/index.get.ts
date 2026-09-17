@@ -8,7 +8,7 @@ import { workflowResponseSchemas } from "../workflowProblem";
 const listWorkflowDefinitionsRoute = createRoute({
   method: "get",
   path: "/v1/workflows",
-  request: { query: dto.ListQuerySchema },
+  request: { query: dto.WorkflowListQuerySchema },
   responses: workflowResponseSchemas(dto.collectionSchema(dto.WorkflowDefinitionSchema)),
 });
 
@@ -19,7 +19,15 @@ export function registerListWorkflowDefinitionsRoute(
   app.openapi(listWorkflowDefinitionsRoute, (async (context) => {
     const query = context.req.valid("query");
     const page = pageWorkflowItems(
-      await listWorkflowDefinitions(dependencies.store),
+      await listWorkflowDefinitions(dependencies.store, {
+        status: query.status,
+        search: query.search,
+        tags: query.tag
+          ? Array.isArray(query.tag)
+            ? query.tag
+            : [query.tag]
+          : [],
+      }),
       (item) => item.workflowId,
       query.limit,
       query.cursor,

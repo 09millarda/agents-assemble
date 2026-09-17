@@ -4,12 +4,124 @@ export type DomainError = { code: string; message: string };
 
 export type DaemonId = string;
 
+export interface DaemonConfiguration {
+  displayName: string;
+  maxParallelHarnesses: number;
+  location: string;
+  deviceLabel: string;
+  purpose: string;
+  ownerTeam: string;
+  tags: string[];
+  notes: string;
+}
+
+export type DaemonConfigurationApplyStatus = "pending" | "applied" | "failed";
+
+export interface DaemonConfigurationState {
+  desired: DaemonConfiguration;
+  applied: DaemonConfiguration | null;
+  revision: number;
+  appliedRevision: number | null;
+  status: DaemonConfigurationApplyStatus;
+  failureReason: string | null;
+}
+
+export interface DaemonHarnessCapability {
+  harness: string;
+  version: string;
+  models: Array<{ model: string; efforts: string[] }>;
+  questions: boolean;
+  permissions: boolean;
+  structuredOutput: boolean;
+}
+
+export interface DaemonRuntimeFacts {
+  machineName: string;
+  operatingSystem: string;
+  architecture: string;
+  cpuCount: number;
+  memoryBytes: number;
+  daemonVersion: string;
+  harnessVersions: Array<{ harness: string; version: string }>;
+  capabilities: DaemonHarnessCapability[];
+  lastSeenAt: string;
+}
+
+export interface DaemonTelemetry {
+  activeHarnesses: number;
+  queuedCommands: number;
+  desiredMaxParallelHarnesses: number;
+  appliedMaxParallelHarnesses: number;
+}
+
+export type DaemonLogDirection =
+  | "daemon-to-api"
+  | "api-to-daemon"
+  | "local";
+
+export type DaemonLogSource =
+  | "websocket"
+  | "daemon-stdout"
+  | "daemon-stderr"
+  | "harness-stdout"
+  | "harness-stderr";
+
+export interface DaemonLogEnvelope {
+  eventId: string;
+  daemonId: DaemonId;
+  connectionSessionId: string;
+  occurredAt: string;
+  direction: DaemonLogDirection;
+  source: DaemonLogSource;
+  payload: string;
+}
+
+export const MIN_DAEMON_HARNESS_CAPACITY = 1;
+export const MAX_DAEMON_HARNESS_CAPACITY = 10;
+
+export function isDaemonHarnessCapacityValid(capacity: number): boolean {
+  return (
+    Number.isInteger(capacity) &&
+    capacity >= MIN_DAEMON_HARNESS_CAPACITY &&
+    capacity <= MAX_DAEMON_HARNESS_CAPACITY
+  );
+}
+
+export function createDefaultDaemonConfiguration(
+  machineName: string,
+): DaemonConfiguration {
+  return {
+    displayName: machineName,
+    maxParallelHarnesses: 1,
+    location: "",
+    deviceLabel: "",
+    purpose: "",
+    ownerTeam: "",
+    tags: [],
+    notes: "",
+  };
+}
+
 export type DaemonStatus = "unknown" | "online" | "offline" | "busy" | "deregistered";
 
 export interface DaemonSummary {
   daemonId: DaemonId;
   machineName: string;
+  displayName: string;
   status: DaemonStatus;
+  maxParallelHarnesses: number;
+  appliedMaxParallelHarnesses: number | null;
+  activeHarnesses: number;
+  queuedCommands: number;
+}
+
+export interface DaemonDetails {
+  daemonId: DaemonId;
+  machineName: string;
+  status: DaemonStatus;
+  configuration: DaemonConfigurationState;
+  runtimeFacts: DaemonRuntimeFacts | null;
+  telemetry: DaemonTelemetry | null;
 }
 
 export function isDaemonReachable(status: DaemonStatus): boolean {

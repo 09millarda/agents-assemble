@@ -21,6 +21,21 @@ export class InMemoryWorkflowStore implements WorkflowStorePort {
     this.definitions.set(value.workflowId, structuredClone(value));
     return value;
   }
+  async unpublishDefinition(workflowId: string) {
+    const existing = this.definitions.get(workflowId);
+    if (!existing) return null;
+    const draft = { ...structuredClone(existing), status: "draft" as const };
+    this.definitions.set(workflowId, draft);
+    for (const [projectId, project] of this.projects) {
+      this.projects.set(projectId, {
+        ...project,
+        enabledWorkflowIds: project.enabledWorkflowIds.filter(
+          (enabledWorkflowId) => enabledWorkflowId !== workflowId,
+        ),
+      });
+    }
+    return draft;
+  }
   async deleteDefinition(workflowId: string) {
     const deleted = this.definitions.delete(workflowId);
     if (!deleted) return false;
@@ -70,6 +85,17 @@ export class InMemoryWorkflowStore implements WorkflowStorePort {
     return [...this.runs.values()].filter(
       (run) => !projectId || run.projectId === projectId,
     );
+  }
+  async deleteRun(id: string): Promise<boolean> {
+    const existed = this.runs.delete(id);
+    for (const [messageId, message] of [...this.messages]) {
+      if (message.kind === "human" && message.response.runId === id) {
+        this.messages.delete(messageId);
+      } else if (message.kind === "fact" && message.fact.runId === id) {
+        this.messages.delete(messageId);
+      }
+    }
+    return existed;
   }
   async submitMessage(
     runId: string,

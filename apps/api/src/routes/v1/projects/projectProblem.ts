@@ -4,8 +4,10 @@ import {
   buildProblemDetail,
 } from "../../../infrastructure/http/problemDetails";
 
-export function projectProblemStatus(code: string): 400 | 404 {
-  return code === "PROJECT_NOT_FOUND" ? 404 : 400;
+export function projectProblemStatus(code: string): 400 | 404 | 409 {
+  if (code === "PROJECT_NOT_FOUND" || code === "WORKFLOW_NOT_FOUND") return 404;
+  if (code === "WORKFLOW_NOT_PUBLISHED") return 409;
+  return 400;
 }
 
 export function projectProblemResponse(

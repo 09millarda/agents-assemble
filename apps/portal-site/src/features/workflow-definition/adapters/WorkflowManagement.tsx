@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Workflow as WorkflowIcon } from "lucide-react";
-import type { WorkflowDefinition } from "@factory/workflow";
+import type { WorkflowCatalogFilters, WorkflowDefinition } from "@factory/workflow";
 import type { WorkflowDefinitionPort } from "../domain/WorkflowDefinitionPort";
 import { CreateWorkflowDialog } from "./CreateWorkflowDialog";
 import { WorkflowList } from "./WorkflowList";
@@ -14,13 +14,20 @@ export function WorkflowManagement({ workflows }: { workflows: WorkflowDefinitio
   const [pendingDelete, setPendingDelete] = useState<WorkflowDefinition | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [filters, setFilters] = useState<WorkflowCatalogFilters>({ tags: [] });
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
 
   useEffect(() => {
     let active = true;
     void workflows
-      .listWorkflows()
+      .listWorkflows(filters)
       .then((next) => {
-        if (active) setDefinitions(next);
+        if (active) {
+          setDefinitions(next);
+          setAvailableTags((current) =>
+            [...new Set([...current, ...next.flatMap((definition) => definition.tags)])].sort(),
+          );
+        }
       })
       .catch((failure: Error) => {
         if (active) setError(failure.message);
@@ -28,12 +35,13 @@ export function WorkflowManagement({ workflows }: { workflows: WorkflowDefinitio
     return () => {
       active = false;
     };
-  }, [workflows]);
+  }, [filters, workflows]);
 
   async function createWorkflow(definition: WorkflowDefinition) {
     setError(null);
     const created = await workflows.createWorkflow(definition);
     setDefinitions((current) => [...current, created]);
+    setAvailableTags((current) => [...new Set([...current, ...created.tags])].sort());
     await navigate({ to: "/workflows/$workflowId", params: { workflowId: created.workflowId } });
   }
 
@@ -78,7 +86,13 @@ export function WorkflowManagement({ workflows }: { workflows: WorkflowDefinitio
       </header>
 
       {error ? <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}
-      <WorkflowList definitions={definitions} onDelete={requestDelete} />
+      <WorkflowList
+        definitions={definitions}
+        onDelete={requestDelete}
+        filters={filters}
+        availableTags={availableTags}
+        onFiltersChange={setFilters}
+      />
       {pendingDelete ? (
         <DeleteWorkflowDialog
           workflowName={pendingDelete.name}

@@ -9,5 +9,5 @@ test("static catalogue gates execution without daemon discovery", () => {
   const effort = createFeatureBuildingWorkflow();
   effort.activities[0]!.execution.effort = "ultra";
   expect(canExecuteWorkflow(effort)).toBe(false);
-  expect(canExecuteWorkflow({ workflowId: "blank", name: "Blank", description: "", activities: [], positions: {} })).toBe(true);
+  expect(canExecuteWorkflow({ workflowId: "blank", name: "Blank", description: "", status: "draft", tags: [], activities: [], positions: {} })).toBe(true);
 });

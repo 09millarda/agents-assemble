@@ -2,11 +2,16 @@ import {
   isSupportedModelEffort,
   type WorkflowDefinition,
 } from "./WorkflowDefinition";
+import { isWorkflowStatus, validateWorkflowTags } from "./workflowLifecycle";
 export function validateWorkflowDefinition(
   workflow: WorkflowDefinition,
 ): string | null {
   if (!isValidIdentifier(workflow.workflowId) || !workflow.name.trim())
     return "Workflow ID and name are required";
+  if (!isWorkflowStatus(workflow.status))
+    return "Workflow status must be draft or published";
+  const invalidTags = validateWorkflowTags(workflow.tags);
+  if (invalidTags) return invalidTags;
   const activityIds = workflow.activities.map(
     (activity) => activity.activityId,
   );

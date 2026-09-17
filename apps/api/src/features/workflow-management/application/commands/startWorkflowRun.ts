@@ -1,5 +1,10 @@
 import { isMatchingRunRequest } from "../../domain/isMatchingRunRequest";
-import { createWorkflowRun, canExecuteWorkflow, type WorkflowRun } from "@factory/workflow";
+import {
+  createWorkflowRun,
+  canExecuteWorkflow,
+  isWorkflowPublished,
+  type WorkflowRun,
+} from "@factory/workflow";
 import type { Result } from "@factory/shared-domain";
 import type {
   StartWorkflowRunInput,
@@ -66,6 +71,14 @@ export async function startWorkflowRun(
       error: {
         code: "WORKFLOW_NOT_FOUND",
         message: "Workflow does not exist.",
+      },
+    };
+  if (!isWorkflowPublished(definition.status))
+    return {
+      ok: false,
+      error: {
+        code: "WORKFLOW_NOT_PUBLISHED",
+        message: "Publish this workflow before starting a run.",
       },
     };
   if (!canExecuteWorkflow(definition))

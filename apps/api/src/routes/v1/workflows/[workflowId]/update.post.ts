@@ -12,7 +12,7 @@ const updateWorkflowDefinitionRoute = createRoute({
     params: z.object({ workflowId: z.string().min(1) }),
     body: {
       required: true,
-      content: { "application/json": { schema: dto.WorkflowDefinitionSchema } },
+      content: { "application/json": { schema: dto.WorkflowDefinitionInputSchema } },
     },
   },
   responses: workflowResponseSchemas(dto.WorkflowDefinitionSchema),

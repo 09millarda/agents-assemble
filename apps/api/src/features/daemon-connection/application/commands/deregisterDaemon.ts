@@ -1,11 +1,11 @@
-import type { DaemonId, DaemonSummary, DomainError, Result } from "@factory/shared-domain";
+import type { DaemonId, DomainError, Result } from "@factory/shared-domain";
 import type { DaemonDisconnectionPort, DaemonRegistryPort } from "../../domain/DaemonConnectionPort";
 
 export async function deregisterDaemon(
   registry: DaemonRegistryPort,
   disconnection: DaemonDisconnectionPort,
   daemonId: DaemonId
-): Promise<Result<DaemonSummary, DomainError>> {
+): Promise<Result<{ daemonId: DaemonId; status: "deregistered" }, DomainError>> {
   const outcome = await registry.deregisterDaemon(daemonId);
   if (outcome === "not-found") {
     return { ok: false, error: { code: "DAEMON_NOT_FOUND", message: "Daemon not found." } };
@@ -14,5 +14,5 @@ export async function deregisterDaemon(
     return { ok: false, error: { code: "DAEMON_ALREADY_DEREGISTERED", message: "Daemon is already deregistered." } };
   }
   disconnection.disconnectDaemon(daemonId);
-  return { ok: true, value: { daemonId, machineName: "", status: "deregistered" } };
+  return { ok: true, value: { daemonId, status: "deregistered" } };
 }

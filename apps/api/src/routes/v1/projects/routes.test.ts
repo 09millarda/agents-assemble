@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import type { WorkflowDefinition } from "@factory/workflow";
 import type { ProjectRegistryPort } from "../../../features/project-workspace/domain/ProjectWorkspacePort";
 import { validationHook } from "../../../infrastructure/http/validationHook";
 import { registerAssignDaemonRoute } from "./[projectId]/assign.post";
@@ -21,6 +22,16 @@ const project = {
 };
 
 function buildProjectRoutes(): OpenAPIHono {
+  const publishedWorkflow: WorkflowDefinition = {
+    workflowId: "build",
+    name: "Build",
+    description: "",
+    status: "published",
+    tags: [],
+    activities: [],
+    positions: {},
+  };
+  const draftWorkflow: WorkflowDefinition = { ...publishedWorkflow, workflowId: "draft", status: "draft" };
   const registry: ProjectRegistryPort = {
     createProject: async (input) => ({ ...project, name: input.name, absolutePath: input.absolutePath }),
     listProjects: async () => [project],
@@ -36,7 +47,17 @@ function buildProjectRoutes(): OpenAPIHono {
   registerListProjectsRoute(app, { registry });
   registerSetProjectNameRoute(app, { registry });
   registerAssignDaemonRoute(app, { registry });
-  registerSetEnabledWorkflowsRoute(app, { registry });
+  registerSetEnabledWorkflowsRoute(app, {
+    registry,
+    workflows: {
+      findDefinition: async (workflowId) =>
+        workflowId === publishedWorkflow.workflowId
+          ? publishedWorkflow
+          : workflowId === draftWorkflow.workflowId
+            ? draftWorkflow
+            : null,
+    },
+  });
   registerSetProjectSettingsRoute(app, { registry });
   return app;
 }
@@ -51,6 +72,18 @@ test("POST /v1/projects creates a project and returns its location", async () =>
   expect(response.status).toBe(201);
   expect(response.headers.get("location")).toBe("/v1/projects/project-1");
   expect(await response.json()).toMatchObject({ projectId: "project-1", name: "Portal" });
+});
+
+test("project enablement rejects Draft workflows without changing the allow-list", async () => {
+  const app = buildProjectRoutes();
+  const response = await app.request("/v1/projects/project-1/enabled-workflows", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ workflowIds: ["draft"] }),
+  });
+
+  expect(response.status).toBe(409);
+  expect((await response.json()).code).toBe("WORKFLOW_NOT_PUBLISHED");
 });
 
 test("GET /v1/projects returns a cursor-paged collection", async () => {

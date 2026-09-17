@@ -12,7 +12,7 @@ test("notification view distinguishes push acceptance from failure without chang
           kind: "result",
           title: "Workflow completed",
           body: "Pull request created",
-          url: "/workflow-runs/run-1",
+          url: "/projects/project-1/runs/run-1",
           deliveryStatus: "failed",
           attempts: 2,
           lastError: "Push service rejected delivery",

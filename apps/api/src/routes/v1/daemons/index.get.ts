@@ -2,6 +2,7 @@ import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import type { Context } from "hono";
 import { listDaemons } from "../../../features/daemon-connection/application/queries/listDaemons";
 import type { DaemonPresencePort, DaemonRegistryPort } from "../../../features/daemon-connection/domain/DaemonConnectionPort";
+import type { DaemonTelemetryPort } from "../../../features/daemon-connection/domain/DaemonConfigurationPort";
 import { ProblemDetailSchema } from "../../../infrastructure/http/problemDetails";
 import {
   DaemonListResponseSchema,
@@ -40,11 +41,12 @@ export function registerListDaemonsRoute(
   dependencies: {
     registry: DaemonRegistryPort;
     presence: DaemonPresencePort;
+    telemetry: DaemonTelemetryPort;
   },
 ): void {
   app.openapi(listDaemonsRoute, async (context) => {
     const query = context.req.valid("query");
-    const page = await listDaemons(dependencies.registry, dependencies.presence, {
+    const page = await listDaemons(dependencies.registry, dependencies.presence, dependencies.telemetry, {
       limit: query.limit,
       cursor: query.cursor ?? null,
     });

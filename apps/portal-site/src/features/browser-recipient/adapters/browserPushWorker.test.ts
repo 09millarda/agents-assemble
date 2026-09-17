@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
 
-test("closed-page push shows a stable notification and a click opens its exact run", async () => {
+async function loadWorker() {
   const handlers: Record<string, (event: unknown) => void> = {};
   const notifications: unknown[] = [];
   const opened: string[] = [];
@@ -32,6 +32,11 @@ test("closed-page push shows a stable notification and a click opens its exact r
     URL,
     encodeURIComponent,
   });
+  return { handlers, notifications, opened, pending };
+}
+
+test("closed-page push ignores attacker urls and falls back to the portal root", async () => {
+  const { handlers, notifications, opened, pending } = await loadWorker();
   handlers.push!({
     data: {
       json: () => ({
@@ -60,5 +65,45 @@ test("closed-page push shows a stable notification and a click opens its exact r
     waitUntil: (work: Promise<unknown>) => pending.push(work),
   });
   await Promise.all(pending);
-  expect(opened).toEqual(["https://portal.example/workflow-runs/run-1"]);
+  expect(opened).toEqual(["https://portal.example/"]);
+});
+
+test("a project-nested notification url opens the nested run page", async () => {
+  const { handlers, notifications, opened, pending } = await loadWorker();
+  handlers.push!({
+    data: {
+      json: () => ({
+        notificationId: "notification-2",
+        runId: "run-1",
+        title: "Approval needed",
+        body: "Review output",
+        url: "/projects/project-1/runs/run-1",
+      }),
+    },
+    waitUntil: (work: Promise<unknown>) => pending.push(work),
+  });
+  await Promise.all(pending);
+  expect(notifications).toEqual([
+    {
+      title: "Approval needed",
+      options: {
+        body: "Review output",
+        tag: "notification-2",
+        data: {
+          runId: "run-1",
+          notificationId: "notification-2",
+          url: "/projects/project-1/runs/run-1",
+        },
+      },
+    },
+  ]);
+  handlers.notificationclick!({
+    notification: {
+      data: { runId: "run-1", url: "/projects/project-1/runs/run-1" },
+      close() {},
+    },
+    waitUntil: (work: Promise<unknown>) => pending.push(work),
+  });
+  await Promise.all(pending);
+  expect(opened).toEqual(["https://portal.example/projects/project-1/runs/run-1"]);
 });

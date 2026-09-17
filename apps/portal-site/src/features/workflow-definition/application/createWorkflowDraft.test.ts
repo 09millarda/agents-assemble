@@ -7,11 +7,14 @@ test("workflow draft applies the entered metadata to the selected template", () 
     "workflow-1",
     "Production bug triage",
     "A workflow for investigating production defects.",
+    [" Bugs ", "production"],
   );
 
   expect(draft.workflowId).toBe("workflow-1");
   expect(draft.name).toBe("Production bug triage");
   expect(draft.description).toBe("A workflow for investigating production defects.");
+  expect(draft.status).toBe("draft");
+  expect(draft.tags).toEqual([" Bugs ", "production"]);
   expect(draft.activities.map((activity) => activity.activityId)).toEqual([
     "intake",
     "reproduce",

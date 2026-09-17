@@ -82,7 +82,7 @@ test("run notifications expose persisted delivery attempts independently of run 
             kind: "result",
             title: "Completed",
             body: "Pull request created",
-            url: "/workflow-runs/run-1",
+            url: "/projects/project-1/runs/run-1",
             deliveryStatus: "failed",
             attempts: 2,
             lastError: "Push service unavailable",
@@ -99,4 +99,20 @@ test("run notifications expose persisted delivery attempts independently of run 
   ).listNotifications("run-1");
   expect(notifications[0]?.lastError).toBe("Push service unavailable");
   expect(notifications[0]?.attempts).toBe(2);
+});
+
+test("deleting a run issues a hard delete for the terminal run", async () => {
+  let request: unknown;
+  globalThis.fetch = Object.assign(
+    async (input: RequestInfo | URL, init?: RequestInit) => {
+      request = { url: String(input), method: init?.method };
+      return Response.json({ deleted: true });
+    },
+    { preconnect: originalFetch.preconnect },
+  );
+  await new HttpWorkflowRunAdapter("https://factory.example").deleteRun("run-1");
+  expect(request).toEqual({
+    url: "https://factory.example/v1/workflow-runs/run-1",
+    method: "DELETE",
+  });
 });

@@ -11,12 +11,13 @@ const project: ProjectInfo = {
   daemonId: "daemon-1",
   gitStatus: "valid",
   blockedReason: null,
-  enabledWorkflowIds: ["workflow-1"],
+  enabledWorkflowIds: ["workflow-1", "workflow-3"],
 };
 
 const definitions: WorkflowDefinition[] = [
-  { workflowId: "workflow-1", name: "Build a feature", description: "", activities: [], positions: {} },
-  { workflowId: "workflow-2", name: "Disabled workflow", description: "", activities: [], positions: {} },
+  { workflowId: "workflow-1", name: "Build a feature", description: "", status: "published", tags: [], activities: [], positions: {} },
+  { workflowId: "workflow-2", name: "Disabled workflow", description: "", status: "published", tags: [], activities: [], positions: {} },
+  { workflowId: "workflow-3", name: "Draft workflow", description: "", status: "draft", tags: [], activities: [], positions: {} },
 ];
 
 function renderForm(overrides: Partial<Parameters<typeof StartWorkflowRunForm>[0]> = {}): string {
@@ -44,6 +45,7 @@ test("start form renders only workflows enabled for the project", () => {
 
   expect(html).toContain("Build a feature");
   expect(html).not.toContain("Disabled workflow");
+  expect(html).not.toContain("Draft workflow");
   expect(html).toContain("Optional kickoff prompt");
   expect(html).toContain("Local starting branch (optional)");
   expect(html).toContain("Notify this browser when enrolled");

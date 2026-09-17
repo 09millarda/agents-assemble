@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { cn } from "../../../lib/utils";
 import { RemoveDaemonDialog } from "./RemoveDaemonDialog";
 import { DaemonRowActions } from "./DaemonRowActions";
+import { Link } from "@tanstack/react-router";
 
 type StatusFilter = "all" | "online" | "offline";
 
@@ -36,6 +37,7 @@ export function DaemonList({
   const filtered = daemons.filter((daemon) => {
     const matchesSearch =
       search.trim().length === 0 ||
+      daemon.displayName.toLowerCase().includes(search.trim().toLowerCase()) ||
       daemon.machineName.toLowerCase().includes(search.trim().toLowerCase()) ||
       daemon.daemonId.toLowerCase().includes(search.trim().toLowerCase());
     const matchesStatus =
@@ -111,7 +113,7 @@ export function DaemonList({
         {pendingDaemon ? (
           <div className="m-5 mb-0">
             <RemoveDaemonDialog
-              machineName={pendingDaemon.machineName}
+              machineName={pendingDaemon.displayName}
               isConfirming={isConfirming}
               confirmError={confirmError}
               onConfirm={() => void confirmDeregisterDaemon()}
@@ -148,6 +150,8 @@ export function DaemonList({
               <TableRow>
                 <TableHead>Machine</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Capacity</TableHead>
+                <TableHead>Live work</TableHead>
                 <TableHead className="text-right">
                   <span className="sr-only">Actions</span>
                 </TableHead>
@@ -159,8 +163,14 @@ export function DaemonList({
                 return (
                   <TableRow key={daemon.daemonId}>
                     <TableCell>
-                      <span className="font-medium">{daemon.machineName}</span>
-                      <p className="mt-1 font-mono text-xs text-muted-foreground">{daemon.daemonId}</p>
+                      <Link
+                        to="/daemons/$daemonId"
+                        params={{ daemonId: daemon.daemonId }}
+                        className="font-medium text-[#315d9b] hover:underline"
+                      >
+                        {daemon.displayName}
+                      </Link>
+                      <p className="mt-1 text-xs text-muted-foreground">{daemon.machineName} · <span className="font-mono">{daemon.daemonId}</span></p>
                     </TableCell>
                     <TableCell>
                       <Badge variant={isOnline ? "success" : "secondary"}>
@@ -168,6 +178,10 @@ export function DaemonList({
                         {daemon.status}
                       </Badge>
                     </TableCell>
+                    <TableCell>
+                      {daemon.appliedMaxParallelHarnesses ?? "—"} applied / {daemon.maxParallelHarnesses} desired
+                    </TableCell>
+                    <TableCell>{daemon.activeHarnesses} active · {daemon.queuedCommands} queued</TableCell>
                     <TableCell className="text-right">
                       <DaemonRowActions
                         daemon={daemon}

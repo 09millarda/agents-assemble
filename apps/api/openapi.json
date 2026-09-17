@@ -184,6 +184,10 @@
                             "type": "string",
                             "minLength": 1
                           },
+                          "displayName": {
+                            "type": "string",
+                            "minLength": 1
+                          },
                           "status": {
                             "type": "string",
                             "enum": [
@@ -193,12 +197,38 @@
                               "busy",
                               "deregistered"
                             ]
+                          },
+                          "maxParallelHarnesses": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10
+                          },
+                          "appliedMaxParallelHarnesses": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ],
+                            "minimum": 1,
+                            "maximum": 10
+                          },
+                          "activeHarnesses": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "queuedCommands": {
+                            "type": "integer",
+                            "minimum": 0
                           }
                         },
                         "required": [
                           "daemonId",
                           "machineName",
-                          "status"
+                          "displayName",
+                          "status",
+                          "maxParallelHarnesses",
+                          "appliedMaxParallelHarnesses",
+                          "activeHarnesses",
+                          "queuedCommands"
                         ]
                       }
                     },
@@ -388,6 +418,957 @@
           },
           "422": {
             "description": "Invalid daemon id.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/daemons/{daemonId}": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "daemonId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daemon configuration, runtime facts, and live telemetry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "daemonId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "machineName": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "online",
+                        "offline",
+                        "busy",
+                        "deregistered"
+                      ]
+                    },
+                    "configuration": {
+                      "type": "object",
+                      "properties": {
+                        "desired": {
+                          "type": "object",
+                          "properties": {
+                            "displayName": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "maxParallelHarnesses": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10
+                            },
+                            "location": {
+                              "type": "string"
+                            },
+                            "deviceLabel": {
+                              "type": "string"
+                            },
+                            "purpose": {
+                              "type": "string"
+                            },
+                            "ownerTeam": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "notes": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "displayName",
+                            "maxParallelHarnesses",
+                            "location",
+                            "deviceLabel",
+                            "purpose",
+                            "ownerTeam",
+                            "tags",
+                            "notes"
+                          ]
+                        },
+                        "applied": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "displayName": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "maxParallelHarnesses": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10
+                            },
+                            "location": {
+                              "type": "string"
+                            },
+                            "deviceLabel": {
+                              "type": "string"
+                            },
+                            "purpose": {
+                              "type": "string"
+                            },
+                            "ownerTeam": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "notes": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "displayName",
+                            "maxParallelHarnesses",
+                            "location",
+                            "deviceLabel",
+                            "purpose",
+                            "ownerTeam",
+                            "tags",
+                            "notes"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        "appliedRevision": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "exclusiveMinimum": 0
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "applied",
+                            "failed"
+                          ]
+                        },
+                        "failureReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "desired",
+                        "applied",
+                        "revision",
+                        "appliedRevision",
+                        "status",
+                        "failureReason"
+                      ]
+                    },
+                    "runtimeFacts": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "machineName": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "operatingSystem": {
+                          "type": "string"
+                        },
+                        "architecture": {
+                          "type": "string"
+                        },
+                        "cpuCount": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "memoryBytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "daemonVersion": {
+                          "type": "string"
+                        },
+                        "harnessVersions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "harness": {
+                                "type": "string"
+                              },
+                              "version": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "harness",
+                              "version"
+                            ]
+                          }
+                        },
+                        "capabilities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "harness": {
+                                "type": "string"
+                              },
+                              "version": {
+                                "type": "string"
+                              },
+                              "models": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "model": {
+                                      "type": "string"
+                                    },
+                                    "efforts": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "model",
+                                    "efforts"
+                                  ]
+                                }
+                              },
+                              "questions": {
+                                "type": "boolean"
+                              },
+                              "permissions": {
+                                "type": "boolean"
+                              },
+                              "structuredOutput": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "harness",
+                              "version",
+                              "models",
+                              "questions",
+                              "permissions",
+                              "structuredOutput"
+                            ]
+                          }
+                        },
+                        "lastSeenAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "machineName",
+                        "operatingSystem",
+                        "architecture",
+                        "cpuCount",
+                        "memoryBytes",
+                        "daemonVersion",
+                        "harnessVersions",
+                        "capabilities",
+                        "lastSeenAt"
+                      ]
+                    },
+                    "telemetry": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "activeHarnesses": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "queuedCommands": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "desiredMaxParallelHarnesses": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10
+                        },
+                        "appliedMaxParallelHarnesses": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "activeHarnesses",
+                        "queuedCommands",
+                        "desiredMaxParallelHarnesses",
+                        "appliedMaxParallelHarnesses"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "daemonId",
+                    "machineName",
+                    "status",
+                    "configuration",
+                    "runtimeFacts",
+                    "telemetry"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown daemon id.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/daemons/{daemonId}/configuration": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "daemonId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "maxParallelHarnesses": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "deviceLabel": {
+                    "type": "string"
+                  },
+                  "purpose": {
+                    "type": "string"
+                  },
+                  "ownerTeam": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "displayName",
+                  "maxParallelHarnesses",
+                  "location",
+                  "deviceLabel",
+                  "purpose",
+                  "ownerTeam",
+                  "tags",
+                  "notes"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Desired daemon configuration saved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "daemonId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "machineName": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "unknown",
+                        "online",
+                        "offline",
+                        "busy",
+                        "deregistered"
+                      ]
+                    },
+                    "configuration": {
+                      "type": "object",
+                      "properties": {
+                        "desired": {
+                          "type": "object",
+                          "properties": {
+                            "displayName": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "maxParallelHarnesses": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10
+                            },
+                            "location": {
+                              "type": "string"
+                            },
+                            "deviceLabel": {
+                              "type": "string"
+                            },
+                            "purpose": {
+                              "type": "string"
+                            },
+                            "ownerTeam": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "notes": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "displayName",
+                            "maxParallelHarnesses",
+                            "location",
+                            "deviceLabel",
+                            "purpose",
+                            "ownerTeam",
+                            "tags",
+                            "notes"
+                          ]
+                        },
+                        "applied": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "displayName": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "maxParallelHarnesses": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10
+                            },
+                            "location": {
+                              "type": "string"
+                            },
+                            "deviceLabel": {
+                              "type": "string"
+                            },
+                            "purpose": {
+                              "type": "string"
+                            },
+                            "ownerTeam": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "notes": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "displayName",
+                            "maxParallelHarnesses",
+                            "location",
+                            "deviceLabel",
+                            "purpose",
+                            "ownerTeam",
+                            "tags",
+                            "notes"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        "appliedRevision": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "exclusiveMinimum": 0
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "applied",
+                            "failed"
+                          ]
+                        },
+                        "failureReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "desired",
+                        "applied",
+                        "revision",
+                        "appliedRevision",
+                        "status",
+                        "failureReason"
+                      ]
+                    },
+                    "runtimeFacts": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "machineName": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "operatingSystem": {
+                          "type": "string"
+                        },
+                        "architecture": {
+                          "type": "string"
+                        },
+                        "cpuCount": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "memoryBytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "daemonVersion": {
+                          "type": "string"
+                        },
+                        "harnessVersions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "harness": {
+                                "type": "string"
+                              },
+                              "version": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "harness",
+                              "version"
+                            ]
+                          }
+                        },
+                        "capabilities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "harness": {
+                                "type": "string"
+                              },
+                              "version": {
+                                "type": "string"
+                              },
+                              "models": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "model": {
+                                      "type": "string"
+                                    },
+                                    "efforts": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "model",
+                                    "efforts"
+                                  ]
+                                }
+                              },
+                              "questions": {
+                                "type": "boolean"
+                              },
+                              "permissions": {
+                                "type": "boolean"
+                              },
+                              "structuredOutput": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "harness",
+                              "version",
+                              "models",
+                              "questions",
+                              "permissions",
+                              "structuredOutput"
+                            ]
+                          }
+                        },
+                        "lastSeenAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "machineName",
+                        "operatingSystem",
+                        "architecture",
+                        "cpuCount",
+                        "memoryBytes",
+                        "daemonVersion",
+                        "harnessVersions",
+                        "capabilities",
+                        "lastSeenAt"
+                      ]
+                    },
+                    "telemetry": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "activeHarnesses": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "queuedCommands": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "desiredMaxParallelHarnesses": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10
+                        },
+                        "appliedMaxParallelHarnesses": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "activeHarnesses",
+                        "queuedCommands",
+                        "desiredMaxParallelHarnesses",
+                        "appliedMaxParallelHarnesses"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "daemonId",
+                    "machineName",
+                    "status",
+                    "configuration",
+                    "runtimeFacts",
+                    "telemetry"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown daemon id.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid daemon configuration.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/daemons/{daemonId}/logs/stream": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "daemonId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true"
+              ]
+            },
+            "required": true,
+            "name": "acknowledgeSensitiveData",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New-only, connection-scoped daemon diagnostics.",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Daemon not found.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Sensitive-data acknowledgement is required.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1924,7 +2905,45 @@
             }
           },
           "404": {
-            "description": "Unknown project.",
+            "description": "Unknown project or workflow.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Workflow is not Published.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2286,6 +3305,15 @@
                         "description": {
                           "type": "string"
                         },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 50
+                          },
+                          "maxItems": 20
+                        },
                         "activities": {
                           "type": "array",
                           "items": {
@@ -2417,14 +3445,23 @@
                               "y"
                             ]
                           }
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "published"
+                          ]
                         }
                       },
                       "required": [
                         "workflowId",
                         "name",
                         "description",
+                        "tags",
                         "activities",
-                        "positions"
+                        "positions",
+                        "status"
                       ]
                     },
                     "workspace": {
@@ -3040,6 +4077,15 @@
                         "description": {
                           "type": "string"
                         },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 50
+                          },
+                          "maxItems": 20
+                        },
                         "activities": {
                           "type": "array",
                           "items": {
@@ -3171,14 +4217,23 @@
                               "y"
                             ]
                           }
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "published"
+                          ]
                         }
                       },
                       "required": [
                         "workflowId",
                         "name",
                         "description",
+                        "tags",
                         "activities",
-                        "positions"
+                        "positions",
+                        "status"
                       ]
                     },
                     "workspace": {
@@ -4024,6 +5079,15 @@
                               "description": {
                                 "type": "string"
                               },
+                              "tags": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "maxItems": 20
+                              },
                               "activities": {
                                 "type": "array",
                                 "items": {
@@ -4155,14 +5219,23 @@
                                     "y"
                                   ]
                                 }
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "draft",
+                                  "published"
+                                ]
                               }
                             },
                             "required": [
                               "workflowId",
                               "name",
                               "description",
+                              "tags",
                               "activities",
-                              "positions"
+                              "positions",
+                              "status"
                             ]
                           },
                           "workspace": {
@@ -4808,6 +5881,15 @@
                               "description": {
                                 "type": "string"
                               },
+                              "tags": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "maxItems": 20
+                              },
                               "activities": {
                                 "type": "array",
                                 "items": {
@@ -4939,14 +6021,23 @@
                                     "y"
                                   ]
                                 }
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "draft",
+                                  "published"
+                                ]
                               }
                             },
                             "required": [
                               "workflowId",
                               "name",
                               "description",
+                              "tags",
                               "activities",
-                              "positions"
+                              "positions",
+                              "status"
                             ]
                           },
                           "workspace": {
@@ -5794,6 +6885,15 @@
                         "description": {
                           "type": "string"
                         },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 50
+                          },
+                          "maxItems": 20
+                        },
                         "activities": {
                           "type": "array",
                           "items": {
@@ -5925,14 +7025,23 @@
                               "y"
                             ]
                           }
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "published"
+                          ]
                         }
                       },
                       "required": [
                         "workflowId",
                         "name",
                         "description",
+                        "tags",
                         "activities",
-                        "positions"
+                        "positions",
+                        "status"
                       ]
                     },
                     "workspace": {
@@ -6548,6 +7657,15 @@
                         "description": {
                           "type": "string"
                         },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 50
+                          },
+                          "maxItems": 20
+                        },
                         "activities": {
                           "type": "array",
                           "items": {
@@ -6679,14 +7797,23 @@
                               "y"
                             ]
                           }
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "published"
+                          ]
                         }
                       },
                       "required": [
                         "workflowId",
                         "name",
                         "description",
+                        "tags",
                         "activities",
-                        "positions"
+                        "positions",
+                        "status"
                       ]
                     },
                     "workspace": {
@@ -7244,6 +8371,253 @@
                     "error",
                     "createdAt",
                     "updatedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "runId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource or accepted command.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  },
+                  "required": [
+                    "deleted"
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  },
+                  "required": [
+                    "deleted"
                   ]
                 }
               }
@@ -8701,6 +10075,15 @@
                   "description": {
                     "type": "string"
                   },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "maxItems": 20
+                  },
                   "activities": {
                     "type": "array",
                     "items": {
@@ -8838,6 +10221,7 @@
                   "workflowId",
                   "name",
                   "description",
+                  "tags",
                   "activities",
                   "positions"
                 ]
@@ -8865,6 +10249,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -8996,14 +10389,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -9028,6 +10430,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -9159,14 +10570,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -9388,11 +10808,45 @@
           {
             "schema": {
               "type": "string",
-              "minLength": 1,
+              "enum": [
+                "draft",
+                "published"
+              ]
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 50
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                  },
+                  "maxItems": 20
+                }
+              ]
+            },
+            "required": false,
+            "name": "tag",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
               "maxLength": 160
             },
             "required": false,
-            "name": "projectId",
+            "name": "search",
             "in": "query"
           }
         ],
@@ -9420,6 +10874,15 @@
                           },
                           "description": {
                             "type": "string"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 50
+                            },
+                            "maxItems": 20
                           },
                           "activities": {
                             "type": "array",
@@ -9552,14 +11015,23 @@
                                 "y"
                               ]
                             }
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "draft",
+                              "published"
+                            ]
                           }
                         },
                         "required": [
                           "workflowId",
                           "name",
                           "description",
+                          "tags",
                           "activities",
-                          "positions"
+                          "positions",
+                          "status"
                         ]
                       }
                     },
@@ -9614,6 +11086,15 @@
                           "description": {
                             "type": "string"
                           },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 50
+                            },
+                            "maxItems": 20
+                          },
                           "activities": {
                             "type": "array",
                             "items": {
@@ -9745,14 +11226,23 @@
                                 "y"
                               ]
                             }
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "draft",
+                              "published"
+                            ]
                           }
                         },
                         "required": [
                           "workflowId",
                           "name",
                           "description",
+                          "tags",
                           "activities",
-                          "positions"
+                          "positions",
+                          "status"
                         ]
                       }
                     },
@@ -10009,6 +11499,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -10140,14 +11639,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -10172,6 +11680,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -10303,14 +11820,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -10541,6 +12067,15 @@
                   "description": {
                     "type": "string"
                   },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50
+                    },
+                    "maxItems": 20
+                  },
                   "activities": {
                     "type": "array",
                     "items": {
@@ -10678,6 +12213,7 @@
                   "workflowId",
                   "name",
                   "description",
+                  "tags",
                   "activities",
                   "positions"
                 ]
@@ -10705,6 +12241,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -10836,14 +12381,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -10868,6 +12422,15 @@
                     "description": {
                       "type": "string"
                     },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
                     "activities": {
                       "type": "array",
                       "items": {
@@ -10999,14 +12562,23 @@
                           "y"
                         ]
                       }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
                     }
                   },
                   "required": [
                     "workflowId",
                     "name",
                     "description",
+                    "tags",
                     "activities",
-                    "positions"
+                    "positions",
+                    "status"
                   ]
                 }
               }
@@ -11267,6 +12839,1166 @@
                   },
                   "required": [
                     "deleted"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workflows/{workflowId}/publish": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "workflowId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resource or accepted command.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activityId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "execution": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "agent"
+                                ]
+                              },
+                              "harness": {
+                                "type": "string",
+                                "enum": [
+                                  "codex"
+                                ]
+                              },
+                              "model": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "effort": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "harness",
+                              "model",
+                              "effort"
+                            ]
+                          },
+                          "humanInput": {
+                            "type": "string",
+                            "enum": [
+                              "off",
+                              "approval",
+                              "input"
+                            ]
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 160
+                                },
+                                "handoff": {
+                                  "type": "object",
+                                  "properties": {
+                                    "targetActivityId": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "minLength": 1,
+                                      "maxLength": 160
+                                    },
+                                    "continuation": {
+                                      "type": "string",
+                                      "enum": [
+                                        "automatic",
+                                        "approval"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "targetActivityId",
+                                    "continuation"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "handoff"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "activityId",
+                          "name",
+                          "description",
+                          "instructions",
+                          "execution",
+                          "humanInput",
+                          "outcomes"
+                        ]
+                      },
+                      "maxItems": 100
+                    },
+                    "positions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ]
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflowId",
+                    "name",
+                    "description",
+                    "tags",
+                    "activities",
+                    "positions",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activityId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "execution": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "agent"
+                                ]
+                              },
+                              "harness": {
+                                "type": "string",
+                                "enum": [
+                                  "codex"
+                                ]
+                              },
+                              "model": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "effort": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "harness",
+                              "model",
+                              "effort"
+                            ]
+                          },
+                          "humanInput": {
+                            "type": "string",
+                            "enum": [
+                              "off",
+                              "approval",
+                              "input"
+                            ]
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 160
+                                },
+                                "handoff": {
+                                  "type": "object",
+                                  "properties": {
+                                    "targetActivityId": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "minLength": 1,
+                                      "maxLength": 160
+                                    },
+                                    "continuation": {
+                                      "type": "string",
+                                      "enum": [
+                                        "automatic",
+                                        "approval"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "targetActivityId",
+                                    "continuation"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "handoff"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "activityId",
+                          "name",
+                          "description",
+                          "instructions",
+                          "execution",
+                          "humanInput",
+                          "outcomes"
+                        ]
+                      },
+                      "maxItems": 100
+                    },
+                    "positions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ]
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflowId",
+                    "name",
+                    "description",
+                    "tags",
+                    "activities",
+                    "positions",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Problem Details.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "instance": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "code",
+                    "instance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workflows/{workflowId}/unpublish": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "workflowId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resource or accepted command.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activityId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "execution": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "agent"
+                                ]
+                              },
+                              "harness": {
+                                "type": "string",
+                                "enum": [
+                                  "codex"
+                                ]
+                              },
+                              "model": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "effort": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "harness",
+                              "model",
+                              "effort"
+                            ]
+                          },
+                          "humanInput": {
+                            "type": "string",
+                            "enum": [
+                              "off",
+                              "approval",
+                              "input"
+                            ]
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 160
+                                },
+                                "handoff": {
+                                  "type": "object",
+                                  "properties": {
+                                    "targetActivityId": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "minLength": 1,
+                                      "maxLength": 160
+                                    },
+                                    "continuation": {
+                                      "type": "string",
+                                      "enum": [
+                                        "automatic",
+                                        "approval"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "targetActivityId",
+                                    "continuation"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "handoff"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "activityId",
+                          "name",
+                          "description",
+                          "instructions",
+                          "execution",
+                          "humanInput",
+                          "outcomes"
+                        ]
+                      },
+                      "maxItems": 100
+                    },
+                    "positions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ]
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflowId",
+                    "name",
+                    "description",
+                    "tags",
+                    "activities",
+                    "positions",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                      },
+                      "maxItems": 20
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activityId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "execution": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "agent"
+                                ]
+                              },
+                              "harness": {
+                                "type": "string",
+                                "enum": [
+                                  "codex"
+                                ]
+                              },
+                              "model": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "effort": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "harness",
+                              "model",
+                              "effort"
+                            ]
+                          },
+                          "humanInput": {
+                            "type": "string",
+                            "enum": [
+                              "off",
+                              "approval",
+                              "input"
+                            ]
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 160
+                                },
+                                "handoff": {
+                                  "type": "object",
+                                  "properties": {
+                                    "targetActivityId": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "minLength": 1,
+                                      "maxLength": 160
+                                    },
+                                    "continuation": {
+                                      "type": "string",
+                                      "enum": [
+                                        "automatic",
+                                        "approval"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "targetActivityId",
+                                    "continuation"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "handoff"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "activityId",
+                          "name",
+                          "description",
+                          "instructions",
+                          "execution",
+                          "humanInput",
+                          "outcomes"
+                        ]
+                      },
+                      "maxItems": 100
+                    },
+                    "positions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ]
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "draft",
+                        "published"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflowId",
+                    "name",
+                    "description",
+                    "tags",
+                    "activities",
+                    "positions",
+                    "status"
                   ]
                 }
               }

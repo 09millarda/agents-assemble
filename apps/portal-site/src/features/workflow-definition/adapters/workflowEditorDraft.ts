@@ -8,7 +8,10 @@ import {
 import type { GraphEdgeRef } from "./WorkflowGraph";
 
 export function cloneWorkflowEditorDraft(definition: WorkflowDefinition): WorkflowDefinition {
-  return structuredClone({ ...definition, positions: definition.positions ?? {} });
+  return structuredClone({
+    ...definition,
+    positions: definition.positions ?? {},
+  });
 }
 
 export function hasWorkflowDraftChanges(draft: WorkflowDefinition, lastSavedDraft: WorkflowDefinition): boolean {

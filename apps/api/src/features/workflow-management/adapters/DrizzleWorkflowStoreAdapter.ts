@@ -9,6 +9,7 @@ import type {
 } from "@factory/workflow";
 import {
   browserRecipients,
+  workflowCommands,
   workflowDocuments,
   workflowMessages,
   workflowNotifications,
@@ -48,6 +49,30 @@ export class DrizzleWorkflowStoreAdapter implements WorkflowStorePort {
         set: { definition },
       });
     return structuredClone(definition);
+  }
+  async unpublishDefinition(
+    workflowId: string,
+  ): Promise<WorkflowDefinition | null> {
+    return this.database.transaction(async (transaction) => {
+      const [row] = await transaction
+        .select()
+        .from(workflows)
+        .where(eq(workflows.workflowId, workflowId))
+        .limit(1);
+      if (!row) return null;
+      const draft = {
+        ...(structuredClone(row.definition) as WorkflowDefinition),
+        status: "draft" as const,
+      };
+      await transaction
+        .update(workflows)
+        .set({ definition: draft })
+        .where(eq(workflows.workflowId, workflowId));
+      await transaction
+        .delete(projectEnabledWorkflows)
+        .where(eq(projectEnabledWorkflows.workflowId, workflowId));
+      return draft;
+    });
   }
   async deleteDefinition(workflowId: string): Promise<boolean> {
     return this.database.transaction(async (transaction) => {
@@ -138,6 +163,27 @@ export class DrizzleWorkflowStoreAdapter implements WorkflowStorePort {
       ? await query.where(eq(workflowRuns.projectId, projectId))
       : await query;
     return rows.map((row) => structuredClone(row.state) as WorkflowRun);
+  }
+  async deleteRun(id: string): Promise<boolean> {
+    return this.database.transaction(async (transaction) => {
+      await transaction
+        .delete(workflowCommands)
+        .where(eq(workflowCommands.runId, id));
+      await transaction
+        .delete(workflowMessages)
+        .where(eq(workflowMessages.runId, id));
+      await transaction
+        .delete(workflowDocuments)
+        .where(eq(workflowDocuments.runId, id));
+      await transaction
+        .delete(workflowNotifications)
+        .where(eq(workflowNotifications.runId, id));
+      const deleted = await transaction
+        .delete(workflowRuns)
+        .where(eq(workflowRuns.runId, id))
+        .returning({ runId: workflowRuns.runId });
+      return deleted.length > 0;
+    });
   }
   async submitMessage(
     runId: string,

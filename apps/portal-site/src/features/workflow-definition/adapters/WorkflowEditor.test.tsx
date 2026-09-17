@@ -8,6 +8,8 @@ test("workflow editor renders a graph-first shell with readonly metadata and an 
         workflowId: "build",
         name: "Build feature",
         description: "A feature workflow",
+        status: "draft",
+        tags: [],
         positions: { plan: { x: 10, y: 20 } },
         activities: [
           {
@@ -47,6 +49,8 @@ test("graph editor renders a persisted workflow without stored positions", () =>
     "workflowId": "legacy-build",
     "name": "Build a feature",
     "description": "",
+    "status": "draft",
+    "tags": [],
     "activities": [{
       "activityId": "requirements",
       "name": "Establish requirements",

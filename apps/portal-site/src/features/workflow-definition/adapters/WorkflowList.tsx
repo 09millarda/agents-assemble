@@ -1,15 +1,35 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Trash2 } from "lucide-react";
-import type { WorkflowDefinition } from "@factory/workflow";
+import type { WorkflowCatalogFilters, WorkflowDefinition } from "@factory/workflow";
 import { Button } from "../../../components/ui/button";
+import { Badge } from "../../../components/ui/badge";
+import { Input } from "../../../components/ui/input";
 
 export function WorkflowList({
   definitions,
   onDelete,
+  filters = {},
+  availableTags = [],
+  onFiltersChange,
 }: {
   definitions: WorkflowDefinition[];
   onDelete: (definition: WorkflowDefinition) => void;
+  filters?: WorkflowCatalogFilters;
+  availableTags?: string[];
+  onFiltersChange?: (filters: WorkflowCatalogFilters) => void;
 }) {
+  function updateFilters(next: Partial<WorkflowCatalogFilters>): void {
+    onFiltersChange?.({ ...filters, ...next });
+  }
+
+  function toggleTag(tag: string): void {
+    const selectedTags = filters.tags ?? [];
+    const tags = selectedTags.includes(tag)
+      ? selectedTags.filter((selectedTag) => selectedTag !== tag)
+      : [...selectedTags, tag];
+    updateFilters({ tags });
+  }
+
   return (
     <section className="grid gap-3">
       <div className="flex items-center justify-between gap-3">
@@ -21,6 +41,42 @@ export function WorkflowList({
           {definitions.length} total
         </span>
       </div>
+      {onFiltersChange ? (
+        <div className="grid gap-3 rounded-2xl border border-border/80 bg-white p-4 shadow-sm md:grid-cols-[minmax(0,1fr)_180px]">
+          <Input
+            aria-label="Search workflows by name"
+            placeholder="Search workflows by name"
+            value={filters.search ?? ""}
+            onChange={(event) => updateFilters({ search: event.target.value })}
+          />
+          <select
+            aria-label="Filter workflows by status"
+            value={filters.status ?? ""}
+            onChange={(event) => updateFilters({ status: event.target.value ? event.target.value as WorkflowCatalogFilters["status"] : undefined })}
+            className="rounded-xl border border-input bg-white px-3 py-2 text-sm"
+          >
+            <option value="">All statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select>
+          {availableTags.length > 0 ? (
+            <fieldset className="flex flex-wrap gap-2 md:col-span-2">
+              <legend className="sr-only">Filter workflows by tag</legend>
+              {availableTags.map((tag) => (
+                <label key={tag} className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-medium">
+                  <input
+                    type="checkbox"
+                    aria-label={`Filter workflows by tag: ${tag}`}
+                    checked={(filters.tags ?? []).includes(tag)}
+                    onChange={() => toggleTag(tag)}
+                  />
+                  {tag}
+                </label>
+              ))}
+            </fieldset>
+          ) : null}
+        </div>
+      ) : null}
       {definitions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-sm text-muted-foreground">
           No workflows yet. Create one to start building your workflow library.
@@ -40,6 +96,12 @@ export function WorkflowList({
               >
                 <div className="min-w-0">
                   <p className="truncate font-semibold text-[#18243a]">{definition.name}</p>
+                  <div className="mt-1 flex flex-wrap gap-1.5">
+                    <Badge variant={definition.status === "published" ? "success" : "secondary"}>
+                      {definition.status === "published" ? "Published" : "Draft"}
+                    </Badge>
+                    {definition.tags.map((tag) => <Badge key={tag} variant="outline">{tag}</Badge>)}
+                  </div>
                   <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
                     {definition.description?.trim() || "No description yet."}
                   </p>

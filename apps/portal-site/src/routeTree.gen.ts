@@ -12,16 +12,17 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as DaemonsIndexRouteImport } from './routes/daemons/index'
+import { Route as DaemonsDaemonIdRouteImport } from './routes/daemons/$daemonId'
 import { Route as DeviceIndexRouteImport } from './routes/device/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects/$projectId'
-import { Route as WorkflowRunsRunIdRouteImport } from './routes/workflow-runs/$runId'
 import { Route as WorkflowsIndexRouteImport } from './routes/workflows/index'
 import { Route as WorkflowsWorkflowIdRouteImport } from './routes/workflows/$workflowId'
 import { Route as ProjectsProjectIdIndexRouteImport } from './routes/projects/$projectId/index'
 import { Route as ProjectsProjectIdSettingsRouteImport } from './routes/projects/$projectId/settings'
 import { Route as WorkflowsWorkflowIdIndexRouteImport } from './routes/workflows/$workflowId/index'
 import { Route as WorkflowsWorkflowIdEditRouteImport } from './routes/workflows/$workflowId/edit'
+import { Route as ProjectsProjectIdRunsRunIdRouteImport } from './routes/projects/$projectId/runs/$runId'
 import { Route as ProjectsProjectIdRunsNewRouteImport } from './routes/projects/$projectId/runs/new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -39,6 +40,11 @@ const DaemonsIndexRoute = DaemonsIndexRouteImport.update({
   path: '/daemons/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DaemonsDaemonIdRoute = DaemonsDaemonIdRouteImport.update({
+  id: '/daemons/$daemonId',
+  path: '/daemons/$daemonId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DeviceIndexRoute = DeviceIndexRouteImport.update({
   id: '/device/',
   path: '/device/',
@@ -52,11 +58,6 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
 const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects/$projectId',
   path: '/projects/$projectId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WorkflowRunsRunIdRoute = WorkflowRunsRunIdRouteImport.update({
-  id: '/workflow-runs/$runId',
-  path: '/workflow-runs/$runId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkflowsIndexRoute = WorkflowsIndexRouteImport.update({
@@ -91,6 +92,12 @@ const WorkflowsWorkflowIdEditRoute = WorkflowsWorkflowIdEditRouteImport.update({
   path: '/edit',
   getParentRoute: () => WorkflowsWorkflowIdRoute,
 } as any)
+const ProjectsProjectIdRunsRunIdRoute =
+  ProjectsProjectIdRunsRunIdRouteImport.update({
+    id: '/runs/$runId',
+    path: '/runs/$runId',
+    getParentRoute: () => ProjectsProjectIdRoute,
+  } as any)
 const ProjectsProjectIdRunsNewRoute =
   ProjectsProjectIdRunsNewRouteImport.update({
     id: '/runs/new',
@@ -101,8 +108,8 @@ const ProjectsProjectIdRunsNewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/daemons/$daemonId': typeof DaemonsDaemonIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
-  '/workflow-runs/$runId': typeof WorkflowRunsRunIdRoute
   '/workflows/$workflowId': typeof WorkflowsWorkflowIdRouteWithChildren
   '/daemons/': typeof DaemonsIndexRoute
   '/device/': typeof DeviceIndexRoute
@@ -112,12 +119,13 @@ export interface FileRoutesByFullPath {
   '/workflows/$workflowId/edit': typeof WorkflowsWorkflowIdEditRoute
   '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
   '/workflows/$workflowId/': typeof WorkflowsWorkflowIdIndexRoute
+  '/projects/$projectId/runs/$runId': typeof ProjectsProjectIdRunsRunIdRoute
   '/projects/$projectId/runs/new': typeof ProjectsProjectIdRunsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
-  '/workflow-runs/$runId': typeof WorkflowRunsRunIdRoute
+  '/daemons/$daemonId': typeof DaemonsDaemonIdRoute
   '/daemons': typeof DaemonsIndexRoute
   '/device': typeof DeviceIndexRoute
   '/projects': typeof ProjectsIndexRoute
@@ -126,14 +134,15 @@ export interface FileRoutesByTo {
   '/workflows/$workflowId/edit': typeof WorkflowsWorkflowIdEditRoute
   '/projects/$projectId': typeof ProjectsProjectIdIndexRoute
   '/workflows/$workflowId': typeof WorkflowsWorkflowIdIndexRoute
+  '/projects/$projectId/runs/$runId': typeof ProjectsProjectIdRunsRunIdRoute
   '/projects/$projectId/runs/new': typeof ProjectsProjectIdRunsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/daemons/$daemonId': typeof DaemonsDaemonIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
-  '/workflow-runs/$runId': typeof WorkflowRunsRunIdRoute
   '/workflows/$workflowId': typeof WorkflowsWorkflowIdRouteWithChildren
   '/daemons/': typeof DaemonsIndexRoute
   '/device/': typeof DeviceIndexRoute
@@ -143,6 +152,7 @@ export interface FileRoutesById {
   '/workflows/$workflowId/edit': typeof WorkflowsWorkflowIdEditRoute
   '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
   '/workflows/$workflowId/': typeof WorkflowsWorkflowIdIndexRoute
+  '/projects/$projectId/runs/$runId': typeof ProjectsProjectIdRunsRunIdRoute
   '/projects/$projectId/runs/new': typeof ProjectsProjectIdRunsNewRoute
 }
 export interface FileRouteTypes {
@@ -150,8 +160,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/activity'
+    | '/daemons/$daemonId'
     | '/projects/$projectId'
-    | '/workflow-runs/$runId'
     | '/workflows/$workflowId'
     | '/daemons/'
     | '/device/'
@@ -161,12 +171,13 @@ export interface FileRouteTypes {
     | '/workflows/$workflowId/edit'
     | '/projects/$projectId/'
     | '/workflows/$workflowId/'
+    | '/projects/$projectId/runs/$runId'
     | '/projects/$projectId/runs/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/activity'
-    | '/workflow-runs/$runId'
+    | '/daemons/$daemonId'
     | '/daemons'
     | '/device'
     | '/projects'
@@ -175,13 +186,14 @@ export interface FileRouteTypes {
     | '/workflows/$workflowId/edit'
     | '/projects/$projectId'
     | '/workflows/$workflowId'
+    | '/projects/$projectId/runs/$runId'
     | '/projects/$projectId/runs/new'
   id:
     | '__root__'
     | '/'
     | '/activity'
+    | '/daemons/$daemonId'
     | '/projects/$projectId'
-    | '/workflow-runs/$runId'
     | '/workflows/$workflowId'
     | '/daemons/'
     | '/device/'
@@ -191,14 +203,15 @@ export interface FileRouteTypes {
     | '/workflows/$workflowId/edit'
     | '/projects/$projectId/'
     | '/workflows/$workflowId/'
+    | '/projects/$projectId/runs/$runId'
     | '/projects/$projectId/runs/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
+  DaemonsDaemonIdRoute: typeof DaemonsDaemonIdRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRouteWithChildren
-  WorkflowRunsRunIdRoute: typeof WorkflowRunsRunIdRoute
   WorkflowsWorkflowIdRoute: typeof WorkflowsWorkflowIdRouteWithChildren
   DaemonsIndexRoute: typeof DaemonsIndexRoute
   DeviceIndexRoute: typeof DeviceIndexRoute
@@ -229,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DaemonsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/daemons/$daemonId': {
+      id: '/daemons/$daemonId'
+      path: '/daemons/$daemonId'
+      fullPath: '/daemons/$daemonId'
+      preLoaderRoute: typeof DaemonsDaemonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/device/': {
       id: '/device/'
       path: '/device'
@@ -248,13 +268,6 @@ declare module '@tanstack/react-router' {
       path: '/projects/$projectId'
       fullPath: '/projects/$projectId'
       preLoaderRoute: typeof ProjectsProjectIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/workflow-runs/$runId': {
-      id: '/workflow-runs/$runId'
-      path: '/workflow-runs/$runId'
-      fullPath: '/workflow-runs/$runId'
-      preLoaderRoute: typeof WorkflowRunsRunIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/workflows/': {
@@ -299,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkflowsWorkflowIdEditRouteImport
       parentRoute: typeof WorkflowsWorkflowIdRoute
     }
+    '/projects/$projectId/runs/$runId': {
+      id: '/projects/$projectId/runs/$runId'
+      path: '/runs/$runId'
+      fullPath: '/projects/$projectId/runs/$runId'
+      preLoaderRoute: typeof ProjectsProjectIdRunsRunIdRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
     '/projects/$projectId/runs/new': {
       id: '/projects/$projectId/runs/new'
       path: '/runs/new'
@@ -312,12 +332,14 @@ declare module '@tanstack/react-router' {
 interface ProjectsProjectIdRouteChildren {
   ProjectsProjectIdSettingsRoute: typeof ProjectsProjectIdSettingsRoute
   ProjectsProjectIdIndexRoute: typeof ProjectsProjectIdIndexRoute
+  ProjectsProjectIdRunsRunIdRoute: typeof ProjectsProjectIdRunsRunIdRoute
   ProjectsProjectIdRunsNewRoute: typeof ProjectsProjectIdRunsNewRoute
 }
 
 const ProjectsProjectIdRouteChildren: ProjectsProjectIdRouteChildren = {
   ProjectsProjectIdSettingsRoute: ProjectsProjectIdSettingsRoute,
   ProjectsProjectIdIndexRoute: ProjectsProjectIdIndexRoute,
+  ProjectsProjectIdRunsRunIdRoute: ProjectsProjectIdRunsRunIdRoute,
   ProjectsProjectIdRunsNewRoute: ProjectsProjectIdRunsNewRoute,
 }
 
@@ -340,8 +362,8 @@ const WorkflowsWorkflowIdRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
+  DaemonsDaemonIdRoute: DaemonsDaemonIdRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRouteWithChildren,
-  WorkflowRunsRunIdRoute: WorkflowRunsRunIdRoute,
   WorkflowsWorkflowIdRoute: WorkflowsWorkflowIdRouteWithChildren,
   DaemonsIndexRoute: DaemonsIndexRoute,
   DeviceIndexRoute: DeviceIndexRoute,

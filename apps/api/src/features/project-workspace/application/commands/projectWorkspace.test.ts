@@ -4,6 +4,17 @@ import { assignDaemonToProject } from "./assignDaemonToProject";
 import { setEnabledWorkflowIds } from "./setEnabledWorkflowIds";
 import type { ProjectRegistryPort } from "../../domain/ProjectWorkspacePort";
 import type { ProjectInfo } from "@factory/shared-domain";
+import { createBlankWorkflow } from "@factory/workflow";
+
+function stubWorkflowCatalog() {
+  return {
+    findDefinition: async (workflowId: string) => ({
+      ...createBlankWorkflow(),
+      workflowId,
+      status: "published" as const,
+    }),
+  };
+}
 
 function stubRegistry(overrides: Partial<ProjectRegistryPort> = {}): ProjectRegistryPort {
   return {
@@ -36,19 +47,20 @@ describe("setEnabledWorkflowIds", () => {
   test("replaces the allow-list and dedupes entries", async () => {
     let stored: string[] = [];
     const registry = stubRegistry({
+      findProject: async () => ({ projectId: "p1", name: "site", absolutePath: "/tmp/site", daemonId: "d1", gitStatus: "valid", blockedReason: null, enabledWorkflowIds: [] }),
       setEnabledWorkflowIds: async (_projectId, workflowIds) => {
         stored = workflowIds;
         return { projectId: "p1", name: "site", absolutePath: "/tmp/site", daemonId: "d1", gitStatus: "valid", blockedReason: null, enabledWorkflowIds: workflowIds };
       },
     });
-    const result = await setEnabledWorkflowIds(registry, "p1", ["workflow-b", "workflow-a", "workflow-a", "  "]);
+    const result = await setEnabledWorkflowIds(registry, stubWorkflowCatalog(), "p1", ["workflow-b", "workflow-a", "workflow-a", "  "]);
     expect(result.ok).toBe(true);
     expect(stored).toEqual(["workflow-b", "workflow-a"]);
     if (result.ok) expect(result.value.enabledWorkflowIds).toEqual(["workflow-b", "workflow-a"]);
   });
 
   test("returns 404 shape when the project is unknown", async () => {
-    const missing = await setEnabledWorkflowIds(stubRegistry(), "missing", ["workflow-a"]);
+    const missing = await setEnabledWorkflowIds(stubRegistry(), stubWorkflowCatalog(), "missing", ["workflow-a"]);
     expect(missing.ok).toBe(false);
     if (!missing.ok) expect(missing.error.code).toBe("PROJECT_NOT_FOUND");
     const assigned = await assignDaemonToProject(stubRegistry(), "missing", "d1");

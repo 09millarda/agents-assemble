@@ -12,7 +12,7 @@ const createdRun: WorkflowRun = {
   workflowId: "workflow-1",
   daemonId: "daemon-1",
   recipientId: "recipient-1",
-  snapshot: { workflowId: "workflow-1", name: "Build feature", description: "", activities: [], positions: {} },
+  snapshot: { workflowId: "workflow-1", name: "Build feature", description: "", status: "published", tags: [], activities: [], positions: {} },
   workspace: { projectPath: "/home/example/portal" },
   workspaceResult: null,
   kickoffPrompt: "Build the page",
@@ -52,6 +52,7 @@ function createRuns(overrides: Partial<WorkflowRunPort> = {}): WorkflowRunPort {
     getRun: async () => createdRun,
     listNotifications: async () => [],
     submitCommand: async () => {},
+    deleteRun: async () => {},
     ...overrides,
   };
 }
@@ -71,8 +72,8 @@ test("starting a workflow passes trimmed context and opens the created run", asy
     browser,
     recipients,
     navigation: {
-      openRun: async (runId) => {
-        opened.push(runId);
+      openRun: async (runId, projectId) => {
+        opened.push([runId, projectId].join("/"));
       },
     },
     resolveRequestId: () => "request-1",
@@ -94,7 +95,7 @@ test("starting a workflow passes trimmed context and opens the created run", asy
       requestId: "request-1",
     },
   ]);
-  expect(opened).toEqual(["run-1"]);
+  expect(opened).toEqual(["run-1/project-1"]);
 });
 
 test("starting a workflow leaves navigation untouched when creation fails", async () => {

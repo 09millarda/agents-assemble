@@ -30,6 +30,8 @@ export function createBugTriageWorkflow(
     workflowId: "bug-triage",
     name: "Triage a bug",
     description: "Capture a bug report, reproduce the behavior, plan and implement a fix, then verify the result.",
+    status: "draft",
+    tags: [],
     activities: [
       agent(
         "intake",

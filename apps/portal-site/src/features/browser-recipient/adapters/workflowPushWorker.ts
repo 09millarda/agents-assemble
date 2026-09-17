@@ -2,12 +2,22 @@
 
 const workflowWorker = self as unknown as ServiceWorkerGlobalScope;
 
+function isSafeRelativeUrl(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    value.startsWith("/") &&
+    !value.startsWith("//") &&
+    !value.includes("\\")
+  );
+}
+
 workflowWorker.addEventListener("push", (event: PushEvent) => {
   let notification: {
     notificationId?: unknown;
     runId?: unknown;
     title?: string;
     body?: string;
+    url?: unknown;
   } | null;
   try {
     notification = event.data?.json() ?? null;
@@ -29,6 +39,7 @@ workflowWorker.addEventListener("push", (event: PushEvent) => {
         data: {
           runId: notification.runId,
           notificationId: notification.notificationId,
+          ...(isSafeRelativeUrl(notification.url) ? { url: notification.url } : {}),
         },
       },
     ),
@@ -39,12 +50,25 @@ workflowWorker.addEventListener(
   "notificationclick",
   (event: NotificationEvent) => {
     event.notification.close();
-    const runId: unknown = event.notification.data?.runId;
-    if (typeof runId !== "string") return;
-    const target = new URL(
-      `/workflow-runs/${encodeURIComponent(runId)}`,
-      workflowWorker.location.origin,
-    ).href;
+    const data: unknown = event.notification.data;
+    const safeUrl =
+      typeof data === "object" && data !== null && "url" in data
+        ? (data as { url?: unknown }).url
+        : undefined;
+    if (isSafeRelativeUrl(safeUrl)) {
+      const target = new URL(safeUrl, workflowWorker.location.origin).href;
+      event.waitUntil(
+        workflowWorker.clients
+          .matchAll({ type: "window", includeUncontrolled: true })
+          .then(async (windows) => {
+            const existing = windows.find((window) => window.url === target);
+            if (existing) return existing.focus();
+            return workflowWorker.clients.openWindow(target);
+          }),
+      );
+      return;
+    }
+    const target = new URL("/", workflowWorker.location.origin).href;
     event.waitUntil(
       workflowWorker.clients
         .matchAll({ type: "window", includeUncontrolled: true })

@@ -18,6 +18,8 @@ export function WorkflowDetailPage({
   const [deleteRequested, setDeleteRequested] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [lifecycleBusy, setLifecycleBusy] = useState(false);
+  const [lifecycleError, setLifecycleError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -37,6 +39,30 @@ export function WorkflowDetailPage({
   function requestDelete(): void {
     setDeleteError(null);
     setDeleteRequested(true);
+  }
+
+  async function publishWorkflow(): Promise<void> {
+    await changeLifecycle(() => workflows.publishWorkflow(workflowId));
+  }
+
+  async function unpublishWorkflow(): Promise<void> {
+    await changeLifecycle(() => workflows.unpublishWorkflow(workflowId));
+  }
+
+  async function changeLifecycle(
+    action: () => Promise<WorkflowDefinition>,
+  ): Promise<void> {
+    setLifecycleBusy(true);
+    setLifecycleError(null);
+    try {
+      setDefinition(await action());
+    } catch (failure) {
+      setLifecycleError(
+        failure instanceof Error ? failure.message : "Could not update workflow status.",
+      );
+    } finally {
+      setLifecycleBusy(false);
+    }
   }
 
   async function deleteWorkflow(): Promise<void> {
@@ -60,7 +86,14 @@ export function WorkflowDetailPage({
       {error ? <p role="alert" className="text-red-700">{error}</p> : null}
       {definition ? (
         <>
-          <WorkflowDetail definition={definition} onDelete={requestDelete} />
+          <WorkflowDetail
+            definition={definition}
+            onDelete={requestDelete}
+            onPublish={() => void publishWorkflow()}
+            onUnpublish={() => void unpublishWorkflow()}
+            lifecycleBusy={lifecycleBusy}
+            lifecycleError={lifecycleError}
+          />
           {deleteRequested ? (
             <DeleteWorkflowDialog
               workflowName={definition.name}

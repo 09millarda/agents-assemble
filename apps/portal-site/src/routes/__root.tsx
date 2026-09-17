@@ -207,18 +207,6 @@ function ConsoleShell() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2.5">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div
-                        className="hidden items-center gap-2 rounded-full border border-[#cce7d7] bg-[#f1fbf5] px-3 py-1.5 text-xs font-semibold text-[#226342] sm:flex"
-                        title="Daemon status refreshes every 30 seconds"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#4fbc7e] shadow-[0_0_0_4px_rgba(79,188,126,0.12)]" />
-                        Factory API connected
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>Daemon status refreshes every 30 seconds</TooltipContent>
-                  </Tooltip>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button type="button" className="flex items-center gap-2 rounded-full p-1.5 pr-2 transition-colors hover:bg-[#edf2f7]" aria-label="Open workspace menu">

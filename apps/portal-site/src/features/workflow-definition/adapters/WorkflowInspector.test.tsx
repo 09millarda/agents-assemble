@@ -7,6 +7,8 @@ const definition: WorkflowDefinition = {
   workflowId: "build",
   name: "Build feature",
   description: "A feature workflow",
+  status: "draft",
+  tags: [],
   positions: {},
   activities: [
     {

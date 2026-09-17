@@ -106,8 +106,8 @@ function RunCard({ run }: { run: WorkflowRun }) {
             Updated {formatRunTimestamp(run.updatedAt)}
           </span>
           <Link
-            to="/workflow-runs/$runId"
-            params={{ runId: run.runId }}
+            to="/projects/$projectId/runs/$runId"
+            params={{ projectId: run.projectId, runId: run.runId }}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#45659a] hover:text-[#18243a]"
           >
             Open run <ArrowUpRight className="h-4 w-4" />
@@ -214,8 +214,8 @@ function RunHistory({ runs }: { runs: WorkflowRun[] }) {
                 </TableCell>
                 <TableCell className="text-right">
                   <Link
-                    to="/workflow-runs/$runId"
-                    params={{ runId: run.runId }}
+                    to="/projects/$projectId/runs/$runId"
+                    params={{ projectId: run.projectId, runId: run.runId }}
                     aria-label={`Open ${run.name}`}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-[#45659a] hover:text-[#18243a]"
                   >

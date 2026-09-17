@@ -18,8 +18,11 @@ describe("factory OpenAPI document", () => {
       "/v1/browser-recipients/{recipientId}",
       "/v1/browser-recipients/{recipientId}/subscription",
       "/v1/daemons",
+      "/v1/daemons/{daemonId}",
       "/v1/daemons/{daemonId}/capabilities",
+      "/v1/daemons/{daemonId}/configuration",
       "/v1/daemons/{daemonId}/deregister",
+      "/v1/daemons/{daemonId}/logs/stream",
       "/v1/device/approve",
       "/v1/device/authorizations",
       "/v1/device/authorizations/{deviceCode}",
@@ -40,6 +43,8 @@ describe("factory OpenAPI document", () => {
       "/v1/workflows",
       "/v1/workflows/{workflowId}",
       "/v1/workflows/{workflowId}/delete",
+      "/v1/workflows/{workflowId}/publish",
+      "/v1/workflows/{workflowId}/unpublish",
       "/v1/workflows/{workflowId}/update",
     ]);
   });

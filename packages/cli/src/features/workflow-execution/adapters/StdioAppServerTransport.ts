@@ -23,13 +23,23 @@ export class StdioAppServerTransport implements AppServerTransport {
     }
   >();
   onMessage: (message: Record<string, unknown>) => void = () => {};
-  constructor() {
+  constructor(
+    private readonly publishLog: (
+      source: "harness-stdout" | "harness-stderr",
+      payload: string,
+    ) => void = () => {},
+  ) {
     this.process = spawn("codex", ["app-server", "--listen", "stdio://"], {
       stdio: ["pipe", "pipe", "pipe"],
     });
     let stderr = "";
     this.process.stderr.on("data", (chunk: Buffer) => {
-      stderr = (stderr + chunk.toString()).slice(-16000);
+      const payload = chunk.toString();
+      this.publishLog("harness-stderr", payload);
+      stderr = (stderr + payload).slice(-16000);
+    });
+    this.process.stdout.on("data", (chunk: Buffer) => {
+      this.publishLog("harness-stdout", chunk.toString());
     });
     createInterface({ input: this.process.stdout }).on("line", (line) => {
       try {

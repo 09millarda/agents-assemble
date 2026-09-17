@@ -7,6 +7,8 @@ const definition: WorkflowDefinition = {
   workflowId: "build",
   name: "Build",
   description: "Build a feature from an agreed plan.",
+  status: "published",
+  tags: ["delivery", "planning"],
   positions: {},
   activities: [
     {
@@ -168,16 +170,132 @@ test("catalog resources are editable independent values with cursor pagination",
   const create = await app.request("/v1/workflows", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(definition),
+    body: JSON.stringify({ ...definition, tags: [" Delivery ", "delivery", "Planning"] }),
   });
   expect(create.status).toBe(201);
   expect(create.headers.get("location")).toBe("/v1/workflows/build");
   const workflow = await (await app.request("/v1/workflows/build")).json();
   expect(workflow.activities[0].name).toBe("Requirements");
   expect(workflow.description).toBe("Build a feature from an agreed plan.");
+  expect(workflow.status).toBe("draft");
+  expect(workflow.tags).toEqual(["delivery", "planning"]);
   const list = await (await app.request("/v1/workflows?limit=1")).json();
   expect(list.pagination).toEqual({ nextCursor: null, limit: 1 });
   expect(list.data[0].workflowId).toBe("build");
+});
+
+test("workflow catalog searches names and combines status and tag filters", async () => {
+  const store = new InMemoryWorkflowStore();
+  const draft = structuredClone(definition);
+  draft.workflowId = "draft-build";
+  draft.status = "draft";
+  const secondPublished = structuredClone(definition);
+  secondPublished.workflowId = "build-second";
+  secondPublished.name = "Build second";
+  store.definitions.set(definition.workflowId, definition);
+  store.definitions.set(draft.workflowId, draft);
+  store.definitions.set(secondPublished.workflowId, secondPublished);
+
+  const response = await buildWorkflowTestApp(store).request(
+    "/v1/workflows?search=build&status=published&tag=planning&tag=delivery&limit=1",
+  );
+
+  expect(response.status).toBe(200);
+  expect((await response.json()).data.map((workflow: { workflowId: string }) => workflow.workflowId)).toEqual(["build"]);
+  expect(response.headers.get("link")).toContain("search=build");
+  expect(response.headers.get("link")).toContain("status=published");
+  expect(response.headers.get("link")).toContain("tag=planning");
+  expect(response.headers.get("link")).toContain("tag=delivery");
+});
+
+test("ordinary updates preserve a published status while normalizing tags", async () => {
+  const store = new InMemoryWorkflowStore();
+  store.definitions.set(definition.workflowId, definition);
+  const response = await buildWorkflowTestApp(store).request(
+    "/v1/workflows/build/update",
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ...definition, status: "draft", tags: [" Delivery ", "delivery", "Planning"] }),
+    },
+  );
+
+  expect(response.status).toBe(200);
+  expect((await response.json()).status).toBe("published");
+  expect(store.definitions.get("build")?.tags).toEqual(["delivery", "planning"]);
+});
+
+test("publishing and unpublishing a workflow are idempotent lifecycle commands", async () => {
+  const store = new InMemoryWorkflowStore();
+  const draft = structuredClone(definition);
+  draft.status = "draft";
+  store.definitions.set(draft.workflowId, draft);
+  store.projects.set("project", {
+    projectId: "project",
+    name: "Project",
+    absolutePath: "/tmp/project",
+    daemonId: "daemon",
+    gitStatus: "valid",
+    blockedReason: null,
+    enabledWorkflowIds: [draft.workflowId],
+  });
+  const { createWorkflowRun } = await import("@factory/workflow");
+  const activeRun = createWorkflowRun(
+    {
+      runId: "active-run",
+      projectId: "project",
+      daemonId: "daemon",
+      workflow: definition,
+      workspace: { projectPath: "/tmp/project" },
+    },
+    "2026-09-15T12:00:00.000Z",
+  );
+  store.runs.set(activeRun.runId, activeRun);
+  const frozenSnapshot = structuredClone(activeRun.snapshot);
+  const app = buildWorkflowTestApp(store);
+  const publish = () =>
+    app.request("/v1/workflows/build/publish", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{}",
+    });
+
+  expect((await publish()).status).toBe(200);
+  expect((await (await app.request("/v1/workflows/build")).json()).status).toBe("published");
+  expect((await publish()).status).toBe(200);
+
+  const unpublish = () =>
+    app.request("/v1/workflows/build/unpublish", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{}",
+    });
+  expect((await unpublish()).status).toBe(200);
+  expect((await (await app.request("/v1/workflows/build")).json()).status).toBe("draft");
+  expect(store.projects.get("project")?.enabledWorkflowIds).toEqual([]);
+  expect(store.runs.get("active-run")?.snapshot).toEqual(frozenSnapshot);
+  expect((await unpublish()).status).toBe(200);
+});
+
+test("publishing rejects an invalid draft workflow", async () => {
+  const store = new InMemoryWorkflowStore();
+  const invalid = structuredClone(definition);
+  invalid.status = "draft";
+  invalid.activities[0]!.outcomes[0]!.handoff.targetActivityId = "missing";
+  store.definitions.set(invalid.workflowId, invalid);
+
+  const response = await buildWorkflowTestApp(store).request(
+    "/v1/workflows/build/publish",
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{}",
+    },
+  );
+
+  expect(response.status).toBe(422);
+  expect((await response.json()).code).toBe("INVALID_WORKFLOW");
+  expect(store.definitions.get("build")?.status).toBe("draft");
 });
 
 test("deleting a workflow detaches projects and preserves existing runs", async () => {
@@ -332,6 +450,32 @@ test("unsupported model selections are rejected before coordinator dispatch", as
   );
   expect(response.status).toBe(409);
   expect((await response.json()).code).toBe("UNSUPPORTED_EXECUTION_SETTINGS");
+  expect(store.enqueuedRunIds).toEqual([]);
+});
+
+test("draft workflows cannot start runs", async () => {
+  const store = new InMemoryWorkflowStore();
+  const draft = structuredClone(definition);
+  draft.status = "draft";
+  store.definitions.set(draft.workflowId, draft);
+  store.projects.set("project", {
+    projectId: "project",
+    name: "Project",
+    absolutePath: "/tmp/project",
+    daemonId: "daemon",
+    gitStatus: "valid",
+    blockedReason: null,
+    enabledWorkflowIds: [draft.workflowId],
+  });
+
+  const response = await buildWorkflowTestApp(store).request("/v1/workflow-runs", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ requestId: "draft-run", projectId: "project", workflowId: draft.workflowId }),
+  });
+
+  expect(response.status).toBe(409);
+  expect((await response.json()).code).toBe("WORKFLOW_NOT_PUBLISHED");
   expect(store.enqueuedRunIds).toEqual([]);
 });
 

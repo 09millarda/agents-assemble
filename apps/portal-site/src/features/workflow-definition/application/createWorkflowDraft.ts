@@ -6,11 +6,14 @@ export function createWorkflowDraft(
   workflowId: string,
   name: string,
   description: string,
+  tags: string[] = [],
 ): WorkflowDefinition {
   return {
     ...createWorkflowFromTemplate(templateId),
     workflowId,
     name,
     description,
+    status: "draft",
+    tags,
   };
 }

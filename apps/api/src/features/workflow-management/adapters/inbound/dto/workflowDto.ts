@@ -1,7 +1,13 @@
 import { z } from "zod";
 import { isCursorValid } from "../../../../../infrastructure/http/pagination";
+import {
+  MAX_WORKFLOW_TAG_LENGTH,
+  MAX_WORKFLOW_TAGS,
+  WORKFLOW_STATUSES,
+} from "@factory/workflow";
 const identity = z.string().min(1).max(160);
 const derivedIdentity = z.string().min(1).max(512);
+const workflowTag = z.string().trim().min(1).max(MAX_WORKFLOW_TAG_LENGTH);
 export const ExecutionSettingsSchema = z.object({
   kind: z.literal("agent"),
   harness: z.literal("codex"),
@@ -27,13 +33,19 @@ export const ActivitySchema = z.object({
     )
     .min(1),
 });
-export const WorkflowDefinitionSchema = z.object({
+const WorkflowDefinitionFields = {
   workflowId: identity,
   name: z.string().min(1),
   description: z.string(),
+  tags: z.array(workflowTag).max(MAX_WORKFLOW_TAGS),
   activities: z.array(ActivitySchema).max(100),
   positions: z.record(identity, z.object({ x: z.number(), y: z.number() })),
+};
+export const WorkflowDefinitionSchema = z.object({
+  ...WorkflowDefinitionFields,
+  status: z.enum(WORKFLOW_STATUSES),
 });
+export const WorkflowDefinitionInputSchema = z.object(WorkflowDefinitionFields);
 export const WorkspaceSchema = z.object({
   projectPath: z.string(),
   requirePublication: z.boolean().optional(),
@@ -198,6 +210,13 @@ export const ListQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
   cursor: z.string().refine(isCursorValid).optional(),
   projectId: identity.optional(),
+});
+export const WorkflowListQuerySchema = z.object({
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+  cursor: z.string().refine(isCursorValid).optional(),
+  status: z.enum(WORKFLOW_STATUSES).optional(),
+  tag: z.union([workflowTag, z.array(workflowTag).max(MAX_WORKFLOW_TAGS)]).optional(),
+  search: z.string().trim().max(160).optional(),
 });
 export function collectionSchema(item: z.ZodType) {
   return z.object({

@@ -3,6 +3,7 @@ import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
 import { z } from "zod";
 import type { DaemonPresencePort, DaemonRegistryPort } from "../../features/daemon-connection/domain/DaemonConnectionPort";
+import type { DaemonConfiguration, DaemonDetails } from "@factory/shared-domain";
 import type { ProjectRegistryPort } from "../../features/project-workspace/domain/ProjectWorkspacePort";
 import type { DeviceAuthorizationStorePort } from "../../features/device-authorization/domain/DeviceAuthorizationPort";
 import { registerResourceRoutes, type ResourceRouteDependencies } from "../../routes/registerResourceRoutes";
@@ -63,6 +64,16 @@ function stubCapabilities() {
   return { getCapabilities: () => [] };
 }
 
+function stubDaemonConfiguration() {
+  return {
+    findDaemon: async (): Promise<DaemonDetails | null> => null,
+    saveDesiredConfiguration: async (
+      _daemonId: string,
+      _configuration: DaemonConfiguration,
+    ): Promise<DaemonDetails | null> => null,
+  };
+}
+
 function stubProjectRegistry(): ProjectRegistryPort {
   return {
     createProject: async (input) => ({ projectId: "project-1", name: input.name, absolutePath: input.absolutePath, daemonId: null, gitStatus: "unknown", blockedReason: null, enabledWorkflowIds: [] }),
@@ -92,6 +103,10 @@ export function buildSpecFactoryApi(): OpenAPIHono {
     daemonRegistry: registry,
     daemonPresence: offlinePresence,
     daemonCapabilities: stubCapabilities(),
+    daemonConfiguration: stubDaemonConfiguration(),
+    daemonConfigurationDelivery: { sendConfiguration: () => false },
+    daemonTelemetry: { getDaemonTelemetry: () => null },
+    daemonLogs: { subscribe: () => () => {} },
     deviceStore: stubStore(),
     credentialIssuer: registry,
     projectRegistry: stubProjectRegistry(),

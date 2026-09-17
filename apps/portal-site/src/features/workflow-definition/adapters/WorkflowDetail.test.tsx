@@ -8,6 +8,8 @@ const definition: WorkflowDefinition = {
   workflowId: "build",
   name: "Build a feature",
   description: "Turn an agreed goal into a tested implementation.",
+  status: "published",
+  tags: ["delivery"],
   activities: [
     {
       activityId: "plan",
@@ -22,8 +24,8 @@ const definition: WorkflowDefinition = {
   positions: { plan: { x: 40, y: 40 } },
 };
 
-test("workflow detail shows metadata, a read-only graph, and an explicit edit action", async () => {
-  const rootRoute = createRootRoute({ component: () => <WorkflowDetail definition={definition} onDelete={() => {}} /> });
+test("workflow detail shows metadata, a read-only graph, and lifecycle controls", async () => {
+  const rootRoute = createRootRoute({ component: () => <WorkflowDetail definition={definition} onDelete={() => {}} onUnpublish={() => {}} /> });
   const router = createRouter({ routeTree: rootRoute, history: createMemoryHistory({ initialEntries: ["/"] }) });
   await router.load();
   const html = renderToString(<RouterProvider router={router} />);
@@ -34,6 +36,8 @@ test("workflow detail shows metadata, a read-only graph, and an explicit edit ac
     "Workflow graph",
     "Edit workflow",
     "Delete workflow",
+    "Published",
+    "Unpublish workflow",
     "Back to workflows",
     "Plan",
   ]) {

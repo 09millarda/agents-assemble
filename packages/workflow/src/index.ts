@@ -1,4 +1,6 @@
 export * from "./features/workflow-definition/domain/WorkflowDefinition";
+export * from "./features/workflow-definition/domain/workflowLifecycle";
+export * from "./features/workflow-definition/domain/workflowCatalog";
 export * from "./features/workflow-execution/domain/WorkflowRun";
 export * from "./features/workflow-execution/application/advanceWorkflowRun";
 export * from "./features/context-document/domain/validateCompletion";

@@ -14,7 +14,7 @@ test("expired subscriptions deactivate their browser and push failures stay inde
         kind: "result",
         title: "Done",
         body: "PR published",
-        url: "/workflow-runs/run",
+        url: "/projects/project/runs/run",
       },
       subscription: {
         endpoint: "https://push.example/subscription",

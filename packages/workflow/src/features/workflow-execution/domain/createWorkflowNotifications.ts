@@ -22,7 +22,7 @@ export function createWorkflowNotifications(
       kind,
       title: run.name,
       body: interaction.prompt,
-      url: `/workflow-runs/${encodeURIComponent(run.runId)}`,
+      url: `/projects/${encodeURIComponent(run.projectId)}/runs/${encodeURIComponent(run.runId)}`,
     });
   }
   if (
@@ -39,7 +39,7 @@ export function createWorkflowNotifications(
       kind: "result",
       title: run.name,
       body: run.publication?.url ?? `Workflow ${run.status}`,
-      url: `/workflow-runs/${encodeURIComponent(run.runId)}`,
+      url: `/projects/${encodeURIComponent(run.projectId)}/runs/${encodeURIComponent(run.runId)}`,
     });
   }
 }

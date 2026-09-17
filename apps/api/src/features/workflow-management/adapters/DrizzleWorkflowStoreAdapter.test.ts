@@ -13,7 +13,7 @@ import { DrizzleWorkflowStoreAdapter } from "./DrizzleWorkflowStoreAdapter";
 const databaseUrl = process.env.WORKFLOW_TEST_DATABASE_URL;
 
 test.skipIf(!databaseUrl)(
-  "deletes enabled-workflow references before deleting the workflow row",
+  "unpublishes atomically and deletes enabled-workflow references with the workflow row",
   async () => {
     const database = createDatabaseConnection(databaseUrl!);
     const workflowId = `delete-workflow-${crypto.randomUUID()}`;
@@ -22,6 +22,8 @@ test.skipIf(!databaseUrl)(
       workflowId,
       name: "Delete me",
       description: "",
+      status: "published",
+      tags: [],
       activities: [],
       positions: {},
     };
@@ -46,6 +48,20 @@ test.skipIf(!databaseUrl)(
         new DrizzleProjectRegistryAdapter(database),
       );
 
+      const unpublished = await adapter.unpublishDefinition(workflowId);
+      expect(unpublished?.status).toBe("draft");
+      expect(
+        await database
+          .select()
+          .from(projectEnabledWorkflows)
+          .where(eq(projectEnabledWorkflows.workflowId, workflowId)),
+      ).toEqual([]);
+
+      await adapter.saveDefinition({ ...unpublished!, status: "published" });
+      await database.insert(projectEnabledWorkflows).values({
+        projectId,
+        workflowId,
+      });
       expect(await adapter.deleteDefinition(workflowId)).toBe(true);
       expect(
         await database

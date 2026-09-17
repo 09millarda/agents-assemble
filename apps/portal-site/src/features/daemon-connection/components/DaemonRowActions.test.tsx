@@ -1,11 +1,16 @@
 import { describe, expect, test } from "bun:test";
 import { renderToString } from "react-dom/server";
 import { DaemonRowActions, buildDaemonRowOptions } from "./DaemonRowActions";
+import type { DaemonSummary } from "@factory/shared-domain";
+
+function daemon(daemonId: string, machineName: string, status: "online" | "offline"): DaemonSummary {
+  return { daemonId, machineName, displayName: machineName, status, maxParallelHarnesses: 1, appliedMaxParallelHarnesses: 1, activeHarnesses: 0, queuedCommands: 0 };
+}
 
 describe("buildDaemonRowOptions", () => {
   test("offers removal when the handler is provided", () => {
     const options = buildDaemonRowOptions(
-      { daemonId: "daemon-1", machineName: "studio", status: "online" },
+      daemon("daemon-1", "studio", "online"),
       { canDeregister: true }
     );
 
@@ -16,7 +21,7 @@ describe("buildDaemonRowOptions", () => {
 
   test("hides all options without a handler", () => {
     const options = buildDaemonRowOptions(
-      { daemonId: "daemon-1", machineName: "studio", status: "online" },
+      daemon("daemon-1", "studio", "online"),
       { canDeregister: false }
     );
 
@@ -25,7 +30,7 @@ describe("buildDaemonRowOptions", () => {
 
   test("offers removal while the daemon is offline", () => {
     const options = buildDaemonRowOptions(
-      { daemonId: "daemon-2", machineName: "laptop", status: "offline" },
+      daemon("daemon-2", "laptop", "offline"),
       { canDeregister: true }
     );
 
@@ -37,7 +42,7 @@ describe("DaemonRowActions", () => {
   test("renders a three-dots trigger with the menu closed", () => {
     const html = renderToString(
       <DaemonRowActions
-        daemon={{ daemonId: "daemon-1", machineName: "studio", status: "online" }}
+        daemon={daemon("daemon-1", "studio", "online")}
         canDeregister={true}
         onDeregister={() => {}}
       />

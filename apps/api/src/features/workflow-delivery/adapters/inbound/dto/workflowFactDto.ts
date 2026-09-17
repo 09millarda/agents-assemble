@@ -25,7 +25,7 @@ export const WorkflowFactSchema = z.object({
       outcome: z.string(),
       outputs: z.array(
         z.object({ documentId: z.string(), content: z.string() }),
-      ),
+      ).optional(),
     })
     .optional(),
   workspaceResult: z

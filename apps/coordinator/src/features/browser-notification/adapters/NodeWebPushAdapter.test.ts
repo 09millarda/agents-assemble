@@ -20,7 +20,7 @@ test("push retries reuse notification identity with stable configured VAPID keys
     kind: "result" as const,
     title: "Done",
     body: "Ready",
-    url: "/workflow-runs/run",
+    url: "/projects/project/runs/run",
   };
   const subscription = {
     endpoint: "https://push.example/id",
@@ -59,7 +59,7 @@ test("large questions are delivered as bounded previews with the original run id
       kind: "question",
       title: "Run",
       body: "Question ".repeat(2000),
-      url: "/workflow-runs/run",
+      url: "/projects/project/runs/run",
     },
     {
       endpoint: "https://push.example/id",

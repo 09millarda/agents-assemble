@@ -1,4 +1,5 @@
 import type { ProjectInfo } from "@factory/shared-domain";
+import type { WorkflowDefinition } from "@factory/workflow";
 
 export interface ProjectRegistryPort {
   createProject(input: { name: string; absolutePath: string }): Promise<ProjectInfo>;
@@ -9,4 +10,8 @@ export interface ProjectRegistryPort {
   setEnabledWorkflowIds(projectId: string, workflowIds: string[]): Promise<ProjectInfo | null>;
   setSetupCommand(projectId: string, setupCommand: string | null): Promise<ProjectInfo | null>;
   markGitStatus(projectId: string, gitStatus: ProjectInfo["gitStatus"], blockedReason: string | null): Promise<void>;
+}
+
+export interface WorkflowAvailabilityPort {
+  findDefinition(workflowId: string): Promise<WorkflowDefinition | null>;
 }

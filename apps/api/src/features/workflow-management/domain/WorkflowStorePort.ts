@@ -10,6 +10,7 @@ import type {
 import type { ProjectInfo } from "@factory/shared-domain";
 export interface WorkflowCatalogPort {
   saveDefinition(definition: WorkflowDefinition): Promise<WorkflowDefinition>;
+  unpublishDefinition(workflowId: string): Promise<WorkflowDefinition | null>;
   deleteDefinition(workflowId: string): Promise<boolean>;
   findDefinition(workflowId: string): Promise<WorkflowDefinition | null>;
   listDefinitions(): Promise<WorkflowDefinition[]>;
@@ -48,6 +49,7 @@ export interface WorkflowRunPort {
   createRun(run: WorkflowRun): Promise<WorkflowRun>;
   findRun(runId: string): Promise<WorkflowRun | null>;
   listRuns(projectId?: string): Promise<WorkflowRun[]>;
+  deleteRun(runId: string): Promise<boolean>;
   submitMessage(
     runId: string,
     messageId: string,

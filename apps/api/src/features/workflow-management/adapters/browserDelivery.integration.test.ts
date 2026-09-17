@@ -28,6 +28,7 @@ test.skipIf(!databaseUrl)(
       .values({
         daemonId: id,
         machineName: "Notification test",
+        displayName: "Notification test",
         authTokenHash: "test-hash",
       });
     const store = new DrizzleWorkflowStoreAdapter(
@@ -51,6 +52,8 @@ test.skipIf(!databaseUrl)(
           workflowId: "notification-test",
           name: "Notification test",
           description: "",
+          status: "published",
+          tags: [],
           activities: [],
           positions: {},
         },
@@ -115,6 +118,7 @@ test.skipIf(!databaseUrl)(
       .values({
         daemonId: id,
         machineName: "Subscription race",
+        displayName: "Subscription race",
         authTokenHash: "test-hash",
       });
     const store = new DrizzleWorkflowStoreAdapter(
@@ -138,6 +142,8 @@ test.skipIf(!databaseUrl)(
           workflowId: "race",
           name: "Race",
           description: "",
+          status: "published",
+          tags: [],
           activities: [],
           positions: {},
         },

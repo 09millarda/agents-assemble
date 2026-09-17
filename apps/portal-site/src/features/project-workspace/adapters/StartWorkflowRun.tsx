@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import type { ProjectInfo } from "@factory/shared-domain";
-import type { WorkflowDefinition } from "@factory/workflow";
+import { isWorkflowPublished, type WorkflowDefinition } from "@factory/workflow";
 import { ArrowLeft, Play } from "lucide-react";
 import type { ProjectWorkspacePort } from "../domain/ProjectWorkspacePort";
 import { startWorkflowRun } from "../application/startWorkflowRun";
@@ -50,7 +50,8 @@ export function StartWorkflowRunForm({
   onStart,
 }: StartWorkflowRunFormProps) {
   const enabledDefinitions = definitions.filter((definition) =>
-    project.enabledWorkflowIds.includes(definition.workflowId),
+    project.enabledWorkflowIds.includes(definition.workflowId) &&
+    isWorkflowPublished(definition.status),
   );
 
   return (
@@ -181,10 +182,10 @@ export function StartWorkflowRun({
         browser,
         recipients,
         navigation: {
-          openRun: async (runId) => {
+          openRun: async (runId, projectId) => {
             await navigate({
-              to: "/workflow-runs/$runId",
-              params: { runId },
+              to: "/projects/$projectId/runs/$runId",
+              params: { projectId, runId },
             });
           },
         },

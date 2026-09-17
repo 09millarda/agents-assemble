@@ -9,6 +9,9 @@ import { GitRunWorkspaceAdapter } from "../adapters/GitRunWorkspaceAdapter";
 import { GitHubCliPublicationAdapter } from "../adapters/GitHubCliPublicationAdapter";
 import { runLocalProcess } from "../adapters/runLocalProcess";
 import { acquireDaemonProcessLock } from "./acquireDaemonProcessLock";
+import { HarnessCapacityController } from "../application/HarnessCapacityController";
+import { StdioAppServerTransport } from "../adapters/StdioAppServerTransport";
+import { isDaemonHarnessCapacityValid } from "@factory/shared-domain";
 
 const runtimes = new Map<string, Promise<WorkflowConnectionHandler>>();
 
@@ -41,7 +44,14 @@ async function initializeWorkflowExecution(
   });
   const journal = new FileExecutionJournalAdapter(join(directory, "journal"));
   const workspace = new GitRunWorkspaceAdapter(join(directory, "runs"));
-  const harness = new CodexAppServerAdapter();
+  let publishLog: (
+    source: "daemon-stdout" | "daemon-stderr" | "harness-stdout" | "harness-stderr",
+    payload: string,
+  ) => void = () => {};
+  const harnessAdapter = new CodexAppServerAdapter(
+    () => new StdioAppServerTransport((source, payload) => publishLog(source, payload)),
+  );
+  const harness = new HarnessCapacityController(harnessAdapter);
   const publisher = new GitHubCliPublicationAdapter(
     join(directory, "publication"),
     runLocalProcess,
@@ -64,6 +74,18 @@ async function initializeWorkflowExecution(
   >();
   return {
     capabilities,
+    async applyConfiguration(configuration) {
+      if (!isDaemonHarnessCapacityValid(configuration.maxParallelHarnesses)) {
+        return { applied: false, reason: "Harness capacity must be an integer from 1 through 10." };
+      }
+      harness.setCapacity(configuration.maxParallelHarnesses);
+      return { applied: true };
+    },
+    getTelemetry: () => harness.getTelemetry(),
+    setTelemetryPublisher: (publisher) => harness.setTelemetryPublisher(publisher),
+    setLogPublisher: (publisher) => {
+      publishLog = publisher;
+    },
     async handleCommand(command, emit) {
       const active = running.get(command.commandId);
       if (active) {

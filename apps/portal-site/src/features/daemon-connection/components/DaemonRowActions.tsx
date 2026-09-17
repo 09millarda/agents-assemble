@@ -42,7 +42,7 @@ export function DaemonRowActions({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button type="button" size="icon" variant="ghost" aria-label={`Actions for ${daemon.machineName}`}>
+        <Button type="button" size="icon" variant="ghost" aria-label={`Actions for ${daemon.displayName}`}>
           <MoreVertical className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

@@ -34,4 +34,9 @@ export class HttpWorkflowRunAdapter implements WorkflowRunPort {
       command,
     );
   }
+  async deleteRun(runId: string): Promise<void> {
+    await this.http.request(`/v1/workflow-runs/${encodeURIComponent(runId)}`, {
+      method: "DELETE",
+    });
+  }
 }

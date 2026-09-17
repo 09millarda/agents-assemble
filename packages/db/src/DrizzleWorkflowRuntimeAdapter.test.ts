@@ -22,6 +22,8 @@ test.skipIf(!databaseUrl)(
           workflowId: "definition",
           name: "Definition",
           description: "",
+          status: "published",
+          tags: [],
           activities: [],
           positions: {},
         },

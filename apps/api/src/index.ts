@@ -14,9 +14,11 @@ import { createCorsMiddleware } from "./infrastructure/cors";
 import type { DaemonRegistryPort } from "./features/daemon-connection/domain/DaemonConnectionPort";
 import type { DaemonCredentialIssuerPort } from "./features/device-authorization/domain/DeviceAuthorizationPort";
 import { validationHook } from "./infrastructure/http/validationHook";
+import { EphemeralDaemonLogBroker } from "./features/daemon-connection/infrastructure/EphemeralDaemonLogBroker";
 
 const database = createDatabaseConnection(process.env.DATABASE_URL ?? "");
-const daemonSockets = new DaemonSocketRegistry();
+const daemonLogs = new EphemeralDaemonLogBroker();
+const daemonSockets = new DaemonSocketRegistry(daemonLogs);
 const daemonRegistry = createDaemonRegistry(database);
 const daemonConnections = buildDaemonConnectionModule(daemonRegistry, daemonSockets, daemonSockets);
 const projectWorkspace = buildProjectWorkspaceModule(createProjectRegistry(database));
@@ -34,6 +36,10 @@ registerResourceRoutes(app, {
   daemonPresence: daemonConnections.presence,
   daemonDisconnection: daemonConnections.disconnection,
   daemonCapabilities: workflowGateway,
+  daemonConfiguration: daemonConnections.registry,
+  daemonConfigurationDelivery: daemonSockets,
+  daemonTelemetry: daemonSockets,
+  daemonLogs,
   deviceStore: deviceAuthorizations.store,
   credentialIssuer: deviceAuthorizations.issuer,
   projectRegistry: projectWorkspace.registry,
@@ -46,17 +52,45 @@ const server = createServer(async (nodeRequest, nodeResponse) => {
   nodeRequest.on("data", (chunk) => chunks.push(chunk));
   nodeRequest.on("end", async () => {
     const url = `http://${nodeRequest.headers.host ?? "localhost"}${nodeRequest.url ?? "/"}`;
+    const requestCancellation = new AbortController();
     const request = new Request(url, {
       method: nodeRequest.method,
       headers: nodeRequest.headers as Record<string, string>,
       body: chunks.length > 0 ? Buffer.concat(chunks) : undefined,
+      signal: requestCancellation.signal,
     });
     const response = await app.fetch(request);
     nodeResponse.writeHead(response.status, Object.fromEntries(response.headers.entries()));
-    nodeResponse.end(await response.text());
+    if (!response.body) {
+      nodeResponse.end();
+      return;
+    }
+    const reader = response.body.getReader();
+    nodeResponse.once("close", () => {
+      requestCancellation.abort();
+      void reader.cancel();
+    });
+    try {
+      for (;;) {
+        const chunk = await reader.read();
+        if (chunk.done) break;
+        if (!nodeResponse.write(Buffer.from(chunk.value))) {
+          await new Promise<void>((resolve) => nodeResponse.once("drain", resolve));
+        }
+      }
+      nodeResponse.end();
+    } catch (error) {
+      if (!nodeResponse.destroyed) nodeResponse.destroy(error as Error);
+    }
   });
 });
-attachSocketGateway(server, daemonConnections.registry, daemonSockets, workflowGateway);
+attachSocketGateway(
+  server,
+  daemonConnections.registry,
+  daemonSockets,
+  workflowGateway,
+  daemonConnections.registry,
+);
 setInterval(() => { void workflowGateway.deliverPendingCommands().catch(error => console.error("Workflow command delivery failed", error)); }, 1000).unref();
 
 const port = Number(process.env.PORT ?? 3001);

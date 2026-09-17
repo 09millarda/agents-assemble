@@ -23,6 +23,7 @@ test.skipIf(!databaseUrl)(
       .values({
         daemonId,
         machineName: "Boundary daemon",
+        displayName: "Boundary daemon",
         status: "online",
         authTokenHash: createHash("sha256").update(token).digest("hex"),
       });

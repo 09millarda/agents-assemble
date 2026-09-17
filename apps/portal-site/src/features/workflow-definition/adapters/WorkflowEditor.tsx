@@ -173,7 +173,7 @@ export function WorkflowEditor({
       </header>
 
       <WorkflowMetadataDialog
-        metadata={{ name: draft.name, description: draft.description }}
+        metadata={{ name: draft.name, description: draft.description, tags: draft.tags }}
         onSave={(metadata) => setDraft((current) => ({ ...current, ...metadata }))}
       />
 

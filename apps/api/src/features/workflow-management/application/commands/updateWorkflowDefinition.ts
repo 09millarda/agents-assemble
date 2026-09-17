@@ -1,15 +1,19 @@
-import type { WorkflowDefinition } from "@factory/workflow";
+import {
+  normalizeWorkflowTags,
+  validateWorkflowDefinition,
+  type WorkflowDefinition,
+  type WorkflowDefinitionInput,
+} from "@factory/workflow";
 import type { Result } from "@factory/shared-domain";
 import type {
   WorkflowCatalogPort,
   WorkflowError,
 } from "../../domain/WorkflowStorePort";
 import { getWorkflowDefinition } from "../queries/getWorkflowDefinition";
-import { saveWorkflowDefinition } from "./saveWorkflowDefinition";
 export async function updateWorkflowDefinition(
   store: WorkflowCatalogPort,
   workflowId: string,
-  resource: WorkflowDefinition,
+  resource: WorkflowDefinitionInput,
 ): Promise<Result<WorkflowDefinition, WorkflowError>> {
   if (resource.workflowId !== workflowId)
     return {
@@ -20,5 +24,14 @@ export async function updateWorkflowDefinition(
       },
     };
   const existing = await getWorkflowDefinition(store, workflowId);
-  return existing.ok ? await saveWorkflowDefinition(store, resource) : existing;
+  if (!existing.ok) return existing;
+  const candidate: WorkflowDefinition = {
+    ...resource,
+    status: existing.value.status,
+    tags: normalizeWorkflowTags(resource.tags),
+  };
+  const invalid = validateWorkflowDefinition(candidate);
+  if (invalid)
+    return { ok: false, error: { code: "INVALID_WORKFLOW", message: invalid } };
+  return { ok: true, value: await store.saveDefinition(candidate) };
 }

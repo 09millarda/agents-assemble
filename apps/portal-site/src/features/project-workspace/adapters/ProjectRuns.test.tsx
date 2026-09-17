@@ -31,6 +31,8 @@ function createRun(
       workflowId: `${runId}-workflow`,
       name,
       description: "",
+      status: "published",
+      tags: [],
       activities: [],
       positions: {},
     },

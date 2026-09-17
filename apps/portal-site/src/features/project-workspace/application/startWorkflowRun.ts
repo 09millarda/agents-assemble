@@ -7,7 +7,7 @@ import type {
 } from "../../workflow-run/domain/WorkflowRunPort";
 
 export interface WorkflowRunNavigationPort {
-  openRun(runId: string): Promise<void>;
+  openRun(runId: string, projectId: string): Promise<void>;
 }
 
 export interface StartWorkflowRunInput {
@@ -48,6 +48,6 @@ export async function startWorkflowRun({
     ...input,
     requestId: resolveRequestId(input),
   });
-  await navigation.openRun(created.runId);
+  await navigation.openRun(created.runId, created.projectId);
   return created;
 }

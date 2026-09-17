@@ -50,7 +50,7 @@ export function HumanInteractionPanel({
           : interaction.kind === "loop-exhaustion"
             ? "Review limit reached"
             : interaction.kind === "recovery"
-              ? "Recovery decision required"
+              ? "Step failed"
               : interaction.kind === "question"
                 ? "Your answer is needed"
                 : "Approval required"}
@@ -196,7 +196,7 @@ export function HumanInteractionPanel({
         ) : null}
         {interaction.kind === "recovery" ? (
           <Button disabled={busy} onClick={() => void respond("retry")}>
-            Retry after reconciliation
+            Retry step
           </Button>
         ) : null}
         <Button
@@ -204,7 +204,7 @@ export function HumanInteractionPanel({
           disabled={busy}
           onClick={() => void respond("cancel")}
         >
-          Cancel
+          Cancel run
         </Button>
       </div>
     </section>

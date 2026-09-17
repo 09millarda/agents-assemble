@@ -18,12 +18,12 @@ const project: ProjectInfo = {
 };
 
 const workflows: WorkflowDefinition[] = [
-  { workflowId: "workflow-1", name: "Build a feature", description: "", activities: [], positions: {} },
-  { workflowId: "workflow-2", name: "Summarise", description: "", activities: [], positions: {} },
+  { workflowId: "workflow-1", name: "Build a feature", description: "", status: "published", tags: [], activities: [], positions: {} },
+  { workflowId: "workflow-2", name: "Summarise", description: "", status: "draft", tags: [], activities: [], positions: {} },
 ];
 
 const daemons: DaemonSummary[] = [
-  { daemonId: "daemon-1", machineName: "studio", status: "online" },
+  { daemonId: "daemon-1", machineName: "studio", displayName: "Studio", status: "online", maxParallelHarnesses: 1, appliedMaxParallelHarnesses: 1, activeHarnesses: 0, queuedCommands: 0 },
 ];
 
 const workspace: ProjectWorkspacePort = {
@@ -73,4 +73,5 @@ test("settings exposes project identity, daemon, setup, and enabled workflows", 
   }
   expect(html).toContain('readOnly=""');
   expect(html).toContain(project.absolutePath);
+  expect(html).not.toContain("Summarise");
 });

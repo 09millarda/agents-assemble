@@ -1,12 +1,22 @@
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import type { DaemonCapabilityPort } from "../features/workflow-delivery/domain/DaemonCapabilityPort";
 import type { DaemonDisconnectionPort, DaemonPresencePort, DaemonRegistryPort } from "../features/daemon-connection/domain/DaemonConnectionPort";
+import type {
+  DaemonConfigurationDeliveryPort,
+  DaemonConfigurationPort,
+  DaemonQueryPort,
+  DaemonTelemetryPort,
+} from "../features/daemon-connection/domain/DaemonConfigurationPort";
+import type { DaemonLogSubscriptionPort } from "../features/daemon-connection/domain/DaemonLogPort";
 import type { DaemonCredentialIssuerPort, DeviceAuthorizationStorePort } from "../features/device-authorization/domain/DeviceAuthorizationPort";
 import type { ProjectRegistryPort } from "../features/project-workspace/domain/ProjectWorkspacePort";
 import type { WorkflowStorePort } from "../features/workflow-management/domain/WorkflowStorePort";
 import { registerGetDaemonCapabilitiesRoute } from "./v1/daemons/[daemonId]/capabilities.get";
 import { registerDeregisterDaemonRoute } from "./v1/daemons/[daemonId]/deregister.post";
 import { registerListDaemonsRoute } from "./v1/daemons/index.get";
+import { registerGetDaemonRoute } from "./v1/daemons/[daemonId]/index.get";
+import { registerSaveDaemonConfigurationRoute } from "./v1/daemons/[daemonId]/configuration.post";
+import { registerStreamDaemonLogsRoute } from "./v1/daemons/[daemonId]/logs/stream.get";
 import { registerReadDeviceAuthorizationRoute } from "./v1/device/authorizations/[deviceCode].get";
 import { registerRequestDeviceAuthorizationRoute } from "./v1/device/authorizations/index.post";
 import { registerApproveDeviceAuthorizationRoute } from "./v1/device/approve.post";
@@ -26,8 +36,11 @@ import { registerListWorkflowDefinitionsRoute } from "./v1/workflows/index.get";
 import { registerGetWorkflowDefinitionRoute } from "./v1/workflows/[workflowId].get";
 import { registerUpdateWorkflowDefinitionRoute } from "./v1/workflows/[workflowId]/update.post";
 import { registerDeleteWorkflowDefinitionRoute } from "./v1/workflows/[workflowId]/delete.post";
+import { registerPublishWorkflowDefinitionRoute } from "./v1/workflows/[workflowId]/publish.post";
+import { registerUnpublishWorkflowDefinitionRoute } from "./v1/workflows/[workflowId]/unpublish.post";
 import { registerStartWorkflowRunRoute } from "./v1/workflow-runs/index.post";
 import { registerGetWorkflowRunRoute } from "./v1/workflow-runs/[runId].get";
+import { registerDeleteWorkflowRunRoute } from "./v1/workflow-runs/[runId].delete";
 import { registerSubmitHumanResponseRoute } from "./v1/workflow-runs/[runId]/commands.post";
 import { registerListWorkflowRunsRoute } from "./v1/workflow-runs/index.get";
 import { registerListRunDocumentsRoute } from "./v1/workflow-runs/[runId]/documents.get";
@@ -37,12 +50,17 @@ import { registerListRunNotificationsRoute } from "./v1/workflow-runs/[runId]/no
 
 const offlinePresence: DaemonPresencePort = { isDaemonConnected: () => false };
 const noopDisconnection: DaemonDisconnectionPort = { disconnectDaemon: () => {} };
+const noTelemetry: DaemonTelemetryPort = { getDaemonTelemetry: () => null };
 
 export interface ResourceRouteDependencies {
   daemonRegistry: DaemonRegistryPort;
   daemonPresence?: DaemonPresencePort;
   daemonDisconnection?: DaemonDisconnectionPort;
   daemonCapabilities: DaemonCapabilityPort;
+  daemonConfiguration?: DaemonQueryPort & DaemonConfigurationPort;
+  daemonConfigurationDelivery?: DaemonConfigurationDeliveryPort;
+  daemonTelemetry?: DaemonTelemetryPort;
+  daemonLogs?: DaemonLogSubscriptionPort;
   deviceStore: DeviceAuthorizationStorePort;
   credentialIssuer: DaemonCredentialIssuerPort;
   verificationUri?: string;
@@ -58,8 +76,33 @@ export function registerResourceRoutes(
   const disconnection = dependencies.daemonDisconnection ?? noopDisconnection;
 
   registerGetDaemonCapabilitiesRoute(app, { capabilities: dependencies.daemonCapabilities });
-  registerListDaemonsRoute(app, { registry: dependencies.daemonRegistry, presence });
+  registerListDaemonsRoute(app, {
+    registry: dependencies.daemonRegistry,
+    presence,
+    telemetry: dependencies.daemonTelemetry ?? noTelemetry,
+  });
   registerDeregisterDaemonRoute(app, { registry: dependencies.daemonRegistry, disconnection });
+  if (
+    dependencies.daemonConfiguration &&
+    dependencies.daemonConfigurationDelivery &&
+    dependencies.daemonTelemetry
+  ) {
+    registerGetDaemonRoute(app, {
+      registry: dependencies.daemonConfiguration,
+      presence,
+      telemetry: dependencies.daemonTelemetry,
+    });
+    registerSaveDaemonConfigurationRoute(app, {
+      registry: dependencies.daemonConfiguration,
+      delivery: dependencies.daemonConfigurationDelivery,
+    });
+    if (dependencies.daemonLogs) {
+      registerStreamDaemonLogsRoute(app, {
+        registry: dependencies.daemonConfiguration,
+        logs: dependencies.daemonLogs,
+      });
+    }
+  }
 
   registerRequestDeviceAuthorizationRoute(app, {
     store: dependencies.deviceStore,
@@ -79,7 +122,12 @@ export function registerResourceRoutes(
     registerListProjectsRoute(app, { registry: dependencies.projectRegistry });
     registerSetProjectNameRoute(app, { registry: dependencies.projectRegistry });
     registerAssignDaemonRoute(app, { registry: dependencies.projectRegistry });
-    registerSetEnabledWorkflowsRoute(app, { registry: dependencies.projectRegistry });
+    if (dependencies.workflowStore) {
+      registerSetEnabledWorkflowsRoute(app, {
+        registry: dependencies.projectRegistry,
+        workflows: dependencies.workflowStore,
+      });
+    }
     registerSetProjectSettingsRoute(app, { registry: dependencies.projectRegistry });
   }
 
@@ -87,6 +135,7 @@ export function registerResourceRoutes(
     const workflow = { store: dependencies.workflowStore };
     registerStartWorkflowRunRoute(app, workflow);
     registerGetWorkflowRunRoute(app, workflow);
+    registerDeleteWorkflowRunRoute(app, workflow);
     registerSubmitHumanResponseRoute(app, workflow);
     registerCreateBrowserRecipientRoute(app, workflow);
     registerGetBrowserRecipientRoute(app, workflow);
@@ -96,6 +145,8 @@ export function registerResourceRoutes(
     registerGetWorkflowDefinitionRoute(app, workflow);
     registerUpdateWorkflowDefinitionRoute(app, workflow);
     registerDeleteWorkflowDefinitionRoute(app, workflow);
+    registerPublishWorkflowDefinitionRoute(app, workflow);
+    registerUnpublishWorkflowDefinitionRoute(app, workflow);
     registerListWorkflowRunsRoute(app, workflow);
     registerListRunDocumentsRoute(app, workflow);
     registerListHumanInteractionsRoute(app, workflow);

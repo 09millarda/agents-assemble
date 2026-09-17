@@ -1,11 +1,25 @@
 import { expect, test } from "bun:test";
 import { createFeatureBuildingWorkflow } from "./createFeatureBuildingWorkflow";
 import { validateWorkflowDefinition } from "./validateWorkflowDefinition";
+import type { WorkflowDefinition } from "./WorkflowDefinition";
 test("empty canvas is allowed and the starter passes", () => {
   expect(
-    validateWorkflowDefinition({ workflowId: "blank", name: "Blank", description: "", activities: [], positions: {} }),
+    validateWorkflowDefinition({ workflowId: "blank", name: "Blank", description: "", status: "draft", tags: [], activities: [], positions: {} }),
   ).toBeNull();
   expect(validateWorkflowDefinition(createFeatureBuildingWorkflow())).toBeNull();
+});
+test("workflow tags are validated with the workflow definition", () => {
+  const workflow = createFeatureBuildingWorkflow();
+  workflow.tags = ["a".repeat(51)];
+
+  expect(validateWorkflowDefinition(workflow)).toContain("50 characters");
+});
+
+test("workflow status is limited to draft and published", () => {
+  const invalidStatus = JSON.parse(JSON.stringify(createFeatureBuildingWorkflow())) as Record<string, unknown>;
+  invalidStatus.status = "archived";
+
+  expect(validateWorkflowDefinition(invalidStatus as unknown as WorkflowDefinition)).toContain("status");
 });
 test("terminal steps end the run and free cycles pass", () => {
   const workflow = createFeatureBuildingWorkflow();

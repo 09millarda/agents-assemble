@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import type { DaemonSummary, ProjectInfo } from "@factory/shared-domain";
-import type { WorkflowDefinition } from "@factory/workflow";
+import { isWorkflowPublished, type WorkflowDefinition } from "@factory/workflow";
 import { ArrowLeft, CheckCircle2, GitBranch, HardDrive, Settings } from "lucide-react";
 import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
@@ -31,11 +31,16 @@ export function ProjectSettings({
   definitions: WorkflowDefinition[];
   workspace: ProjectWorkspacePort;
 }) {
+  const publishedDefinitions = definitions.filter((definition) => isWorkflowPublished(definition.status));
   const [project, setProject] = useState(initialProject);
   const [name, setName] = useState(initialProject.name);
   const [daemonId, setDaemonId] = useState(initialProject.daemonId ?? "");
   const [setupCommand, setSetupCommand] = useState(initialProject.setupCommand ?? "");
-  const [enabledWorkflowIds, setEnabledWorkflowIds] = useState(initialProject.enabledWorkflowIds);
+  const [enabledWorkflowIds, setEnabledWorkflowIds] = useState(() =>
+    initialProject.enabledWorkflowIds.filter((workflowId) =>
+      publishedDefinitions.some((definition) => definition.workflowId === workflowId),
+    ),
+  );
   const [busySection, setBusySection] = useState<SettingsSection | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -138,7 +143,7 @@ export function ProjectSettings({
                 <option value="">Choose daemon</option>
                 {daemons.map((daemon) => (
                   <option key={daemon.daemonId} value={daemon.daemonId}>
-                    {daemon.machineName} · {daemon.status}
+                    {daemon.displayName} · {daemon.status}
                   </option>
                 ))}
               </select>
@@ -187,9 +192,9 @@ export function ProjectSettings({
             <CardDescription>Only enabled Workflows can be started from this project.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3">
-            {definitions.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No Workflows have been created yet.</p>
-            ) : definitions.map((definition) => (
+            {publishedDefinitions.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No Published Workflows are available yet.</p>
+            ) : publishedDefinitions.map((definition) => (
               <label key={definition.workflowId} className="flex items-center gap-3 rounded-xl border border-border/70 bg-[#fbfcfd] px-3 py-3 text-sm">
                 <input
                   type="checkbox"
@@ -197,6 +202,9 @@ export function ProjectSettings({
                   onChange={(event) => setEnabledWorkflowIds((current) => event.target.checked ? [...current, definition.workflowId] : current.filter((workflowId) => workflowId !== definition.workflowId))}
                 />
                 <span className="font-medium">{definition.name}</span>
+                <span className="flex flex-wrap gap-1">
+                  {definition.tags.map((tag) => <Badge key={tag} variant="outline">{tag}</Badge>)}
+                </span>
                 <span className="ml-auto text-xs text-muted-foreground">{definition.activities.length} activities</span>
               </label>
             ))}

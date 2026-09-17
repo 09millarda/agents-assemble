@@ -15,6 +15,8 @@ function createDefinition(): WorkflowDefinition {
     workflowId: "build",
     name: "Build feature",
     description: "A feature workflow",
+    status: "draft",
+    tags: [],
     positions: { plan: { x: 10, y: 20 }, implement: { x: 300, y: 20 } },
     activities: [
       {

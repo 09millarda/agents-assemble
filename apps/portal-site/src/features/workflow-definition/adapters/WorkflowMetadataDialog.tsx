@@ -10,10 +10,13 @@ import {
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Textarea } from "../../../components/ui/textarea";
+import { Badge } from "../../../components/ui/badge";
+import { WorkflowTagInput } from "./WorkflowTagInput";
 
 export interface WorkflowMetadata {
   name: string;
   description: string;
+  tags: string[];
 }
 
 export function WorkflowMetadataDialog({
@@ -37,7 +40,7 @@ export function WorkflowMetadataDialog({
 
   function saveChanges(): void {
     if (!draft.name.trim()) return;
-    onSave({ name: draft.name, description: draft.description });
+    onSave({ name: draft.name, description: draft.description, tags: draft.tags });
     closeEditor();
   }
 
@@ -53,6 +56,12 @@ export function WorkflowMetadataDialog({
             <div>
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Workflow name</dt>
               <dd className="mt-1 truncate text-lg font-bold tracking-tight text-[#18243a]">{metadata.name}</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Workflow tags</dt>
+              <dd className="mt-2 flex flex-wrap gap-2">
+                {metadata.tags.length > 0 ? metadata.tags.map((tag) => <Badge key={tag} variant="secondary">{tag}</Badge>) : <span className="text-sm text-muted-foreground">No tags yet.</span>}
+              </dd>
             </div>
             <div>
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Workflow description</dt>
@@ -92,6 +101,13 @@ export function WorkflowMetadataDialog({
                 autoFocus
               />
               {!draft.name.trim() ? <span className="text-xs font-normal text-red-600">Workflow name is required.</span> : null}
+            </label>
+            <label className="grid gap-1 text-sm font-medium">
+              Workflow tags
+              <WorkflowTagInput
+                tags={draft.tags}
+                onChange={(tags) => setDraft((current) => ({ ...current, tags }))}
+              />
             </label>
             <label className="grid gap-1 text-sm font-medium">
               Workflow description

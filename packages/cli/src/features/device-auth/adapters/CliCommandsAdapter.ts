@@ -23,6 +23,13 @@ import {
   resolveDaemonDeletionTarget,
   shouldClearLocalCredentials,
 } from "../../daemon-connection/application/deleteDaemon";
+import {
+  getDaemonConfiguration,
+  formatDaemonConfiguration,
+  resolveDaemonConfigurationTarget,
+  setDaemonConfiguration,
+  type DaemonConfigurationChanges,
+} from "../../daemon-connection/application/manageDaemonConfiguration";
 
 const RECONNECT_BASE_DELAY_MS = 1000;
 const RECONNECT_MAX_DELAY_MS = 30000;
@@ -168,6 +175,70 @@ export function buildCliCommands(): Command {
       }
       if (shouldClearLocalCredentials(stored, result.value.daemonId)) clearDaemonCredentials();
       console.log(`daemon ${result.value.daemonId} deregistered.`);
+    });
+
+  const daemonConfig = daemon
+    .command("config")
+    .description("Read or change API-owned daemon configuration.");
+
+  daemonConfig
+    .command("get")
+    .option("--daemon-id <id>", "Daemon id; defaults to the stored credential daemon")
+    .action(async (options: { daemonId?: string }) => {
+      const target = resolveDaemonConfigurationTarget(
+        loadDaemonCredentials(),
+        options.daemonId,
+      );
+      if (!target.ok) {
+        console.log(target.error.message);
+        process.exitCode = 1;
+        return;
+      }
+      const result = await getDaemonConfiguration(target.value);
+      if (!result.ok) {
+        console.log(`${result.error.code}: ${result.error.message}`);
+        process.exitCode = 1;
+        return;
+      }
+      console.log(formatDaemonConfiguration(result.value));
+    });
+
+  daemonConfig
+    .command("set")
+    .description("Merge named changes and atomically save the complete configuration.")
+    .option("--daemon-id <id>", "Daemon id; defaults to the stored credential daemon")
+    .option("--display-name <name>", "Stable portal display name")
+    .option("--max-parallel-harnesses <count>", "Harness capacity from 1 through 10", Number)
+    .option("--location <location>", "Physical or logical location")
+    .option("--device-label <label>", "User-managed device label")
+    .option("--purpose <purpose>", "Daemon purpose")
+    .option("--owner-team <team>", "Owning team")
+    .option("--tags <tags...>", "Replacement tags")
+    .option("--notes <notes>", "Operator notes")
+    .option("--clear-location", "Clear location")
+    .option("--clear-device-label", "Clear device label")
+    .option("--clear-purpose", "Clear purpose")
+    .option("--clear-owner-team", "Clear owner team")
+    .option("--clear-tags", "Clear all tags")
+    .option("--clear-notes", "Clear notes")
+    .action(async (options: DaemonConfigurationChanges & { daemonId?: string }) => {
+      const target = resolveDaemonConfigurationTarget(
+        loadDaemonCredentials(),
+        options.daemonId,
+      );
+      if (!target.ok) {
+        console.log(target.error.message);
+        process.exitCode = 1;
+        return;
+      }
+      const { daemonId: _daemonId, ...changes } = options;
+      const result = await setDaemonConfiguration(target.value, changes);
+      if (!result.ok) {
+        console.log(`${result.error.code}: ${result.error.message}`);
+        process.exitCode = 1;
+        return;
+      }
+      console.log(formatDaemonConfiguration(result.value));
     });
 
   return program;

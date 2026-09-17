@@ -14,7 +14,7 @@ Enforceable contract for every HTTP seam in `apps/api`. Root `AGENTS.md` still a
 ## Versioning and Methods (RFC 9110)
 
 - All routes live under `/v1`. No unversioned paths; no compat shims for deleted paths (alpha rule).
-- `GET` reads and never mutates. `POST` creates or runs a command. No `PUT`/`PATCH`/`DELETE` in v0.
+- `GET` reads and never mutates. `POST` creates or runs a command. `DELETE` removes a resource.
 - `201` + `Location` on every create (`POST /v1/device/authorizations` → the grant resource). `200` on reads and commands.
 - Status meanings are fixed: `400` malformed or unusable input, `401` bad daemon credentials, `403` denied grant, `404` unknown resource, `409` conflicting state, `410` gone or expired grant, `422` well-formed but semantically invalid values, `429` poll backoff. The existing RFC 8628 device flow keeps its behavior under these codes.
 

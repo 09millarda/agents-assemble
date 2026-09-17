@@ -33,6 +33,7 @@ test.skipIf(!databaseUrl)(
       .values({
         daemonId: "coordinator-daemon",
         machineName: "Coordinator test",
+        displayName: "Coordinator test",
         authTokenHash: "test",
       })
       .onConflictDoNothing();

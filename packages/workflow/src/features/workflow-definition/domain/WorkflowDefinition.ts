@@ -1,3 +1,5 @@
+import type { WorkflowStatus } from "./workflowLifecycle";
+
 export type HumanInputMode = "off" | "approval" | "input";
 export interface Handoff {
   targetActivityId: string | null;
@@ -30,9 +32,13 @@ export interface WorkflowDefinition {
   workflowId: string;
   name: string;
   description: string;
+  status: WorkflowStatus;
+  tags: string[];
   activities: Activity[];
   positions: Record<string, WorkflowPosition>;
 }
+
+export type WorkflowDefinitionInput = Omit<WorkflowDefinition, "status">;
 export interface HarnessCapability {
   harness: "codex";
   version: string;

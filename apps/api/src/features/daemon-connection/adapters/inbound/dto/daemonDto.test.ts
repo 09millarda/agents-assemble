@@ -1,19 +1,35 @@
 import { describe, expect, test } from "bun:test";
-import { DaemonDtoSchema, DeregisterDaemonResponseSchema, ListDaemonsQuerySchema } from "./daemonDto";
+import {
+  DaemonConfigurationSchema,
+  DaemonDtoSchema,
+  DeregisterDaemonResponseSchema,
+  ListDaemonsQuerySchema,
+} from "./daemonDto";
 import { encodeCursor } from "../../../../../infrastructure/http/pagination";
 
 describe("DaemonDto", () => {
+  const daemon = {
+    daemonId: "d1",
+    machineName: "workstation",
+    displayName: "Builder",
+    status: "online",
+    maxParallelHarnesses: 2,
+    appliedMaxParallelHarnesses: 1,
+    activeHarnesses: 1,
+    queuedCommands: 0,
+  };
+
   test("rejects a blank machine name", () => {
-    expect(DaemonDtoSchema.safeParse({ daemonId: "d1", machineName: "  ", status: "online" }).success).toBe(false);
+    expect(DaemonDtoSchema.safeParse({ ...daemon, machineName: "  " }).success).toBe(false);
   });
 
   test("rejects an unknown status", () => {
-    expect(DaemonDtoSchema.safeParse({ daemonId: "d1", machineName: "workstation", status: "ghost" }).success).toBe(false);
+    expect(DaemonDtoSchema.safeParse({ ...daemon, status: "ghost" }).success).toBe(false);
   });
 
   test("accepts deregistered as a terminal status", () => {
     expect(
-      DaemonDtoSchema.safeParse({ daemonId: "d1", machineName: "workstation", status: "deregistered" }).success
+      DaemonDtoSchema.safeParse({ ...daemon, status: "deregistered" }).success
     ).toBe(true);
   });
 });
@@ -42,5 +58,45 @@ describe("DeregisterDaemonResponse", () => {
       daemonId: "d1",
       status: "deregistered",
     });
+  });
+});
+
+describe("DaemonConfiguration", () => {
+  const configuration = {
+    displayName: "Build machine",
+    maxParallelHarnesses: 1,
+    location: "London",
+    deviceLabel: "Workstation",
+    purpose: "Feature delivery",
+    ownerTeam: "Platform",
+    tags: ["linux"],
+    notes: "",
+  };
+
+  test("accepts a complete configuration with capacity from one through ten", () => {
+    expect(DaemonConfigurationSchema.parse(configuration)).toEqual(
+      configuration,
+    );
+    expect(
+      DaemonConfigurationSchema.parse({
+        ...configuration,
+        maxParallelHarnesses: 10,
+      }).maxParallelHarnesses,
+    ).toBe(10);
+  });
+
+  test("rejects blank display names and capacity above ten", () => {
+    expect(
+      DaemonConfigurationSchema.safeParse({
+        ...configuration,
+        displayName: "  ",
+      }).success,
+    ).toBe(false);
+    expect(
+      DaemonConfigurationSchema.safeParse({
+        ...configuration,
+        maxParallelHarnesses: 11,
+      }).success,
+    ).toBe(false);
   });
 });

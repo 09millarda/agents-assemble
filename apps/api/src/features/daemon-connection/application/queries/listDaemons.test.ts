@@ -3,6 +3,20 @@ import { listDaemons } from "./listDaemons";
 import { encodeCursor } from "../../../../infrastructure/http/pagination";
 import type { DaemonPresencePort, DaemonRegistryPort } from "../../domain/DaemonConnectionPort";
 
+function summary(daemonId: string, machineName: string, status: "offline" | "unknown") {
+  return {
+    daemonId,
+    machineName,
+    displayName: machineName,
+    status,
+    maxParallelHarnesses: 1,
+    appliedMaxParallelHarnesses: null,
+    activeHarnesses: 0,
+    queuedCommands: 0,
+  };
+}
+const noTelemetry = { getDaemonTelemetry: () => null };
+
 function stubRegistry(): DaemonRegistryPort {
   return {
     issueDaemonCredentials: () => {
@@ -11,9 +25,9 @@ function stubRegistry(): DaemonRegistryPort {
     updateDaemonOnHello: async () => {},
     listKnownDaemons: async () => ["daemon-b", "daemon-a", "daemon-c"],
     listDaemons: async () => [
-      { daemonId: "daemon-b", machineName: "laptop", status: "offline" },
-      { daemonId: "daemon-a", machineName: "workstation", status: "offline" },
-      { daemonId: "daemon-c", machineName: "server", status: "unknown" },
+      summary("daemon-b", "laptop", "offline"),
+      summary("daemon-a", "workstation", "offline"),
+      summary("daemon-c", "server", "unknown"),
     ],
     verifyDaemonToken: async () => true,
     deregisterDaemon: async () => "not-found" as const,
@@ -26,25 +40,43 @@ function stubPresence(connectedIds: string[]): DaemonPresencePort {
 
 describe("listDaemons", () => {
   test("marks socket-connected daemons online in stable id order", async () => {
-    const page = await listDaemons(stubRegistry(), stubPresence(["daemon-b"]), { limit: 10 });
+    const page = await listDaemons(
+      stubRegistry(),
+      stubPresence(["daemon-b"]),
+      {
+        getDaemonTelemetry: (daemonId) => daemonId === "daemon-b" ? {
+          activeHarnesses: 1,
+          queuedCommands: 2,
+          desiredMaxParallelHarnesses: 1,
+          appliedMaxParallelHarnesses: 1,
+        } : null,
+      },
+      { limit: 10 },
+    );
 
     expect(page).toEqual({
       data: [
-        { daemonId: "daemon-a", machineName: "workstation", status: "offline" },
-        { daemonId: "daemon-b", machineName: "laptop", status: "online" },
-        { daemonId: "daemon-c", machineName: "server", status: "unknown" },
+        summary("daemon-a", "workstation", "offline"),
+        {
+          ...summary("daemon-b", "laptop", "offline"),
+          status: "online",
+          appliedMaxParallelHarnesses: 1,
+          activeHarnesses: 1,
+          queuedCommands: 2,
+        },
+        summary("daemon-c", "server", "unknown"),
       ],
       pagination: { nextCursor: null, limit: 10 },
     });
   });
 
   test("pages with an opaque cursor", async () => {
-    const first = await listDaemons(stubRegistry(), stubPresence([]), { limit: 2 });
+    const first = await listDaemons(stubRegistry(), stubPresence([]), noTelemetry, { limit: 2 });
 
     expect(first.data.map((daemon) => daemon.daemonId)).toEqual(["daemon-a", "daemon-b"]);
     expect(first.pagination.nextCursor).toBe(encodeCursor("daemon-b"));
 
-    const second = await listDaemons(stubRegistry(), stubPresence([]), { limit: 2, cursor: first.pagination.nextCursor });
+    const second = await listDaemons(stubRegistry(), stubPresence([]), noTelemetry, { limit: 2, cursor: first.pagination.nextCursor });
 
     expect(second.data.map((daemon) => daemon.daemonId)).toEqual(["daemon-c"]);
     expect(second.pagination.nextCursor).toBeNull();
