@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { renderToString } from "react-dom/server";
 import { WorkflowEditor } from "./WorkflowEditor";
-test("graph editor renders steps as nodes with labelled outcome edges and side panels", () => {
+test("workflow editor renders a graph-first shell with readonly metadata and an inspector", () => {
   const html = renderToString(
     <WorkflowEditor
       definition={{
@@ -21,22 +21,25 @@ test("graph editor renders steps as nodes with labelled outcome edges and side p
           },
         ],
       }}
-      onSave={async () => {}}
+      onSave={async (draft) => draft}
     />,
   );
   for (const text of [
+    "Edit workflow",
     "Workflow name",
     "Workflow description",
+    "Edit workflow metadata",
     "Add step",
     "Save workflow",
     "Step details",
-    "Edge details",
-    "Select a step node",
-    "Select an edge label",
+    "Select a step or outcome to edit.",
     "Plan",
     "ready",
   ])
     expect(html).toContain(text);
+
+  expect(html).not.toContain('placeholder="What is this workflow for?"');
+  expect(html.indexOf("Add step")).toBeLessThan(html.indexOf("Workflow graph"));
 });
 
 test("graph editor renders a persisted workflow without stored positions", () => {
@@ -56,7 +59,7 @@ test("graph editor renders a persisted workflow without stored positions", () =>
   }`);
 
   const html = renderToString(
-    <WorkflowEditor definition={persistedDefinition} onSave={async () => {}} />,
+    <WorkflowEditor definition={persistedDefinition} onSave={async (draft) => draft} />,
   );
 
   expect(html).toContain("Establish requirements");
